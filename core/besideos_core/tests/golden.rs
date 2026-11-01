@@ -153,7 +153,7 @@ fn real_windows_vm_facts_refuse_oversized_request() {
 }
 
 // The exact plan consumed by probe/windows/apply-plan.ps1 in the VM (media root E:\).
-// NOTE: iso_ubuntu_arm64.json sizes are estimates until measured from the real ISO.
+// iso_ubuntu_arm64.json: measured with bsdtar from ubuntu-26.04.1-desktop-arm64.iso.
 #[test]
 fn vm_apply_plan_matches_golden() {
     let o = Command::new(env!("CARGO_BIN_EXE_besideos-plan"))

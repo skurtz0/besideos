@@ -1,1 +1,1 @@
-{ "arch": "arm64", "size_bytes": 4154798080, "extracted_bytes": 4154798080, "largest_file_bytes": 3221225472, "largest_file_name": "casper/minimal.standard.live.squashfs" }
+{ "arch": "arm64", "size_bytes": 4154798080, "extracted_bytes": 4146155874, "largest_file_bytes": 3113000960, "largest_file_name": "casper/minimal.squashfs" }

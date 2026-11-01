@@ -6,7 +6,7 @@
         "type": "shrink_partition",
         "disk": 0,
         "partition": 3,
-        "shrink_bytes": 26166505472
+        "shrink_bytes": 26157863266
       },
       "undo": null
     },
@@ -15,7 +15,7 @@
       "step": {
         "type": "create_partition",
         "disk": 0,
-        "size_bytes": 4691668992,
+        "size_bytes": 4683026786,
         "filesystem": "fat32",
         "label": "BESIDEOS"
       },
@@ -61,5 +61,5 @@
     "Kurulum sonrası BESIDEOS bölümü silinebilir.",
     "arm64 yolu şimdilik yalnız kuru çalıştırmayla (dry-run) doğrulandı."
   ],
-  "total_shrink_bytes": 26166505472
+  "total_shrink_bytes": 26157863266
 }
