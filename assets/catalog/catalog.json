@@ -13,15 +13,15 @@
       "guide": [
         {
           "title": "Seç ve indir",
-          "body": "Ubuntu için resmi indirme sayfasını açacağız; ISO dosyasını oradan indirirsin. Masaüstü sürümünü seçmen yeterli."
+          "body": "Planlanan: Ubuntu için resmi indirme sayfasını açıp ISO dosyasını oradan indirirsin. BesideOS geliştirildiğinde bu adıma yönlendirmesi hedefleniyor."
         },
         {
           "title": "Yedek al ve yer aç",
-          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; BesideOS disk bölümlerini değiştirmeden önce sana gösterecek ve onayını isteyecek."
+          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayarını yeniden başlatıp Ubuntu kurulum ekranından devam edersin. BesideOS sana bu adımda neye basacağını adım adım gösterecek."
+          "body": "Planlanan: Bilgisayarını yeniden başlatıp Ubuntu kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
         }
       ],
       "requirements": [
@@ -50,15 +50,15 @@
       "guide": [
         {
           "title": "Seç ve indir",
-          "body": "Linux Mint için resmi indirme sayfasını açacağız; ISO dosyasını oradan indirirsin. Ana sürüm Cinnamon masaüstüyle gelir."
+          "body": "Planlanan: Linux Mint için resmi indirme sayfasını açıp ISO dosyasını oradan indirirsin. BesideOS geliştirildiğinde bu adıma yönlendirmesi hedefleniyor."
         },
         {
           "title": "Yedek al ve yer aç",
-          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; BesideOS disk bölümlerini değiştirmeden önce sana gösterecek ve onayını isteyecek."
+          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayarını yeniden başlatıp Linux Mint kurulum ekranından devam edersin. BesideOS sana bu adımda neye basacağını adım adım gösterecek."
+          "body": "Planlanan: Bilgisayarını yeniden başlatıp Linux Mint kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
         }
       ],
       "requirements": [
@@ -87,15 +87,15 @@
       "guide": [
         {
           "title": "Seç ve indir",
-          "body": "Fedora için resmi indirme sayfasını açacağız; ISO dosyasını oradan indirirsin. Windows bilgisayarlar için Fedora Workstation, Apple Silicon Mac'ler için Fedora Asahi Remix'in kurulum adımları farklıdır; BesideOS bilgisayarına uygun olanı gösterecek."
+          "body": "Windows yolunda Fedora'nın resmi indirme sayfasından Fedora Workstation ISO'sunu indirirsin. Apple Silicon (M1/M2) Mac yolunda ise Fedora Asahi Remix, Asahi projesinin kendi yükleyicisiyle başlar; bu sayfadan bir ISO indirilmez."
         },
         {
           "title": "Yedek al ve yer aç",
-          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; BesideOS disk bölümlerini değiştirmeden önce sana gösterecek ve onayını isteyecek."
+          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayarını yeniden başlatıp Fedora kurulum ekranından devam edersin. BesideOS sana bu adımda neye basacağını adım adım gösterecek."
+          "body": "Planlanan: Bilgisayarını yeniden başlatıp Fedora kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
         }
       ],
       "requirements": [
@@ -124,15 +124,15 @@
       "guide": [
         {
           "title": "Seç ve indir",
-          "body": "Debian için resmi indirme sayfasını açacağız; ISO dosyasını oradan indirirsin. Hangi sürümü ve masaüstünü seçeceğin resmi sayfada anlatılır."
+          "body": "Planlanan: Debian için resmi indirme sayfasını açıp ISO dosyasını oradan indirirsin. BesideOS geliştirildiğinde bu adıma yönlendirmesi hedefleniyor."
         },
         {
           "title": "Yedek al ve yer aç",
-          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; BesideOS disk bölümlerini değiştirmeden önce sana gösterecek ve onayını isteyecek."
+          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayarını yeniden başlatıp Debian kurulum ekranından devam edersin. BesideOS sana bu adımda neye basacağını adım adım gösterecek."
+          "body": "Planlanan: Bilgisayarını yeniden başlatıp Debian kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
         }
       ],
       "requirements": [
@@ -165,11 +165,11 @@
         },
         {
           "title": "Yedek al ve yer aç",
-          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; disk bölümlerini değiştirmeden önce sana gösterip onayını isteyecek."
+          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayarını yeniden başlatıp Windows kurulum ekranından devam edersin. BesideOS bu adımda neye basacağını gösterecek."
+          "body": "Planlanan: Bilgisayarını yeniden başlatıp Windows kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
         }
       ],
       "requirements": [
