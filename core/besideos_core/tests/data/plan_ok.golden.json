@@ -19,7 +19,11 @@
         "filesystem": "fat32",
         "label": "BESIDEOS"
       },
-      "undo": null
+      "undo": {
+        "type": "delete_partition",
+        "disk": 0,
+        "label": "BESIDEOS"
+      }
     },
     {
       "description": "ISO içeriği (3,0 GiB) 'BESIDEOS' bölümüne açılacak",
@@ -37,7 +41,10 @@
         "loader_path": "\\EFI\\BOOT\\BOOTX64.EFI",
         "description": "BesideOS kurulumu"
       },
-      "undo": null
+      "undo": {
+        "type": "remove_boot_entry",
+        "description": "BesideOS kurulumu"
+      }
     },
     {
       "description": "Bilgisayar yeniden başlatılacak",
@@ -49,8 +56,8 @@
   ],
   "risks": [
     "Bölüm küçültme geri alınamaz; işleme başlamadan önce yedek al (yedek uyarısı).",
+    "Bir adım yarıda kalırsa geri alma adımları uygulanmalı.",
     "Secure Boot açıksa Linux yükleyicisi imzalı değilse açılmayabilir (Secure Boot notu).",
-    "Önyükleyici yolu x86_64 (BOOTX64.EFI) varsayılır; ARM bilgisayarlarda çalışmaz.",
     "Kurulum sonrası BESIDEOS bölümü silinebilir."
   ],
   "total_shrink_bytes": 57445187584

@@ -1,15 +1,8 @@
 use crate::checks::{check, staging_size};
 use crate::facts::{HostFacts, IsoFacts, Request};
-use crate::plan::{Fs, Plan, PlannedStep, Refusal, Step};
+use crate::plan::{fmt_gib, Fs, Plan, PlannedStep, Refusal, Step};
 
-const GIB: u128 = 1024 * 1024 * 1024;
 const LABEL: &str = "BESIDEOS";
-
-/// Bytes -> GiB, one decimal (half up), comma separator.
-pub fn fmt_gib(bytes: u64) -> String {
-    let tenths = (u128::from(bytes) * 10 + GIB / 2) / GIB;
-    format!("{},{}", tenths / 10, tenths % 10)
-}
 
 pub fn plan_windows_to_linux(
     host: &HostFacts,
@@ -17,15 +10,14 @@ pub fn plan_windows_to_linux(
     req: &Request,
     iso_path: &str,
 ) -> Result<Plan, Refusal> {
-    let (disk, part) = check(host, iso, req)?;
+    let (disk, part, shrink) = check(host, iso, req)?;
     let staging = staging_size(iso)?;
-    // check() already proved this cannot overflow.
-    let shrink = req.linux_space_bytes + staging;
     let loader = "\\EFI\\BOOT\\BOOTX64.EFI";
-    let step = |description: String, step: Step| PlannedStep {
+    let boot_desc = "BesideOS kurulumu";
+    let step = |description: String, step: Step, undo: Option<Step>| PlannedStep {
         description,
         step,
-        undo: None,
+        undo,
     };
     let steps = vec![
         step(
@@ -40,6 +32,7 @@ pub fn plan_windows_to_linux(
                 partition: part.number,
                 shrink_bytes: shrink,
             },
+            None,
         ),
         step(
             format!(
@@ -52,6 +45,10 @@ pub fn plan_windows_to_linux(
                 filesystem: Fs::Fat32,
                 label: LABEL.into(),
             },
+            Some(Step::DeletePartition {
+                disk: disk.number,
+                label: LABEL.into(),
+            }),
         ),
         step(
             format!(
@@ -62,21 +59,25 @@ pub fn plan_windows_to_linux(
                 iso_path: iso_path.into(),
                 target_label: LABEL.into(),
             },
+            None,
         ),
         step(
             "Bir sonraki açılış için tek seferlik UEFI önyükleme girdisi eklenecek".into(),
             Step::AddOneShotBootEntry {
                 loader_path: loader.into(),
-                description: "BesideOS kurulumu".into(),
+                description: boot_desc.into(),
             },
+            Some(Step::RemoveBootEntry {
+                description: boot_desc.into(),
+            }),
         ),
-        step("Bilgisayar yeniden başlatılacak".into(), Step::Reboot),
+        step("Bilgisayar yeniden başlatılacak".into(), Step::Reboot, None),
     ];
     let risks = vec![
         "Bölüm küçültme geri alınamaz; işleme başlamadan önce yedek al (yedek uyarısı).".into(),
+        "Bir adım yarıda kalırsa geri alma adımları uygulanmalı.".into(),
         "Secure Boot açıksa Linux yükleyicisi imzalı değilse açılmayabilir (Secure Boot notu)."
             .into(),
-        "Önyükleyici yolu x86_64 (BOOTX64.EFI) varsayılır; ARM bilgisayarlarda çalışmaz.".into(),
         "Kurulum sonrası BESIDEOS bölümü silinebilir.".into(),
     ];
     Ok(Plan {
@@ -90,13 +91,14 @@ pub fn plan_windows_to_linux(
 mod tests {
     use super::*;
     use crate::checks::STAGING_MARGIN;
-    use crate::facts::{Disk, Partition, PartitionStyle};
+    use crate::facts::{Arch, Disk, Partition, PartitionStyle};
 
     const GIB: u64 = 1024 * 1024 * 1024;
 
     fn host() -> HostFacts {
         HostFacts {
             uefi: true,
+            arch: Arch::X86_64,
             windows_partition: (0, 3),
             disks: vec![Disk {
                 number: 0,
@@ -107,6 +109,7 @@ mod tests {
                     number: 3,
                     size_bytes: 300 * GIB,
                     used_bytes: 50 * GIB,
+                    min_size_bytes: 50 * GIB,
                     filesystem: "ntfs".into(),
                     is_system: true,
                     encrypted: Some(false),
@@ -185,12 +188,7 @@ mod tests {
     #[test]
     fn risks_mention_backup_and_secure_boot() {
         let r = plan().risks.join(" ").to_lowercase();
-        assert!(
-            r.contains("yedek")
-                && r.contains("secure boot")
-                && r.contains("besideos")
-                && r.contains("x86_64")
-        );
+        assert!(r.contains("yedek") && r.contains("secure boot") && r.contains("besideos"));
     }
     #[test]
     fn descriptions_are_turkish_with_gib() {
@@ -208,6 +206,56 @@ mod tests {
         assert_eq!(fmt_gib(0), "0,0");
         assert_eq!(fmt_gib(GIB * 105 / 2), "52,5");
         assert_eq!(fmt_gib(u64::MAX), "17179869184,0");
+    }
+    #[test]
+    fn undo_present_only_for_create_and_boot_entry() {
+        let p = plan();
+        assert_eq!(p.steps[0].undo, None);
+        assert_eq!(
+            p.steps[1].undo,
+            Some(Step::DeletePartition {
+                disk: 0,
+                label: "BESIDEOS".into()
+            })
+        );
+        assert_eq!(p.steps[2].undo, None);
+        let Step::AddOneShotBootEntry { description, .. } = &p.steps[3].step else {
+            panic!()
+        };
+        assert_eq!(
+            p.steps[3].undo,
+            Some(Step::RemoveBootEntry {
+                description: description.clone()
+            })
+        );
+        assert_eq!(p.steps[4].undo, None);
+    }
+    #[test]
+    fn plan_with_undo_roundtrips_json() {
+        let p = plan();
+        let j = serde_json::to_string(&p).unwrap();
+        assert!(
+            j.contains("\"type\":\"delete_partition\"")
+                && j.contains("\"type\":\"remove_boot_entry\"")
+        );
+        assert_eq!(serde_json::from_str::<Plan>(&j).unwrap(), p);
+    }
+    #[test]
+    fn risks_mention_irreversible_shrink_and_interrupted_steps() {
+        let r = plan().risks.join(" ");
+        assert!(
+            r.contains("geri alınamaz")
+                && r.contains("yarıda kalırsa geri alma adımları uygulanmalı")
+        );
+    }
+    #[test]
+    fn arm64_is_refused() {
+        let mut h = host();
+        h.arch = Arch::Arm64;
+        assert!(matches!(
+            plan_windows_to_linux(&h, &iso(), &req(), "x"),
+            Err(Refusal::UnsupportedArch { .. })
+        ));
     }
     #[test]
     fn no_step_when_refused() {

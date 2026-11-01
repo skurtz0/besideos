@@ -28,3 +28,21 @@ Commits: b9f5f4a plan types; 3db7c34 host and iso facts; 3cd4ece preflight check
 - Task 1 TDD ordering (above).
 - Root `.gitignore` also tracks nothing else new; AGENTS.md rules (SECOND_HAND.md, scout) not applied since SECOND_HAND.md does not exist in this repo; no architectural log written.
 - `risks` strings contain parenthetical tags ("yedek uyarısı", "Secure Boot notu") to satisfy keyword tests; wording could be polished.
+
+# Fix pass (review follow-up)
+
+Commit: "fix(core): validate target partition, reserve, undo, arch". Result: cargo test 63 passed (58 lib + 5 golden), clippy --all-targets -D warnings clean, fmt --check clean, flutter test 114 passed.
+
+## Per item
+1. Target validation (checks.rs): NTFS (ASCII case-insens.), partition <= disk, checked sum of partitions <= disk, duplicate disk numbers / duplicate target-disk partition numbers -> InvalidInput. Tests incl. FAT32 900 GB on 1000-byte disk, sum overflow.
+2. Zero/min: linux_space==0 and extracted==0 -> InvalidInput; `MIN_LINUX_SPACE`=8 GiB, `Refusal::LinuxSpaceTooSmall{min,given}`; boundary min-1 refused / min accepted.
+3. Reserve: `Partition.min_size_bytes` required; available = size - max(used,min) - max(10% size, 10 GiB) (saturating at 0 when it does not fit; min>size or used>size -> InvalidInput). Tests: exact == accepted, +1 refused, min dominating used. NotEnoughFreeSpace message in GiB via `fmt_gib`, now shared from plan.rs.
+4. Undo: new Step::DeletePartition{disk,label}, RemoveBootEntry{description}; undo set for CreatePartition and AddOneShotBootEntry only; new risk note on interrupted steps. Tests for presence/absence per step and JSON round trip with tags.
+Minors: MBR/GPT limits via `len()+2 > 4 / 128` (boundary tests 126 ok, 127 refused); `Arch` (x86_64/arm64) required in HostFacts, arm64 -> UnsupportedArch; MAX_STAGING 32 GiB -> StagingTooLarge (boundary tests); `check` now returns (disk, part, needed) so shrink is exact by construction; largest_file_bytes > extracted_bytes -> InvalidInput; core/.gitattributes `besideos_core/tests/data/* -text`; BOOTX64 hedge removed from risks (Secure Boot note kept); tests: zero-partition disk, missing `encrypted`/`min_size_bytes`/`arch` keys rejected, u64::MAX disk where sum fits but needed > available, golden for BitLocker refusal; README documents exit codes.
+
+## Decisions
+- Decision: check order: uefi, arch, disk/partition lookup (+duplicates), dynamic, encrypted, NTFS, geometry, partition-count limit, FAT32 file limit, ISO consistency, linux space zero/min, staging max, free space.
+- Decision: FAT32-limit check runs before the "largest file > content" consistency check; the existing FAT32 tests set extracted_bytes accordingly.
+- Decision: window `arm64` message names the arch as "arm64" (only other variant).
+- Decision: golden files regenerated and hand-checked (shrink 50+3+0.5 = 53.5 GiB = 57445187584; Windows reserve 40 GiB of 400 GiB; available 210 GiB); refusal golden is the CLI's pretty JSON with keys sorted by serde_json (message, refused).
+- Decision: sample data: `min_size_bytes` = used_bytes, `arch` x86_64.

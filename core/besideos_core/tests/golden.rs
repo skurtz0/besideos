@@ -55,3 +55,10 @@ fn missing_file_exits_1() {
 fn output_is_stable_across_runs() {
     assert_eq!(run("host_ok.json").stdout, run("host_ok.json").stdout);
 }
+
+#[test]
+fn bitlocker_refusal_matches_golden() {
+    let o = run("host_bitlocker.json");
+    let golden = std::fs::read_to_string(data("refusal_bitlocker.golden.json")).unwrap();
+    assert_eq!(String::from_utf8(o.stdout).unwrap(), golden);
+}

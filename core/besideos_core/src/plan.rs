@@ -30,6 +30,13 @@ pub enum Step {
         description: String,
     },
     Reboot,
+    DeletePartition {
+        disk: u32,
+        label: String,
+    },
+    RemoveBootEntry {
+        description: String,
+    },
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -56,6 +63,16 @@ pub enum Refusal {
     IsoFileTooLargeForFat32 { name: String, size: u64 },
     NoSuitableDisk,
     InvalidInput(String),
+    LinuxSpaceTooSmall { min: u64, given: u64 },
+    UnsupportedArch { arch: String },
+    StagingTooLarge { max: u64, given: u64 },
+}
+
+/// Bytes -> GiB, one decimal (half up), comma separator.
+pub fn fmt_gib(bytes: u64) -> String {
+    const GIB: u128 = 1024 * 1024 * 1024;
+    let tenths = (u128::from(bytes) * 10 + GIB / 2) / GIB;
+    format!("{},{}", tenths / 10, tenths % 10)
 }
 
 impl Refusal {
@@ -70,6 +87,9 @@ impl Refusal {
             Refusal::IsoFileTooLargeForFat32 { .. } => "iso_file_too_large_for_fat32",
             Refusal::NoSuitableDisk => "no_suitable_disk",
             Refusal::InvalidInput(_) => "invalid_input",
+            Refusal::LinuxSpaceTooSmall { .. } => "linux_space_too_small",
+            Refusal::UnsupportedArch { .. } => "unsupported_arch",
+            Refusal::StagingTooLarge { .. } => "staging_too_large",
         }
     }
 
@@ -80,13 +100,28 @@ impl Refusal {
             Refusal::TooManyPrimaryPartitions => "MBR diskte 4 birincil bölüm dolu; yeni bölüm açılamaz.".into(),
             Refusal::DynamicDisk => "Disk dinamik disk türünde; desteklenmiyor.".into(),
             Refusal::NotEnoughFreeSpace { needed, available } => format!(
-                "Boş yer yetersiz: {needed} bayt gerekli, {available} bayt var."
+                "Boş yer yetersiz: {} GiB gerekli, {} GiB var.",
+                fmt_gib(*needed),
+                fmt_gib(*available)
             ),
             Refusal::IsoFileTooLargeForFat32 { name, size } => format!(
                 "ISO içindeki '{name}' dosyası ({size} bayt) FAT32 sınırını (4 GiB − 1 bayt) aşıyor."
             ),
             Refusal::NoSuitableDisk => "Windows'un kurulu olduğu uygun disk ya da bölüm bulunamadı.".into(),
             Refusal::InvalidInput(m) => format!("Geçersiz girdi: {m}"),
+            Refusal::LinuxSpaceTooSmall { min, given } => format!(
+                "Linux için ayrılan alan çok küçük: en az {} GiB gerekli, {} GiB istendi.",
+                fmt_gib(*min),
+                fmt_gib(*given)
+            ),
+            Refusal::UnsupportedArch { arch } => {
+                format!("'{arch}' mimarisi desteklenmiyor; şimdilik yalnız x86_64.")
+            }
+            Refusal::StagingTooLarge { max, given } => format!(
+                "Geçici FAT32 bölümü çok büyük: en çok {} GiB olabilir, {} GiB gerekiyor.",
+                fmt_gib(*max),
+                fmt_gib(*given)
+            ),
         }
     }
 }
@@ -147,6 +182,11 @@ mod tests {
             },
             Refusal::NoSuitableDisk,
             Refusal::InvalidInput("x".into()),
+            Refusal::LinuxSpaceTooSmall { min: 2, given: 1 },
+            Refusal::UnsupportedArch {
+                arch: "arm64".into(),
+            },
+            Refusal::StagingTooLarge { max: 2, given: 3 },
         ];
         for r in all {
             let m = r.message();
@@ -156,6 +196,39 @@ mod tests {
                 "{m}"
             );
         }
+    }
+
+    #[test]
+    fn new_steps_roundtrip_with_snake_case_tags() {
+        for (st, tag) in [
+            (
+                Step::DeletePartition {
+                    disk: 1,
+                    label: "L".into(),
+                },
+                "delete_partition",
+            ),
+            (
+                Step::RemoveBootEntry {
+                    description: "d".into(),
+                },
+                "remove_boot_entry",
+            ),
+        ] {
+            let j = serde_json::to_string(&st).unwrap();
+            assert!(j.contains(&format!("\"type\":\"{tag}\"")), "{j}");
+            assert_eq!(serde_json::from_str::<Step>(&j).unwrap(), st);
+        }
+    }
+
+    #[test]
+    fn not_enough_space_message_uses_gib() {
+        let m = Refusal::NotEnoughFreeSpace {
+            needed: 1 << 31,
+            available: 1 << 30,
+        }
+        .message();
+        assert!(m.contains("2,0 GiB") && m.contains("1,0 GiB"), "{m}");
     }
 
     #[test]

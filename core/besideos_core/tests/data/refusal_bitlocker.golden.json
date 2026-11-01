@@ -1,0 +1,4 @@
+{
+  "message": "Windows bölümü şifreli (BitLocker) ya da şifreleme durumu bilinmiyor; önce şifrelemeyi kaldırın.",
+  "refused": "encrypted_target"
+}

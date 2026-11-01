@@ -1,5 +1,6 @@
 {
   "uefi": true,
+  "arch": "x86_64",
   "windows_partition": { "disk": 0, "partition": 3 },
   "disks": [
     {
@@ -8,9 +9,9 @@
       "style": "gpt",
       "dynamic": false,
       "partitions": [
-        { "number": 1, "size_bytes": 273678336, "used_bytes": 104857600, "filesystem": "fat32", "is_system": true, "encrypted": false },
-        { "number": 2, "size_bytes": 16777216, "used_bytes": 0, "filesystem": "msr", "is_system": false, "encrypted": false },
-        { "number": 3, "size_bytes": 429496729600, "used_bytes": 161061273600, "filesystem": "ntfs", "is_system": true, "encrypted": true }
+        { "number": 1, "size_bytes": 273678336, "used_bytes": 104857600, "min_size_bytes": 104857600, "filesystem": "fat32", "is_system": true, "encrypted": false },
+        { "number": 2, "size_bytes": 16777216, "used_bytes": 0, "min_size_bytes": 0, "filesystem": "msr", "is_system": false, "encrypted": false },
+        { "number": 3, "size_bytes": 429496729600, "used_bytes": 161061273600, "min_size_bytes": 161061273600, "filesystem": "ntfs", "is_system": true, "encrypted": true }
       ]
     }
   ]

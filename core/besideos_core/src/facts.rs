@@ -7,6 +7,8 @@ pub struct Partition {
     pub number: u32,
     pub size_bytes: u64,
     pub used_bytes: u64,
+    /// True shrink minimum from the host probe (e.g. SizeMin).
+    pub min_size_bytes: u64,
     pub filesystem: String,
     pub is_system: bool,
     /// `null` = unknown (treated as encrypted). Key itself is required.
@@ -31,10 +33,19 @@ pub struct Disk {
     pub partitions: Vec<Partition>,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+pub enum Arch {
+    #[serde(rename = "x86_64")]
+    X86_64,
+    #[serde(rename = "arm64")]
+    Arm64,
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct HostFacts {
     pub uefi: bool,
+    pub arch: Arch,
     pub disks: Vec<Disk>,
     /// (disk, partition); JSON shape `{"disk":..,"partition":..}`.
     #[serde(with = "win_part")]
@@ -95,9 +106,9 @@ from_json!(HostFacts, IsoFacts, Request);
 mod tests {
     use super::*;
 
-    const HOST: &str = r#"{"uefi":true,"windows_partition":{"disk":0,"partition":3},
+    const HOST: &str = r#"{"uefi":true,"arch":"x86_64","windows_partition":{"disk":0,"partition":3},
       "disks":[{"number":0,"size_bytes":1000,"style":"gpt","dynamic":false,
-      "partitions":[{"number":3,"size_bytes":900,"used_bytes":400,"filesystem":"ntfs","is_system":true,"encrypted":false}]}]}"#;
+      "partitions":[{"number":3,"size_bytes":900,"used_bytes":400,"min_size_bytes":450,"filesystem":"ntfs","is_system":true,"encrypted":false}]}]}"#;
 
     #[test]
     fn parses_valid_host_json() {
@@ -138,9 +149,37 @@ mod tests {
     }
 
     #[test]
+    fn missing_encrypted_key_is_rejected() {
+        let j = HOST.replace(",\"encrypted\":false", "");
+        assert!(matches!(
+            HostFacts::from_json(&j),
+            Err(Refusal::InvalidInput(_))
+        ));
+        let j = HOST.replace("\"min_size_bytes\":450,", "");
+        assert!(matches!(
+            HostFacts::from_json(&j),
+            Err(Refusal::InvalidInput(_))
+        ));
+        let j = HOST.replace("\"arch\":\"x86_64\",", "");
+        assert!(matches!(
+            HostFacts::from_json(&j),
+            Err(Refusal::InvalidInput(_))
+        ));
+    }
+
+    #[test]
+    fn arch_parses_both_values_and_rejects_unknown() {
+        assert_eq!(HostFacts::from_json(HOST).unwrap().arch, Arch::X86_64);
+        let j = HOST.replace("x86_64", "arm64");
+        assert_eq!(HostFacts::from_json(&j).unwrap().arch, Arch::Arm64);
+        let j = HOST.replace("x86_64", "riscv");
+        assert!(HostFacts::from_json(&j).is_err());
+    }
+
+    #[test]
     fn empty_disk_list_parses() {
         let h = HostFacts::from_json(
-            r#"{"uefi":true,"disks":[],"windows_partition":{"disk":0,"partition":1}}"#,
+            r#"{"uefi":true,"arch":"arm64","disks":[],"windows_partition":{"disk":0,"partition":1}}"#,
         )
         .unwrap();
         assert!(h.disks.is_empty());
