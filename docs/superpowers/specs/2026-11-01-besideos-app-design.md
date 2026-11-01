@@ -53,6 +53,9 @@ helper/             yönetici yetkisiyle çalışan küçük program (yalnız pl
 ```
 Flutter, Rust çekirdeğe FFI ile bağlanır. Arayüz asla doğrudan disk komutu çalıştırmaz, yalnız plan ister ve onaylı planı helper'a verir.
 
+## Sapma (kullanıcı kararı, 2026-11-01)
+Aşama 2'de indirme ve doğrulama Rust yerine Dart ile yazılır (dart:io + `crypto` paketi); bu Mac'te Rust kurulu değil ve işin disk riski yok. Rust çekirdeği Aşama 3'te disk motorlarıyla birlikte gelir; indirme/doğrulama o zaman Rust'a taşınabilir ya da Dart'ta kalır.
+
 ## Katalog alanları
 id, ad, aile (Linux/Windows), kısa ve uzun açıklama, "ne için uygun", masaüstü ortamı, görünüş (ekran görüntüleri), temel aldığı sistem, ISO bağlantıları (mimari başına: x86_64, arm64), sha256 veya sağlama dosyası URL'si, imza URL'si, boyut, donanım gereksinimi, kurulum rehberi adımları, hangi ana sistemlerde kurulabildiği (destek matrisi), lisans notu. Katalog imzalı yayımlanır, uygulama imzayı doğrular.
 
