@@ -66,7 +66,7 @@ void main() {
     final c = ctl();
     await c.start(iso());
     expect(c.phase, DownloadPhase.failed);
-    expect(c.error, isNotEmpty);
+    expect(c.error, contains('Katalog eskimiş olabilir; resmi sayfadan indir'));
     expect(File('${dir.path}/a.iso').existsSync(), isFalse);
   });
 
@@ -139,7 +139,10 @@ void main() {
     expect(c.phase, DownloadPhase.verified);
     await c.startWithManualHash(f, '1' * 64);
     expect(c.phase, DownloadPhase.mismatch);
-    expect(f.existsSync(), isFalse);
+    expect(f.existsSync(), isTrue); // user's own file is never deleted
+    expect(c.error, contains('Dosya silinmedi'));
+    await c.startWithManualHash(f, hash); // retry on the same file
+    expect(c.phase, DownloadPhase.verified);
     await c.startWithManualHash(f, 'bad');
     expect(c.phase, DownloadPhase.failed);
   });

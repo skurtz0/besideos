@@ -128,6 +128,7 @@ class _DownloadSectionState extends State<DownloadSection> {
       case DownloadPhase.verified:
         return [
           _note('İndirildi ve doğrulandı', color: kGreen),
+          _note('Sağlama değeri indirme kaynağıyla aynı siteden alındı; bozulmayı yakalar, ele geçirilmiş bir kaynağa karşı koruma sağlamaz.'),
           if (c.file != null) SelectableText(c.file!.path, style: const TextStyle(color: kText)),
         ];
       case DownloadPhase.mismatch:

@@ -100,6 +100,7 @@ void main() {
     f.set(DownloadPhase.verified);
     await t.pump();
     expect(find.text('İndirildi ve doğrulandı'), findsOneWidget);
+    expect(find.textContaining('bozulmayı yakalar'), findsOneWidget);
     expect(find.textContaining('kuruldu'), findsNothing);
     expect(find.textContaining('Kurulum hazır'), findsNothing);
   });

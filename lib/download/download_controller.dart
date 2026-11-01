@@ -105,7 +105,7 @@ class DownloadController extends ChangeNotifier {
       final expected = expectedHashFor(sums, iso.fileName);
       if (expected == null) {
         _set(DownloadPhase.failed,
-            error: 'Sağlama dosyası geçersiz veya dosya adı bulunamadı; doğrulanamadı.');
+            error: 'Sağlama dosyasında bu dosya adı yok; doğrulanamadı. Katalog eskimiş olabilir; resmi sayfadan indir.');
         return;
       }
 
@@ -145,15 +145,15 @@ class DownloadController extends ChangeNotifier {
     _file = null;
     expectedHash = actualHash = null;
     try {
-      await _verify(isoFile, expectedSha256);
+      await _verify(isoFile, expectedSha256, keep: true);
     } catch (_) {
       _set(DownloadPhase.failed, error: 'Doğrulama başarısız (disk hatası).');
     }
   }
 
-  Future<void> _verify(File f, String expected) async {
+  Future<void> _verify(File f, String expected, {bool keep = false}) async {
     _set(DownloadPhase.verifying);
-    final r = await verifyIso(f, expected);
+    final r = await verifyIso(f, expected, deleteOnMismatch: !keep);
     switch (r.outcome) {
       case VerifyOutcome.ok:
         _file = f;
@@ -162,7 +162,9 @@ class DownloadController extends ChangeNotifier {
         expectedHash = r.expected;
         actualHash = r.actual;
         _set(DownloadPhase.mismatch,
-            error: 'Sağlama toplamı eşleşmedi; dosya silindi.');
+            error: keep
+                ? 'Sağlama toplamı eşleşmedi. Dosya silinmedi; SHA-256 değerini kontrol et.'
+                : 'Sağlama toplamı eşleşmedi; dosya silindi.');
       case VerifyOutcome.unreadable:
         _set(DownloadPhase.failed,
             error: 'Dosya okunamadı veya sağlama değeri geçersiz.');
