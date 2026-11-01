@@ -2,14 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-void main() => runApp(const BesideSite());
+import 'theme.dart';
 
-const _bg = Color(0xFF181C26);
-const _panel = Color(0xFF212736);
-const _text = Color(0xFFF5F7FA);
-const _muted = Color(0xFFAEB7C8);
-const _accent = Color(0xFF60A5FF);
-const _green = Color(0xFF4ADE80);
+void main() => runApp(const BesideSite());
 
 class BesideSite extends StatelessWidget {
   const BesideSite({super.key});
@@ -22,11 +17,11 @@ class BesideSite extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: _bg,
+        scaffoldBackgroundColor: kBg,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: _accent,
+          seedColor: kAccent,
           brightness: Brightness.dark,
-          surface: _bg,
+          surface: kBg,
         ),
       ),
       home: const HomePage(),
@@ -185,7 +180,7 @@ class _GlowBackgroundState extends State<_GlowBackground>
             gradient: RadialGradient(
               center: Alignment.lerp(const Alignment(-0.8, -0.7), const Alignment(0.8, 0.2), v)!,
               radius: 1.1,
-              colors: [_accent.withAlpha(48), _bg.withAlpha(0)],
+              colors: [kAccent.withAlpha(48), kBg.withAlpha(0)],
             ),
           ),
           child: child,
@@ -207,17 +202,17 @@ class _Hero extends StatelessWidget {
       children: [
         const SizedBox(height: 24),
         Text('BesideOS',
-            style: t.titleLarge?.copyWith(color: _accent, fontWeight: FontWeight.w700)),
+            style: t.titleLarge?.copyWith(color: kAccent, fontWeight: FontWeight.w700)),
         const SizedBox(height: 16),
         Text(
           'Install another operating system beside this one. No USB stick.',
-          style: t.displaySmall?.copyWith(color: _text, fontWeight: FontWeight.w700, height: 1.15),
+          style: t.displaySmall?.copyWith(color: kText, fontWeight: FontWeight.w700, height: 1.15),
         ),
         const SizedBox(height: 16),
         Text(
           'BesideOS makes room on your disk, puts the installer there, and restarts into it. '
           'Your current system stays where it is.',
-          style: t.titleMedium?.copyWith(color: _muted, height: 1.5),
+          style: t.titleMedium?.copyWith(color: kMuted, height: 1.5),
         ),
         const SizedBox(height: 24),
         const Wrap(
@@ -246,10 +241,10 @@ class _Chip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: _panel,
+        color: kPanel,
         borderRadius: BorderRadius.circular(999),
       ),
-      child: Text(label, style: const TextStyle(color: _text)),
+      child: Text(label, style: const TextStyle(color: kText)),
     );
   }
 }
@@ -301,7 +296,7 @@ class _DiskDemoState extends State<_DiskDemo> with SingleTickerProviderStateMixi
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: _panel,
+        color: kPanel,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -325,7 +320,7 @@ class _DiskDemoState extends State<_DiskDemo> with SingleTickerProviderStateMixi
                     child: Text(
                       _caption(t),
                       key: ValueKey(_caption(t)),
-                      style: const TextStyle(color: _text, fontSize: 16),
+                      style: const TextStyle(color: kText, fontSize: 16),
                     ),
                   ),
                 ],
@@ -334,7 +329,7 @@ class _DiskDemoState extends State<_DiskDemo> with SingleTickerProviderStateMixi
           ),
           const SizedBox(height: 8),
           const Text('Illustration. Real plans are shown to you in full before anything changes.',
-              style: TextStyle(color: _muted, fontSize: 12)),
+              style: TextStyle(color: kMuted, fontSize: 12)),
         ],
       ),
     );
@@ -383,8 +378,8 @@ class _DiskPainter extends CustomPainter {
     }
 
     segment(0, windows, const Color(0xFF8FA3C7), 'Current system');
-    segment(1.0 - system - installer, installer, _accent, 'Installer');
-    segment(1.0 - system, system, _green, 'New system');
+    segment(1.0 - system - installer, installer, kAccent, 'Installer');
+    segment(1.0 - system, system, kGreen, 'New system');
     canvas.restore();
   }
 
@@ -405,7 +400,7 @@ class _Heading extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .headlineSmall
-            ?.copyWith(color: _text, fontWeight: FontWeight.w700),
+            ?.copyWith(color: kText, fontWeight: FontWeight.w700),
       ),
     );
   }
@@ -464,10 +459,10 @@ class _HoverCardState extends State<_HoverCard> {
           transform: Matrix4.translationValues(0, _hover ? -4 : 0, 0),
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: _panel,
+            color: kPanel,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-                color: _hover ? _accent.withAlpha(170) : const Color(0x00000000)),
+                color: _hover ? kAccent.withAlpha(170) : const Color(0x00000000)),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -475,9 +470,9 @@ class _HoverCardState extends State<_HoverCard> {
             children: [
               Text(widget.data.title,
                   style: const TextStyle(
-                      color: _text, fontSize: 17, fontWeight: FontWeight.w600)),
+                      color: kText, fontSize: 17, fontWeight: FontWeight.w600)),
               const SizedBox(height: 8),
-              Text(widget.data.body, style: const TextStyle(color: _muted, height: 1.5)),
+              Text(widget.data.body, style: const TextStyle(color: kMuted, height: 1.5)),
             ],
           ),
         ),
@@ -558,20 +553,20 @@ class _Status extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: _panel,
+        color: kPanel,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: _accent.withAlpha(120)),
+        border: Border.all(color: kAccent.withAlpha(120)),
       ),
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('Status: early development',
-              style: TextStyle(color: _text, fontSize: 18, fontWeight: FontWeight.w700)),
+              style: TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700)),
           SizedBox(height: 8),
           Text(
             'There is no download yet. The current builds do not change any disk. '
             'This page will link to signed releases when they exist.',
-            style: TextStyle(color: _muted, height: 1.5),
+            style: TextStyle(color: kMuted, height: 1.5),
           ),
         ],
       ),
@@ -589,7 +584,7 @@ class _Footer extends StatelessWidget {
         'BesideOS is open source under the MIT license. It is based on hop by Arjun Ingole, '
         'also MIT. Other operating-system names belong to their owners and are used only to '
         'say what BesideOS can install.',
-        style: TextStyle(color: _muted, fontSize: 13, height: 1.5),
+        style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
       ),
     );
   }
