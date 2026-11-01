@@ -1,0 +1,311 @@
+2026-11-01T21:45:21 [INFO] start; APPLY mode=DRY-RUN; PS=5.1.26100.9457; plan=D:\plan.json; Reboot=False
+2026-11-01T21:45:21 [DEBUG] check ok: Must run as Administrator.
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'steps' in plan
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'risks' in plan
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'total_shrink_bytes' in plan
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'steps' in plan
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'risks' in plan
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'total_shrink_bytes' in plan
+2026-11-01T21:45:21 [DEBUG] check ok: Plan has no steps.
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'description' in steps[1]
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'step' in steps[1]
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'undo' in steps[1]
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'description' in steps[1]
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'step' in steps[1]
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'undo' in steps[1]
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'type' in steps[1].step
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'disk' in steps[1].step
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'partition' in steps[1].step
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'shrink_bytes' in steps[1].step
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'type' in steps[1].step
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'disk' in steps[1].step
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'partition' in steps[1].step
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'shrink_bytes' in steps[1].step
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'description' in steps[2]
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'step' in steps[2]
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'undo' in steps[2]
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'description' in steps[2]
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'step' in steps[2]
+2026-11-01T21:45:21 [DEBUG] check ok: Missing field 'undo' in steps[2]
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'type' in steps[2].step
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'disk' in steps[2].step
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'size_bytes' in steps[2].step
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'filesystem' in steps[2].step
+2026-11-01T21:45:21 [DEBUG] check ok: Unknown field 'label' in steps[2].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'type' in steps[2].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'disk' in steps[2].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'size_bytes' in steps[2].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'filesystem' in steps[2].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'label' in steps[2].step
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'type' in steps[2].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'disk' in steps[2].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'label' in steps[2].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'type' in steps[2].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'disk' in steps[2].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'label' in steps[2].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'description' in steps[3]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'step' in steps[3]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'undo' in steps[3]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'description' in steps[3]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'step' in steps[3]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'undo' in steps[3]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'type' in steps[3].step
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'iso_path' in steps[3].step
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'target_label' in steps[3].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'type' in steps[3].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'iso_path' in steps[3].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'target_label' in steps[3].step
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'description' in steps[4]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'step' in steps[4]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'undo' in steps[4]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'description' in steps[4]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'step' in steps[4]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'undo' in steps[4]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'type' in steps[4].step
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'loader_path' in steps[4].step
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'description' in steps[4].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'type' in steps[4].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'loader_path' in steps[4].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'description' in steps[4].step
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'type' in steps[4].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'description' in steps[4].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'type' in steps[4].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'description' in steps[4].undo
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'description' in steps[5]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'step' in steps[5]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'undo' in steps[5]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'description' in steps[5]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'step' in steps[5]
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'undo' in steps[5]
+2026-11-01T21:45:22 [DEBUG] check ok: Unknown field 'type' in steps[5].step
+2026-11-01T21:45:22 [DEBUG] check ok: Missing field 'type' in steps[5].step
+2026-11-01T21:45:22 [DEBUG] check ok: Unsupported step sequence: shrink_partition,create_partition,extract_iso,add_one_shot_boot_entry,reboot (expected shrink_partition,create_partition,extract_iso,add_one_shot_boot_entry[,reboot])
+2026-11-01T21:45:22 [DEBUG] check ok: Sizes must be positive.
+2026-11-01T21:45:22 [DEBUG] check ok: shrink_bytes (26157863266) must equal total_shrink_bytes (26157863266)
+2026-11-01T21:45:22 [DEBUG] check ok: Staging size must fit in the shrunk space.
+2026-11-01T21:45:22 [DEBUG] check ok: create_partition filesystem must be fat32
+2026-11-01T21:45:22 [DEBUG] check ok: create_partition disk differs from shrink disk
+2026-11-01T21:45:22 [DEBUG] check ok: Invalid FAT32 label 'BESIDEOS'
+2026-11-01T21:45:22 [DEBUG] check ok: extract_iso target_label differs from created label
+2026-11-01T21:45:22 [DEBUG] check ok: Boot entry description must be printable ASCII without quotes/braces
+2026-11-01T21:45:22 [DEBUG] check ok: loader_path '\EFI\BOOT\BOOTAA64.EFI' does not match architecture 'ARM64'
+2026-11-01T21:45:22 [DEBUG] PEFirmwareType unreadable: Property PEFirmwareType does not exist at path HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control.
+2026-11-01T21:45:22 [INFO] uefi decided via bcdedit
+2026-11-01T21:45:22 [DEBUG] check ok: UEFI boot required (undetermined counts as not UEFI)
+2026-11-01T21:45:24 [DEBUG] check ok: Disk 0 not found
+2026-11-01T21:45:24 [DEBUG] check ok: Disk 0 must be GPT (is GPT)
+2026-11-01T21:45:24 [DEBUG] check ok: Disk is read-only or offline
+2026-11-01T21:45:24 [DEBUG] check ok: Partition 0/3 not found
+2026-11-01T21:45:24 [DEBUG] check ok: Target partition must be the one holding C:
+2026-11-01T21:45:24 [DEBUG] check ok: Windows volume must be NTFS
+2026-11-01T21:45:24 [DEBUG] check ok: BitLocker must be verifiably off (result: False)
+2026-11-01T21:45:26 [DEBUG] check ok: Get-PartitionSupportedSize failed
+2026-11-01T21:45:26 [DEBUG] check ok: Shrink impossible: new size 58617409182 < SizeMin 29390811136
+2026-11-01T21:45:26 [DEBUG] check ok: Free after shrink 36146908830 < 10 GiB
+2026-11-01T21:45:26 [DEBUG] check ok: A volume labelled 'BESIDEOS' already exists (or volumes unreadable)
+2026-11-01T21:45:26 [DEBUG] check ok: Media root not found: E:\
+2026-11-01T21:45:26 [INFO] source tree OK: 4145949026 bytes
+2026-11-01T21:45:26 [DEBUG] check ok: Media tree does not fit FAT32 staging partition
+2026-11-01T21:45:26 [INFO] PREFLIGHT TAMAM / PREFLIGHT OK (disk 0 part 3, size 84775272448 -> 58617409182, SizeMin 29390811136)
+2026-11-01T21:45:26 [INFO] KURU CALISTIRMA: asagidaki eylemler yapilacakti (hicbiri yapilmiyor) / DRY-RUN: the actions below WOULD be taken (none are):
+2026-11-01T21:45:26 [INFO] STEP 1/5 [shrink_partition] Disk 0 bölüm 3 24,4 GiB küçültülecek
+2026-11-01T21:45:27 [INFO] DRY-RUN: would run Resize-Partition -DiskNumber 0 -PartitionNumber 3 -Size 58617409182  (current 84775272448, SizeMin 29390811136)
+2026-11-01T21:45:27 [INFO] STEP 2/5 [create_partition] 4,4 GiB'lık FAT32 'BESIDEOS' bölümü oluşturulacak
+2026-11-01T21:45:27 [INFO] DRY-RUN: would run New-Partition -DiskNumber 0 -Size 4683026786 -AssignDriveLetter
+2026-11-01T21:45:27 [INFO] DRY-RUN: then Format-Volume -DriveLetter <new> -FileSystem FAT32 -NewFileSystemLabel BESIDEOS -Confirm:$false
+2026-11-01T21:45:27 [INFO] STEP 3/5 [extract_iso] ISO içeriği (3,9 GiB) 'BESIDEOS' bölümüne açılacak
+2026-11-01T21:45:27 [INFO] DRY-RUN: would run robocopy E:\ <staging-letter>:\ /E /R:1 /W:1 /NFL /NDL /NP /XD 'System Volume Information' '$RECYCLE.BIN'  (exit < 8 = ok)
+2026-11-01T21:45:27 [INFO] DRY-RUN: then verify <staging-letter>:\EFI\BOOT\BOOTAA64.EFI exists
+2026-11-01T21:45:27 [INFO] STEP 4/5 [add_one_shot_boot_entry] Bir sonraki açılış için tek seferlik UEFI önyükleme girdisi (arm64) eklenecek
+2026-11-01T21:45:27 [INFO] DRY-RUN: would run bcdedit /copy {bootmgr} /d "BesideOS kurulumu"   (parse new {guid} from output)
+2026-11-01T21:45:27 [INFO] DRY-RUN: then bcdedit /set {guid} device partition=<staging-letter>:
+2026-11-01T21:45:27 [INFO] DRY-RUN: then bcdedit /set {guid} path \EFI\BOOT\BOOTAA64.EFI
+2026-11-01T21:45:27 [INFO] DRY-RUN: then bcdedit /set {fwbootmgr} bootsequence {guid}   (one-shot)
+2026-11-01T21:45:27 [INFO] STEP 5/5 [reboot] Bilgisayar yeniden başlatılacak
+2026-11-01T21:45:27 [INFO] reboot skipped (needs -Execute and -Reboot).
+2026-11-01T21:45:27 [INFO] DRY-RUN complete: nothing was changed. Add -Execute to apply.
+2026-11-01T21:47:31 [INFO] start; APPLY mode=EXECUTE; PS=5.1.26100.9457; plan=D:\plan.json; Reboot=False
+2026-11-01T21:47:31 [DEBUG] check ok: Must run as Administrator.
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'steps' in plan
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'risks' in plan
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'total_shrink_bytes' in plan
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'steps' in plan
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'risks' in plan
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'total_shrink_bytes' in plan
+2026-11-01T21:47:31 [DEBUG] check ok: Plan has no steps.
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'description' in steps[1]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'step' in steps[1]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'undo' in steps[1]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'description' in steps[1]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'step' in steps[1]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'undo' in steps[1]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'type' in steps[1].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'disk' in steps[1].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'partition' in steps[1].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'shrink_bytes' in steps[1].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'type' in steps[1].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'disk' in steps[1].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'partition' in steps[1].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'shrink_bytes' in steps[1].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'description' in steps[2]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'step' in steps[2]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'undo' in steps[2]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'description' in steps[2]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'step' in steps[2]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'undo' in steps[2]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'type' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'disk' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'size_bytes' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'filesystem' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'label' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'type' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'disk' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'size_bytes' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'filesystem' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'label' in steps[2].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'type' in steps[2].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'disk' in steps[2].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'label' in steps[2].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'type' in steps[2].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'disk' in steps[2].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'label' in steps[2].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'description' in steps[3]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'step' in steps[3]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'undo' in steps[3]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'description' in steps[3]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'step' in steps[3]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'undo' in steps[3]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'type' in steps[3].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'iso_path' in steps[3].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'target_label' in steps[3].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'type' in steps[3].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'iso_path' in steps[3].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'target_label' in steps[3].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'description' in steps[4]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'step' in steps[4]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'undo' in steps[4]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'description' in steps[4]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'step' in steps[4]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'undo' in steps[4]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'type' in steps[4].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'loader_path' in steps[4].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'description' in steps[4].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'type' in steps[4].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'loader_path' in steps[4].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'description' in steps[4].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'type' in steps[4].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'description' in steps[4].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'type' in steps[4].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'description' in steps[4].undo
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'description' in steps[5]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'step' in steps[5]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'undo' in steps[5]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'description' in steps[5]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'step' in steps[5]
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'undo' in steps[5]
+2026-11-01T21:47:31 [DEBUG] check ok: Unknown field 'type' in steps[5].step
+2026-11-01T21:47:31 [DEBUG] check ok: Missing field 'type' in steps[5].step
+2026-11-01T21:47:31 [DEBUG] check ok: Unsupported step sequence: shrink_partition,create_partition,extract_iso,add_one_shot_boot_entry,reboot (expected shrink_partition,create_partition,extract_iso,add_one_shot_boot_entry[,reboot])
+2026-11-01T21:47:31 [DEBUG] check ok: Sizes must be positive.
+2026-11-01T21:47:31 [DEBUG] check ok: shrink_bytes (26157863266) must equal total_shrink_bytes (26157863266)
+2026-11-01T21:47:31 [DEBUG] check ok: Staging size must fit in the shrunk space.
+2026-11-01T21:47:31 [DEBUG] check ok: create_partition filesystem must be fat32
+2026-11-01T21:47:31 [DEBUG] check ok: create_partition disk differs from shrink disk
+2026-11-01T21:47:31 [DEBUG] check ok: Invalid FAT32 label 'BESIDEOS'
+2026-11-01T21:47:31 [DEBUG] check ok: extract_iso target_label differs from created label
+2026-11-01T21:47:31 [DEBUG] check ok: Boot entry description must be printable ASCII without quotes/braces
+2026-11-01T21:47:31 [DEBUG] check ok: loader_path '\EFI\BOOT\BOOTAA64.EFI' does not match architecture 'ARM64'
+2026-11-01T21:47:31 [DEBUG] PEFirmwareType unreadable: Property PEFirmwareType does not exist at path HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control.
+2026-11-01T21:47:31 [INFO] uefi decided via bcdedit
+2026-11-01T21:47:31 [DEBUG] check ok: UEFI boot required (undetermined counts as not UEFI)
+2026-11-01T21:47:31 [DEBUG] check ok: Disk 0 not found
+2026-11-01T21:47:31 [DEBUG] check ok: Disk 0 must be GPT (is GPT)
+2026-11-01T21:47:31 [DEBUG] check ok: Disk is read-only or offline
+2026-11-01T21:47:31 [DEBUG] check ok: Partition 0/3 not found
+2026-11-01T21:47:31 [DEBUG] check ok: Target partition must be the one holding C:
+2026-11-01T21:47:31 [DEBUG] check ok: Windows volume must be NTFS
+2026-11-01T21:47:31 [DEBUG] check ok: BitLocker must be verifiably off (result: False)
+2026-11-01T21:47:32 [DEBUG] check ok: Get-PartitionSupportedSize failed
+2026-11-01T21:47:32 [DEBUG] check ok: Shrink impossible: new size 58617409182 < SizeMin 29390811136
+2026-11-01T21:47:32 [DEBUG] check ok: Free after shrink 36135734942 < 10 GiB
+2026-11-01T21:47:32 [DEBUG] check ok: A volume labelled 'BESIDEOS' already exists (or volumes unreadable)
+2026-11-01T21:47:32 [DEBUG] check ok: Media root not found: E:\
+2026-11-01T21:47:32 [INFO] source tree OK: 4145949026 bytes
+2026-11-01T21:47:32 [DEBUG] check ok: Media tree does not fit FAT32 staging partition
+2026-11-01T21:47:32 [DEBUG] check ok: apply-state.json exists; run -Undo first (or move it away).
+2026-11-01T21:47:32 [INFO] PREFLIGHT TAMAM / PREFLIGHT OK (disk 0 part 3, size 84775272448 -> 58617409182, SizeMin 29390811136)
+2026-11-01T21:47:32 [INFO] Adimlar uygulanacak / Executing steps:
+2026-11-01T21:47:32 [INFO] STEP 1/5 [shrink_partition] Disk 0 bölüm 3 24,4 GiB küçültülecek
+2026-11-01T21:47:33 [INFO] RUN: Resize-Partition -DiskNumber 0 -PartitionNumber 3 -Size 58617409182
+2026-11-01T21:47:34 [INFO] shrunk: 84775272448 -> 58617409536
+2026-11-01T21:47:34 [INFO] STEP 2/5 [create_partition] 4,4 GiB'lık FAT32 'BESIDEOS' bölümü oluşturulacak
+2026-11-01T21:47:34 [INFO] RUN: New-Partition -DiskNumber 0 -Size 4683026786 -AssignDriveLetter
+2026-11-01T21:47:34 [INFO] RUN: Format-Volume -DriveLetter F -FileSystem FAT32 -NewFileSystemLabel BESIDEOS -Confirm:$false
+2026-11-01T21:47:37 [INFO] created partition 5, letter F:
+2026-11-01T21:47:37 [INFO] STEP 3/5 [extract_iso] ISO içeriği (3,9 GiB) 'BESIDEOS' bölümüne açılacak
+2026-11-01T21:47:43 [INFO] > robocopy E:\ F:\ /E /R:1 /W:1 /NFL /NDL /NP /XD System Volume Information $RECYCLE.BIN [exit 3]
+2026-11-01T21:47:43 [OUT] 
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows                              
+-------------------------------------------------------------------------------
+
+  Started : Sunday, November 1, 2026 9:47:37 PM
+   Source = E:\
+     Dest = F:\
+
+    Files : *.*
+	    
+ Exc Dirs : System Volume Information
+	    $RECYCLE.BIN
+	    
+  Options : *.* /NDL /NFL /S /E /DCOPY:DA /COPY:DAT /NP /R:1 /W:1 
+
+------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------
+
+               Total    Copied   Skipped  Mismatch    FAILED    Extras
+    Dirs :        78        77         1         0         0         1
+   Files :       429       429         0         0         0         0
+   Bytes :   3.861 g   3.861 g         0         0         0         0
+   Times :   0:00:06   0:00:06                       0:00:00   0:00:00
+
+
+   Speed :           651,673,848 Bytes/sec.
+   Speed :            37,289.078 MegaBytes/min.
+   Ended : Sunday, November 1, 2026 9:47:43 PM
+
+
+2026-11-01T21:47:43 [INFO] copy verified: F:\EFI\BOOT\BOOTAA64.EFI
+2026-11-01T21:47:43 [INFO] STEP 4/5 [add_one_shot_boot_entry] Bir sonraki açılış için tek seferlik UEFI önyükleme girdisi (arm64) eklenecek
+2026-11-01T21:47:44 [INFO] > bcdedit /copy {bootmgr} /d BesideOS kurulumu [exit 0]
+2026-11-01T21:47:44 [OUT] The entry was successfully copied to {53849274-d669-11f1-aefa-a892380555b2}.
+
+2026-11-01T21:47:44 [INFO] > bcdedit /set {53849274-d669-11f1-aefa-a892380555b2} device partition=F: [exit 0]
+2026-11-01T21:47:44 [OUT] The operation completed successfully.
+
+2026-11-01T21:47:44 [INFO] > bcdedit /set {53849274-d669-11f1-aefa-a892380555b2} path \EFI\BOOT\BOOTAA64.EFI [exit 0]
+2026-11-01T21:47:44 [OUT] The operation completed successfully.
+
+2026-11-01T21:47:44 [INFO] > bcdedit /set {fwbootmgr} bootsequence {53849274-d669-11f1-aefa-a892380555b2} [exit 0]
+2026-11-01T21:47:44 [OUT] The operation completed successfully.
+
+2026-11-01T21:47:44 [INFO] > bcdedit /enum {53849274-d669-11f1-aefa-a892380555b2} [exit 0]
+2026-11-01T21:47:44 [OUT] 
+Windows Boot Manager
+--------------------
+identifier              {53849274-d669-11f1-aefa-a892380555b2}
+device                  partition=F:
+path                    \EFI\BOOT\BOOTAA64.EFI
+description             BesideOS kurulumu
+locale                  en-US
+inherit                 {globalsettings}
+default                 {current}
+resumeobject            {53849270-d669-11f1-aefa-a892380555b2}
+displayorder            {current}
+timeout                 30
+
+2026-11-01T21:47:44 [INFO] STEP 5/5 [reboot] Bilgisayar yeniden başlatılacak
+2026-11-01T21:47:44 [INFO] reboot skipped (needs -Execute and -Reboot).
+2026-11-01T21:47:44 [INFO] DONE: all steps executed. State in apply-state.json.

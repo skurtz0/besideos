@@ -1,0 +1,30 @@
+{
+    "version":  1,
+    "started":  "2026-11-01T21:47:32",
+    "plan_file":  "D:\\plan.json",
+    "windows":  {
+                    "disk":  0,
+                    "partition":  3
+                },
+    "original_size":  84775272448,
+    "shrunk_size":  58617409536,
+    "created":  {
+                    "disk":  0,
+                    "partition":  5,
+                    "label":  "BESIDEOS",
+                    "size_bytes":  4683988992,
+                    "letter":  "F"
+                },
+    "boot_entry":  {
+                       "guid":  "{53849274-d669-11f1-aefa-a892380555b2}",
+                       "description":  "BesideOS kurulumu"
+                   },
+    "iso":  null,
+    "steps_done":  [
+                       "shrink_partition",
+                       "create_partition",
+                       "extract_iso",
+                       "add_one_shot_boot_entry"
+                   ],
+    "failed_step":  null
+}
