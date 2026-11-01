@@ -4,6 +4,7 @@ import 'package:besideos_site/catalog/distro.dart';
 import 'package:besideos_site/catalog/distro_page.dart';
 import 'package:besideos_site/catalog/routes.dart';
 import 'package:besideos_site/catalog/support_matrix.dart';
+import 'package:besideos_site/download/download_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -76,11 +77,10 @@ void main() {
     expect(find.textContaining('Asahi Linux ile Linux, macOS yanına kurulabilir'), findsNothing);
   });
 
-  testWidgets('download button is disabled and says it arrives in the next stage', (t) async {
+  testWidgets('distro page embeds the download section', (t) async {
     await t.pumpWidget(page(catalog.distros.first));
-    final b = find.widgetWithText(FilledButton, 'İndir (sonraki aşamada)');
-    expect(b, findsOneWidget);
-    expect(t.widget<FilledButton>(b).onPressed, isNull);
+    expect(find.byType(DownloadSection), findsOneWidget);
+    expect(find.textContaining('sonraki aşamada'), findsNothing);
   });
 
   testWidgets('windows distro shows the bring-your-own-ISO note', (t) async {

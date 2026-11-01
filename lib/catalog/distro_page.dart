@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../download/download_section.dart';
 import '../theme.dart';
 import 'distro.dart';
 import 'support_matrix.dart';
@@ -118,7 +119,7 @@ class DistroPage extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: 24),
-              const FilledButton(onPressed: null, child: Text('İndir (sonraki aşamada)')),
+              DownloadSection(distro: d),
             ]),
           ),
         ),

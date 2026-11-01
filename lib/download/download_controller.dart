@@ -42,6 +42,8 @@ class DownloadController extends ChangeNotifier {
   int? get total => _total;
   String? get error => _error;
   File? get file => _file;
+  /// Set only in the mismatch phase, so the UI can show both hashes.
+  String? expectedHash, actualHash;
 
   bool _disposed = false;
   bool get _busy =>
@@ -81,6 +83,7 @@ class DownloadController extends ChangeNotifier {
     _received = 0;
     _total = null;
     _file = null;
+    expectedHash = actualHash = null;
     final token = _token = CancelToken();
     // Re-check at the write site; never trust catalog validation alone.
     if (!isSafeFileName(iso.fileName)) {
@@ -140,6 +143,7 @@ class DownloadController extends ChangeNotifier {
     _received = 0;
     _total = null;
     _file = null;
+    expectedHash = actualHash = null;
     try {
       await _verify(isoFile, expectedSha256);
     } catch (_) {
@@ -155,6 +159,8 @@ class DownloadController extends ChangeNotifier {
         _file = f;
         _set(DownloadPhase.verified);
       case VerifyOutcome.mismatch:
+        expectedHash = r.expected;
+        actualHash = r.actual;
         _set(DownloadPhase.mismatch,
             error: 'Sağlama toplamı eşleşmedi; dosya silindi.');
       case VerifyOutcome.unreadable:
