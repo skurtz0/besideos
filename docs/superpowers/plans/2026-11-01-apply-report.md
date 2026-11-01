@@ -16,3 +16,10 @@ Assumptions/risks: see `probe/windows/apply-plan.selfcheck.md`. Top: bcdedit /co
 firmware; New-Partition placement; Resize-Partition rounding; first-run PS syntax errors.
 Concerns: only the exact sequence shrink,create,extract,boot[,reboot] is accepted; macOS creates `._*` AppleDouble files on the
 image (harmless); undo removes whole bootsequence if it lists our GUID.
+
+## Fix after first VM dry-run
+UEFI check now mirrors collect-host-facts.ps1 (registry PEFirmwareType, then bcdedit `.efi` fallback; unknown = abort).
+The odd "PASS: Unknown field ..." lines were passing checks printed with their failure text; passing checks are now logged
+as DEBUG "check ok" (file only, console only with -Verbose). Summary lines "PREFLIGHT TAMAM / PREFLIGHT OK" and
+"PREFLIGHT BASARISIZ / PREFLIGHT FAILED (n)"; dry-run prints a header before the per-step "DRY-RUN: would run ..." action list.
+Still unrun on Windows after this edit.

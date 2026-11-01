@@ -39,6 +39,7 @@
   Assumptions: see apply-plan.selfcheck.md (untested on real Windows when written).
   Outputs (OutDir): apply.log (UTF-8, no BOM, appended), apply-state.json.
 #>
+[CmdletBinding()]
 param(
     [string]$PlanFile = (Join-Path $PSScriptRoot 'plan.json'),
     [switch]$Execute,
@@ -67,10 +68,13 @@ function Abort([string]$tr, [string]$en) {
 }
 $script:fails = 0
 function Req([bool]$ok, [string]$tr, [string]$en) {
-    if ($ok) { Log "PASS: $en" } else { Log "FAIL: $tr / $en" 'ERROR'; $script:fails++ }
+    if ($ok) { Log "check ok: $en" 'DEBUG' -NoConsole:($VerbosePreference -ne 'Continue') } else { Log "FAIL: $tr / $en" 'ERROR'; $script:fails++ }
 }
 function Stop-IfFailed {
-    if ($script:fails -gt 0) { Abort "Preflight basarisiz ($($script:fails) hata)." "Preflight failed ($($script:fails) problem(s))." }
+    if ($script:fails -gt 0) {
+        Log "PREFLIGHT BASARISIZ / PREFLIGHT FAILED ($($script:fails))" 'ERROR'
+        Abort "Preflight basarisiz ($($script:fails) hata)." "Preflight failed ($($script:fails) problem(s))."
+    }
 }
 function Invoke-Native([string]$exe, [string[]]$a) {
     # 2>&1 on a native exe yields ErrorRecords that would throw under 'Stop'.
@@ -266,9 +270,22 @@ Req ($wantLeaf -and $leaf -ieq $wantLeaf -and $loader -imatch '^\\EFI\\BOOT\\[^\
 Stop-IfFailed
 
 # --- firmware ---
-$pft = $null
-try { $pft = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control' -Name PEFirmwareType).PEFirmwareType } catch { }
-Req ($pft -eq 2) 'UEFI degil (veya belirlenemedi).' "UEFI boot required (PEFirmwareType=$pft)"
+# Mirrors collect-host-facts.ps1: registry PEFirmwareType first, then bcdedit fallback (boot manager path ends in .efi).
+# Unknown => $false => abort (fail-closed).
+$uefi = $false
+try {
+    $t = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control' -Name PEFirmwareType).PEFirmwareType
+    if ($t -eq 2) { $uefi = $true }
+    Log "PEFirmwareType=$t" 'DEBUG' -NoConsole
+} catch {
+    Log "PEFirmwareType unreadable: $($_.Exception.Message)" 'DEBUG' -NoConsole
+    try {
+        $bcd = (& bcdedit /enum '{current}' 2>&1 | Out-String)
+        if ($bcd -match '(?i)\.efi') { $uefi = $true }
+        Log 'uefi decided via bcdedit'
+    } catch { Log "bcdedit failed: $($_.Exception.Message)" 'WARN' }
+}
+Req $uefi 'UEFI degil (veya belirlenemedi).' 'UEFI boot required (undetermined counts as not UEFI)'
 
 # --- target disk/partition ---
 $part = $null; $winPart = $null; $vol = $null; $disk = $null
@@ -329,11 +346,12 @@ $stateExists = Test-Path -LiteralPath $statePath
 if ($Execute) { Req (-not $stateExists) 'apply-state.json zaten var; once -Undo calistirin.' 'apply-state.json exists; run -Undo first (or move it away).' }
 elseif ($stateExists) { Log 'apply-state.json exists; -Execute would refuse.' 'WARN' }
 Stop-IfFailed
-Log "PREFLIGHT OK (disk $dn part $pn, size $cur -> $newSize, SizeMin $($sup.SizeMin))"
+Log "PREFLIGHT TAMAM / PREFLIGHT OK (disk $dn part $pn, size $cur -> $newSize, SizeMin $($sup.SizeMin))"
 
 # =====================================================================
 # EXECUTE / DRY-RUN
 # =====================================================================
+if ($Execute) { Log 'Adimlar uygulanacak / Executing steps:' } else { Log 'KURU CALISTIRMA: asagidaki eylemler yapilacakti (hicbiri yapilmiyor) / DRY-RUN: the actions below WOULD be taken (none are):' }
 $script:State = [ordered]@{
     version = 1; started = (Get-Date -Format 's'); plan_file = $PlanFile
     windows = $null; original_size = $null; shrunk_size = $null
