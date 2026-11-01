@@ -15,6 +15,23 @@ class GuideStep {
   const GuideStep({required this.title, required this.body});
 }
 
+enum IsoArch { x86_64, arm64 }
+
+class IsoAsset {
+  final IsoArch arch;
+  final String url;
+  final String checksumUrl;
+  final String fileName;
+  final int? sizeBytes;
+  const IsoAsset({
+    required this.arch,
+    required this.url,
+    required this.checksumUrl,
+    required this.fileName,
+    this.sizeBytes,
+  });
+}
+
 const _validHosts = {'windows', 'linux', 'mac-m1m2'};
 
 class Distro {
@@ -34,6 +51,7 @@ class Distro {
   final String downloadPage;
   final bool userSuppliedIso;
   final String license;
+  final List<IsoAsset> isos;
 
   const Distro({
     required this.id,
@@ -52,7 +70,10 @@ class Distro {
     required this.downloadPage,
     required this.userSuppliedIso,
     required this.license,
+    this.isos = const [],
   });
+
+  IsoAsset? isoFor(IsoArch arch) => isos.where((i) => i.arch == arch).firstOrNull;
 
   factory Distro.fromJson(Object? raw, int index) {
     if (raw is! Map) throw CatalogException('distros[$index]: not an object');
@@ -99,6 +120,49 @@ class Distro {
       return GuideStep(title: s['title'] as String, body: s['body'] as String);
     }).toList();
 
+    final rawIsos = raw['isos'] ?? const [];
+    if (rawIsos is! List) throw CatalogException('$id: isos must be a list');
+    final isos = <IsoAsset>[];
+    for (var i = 0; i < rawIsos.length; i++) {
+      final e = rawIsos[i];
+      final at = '$id: isos[$i]';
+      if (e is! Map) throw CatalogException('$at: not an object');
+      String str(String f) {
+        final v = e[f];
+        if (v is! String) throw CatalogException('$at.$f must be String');
+        return v;
+      }
+
+      String https(String f) {
+        final v = str(f);
+        final u = Uri.tryParse(v);
+        if (u == null || u.scheme != 'https' || u.host.isEmpty) {
+          throw CatalogException('$at.$f must be an https URL');
+        }
+        return v;
+      }
+
+      final archName = str('arch');
+      final arch = IsoArch.values.where((a) => a.name == archName).firstOrNull;
+      if (arch == null) throw CatalogException('$at.arch "$archName" unknown');
+      final fileName = str('fileName');
+      if (fileName.isEmpty || fileName.contains('/') || fileName.contains(r'\') || fileName.contains('..')) {
+        throw CatalogException('$at.fileName is not a safe file name');
+      }
+      final size = e['sizeBytes'];
+      if (size != null && (size is! int || size <= 0)) {
+        throw CatalogException('$at.sizeBytes must be a positive int or null');
+      }
+      if (isos.any((x) => x.arch == arch)) throw CatalogException('$at.arch "$archName" duplicated');
+      isos.add(IsoAsset(
+        arch: arch,
+        url: https('url'),
+        checksumUrl: https('checksumUrl'),
+        fileName: fileName,
+        sizeBytes: size as int?,
+      ));
+    }
+
     return Distro(
       id: id,
       name: get<String>('name'),
@@ -116,6 +180,7 @@ class Distro {
       downloadPage: get<String>('downloadPage'),
       userSuppliedIso: get<bool>('userSuppliedIso'),
       license: get<String>('license'),
+      isos: List.unmodifiable(isos),
     );
   }
 }

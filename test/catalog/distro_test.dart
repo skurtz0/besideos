@@ -81,4 +81,45 @@ void main() {
     expect(c.byId('a')!.basedOn, 'Debian');
     expect(c.byId('b')!.basedOn, isNull);
   });
+
+  Map<String, dynamic> iso({String arch = 'x86_64', String url = 'https://e.com/x.iso', String sum = 'https://e.com/SHA256SUMS', String file = 'x.iso', Object? size = 123}) =>
+      {'arch': arch, 'url': url, 'checksumUrl': sum, 'fileName': file, 'sizeBytes': size};
+
+  void bad(List<Map<String, dynamic>> isos) => expect(
+      () => Catalog.parse(cat([d('a', over: {'isos': isos})])),
+      throwsA(isA<CatalogException>()
+          .having((e) => e.message, 'message', allOf(contains('a:'), contains('isos')))));
+
+  test('parses isos list', () {
+    final x = Catalog.parse(cat([d('a', over: {'isos': [iso(), iso(arch: 'arm64', size: null)]})])).byId('a')!;
+    expect(x.isos.length, 2);
+    expect(x.isos[0].arch, IsoArch.x86_64);
+    expect(x.isos[0].url, 'https://e.com/x.iso');
+    expect(x.isos[0].checksumUrl, 'https://e.com/SHA256SUMS');
+    expect(x.isos[0].fileName, 'x.iso');
+    expect(x.isos[0].sizeBytes, 123);
+    expect(x.isos[1].sizeBytes, isNull);
+    expect(x.isoFor(IsoArch.arm64), x.isos[1]);
+  });
+
+  test('isos absent means empty list', () {
+    expect(Catalog.parse(cat([d('a')])).byId('a')!.isos, isEmpty);
+  });
+
+  test('rejects http url', () => bad([iso(url: 'http://e.com/x.iso')]));
+  test('rejects http checksumUrl', () => bad([iso(sum: 'http://e.com/SUMS')]));
+
+  test('rejects fileName with path separator or ..', () {
+    for (final f in ['a/b.iso', r'a\b.iso', '..', '../x.iso', '']) {
+      bad([iso(file: f)]);
+    }
+  });
+
+  test('rejects unknown arch', () => bad([iso(arch: 'riscv')]));
+  test('rejects duplicate arch within a distro', () => bad([iso(), iso()]));
+
+  test('isoFor returns null when arch missing', () {
+    final x = Catalog.parse(cat([d('a', over: {'isos': [iso()]})])).byId('a')!;
+    expect(x.isoFor(IsoArch.arm64), isNull);
+  });
 }
