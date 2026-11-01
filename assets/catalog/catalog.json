@@ -1,0 +1,191 @@
+{
+  "distros": [
+    {
+      "id": "ubuntu",
+      "name": "Ubuntu",
+      "family": "linux",
+      "tagline": "Yeni başlayanlar için en yaygın Linux.",
+      "description": "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.",
+      "bestFor": "Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.",
+      "desktop": "GNOME",
+      "look": "Solda sabit bir uygulama çubuğu (dock), üstte ince bir durum çubuğu ve turuncu-mor tonlarda sade bir masaüstü.",
+      "accent": 4293481504,
+      "guide": [
+        {
+          "title": "Seç ve indir",
+          "body": "Ubuntu için resmi indirme sayfasını açacağız; ISO dosyasını oradan indirirsin. Masaüstü sürümünü seçmen yeterli."
+        },
+        {
+          "title": "Yedek al ve yer aç",
+          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; BesideOS disk bölümlerini değiştirmeden önce sana gösterecek ve onayını isteyecek."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayarını yeniden başlatıp Ubuntu kurulum ekranından devam edersin. BesideOS sana bu adımda neye basacağını adım adım gösterecek."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Kurulum medyası için bir USB bellek",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://ubuntu.com/download/desktop",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)"
+    },
+    {
+      "id": "linux-mint",
+      "name": "Linux Mint",
+      "family": "linux",
+      "tagline": "Windows'tan gelenlere tanıdık gelen, sakin bir masaüstü.",
+      "description": "Linux Mint'in ana sürümü Cinnamon masaüstünü kullanır. Alt çubuk, başlat menüsü ve sistem tepsisiyle Windows düzenine benzer bir yapı sunar.",
+      "bestFor": "Windows'tan geçenler ve tanıdık, sade bir arayüz isteyenler.",
+      "desktop": "Cinnamon",
+      "look": "Altta görev çubuğu, solda başlat menüsü, sağda sistem tepsisi; yeşil vurgulu, klasik düzenli bir masaüstü.",
+      "accent": 4287079766,
+      "guide": [
+        {
+          "title": "Seç ve indir",
+          "body": "Linux Mint için resmi indirme sayfasını açacağız; ISO dosyasını oradan indirirsin. Ana sürüm Cinnamon masaüstüyle gelir."
+        },
+        {
+          "title": "Yedek al ve yer aç",
+          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; BesideOS disk bölümlerini değiştirmeden önce sana gösterecek ve onayını isteyecek."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayarını yeniden başlatıp Linux Mint kurulum ekranından devam edersin. BesideOS sana bu adımda neye basacağını adım adım gösterecek."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Kurulum medyası için bir USB bellek",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://linuxmint.com/download.php",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)"
+    },
+    {
+      "id": "fedora",
+      "name": "Fedora",
+      "family": "linux",
+      "tagline": "Güncel yazılımlar sunan, topluluk destekli bir dağıtım.",
+      "description": "Fedora Workstation, GNOME masaüstüyle gelen ve Fedora Projesi tarafından geliştirilen bir Linux dağıtımıdır. Apple Silicon (M1/M2) Mac'lerde Asahi Linux projesinin Fedora Asahi Remix'i kullanılır.",
+      "bestFor": "Güncel yazılımları ve geliştirici araçlarını görmek isteyenler.",
+      "desktop": "GNOME",
+      "look": "Üstte ince bir çubuk, tam ekran uygulama ve etkinlik görünümü olan, mavi tonlu sade bir GNOME masaüstü.",
+      "accent": 4282150580,
+      "guide": [
+        {
+          "title": "Seç ve indir",
+          "body": "Fedora için resmi indirme sayfasını açacağız; ISO dosyasını oradan indirirsin. Windows bilgisayarlar için Fedora Workstation, Apple Silicon Mac'ler için Fedora Asahi Remix'in kurulum adımları farklıdır; BesideOS bilgisayarına uygun olanı gösterecek."
+        },
+        {
+          "title": "Yedek al ve yer aç",
+          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; BesideOS disk bölümlerini değiştirmeden önce sana gösterecek ve onayını isteyecek."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayarını yeniden başlatıp Fedora kurulum ekranından devam edersin. BesideOS sana bu adımda neye basacağını adım adım gösterecek."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar veya Apple Silicon (M1/M2) Mac",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows",
+        "mac-m1m2"
+      ],
+      "downloadPage": "https://fedoraproject.org/workstation/download",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)"
+    },
+    {
+      "id": "debian",
+      "name": "Debian",
+      "family": "linux",
+      "tagline": "Kararlılığıyla bilinen, topluluk işletmeli evrensel işletim sistemi.",
+      "description": "Debian, gönüllü bir topluluk tarafından geliştirilen ve kararlılığıyla tanınan bir işletim sistemidir. Pek çok başka dağıtımın temelini oluşturur.",
+      "bestFor": "Kararlı ve sade bir sistem isteyen, biraz Linux bilgisi olanlar.",
+      "desktop": null,
+      "look": "Seçtiğin masaüstü ortamına göre değişir; varsayılan görünüm sade ve gösterişsizdir.",
+      "accent": 4289200176,
+      "guide": [
+        {
+          "title": "Seç ve indir",
+          "body": "Debian için resmi indirme sayfasını açacağız; ISO dosyasını oradan indirirsin. Hangi sürümü ve masaüstünü seçeceğin resmi sayfada anlatılır."
+        },
+        {
+          "title": "Yedek al ve yer aç",
+          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; BesideOS disk bölümlerini değiştirmeden önce sana gösterecek ve onayını isteyecek."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayarını yeniden başlatıp Debian kurulum ekranından devam edersin. BesideOS sana bu adımda neye basacağını adım adım gösterecek."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Kurulum medyası için bir USB bellek",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://www.debian.org/distrib/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)"
+    },
+    {
+      "id": "windows-11",
+      "name": "Windows 11",
+      "family": "windows",
+      "tagline": "Microsoft'un güncel Windows sürümü.",
+      "description": "Windows 11, Microsoft'un ticari işletim sistemidir. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu seçersin veya Microsoft'un resmi sayfasından indirirsin.",
+      "bestFor": "Windows'a ihtiyaç duyan uygulama ve oyunları çalıştırmak isteyenler.",
+      "desktop": null,
+      "look": "Ortalanmış görev çubuğu ve başlat menüsü, yuvarlatılmış köşeli pencereler.",
+      "accent": 4278221012,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows 11 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "Yedek al ve yer aç",
+          "body": "BesideOS, kurulum için diskinde yer açmanı sağlayacak. Başlamadan önce önemli dosyalarının yedeğini al; disk bölümlerini değiştirmeden önce sana gösterip onayını isteyecek."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayarını yeniden başlatıp Windows kurulum ekranından devam edersin. BesideOS bu adımda neye basacağını gösterecek."
+        }
+      ],
+      "requirements": [
+        "UEFI desteği ve Secure Boot yapabilen bir bilgisayar",
+        "TPM 2.0 (resmi gereksinim)",
+        "64 bit işlemci",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://www.microsoft.com/software-download/windows11",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)"
+    }
+  ]
+}
