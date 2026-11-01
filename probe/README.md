@@ -30,3 +30,12 @@ Belirsiz her bilgi güvenli (fail-closed) değere düşer: `encrypted=null`, `us
 
 ## Bilinen: VM'de otomasyon (probe/README)
 - UTM'de computer-use ile yazarken `type` eylemi tek karakteri tekrarlıyor; tuşlar tek tek gönderilmeli, '.' tuşu VM'e ulaşmıyor (Tab tamamlama da çalışmadı); dosya adı için `gci \coll*` joker kullanıldı. Probe diski MBR bölümlü olmalı, yoksa Windows sürücü harfi vermiyor.
+
+## Plan uygulama (Aşama 3c) — `apply-plan.ps1`
+**Yalnız yedeği/snapshot'ı olan test VM'inde.** Önce VM snapshot'ı al.
+1. Mac: `probe/make-probe-image.sh --force --plan plan.json [--execute] [--reboot] [--undo] out.img` (plan: `besideos-plan` çıktısı; `extract_iso` kaynağı VM'de var olan bir `.iso` yolu ya da takılı medya kökü, örn. `E:\`).
+2. VM'e takıp `run-apply.cmd`'ye çift tıkla. Mod, imajdaki bayrak dosyalarından seçilir: hiçbiri yok = **kuru çalıştırma** (preflight + yapılacakları yazar, hiçbir şeyi değiştirmez); `EXECUTE.flag` = gerçekten uygula; `REBOOT.flag` = (EXECUTE ile) sonunda yeniden başlat; `UNDO.flag` = geri al (EXECUTE yoksa o da kuru).
+3. **Önce kuru çalıştır**, `apply.log`'u oku (`make-probe-image.sh --read img` ile), sonra `--execute` imajını hazırla.
+4. Durum `apply-state.json`'da tutulur (küçültülen bölüm + özgün boyut, oluşturulan bölüm, önyükleme girdisi GUID'i). Hata olursa script durur; `--undo --execute` imajıyla geri al: girdi silinir, BESIDEOS bölümü (yalnız bizim oluşturduğumuz) silinir, Windows bölümü eski boyutuna büyütülür. Olmadı: VM snapshot'ına dön.
+
+Doğrulanmadı (Windows'ta hiç çalıştırılmadı): bkz. `windows/apply-plan.selfcheck.md` — özellikle ARM64'te `bcdedit /copy {bootmgr}`, tek seferlik `bootsequence`, FAT32 biçimlendirme, robocopy, Resize-Partition hizalaması.

@@ -151,3 +151,25 @@ fn real_windows_vm_facts_refuse_oversized_request() {
         .unwrap()
         .contains("not_enough_free_space"));
 }
+
+// The exact plan consumed by probe/windows/apply-plan.ps1 in the VM (media root E:\).
+// NOTE: iso_ubuntu_arm64.json sizes are estimates until measured from the real ISO.
+#[test]
+fn vm_apply_plan_matches_golden() {
+    let o = Command::new(env!("CARGO_BIN_EXE_besideos-plan"))
+        .args([
+            "--host",
+            &data("host_windows_vm.json"),
+            "--iso",
+            &data("iso_ubuntu_arm64.json"),
+            "--request",
+            &data("request_20gib.json"),
+            "--iso-path",
+            "E:\\",
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(o.status.code(), Some(0));
+    let golden = std::fs::read_to_string(data("plan_vm_apply.json")).unwrap();
+    assert_eq!(String::from_utf8(o.stdout).unwrap(), golden);
+}

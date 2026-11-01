@@ -1,0 +1,65 @@
+{
+  "steps": [
+    {
+      "description": "Disk 0 bölüm 3 24,4 GiB küçültülecek",
+      "step": {
+        "type": "shrink_partition",
+        "disk": 0,
+        "partition": 3,
+        "shrink_bytes": 26166505472
+      },
+      "undo": null
+    },
+    {
+      "description": "4,4 GiB'lık FAT32 'BESIDEOS' bölümü oluşturulacak",
+      "step": {
+        "type": "create_partition",
+        "disk": 0,
+        "size_bytes": 4691668992,
+        "filesystem": "fat32",
+        "label": "BESIDEOS"
+      },
+      "undo": {
+        "type": "delete_partition",
+        "disk": 0,
+        "label": "BESIDEOS"
+      }
+    },
+    {
+      "description": "ISO içeriği (3,9 GiB) 'BESIDEOS' bölümüne açılacak",
+      "step": {
+        "type": "extract_iso",
+        "iso_path": "E:\\",
+        "target_label": "BESIDEOS"
+      },
+      "undo": null
+    },
+    {
+      "description": "Bir sonraki açılış için tek seferlik UEFI önyükleme girdisi (arm64) eklenecek",
+      "step": {
+        "type": "add_one_shot_boot_entry",
+        "loader_path": "\\EFI\\BOOT\\BOOTAA64.EFI",
+        "description": "BesideOS kurulumu"
+      },
+      "undo": {
+        "type": "remove_boot_entry",
+        "description": "BesideOS kurulumu"
+      }
+    },
+    {
+      "description": "Bilgisayar yeniden başlatılacak",
+      "step": {
+        "type": "reboot"
+      },
+      "undo": null
+    }
+  ],
+  "risks": [
+    "Bölüm küçültme geri alınamaz; işleme başlamadan önce yedek al (yedek uyarısı).",
+    "Bir adım yarıda kalırsa geri alma adımları uygulanmalı.",
+    "Secure Boot açıksa Linux yükleyicisi imzalı değilse açılmayabilir (Secure Boot notu).",
+    "Kurulum sonrası BESIDEOS bölümü silinebilir.",
+    "arm64 yolu şimdilik yalnız kuru çalıştırmayla (dry-run) doğrulandı."
+  ],
+  "total_shrink_bytes": 26166505472
+}
