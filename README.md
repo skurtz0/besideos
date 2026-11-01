@@ -39,3 +39,7 @@ Windows için BesideOS ISO sağlamaz: kendi ISO dosyanın yolunu ve Microsoft sa
 Web sürümünde indirme kapalıdır. macOS sandbox'ı için `macos/Runner/*.entitlements` dosyalarına `com.apple.security.network.client` ve `com.apple.security.files.downloads.read-write` eklendi. Windows ve Linux derlemeleri doğrulanmadı.
 
 ISO girdileri `assets/catalog/catalog.json` içinde (`isos`); Debian `current/` ve Fedora sürüm adresleri yeni sürümde değişir, katalog elle güncellenmelidir.
+
+## Çekirdek (Rust)
+
+`core/` altında, Windows yanına Linux kurulumunun planını üreten saf bir Rust kütüphanesi ve `besideos-plan` aracı bulunur. Diske dokunmaz, yalnız plan (JSON) ya da gerekçeli ret üretir; gerçek host bilgisi toplama (3b) ve planı uygulama (3c) sonraki aşamalardır. Ayrıntı: `core/README.md`.
