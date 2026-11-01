@@ -102,3 +102,52 @@ fn arch_mismatch_exits_2() {
     let v: serde_json::Value = serde_json::from_slice(&o.stdout).unwrap();
     assert_eq!(v["refused"], "arch_mismatch");
 }
+
+// Facts captured by probe/windows/collect-host-facts.ps1 on a real Windows 11 ARM64 VM (UTM).
+#[test]
+fn real_windows_vm_facts_parse_and_plan() {
+    let o = Command::new(env!("CARGO_BIN_EXE_besideos-plan"))
+        .args([
+            "--host",
+            &data("host_windows_vm.json"),
+            "--iso",
+            &data("iso_arm64.json"),
+            "--request",
+            &data("request_20gib.json"),
+            "--iso-path",
+            "D:\\ubuntu-arm64.iso",
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(
+        o.status.code(),
+        Some(0),
+        "{}",
+        String::from_utf8_lossy(&o.stdout)
+    );
+    let out = String::from_utf8(o.stdout).unwrap();
+    assert!(out.contains("\"shrink_partition\""));
+    assert!(out.contains("BOOTAA64.EFI"));
+}
+
+#[test]
+fn real_windows_vm_facts_refuse_oversized_request() {
+    // 50 GiB request (request.json) is more than the 80 GB VM disk can spare.
+    let o = Command::new(env!("CARGO_BIN_EXE_besideos-plan"))
+        .args([
+            "--host",
+            &data("host_windows_vm.json"),
+            "--iso",
+            &data("iso_arm64.json"),
+            "--request",
+            &data("request.json"),
+            "--iso-path",
+            "D:\\ubuntu-arm64.iso",
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(o.status.code(), Some(2));
+    assert!(String::from_utf8(o.stdout)
+        .unwrap()
+        .contains("not_enough_free_space"));
+}

@@ -27,3 +27,6 @@ probe/validate-facts.sh facts.json
 `besideos-plan`'ı örnek ISO/istek ile çalıştırır (mimariye göre). Çıkış: 0 plan, 2 ret, 1 hata.
 
 Belirsiz her bilgi güvenli (fail-closed) değere düşer: `encrypted=null`, `used_bytes=size_bytes`, `min_size_bytes=size_bytes`. Başarısız çalışmada `facts.json` yazılmaz; nedeni `probe.log`'dadır.
+
+## Bilinen: VM'de otomasyon (probe/README)
+- UTM'de computer-use ile yazarken `type` eylemi tek karakteri tekrarlıyor; tuşlar tek tek gönderilmeli, '.' tuşu VM'e ulaşmıyor (Tab tamamlama da çalışmadı); dosya adı için `gci \coll*` joker kullanıldı. Probe diski MBR bölümlü olmalı, yoksa Windows sürücü harfi vermiyor.

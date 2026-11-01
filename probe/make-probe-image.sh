@@ -21,10 +21,12 @@ if [ "$mode" = pack ]; then
   img="${args[0]:-$here/besideprobe.img}"
   if [ -e "$img" ] && [ "$force" -ne 1 ]; then echo "exists: $img (use --force)" >&2; exit 1; fi
   rm -f "$img"
-  dd if=/dev/zero of="$img" bs=1m count=64 2>/dev/null  # newfs_msdos formats the file directly
-  newfs_msdos -F 32 -S 512 -s 131072 -v BESIDEPROBE "$img" >/dev/null
-  attach "$img" -readwrite
+  dd if=/dev/zero of="$img" bs=1m count=64 2>/dev/null
+  # MBR partition table is required: Windows will not mount an unpartitioned (superfloppy) USB disk.
+  dev="$(hdiutil attach -imagekey diskimage-class=CRawDiskImage -nomount "$img" 2>/dev/null | awk 'NR==1{print $1}')"
   trap 'hdiutil detach "$dev" >/dev/null 2>&1 || true' EXIT
+  diskutil partitionDisk "$dev" MBR MS-DOS BESIDEPROBE R >/dev/null
+  mnt="/Volumes/BESIDEPROBE"; [ -d "$mnt" ] || { echo "mount failed" >&2; exit 1; }
   cp "$here/windows/collect-host-facts.ps1" "$here/windows/run-probe.cmd" "$mnt/"
   sync; hdiutil detach "$dev" >/dev/null; trap - EXIT
   echo "$img"

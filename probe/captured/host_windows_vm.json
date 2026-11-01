@@ -1,0 +1,71 @@
+{
+    "uefi":  true,
+    "arch":  "arm64",
+    "windows_partition":  {
+                              "disk":  0,
+                              "partition":  3
+                          },
+    "disks":  [
+                  {
+                      "number":  0,
+                      "size_bytes":  85899345920,
+                      "style":  "gpt",
+                      "dynamic":  false,
+                      "partitions":  [
+                                         {
+                                             "number":  1,
+                                             "size_bytes":  209715200,
+                                             "used_bytes":  35069952,
+                                             "min_size_bytes":  209715200,
+                                             "filesystem":  "fat32",
+                                             "is_system":  true,
+                                             "encrypted":  false
+                                         },
+                                         {
+                                             "number":  2,
+                                             "size_bytes":  16777216,
+                                             "used_bytes":  16777216,
+                                             "min_size_bytes":  16777216,
+                                             "filesystem":  "msr",
+                                             "is_system":  false,
+                                             "encrypted":  false
+                                         },
+                                         {
+                                             "number":  3,
+                                             "size_bytes":  84775272448,
+                                             "used_bytes":  22431760384,
+                                             "min_size_bytes":  29390811136,
+                                             "filesystem":  "ntfs",
+                                             "is_system":  true,
+                                             "encrypted":  false
+                                         },
+                                         {
+                                             "number":  4,
+                                             "size_bytes":  894435328,
+                                             "used_bytes":  773615616,
+                                             "min_size_bytes":  894435328,
+                                             "filesystem":  "ntfs",
+                                             "is_system":  false,
+                                             "encrypted":  null
+                                         }
+                                     ]
+                  },
+                  {
+                      "number":  1,
+                      "size_bytes":  67108864,
+                      "style":  "mbr",
+                      "dynamic":  false,
+                      "partitions":  [
+                                         {
+                                             "number":  1,
+                                             "size_bytes":  67060224,
+                                             "used_bytes":  178688,
+                                             "min_size_bytes":  67060224,
+                                             "filesystem":  "fat",
+                                             "is_system":  false,
+                                             "encrypted":  false
+                                         }
+                                     ]
+                  }
+              ]
+}
