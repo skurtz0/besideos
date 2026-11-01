@@ -30,7 +30,7 @@ SupportEntry supportFor(Host host, DistroFamily guest) {
     case Host.macOther:
       return guest == DistroFamily.linux
           ? const SupportEntry(false, 'Asahi Linux yalnızca M1/M2 Apple Silicon Mac\'leri destekler; diğer Mac\'lerde bu yöntem çalışmaz.')
-          : const SupportEntry(false, 'Bu Mac modelinde Windows yanına kurulum desteklenmiyor: Boot Camp artık sunulmuyor.');
+          : const SupportEntry(false, 'BesideOS bu Mac modellerinde Windows kurulumunu desteklemiyor.');
   }
 }
 

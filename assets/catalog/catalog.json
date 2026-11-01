@@ -2,6 +2,7 @@
   "distros": [
     {
       "id": "ubuntu",
+      "basedOn": "Debian",
       "name": "Ubuntu",
       "family": "linux",
       "tagline": "Yeni başlayanlar için en yaygın Linux.",
@@ -39,6 +40,7 @@
     },
     {
       "id": "linux-mint",
+      "basedOn": "Ubuntu",
       "name": "Linux Mint",
       "family": "linux",
       "tagline": "Windows'tan gelenlere tanıdık gelen, sakin bir masaüstü.",

@@ -99,4 +99,11 @@ void main() {
     await t.sendKeyEvent(LogicalKeyboardKey.enter);
     expect(opened?.id, 'win');
   });
+
+  testWidgets('host filter hides distro whose host the matrix rejects', (t) async {
+    await pump(t, Catalog([d('lx', DistroFamily.linux, ['linux'])]));
+    await t.tap(find.text('Linux').last);
+    await t.pump();
+    expect(find.text('Ad lx'), findsNothing);
+  });
 }

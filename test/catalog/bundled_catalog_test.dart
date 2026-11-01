@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:besideos_site/catalog/distro.dart';
+import 'package:besideos_site/catalog/support_matrix.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -17,11 +18,17 @@ void main() {
       expect(d.hosts, isNot(contains('macos')), reason: d.id);
       expect(d.requirements, isNotEmpty, reason: d.id);
       expect(d.downloadPage, startsWith('https://'), reason: d.id);
+      for (final k in d.hosts) {
+        final h = Host.values.firstWhere((h) => hostKey(h) == k);
+        expect(supportFor(h, d.family).supported, isTrue, reason: '${d.id} $k');
+      }
       if (d.family == DistroFamily.windows) {
         expect(d.downloadPage.endsWith('.iso'), isFalse, reason: d.id);
       }
     }
     expect(catalog.byId('windows-11')!.userSuppliedIso, isTrue);
+    expect(catalog.byId('ubuntu')!.basedOn, 'Debian');
+    expect(catalog.byId('fedora')!.basedOn, isNull);
     expect(catalog.byId('fedora')!.hosts, contains('mac-m1m2'));
   });
 }

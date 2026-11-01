@@ -27,8 +27,9 @@ class _CatalogPageState extends State<CatalogPage> {
   List<Distro> get _visible => widget.catalog.distros.where((d) {
         if (_family != null && d.family != _family) return false;
         if (_host == null) return true;
-        final key = _host == null ? null : hostKey(_host!);
-        return key != null && d.hosts.contains(key); // macOther: eşleşme yok
+        final key = hostKey(_host!);
+        // macOther: eşleşme yok; matris reddettiği ana sistem de gösterilmez
+        return key != null && supportFor(_host!, d.family).supported && d.hosts.contains(key);
       }).toList();
 
   @override

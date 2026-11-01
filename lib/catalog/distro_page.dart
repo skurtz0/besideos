@@ -20,7 +20,7 @@ class DistroPage extends StatelessWidget {
     final d = distro;
     final installable = [
       for (final h in Host.values)
-        if (hostKey(h) != null && d.hosts.contains(hostKey(h))) _hostNames[h]!,
+        if (_ok(h, d)) _hostNames[h]!,
     ];
     return Scaffold(
       backgroundColor: kBg,
@@ -48,6 +48,8 @@ class DistroPage extends StatelessWidget {
               Text(d.description, style: const TextStyle(color: kMuted, height: 1.5)),
               const SizedBox(height: 8),
               Text('Kimler için: ${d.bestFor}', style: const TextStyle(color: kMuted, height: 1.5)),
+              if (d.basedOn != null)
+                Text('Temel aldığı sistem: ${d.basedOn}', style: const TextStyle(color: kMuted, height: 1.5)),
               _head('Görünüm'),
               Container(
                 decoration: BoxDecoration(color: kPanel, borderRadius: BorderRadius.circular(8)),
@@ -88,6 +90,18 @@ class DistroPage extends StatelessWidget {
               Text(installable.isEmpty ? 'Yok' : installable.join(', '), style: const TextStyle(color: kText)),
               const SizedBox(height: 8),
               for (final h in Host.values) _hostRow(h, d),
+              _head('Kurulamayanlar'),
+              for (final u in unsupportedTargets)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text.rich(
+                    TextSpan(children: [
+                      TextSpan(text: u.key, style: const TextStyle(color: kText, fontWeight: FontWeight.w600)),
+                      TextSpan(text: ': ${u.value.reason}'),
+                    ]),
+                    style: const TextStyle(color: kMuted, height: 1.5),
+                  ),
+                ),
               _head('Lisans'),
               Text(d.license, style: const TextStyle(color: kMuted, height: 1.5)),
               _head('Resmi sayfa'),
@@ -112,6 +126,11 @@ class DistroPage extends StatelessWidget {
     );
   }
 
+  static bool _ok(Host h, Distro d) {
+    final key = hostKey(h);
+    return key != null && supportFor(h, d.family).supported && d.hosts.contains(key);
+  }
+
   Widget _head(String t) => Padding(
         padding: const EdgeInsets.only(top: 24, bottom: 8),
         child: Text(t, style: const TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
@@ -119,8 +138,7 @@ class DistroPage extends StatelessWidget {
 
   Widget _hostRow(Host h, Distro d) {
     final m = supportFor(h, d.family);
-    final key = hostKey(h);
-    final ok = m.supported && key != null && d.hosts.contains(key);
+    final ok = _ok(h, d);
     final e = ok || !m.supported ? m : const SupportEntry(false, 'Bu dağıtım için bu rehberde yok.');
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),

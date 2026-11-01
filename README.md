@@ -1,8 +1,8 @@
 # besideos_site
 
-The besideos.com website, built with Flutter web. A landing page plus a distro catalog and install guides at `/distros` and `/distros/<id>` (data: `assets/catalog/catalog.json`).
+The besideos.com website, built with Flutter web. A landing page plus a distro catalog and install guides at `/#/distros` and `/#/distros/<id>` (hash-based URLs) (data: `assets/catalog/catalog.json`).
 
-Flutter is not installed where this was written, so it has not been run yet. First time on a machine with Flutter:
+Built with Flutter 3.47.7; `flutter analyze` and `flutter test` pass. Web and macOS release builds are verified; Windows and Linux builds are not. No installer exists yet. First time on a machine with Flutter:
 
 ```
 flutter create . --platforms web --project-name besideos_site

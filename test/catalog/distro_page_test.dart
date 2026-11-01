@@ -137,4 +137,34 @@ void main() {
     await t.pumpAndSettle();
     expect(find.text('Slogan mint'), findsOneWidget);
   });
+
+  testWidgets('summary excludes hosts the matrix rejects', (t) async {
+    final x = Distro(
+      id: 'lx', name: 'Ad lx', family: DistroFamily.linux, tagline: '', description: '', bestFor: '',
+      look: '', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['linux'],
+      downloadPage: '', userSuppliedIso: false, license: '',
+    );
+    await t.pumpWidget(page(x));
+    expect(find.text('Yok'), findsOneWidget);
+  });
+
+  testWidgets('shows unsupported targets and basedOn only when set', (t) async {
+    t.view.physicalSize = const Size(320, 640);
+    t.view.devicePixelRatio = 1;
+    addTearDown(t.view.reset);
+    await t.pumpWidget(page(catalog.distros.first));
+    await t.scrollUntilVisible(find.text('Kurulamayanlar'), 300, scrollable: find.byType(Scrollable).first);
+    for (final u in unsupportedTargets) {
+      expect(find.textContaining(u.key), findsOneWidget);
+    }
+    expect(find.textContaining('Temel aldığı sistem'), findsNothing);
+    expect(t.takeException(), isNull);
+    final b = Distro(
+      id: 'b', name: 'Ad b', family: DistroFamily.linux, tagline: '', description: '', bestFor: '',
+      look: '', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['linux'],
+      downloadPage: '', userSuppliedIso: false, license: '', basedOn: 'Debian',
+    );
+    await t.pumpWidget(page(b));
+    expect(find.text('Temel aldığı sistem: Debian'), findsOneWidget);
+  });
 }

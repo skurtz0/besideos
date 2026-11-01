@@ -279,7 +279,7 @@ class _Hero extends StatelessWidget {
           children: [
             _Chip('Windows'),
             _Chip('Linux'),
-            _Chip('macOS (guided)'),
+            _Chip('Mac → Linux (M1/M2, guided)'),
             _Chip('Open source, MIT'),
           ],
         ),

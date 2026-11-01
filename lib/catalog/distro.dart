@@ -25,6 +25,7 @@ class Distro {
   final String description;
   final String bestFor;
   final String? desktop;
+  final String? basedOn;
   final String look;
   final int accent;
   final List<GuideStep> guide;
@@ -42,6 +43,7 @@ class Distro {
     required this.description,
     required this.bestFor,
     this.desktop,
+    this.basedOn,
     required this.look,
     required this.accent,
     required this.guide,
@@ -85,6 +87,11 @@ class Distro {
       throw CatalogException('$id: desktop must be String or null');
     }
 
+    final basedOn = raw['basedOn'];
+    if (basedOn != null && basedOn is! String) {
+      throw CatalogException('$id: basedOn must be String or null');
+    }
+
     final guide = get<List>('guide').map((s) {
       if (s is! Map || s['title'] is! String || s['body'] is! String) {
         throw CatalogException('$id: guide steps need string title and body');
@@ -100,6 +107,7 @@ class Distro {
       description: get<String>('description'),
       bestFor: get<String>('bestFor'),
       desktop: desktop as String?,
+      basedOn: basedOn as String?,
       look: get<String>('look'),
       accent: get<int>('accent'),
       guide: guide,

@@ -75,4 +75,10 @@ void main() {
   test('empty distros list parses', () {
     expect(Catalog.parse(cat([])).distros, isEmpty);
   });
+
+  test('basedOn parsed when present, null when absent', () {
+    final c = Catalog.parse(cat([d('a', over: {'basedOn': 'Debian'}), d('b')]));
+    expect(c.byId('a')!.basedOn, 'Debian');
+    expect(c.byId('b')!.basedOn, isNull);
+  });
 }
