@@ -69,9 +69,10 @@
   - `Map<String, String> parseChecksums(String text)`: `SHA256SUMS` biçimi (`<64 hex>  <ad>` veya `<64 hex> *<ad>`), anahtar ad, değer küçük harfli hex; geçersiz satırlar atlanır.
   - `Future<String> sha256OfFile(File f)`: akışlı, küçük harfli hex.
   - `String? expectedHashFor(Map<String,String> sums, String fileName)`
+  - `bool isSafeFileName(String name)`: izin listesi `^[A-Za-z0-9][A-Za-z0-9._+-]*$`, `..` içermez, en çok 255 karakter; `.`, boşluk, NUL, `C:x`, `%2f`, sondaki nokta/boşluk reddedilir.
   - `String? normalizeSha256(String input)`: boşluk/`sha256:` önekini atar, 64 hex değilse `null`.
 
-- [ ] **Step 1: Write failing tests**: `parses two-space and star formats`, `ignores comments and blank and bad lines`, `uppercase hash normalized to lowercase`, `expectedHashFor missing name returns null`, `sha256OfFile of empty file equals e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`, `sha256OfFile of "abc" equals ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad`, `sha256OfFile streams a 20 MB file` (geçici dosya, bellek testi değil, doğru hash), `normalizeSha256 rejects 63 chars and non-hex`.
+- [ ] **Step 1: Write failing tests**: `parses two-space and star formats`, `ignores comments and blank and bad lines`, `uppercase hash normalized to lowercase`, `expectedHashFor missing name returns null`, `sha256OfFile of empty file equals e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855`, `sha256OfFile of "abc" equals ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad`, `sha256OfFile streams a 20 MB file` (geçici dosya, bellek testi değil, doğru hash), `normalizeSha256 rejects 63 chars and non-hex`, `isSafeFileName accepts ubuntu-24.04-desktop-amd64.iso and rejects "..", ".", "a/b", "a\\b", "C:x.iso", "a b", NUL, "%2f", trailing dot, 256 chars`.
 - [ ] **Step 2: Run** `flutter test test/download/checksum_test.dart` → FAIL.
 - [ ] **Step 3: Implement** `lib/download/checksum.dart`; `crypto`'nun `sha256.bind(file.openRead())` akış API'sini kullan.
 - [ ] **Step 4: Run** → PASS.
@@ -128,9 +129,9 @@
   - `enum DownloadPhase { idle, fetchingChecksum, downloading, verifying, verified, mismatch, failed, cancelled }`
   - `class DownloadController extends ChangeNotifier { DownloadController({required Downloader downloader, required Directory targetDir}); DownloadPhase get phase; int get received; int? get total; String? get error; File? get file; Future<void> start(IsoAsset iso); void cancel(); }`
   - `Future<void> startWithManualHash(File isoFile, String expectedSha256)`: Windows "kendi ISO'm" yolu, yalnız doğrular.
-  - Hedef: `targetDir/<fileName>` (`targetDir` yoksa oluşturulur); `defaultDownloadDir()` → `HOME/Downloads/BesideOS` (Windows `USERPROFILE`), ortam değişkeni yoksa `Directory.systemTemp/BesideOS`.
+  - Hedef: `targetDir/<fileName>` (`isSafeFileName` yazma noktasında yeniden denetlenir, katalog doğrulamasına güvenilmez) (`targetDir` yoksa oluşturulur); `defaultDownloadDir()` → `HOME/Downloads/BesideOS` (Windows `USERPROFILE`), ortam değişkeni yoksa `Directory.systemTemp/BesideOS`.
 
-- [ ] **Step 1: Write failing tests** (sahte yerel sunucu): `happy path ends verified with matching checksum file`, `checksum file missing the iso name ends failed (fail closed)`, `hash mismatch ends mismatch and deletes file`, `network error ends failed with message`, `cancel ends cancelled and keeps .part`, `restart after cancel resumes`, `unwritable target dir ends failed without throwing`, `startWithManualHash ok and mismatch`, `phases notified in order` (dinleyici sırası).
+- [ ] **Step 1: Write failing tests** (sahte yerel sunucu): `happy path ends verified with matching checksum file`, `checksum file missing the iso name ends failed (fail closed)`, `hash mismatch ends mismatch and deletes file`, `network error ends failed with message`, `cancel ends cancelled and keeps .part`, `restart after cancel resumes`, `unwritable target dir ends failed without throwing`, `startWithManualHash ok and mismatch`, `unsafe iso fileName (e.g. 'C:x.iso', '.', 'a b') ends failed before any network call`, `phases notified in order` (dinleyici sırası).
 - [ ] **Step 2: Run** `flutter test test/download/download_controller_test.dart` → FAIL.
 - [ ] **Step 3: Implement** `DownloadController` ve `defaultDownloadDir`; tüm hatalar `failed` durumuna ve Türkçe `error` metnine çevrilir, hiçbiri dışarı fırlatılmaz.
 - [ ] **Step 4: Run** → PASS.
