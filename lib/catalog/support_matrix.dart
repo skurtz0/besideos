@@ -2,6 +2,8 @@ import 'distro.dart';
 
 enum Host { windows, linux, macM1M2, macOther }
 
+String? hostKey(Host h) => const {Host.windows: 'windows', Host.linux: 'linux', Host.macM1M2: 'mac-m1m2'}[h];
+
 class SupportEntry {
   final bool supported;
   final String reason;

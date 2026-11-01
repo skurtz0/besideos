@@ -1,1 +1,0 @@
-- Task 5: lib/catalog/distro_page.dart (DistroPage) + routes.dart (catalogRoute: /distros, /distros/<id>, else Bulunamadı); indirme düğmesi devre dışı, url_launcher yok.

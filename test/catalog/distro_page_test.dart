@@ -34,8 +34,10 @@ final catalog = Catalog([
 ]);
 
 Widget routed(String name, {Catalog? c}) => MaterialApp(
+      key: UniqueKey(),
       theme: ThemeData.dark(),
       onGenerateRoute: (s) => catalogRoute(s, c ?? catalog),
+      onGenerateInitialRoutes: (n) => [catalogRoute(RouteSettings(name: n), c ?? catalog)],
       initialRoute: name,
     );
 
@@ -54,12 +56,24 @@ void main() {
     expect(find.textContaining('https://example.org/mint'), findsOneWidget);
   });
 
-  testWidgets('shows supported hosts', (t) async {
+  testWidgets('shows supported hosts: check only for hosts in distro.hosts', (t) async {
+    // mint hosts: windows, linux. Linux guest on linux is unsupported by matrix; mac M1/M2 not in hosts.
     await t.pumpWidget(page(catalog.distros.first));
     expect(find.textContaining(supportFor(Host.windows, DistroFamily.linux).reason), findsOneWidget);
     expect(find.textContaining(supportFor(Host.macOther, DistroFamily.linux).reason), findsOneWidget);
-    expect(find.text('✓'), findsNWidgets(2));
-    expect(find.text('✗'), findsNWidgets(2));
+    expect(find.text('✓'), findsOneWidget);
+    expect(find.text('✗'), findsNWidgets(3));
+  });
+
+  testWidgets('hosts [windows] gives no check for Mac M1/M2', (t) async {
+    final x = Distro(
+      id: 'u', name: 'U', family: DistroFamily.linux, tagline: 't', description: 'd', bestFor: 'b',
+      look: 'l', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['windows'],
+      downloadPage: 'x', userSuppliedIso: false, license: 'l');
+    await t.pumpWidget(page(x));
+    expect(find.text('✓'), findsOneWidget);
+    expect(find.textContaining('Mac M1/M2: Bu dağıtım için bu rehberde yok'), findsOneWidget);
+    expect(find.textContaining('Asahi Linux ile Linux, macOS yanına kurulabilir'), findsNothing);
   });
 
   testWidgets('download button is disabled and says it arrives in the next stage', (t) async {
@@ -77,7 +91,7 @@ void main() {
   });
 
   testWidgets('unknown id route shows "Bulunamadı"', (t) async {
-    for (final n in ['/distros/nope', '/distros/', '/distros/a/b']) {
+    for (final n in ['/distros/nope', '/distros/a/b']) {
       await t.pumpWidget(routed(n));
       expect(find.textContaining('Bulunamadı'), findsOneWidget, reason: n);
     }
@@ -103,5 +117,24 @@ void main() {
     final real = Catalog.parse(File('assets/catalog/catalog.json').readAsStringSync());
     await t.pumpWidget(page(real.byId('ubuntu')!));
     expect(t.takeException(), isNull);
+  });
+
+  testWidgets('trailing slash and query string routes', (t) async {
+    for (final n in ['/distros/', '/distros?x=1']) {
+      await t.pumpWidget(routed(n));
+      expect(find.text('Ad mint'), findsOneWidget, reason: n);
+    }
+    for (final n in ['/distros/mint/', '/distros/mint?ref=1']) {
+      await t.pumpWidget(routed(n));
+      expect(find.textContaining('Aciklama mint'), findsOneWidget, reason: n);
+    }
+  });
+
+  testWidgets('deep link without back stack shows fallback back button', (t) async {
+    await t.pumpWidget(routed('/distros/mint'));
+    expect(find.byType(BackButton), findsNothing);
+    await t.tap(find.byTooltip('Dağıtımlar'));
+    await t.pumpAndSettle();
+    expect(find.text('Slogan mint'), findsOneWidget);
   });
 }

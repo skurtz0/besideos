@@ -6,9 +6,9 @@ import 'distro.dart';
 import 'distro_page.dart';
 
 Route<dynamic> catalogRoute(RouteSettings s, Catalog catalog) {
-  final name = s.name ?? '';
+  final seg = (Uri.tryParse(s.name ?? '')?.pathSegments ?? const <String>[]).where((e) => e.isNotEmpty).toList();
   Widget body;
-  if (name == '/distros') {
+  if (seg.length == 1 && seg[0] == 'distros') {
     body = Builder(
       builder: (context) => Scaffold(
         backgroundColor: kBg,
@@ -17,7 +17,7 @@ Route<dynamic> catalogRoute(RouteSettings s, Catalog catalog) {
       ),
     );
   } else {
-    final d = name.startsWith('/distros/') ? catalog.byId(name.substring('/distros/'.length)) : null;
+    final d = seg.length == 2 && seg[0] == 'distros' ? catalog.byId(seg[1]) : null;
     body = d != null ? DistroPage(distro: d) : const _NotFound();
   }
   return MaterialPageRoute(settings: s, builder: (_) => body);

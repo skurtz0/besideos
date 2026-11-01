@@ -11,12 +11,6 @@ const _hostLabels = {
   Host.macOther: 'Diğer Mac',
 };
 
-const _hostKeys = {
-  Host.windows: 'windows',
-  Host.linux: 'linux',
-  Host.macM1M2: 'mac-m1m2',
-};
-
 class CatalogPage extends StatefulWidget {
   const CatalogPage({super.key, required this.catalog, required this.onOpen});
   final Catalog catalog;
@@ -33,7 +27,7 @@ class _CatalogPageState extends State<CatalogPage> {
   List<Distro> get _visible => widget.catalog.distros.where((d) {
         if (_family != null && d.family != _family) return false;
         if (_host == null) return true;
-        final key = _hostKeys[_host];
+        final key = _host == null ? null : hostKey(_host!);
         return key != null && d.hosts.contains(key); // macOther: eşleşme yok
       }).toList();
 

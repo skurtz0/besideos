@@ -17,6 +17,10 @@ void main() {
     expect(e.supported, isFalse);
     expect(e.reason, contains('M1/M2'));
   });
+  test('hostKey maps hosts, macOther null', () {
+    expect(hostKey(Host.macM1M2), 'mac-m1m2');
+    expect(hostKey(Host.macOther), isNull);
+  });
   test('macOther→windows unsupported', () => expect(supportFor(Host.macOther, DistroFamily.windows).supported, isFalse));
   test('linux→linux unsupported', () {
     final e = supportFor(Host.linux, DistroFamily.linux);

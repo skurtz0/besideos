@@ -10,7 +10,6 @@ const _hostNames = {
   Host.macM1M2: 'Mac M1/M2',
   Host.macOther: 'Diğer Mac',
 };
-const _hostKeys = {Host.windows: 'windows', Host.linux: 'linux', Host.macM1M2: 'mac-m1m2'};
 
 class DistroPage extends StatelessWidget {
   const DistroPage({super.key, required this.distro});
@@ -21,14 +20,20 @@ class DistroPage extends StatelessWidget {
     final d = distro;
     final installable = [
       for (final h in Host.values)
-        if (_hostKeys[h] != null && d.hosts.contains(_hostKeys[h])) _hostNames[h]!,
+        if (hostKey(h) != null && d.hosts.contains(hostKey(h))) _hostNames[h]!,
     ];
     return Scaffold(
       backgroundColor: kBg,
       appBar: AppBar(
         backgroundColor: kBg,
         foregroundColor: kText,
-        leading: const BackButton(),
+        leading: Navigator.canPop(context)
+            ? const BackButton()
+            : IconButton(
+                icon: const Icon(Icons.arrow_back),
+                tooltip: 'Dağıtımlar',
+                onPressed: () => Navigator.pushReplacementNamed(context, '/distros'),
+              ),
         title: Text(d.name, overflow: TextOverflow.ellipsis),
       ),
       body: SingleChildScrollView(
@@ -82,7 +87,7 @@ class DistroPage extends StatelessWidget {
               _head('Kurulabilir ana sistemler'),
               Text(installable.isEmpty ? 'Yok' : installable.join(', '), style: const TextStyle(color: kText)),
               const SizedBox(height: 8),
-              for (final h in Host.values) _hostRow(h, d.family),
+              for (final h in Host.values) _hostRow(h, d),
               _head('Lisans'),
               Text(d.license, style: const TextStyle(color: kMuted, height: 1.5)),
               _head('Resmi sayfa'),
@@ -112,12 +117,15 @@ class DistroPage extends StatelessWidget {
         child: Text(t, style: const TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
       );
 
-  Widget _hostRow(Host h, DistroFamily f) {
-    final e = supportFor(h, f);
+  Widget _hostRow(Host h, Distro d) {
+    final m = supportFor(h, d.family);
+    final key = hostKey(h);
+    final ok = m.supported && key != null && d.hosts.contains(key);
+    final e = ok || !m.supported ? m : const SupportEntry(false, 'Bu dağıtım için bu rehberde yok.');
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(width: 24, child: Text(e.supported ? '✓' : '✗', style: TextStyle(color: e.supported ? kGreen : kMuted, fontWeight: FontWeight.w700))),
+        SizedBox(width: 24, child: Text(ok ? '✓' : '✗', style: TextStyle(color: ok ? kGreen : kMuted, fontWeight: FontWeight.w700))),
         Expanded(
           child: Text('${_hostNames[h]}: ${e.reason}', style: const TextStyle(color: kMuted, height: 1.5)),
         ),
