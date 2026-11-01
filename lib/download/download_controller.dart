@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import '../catalog/distro.dart';
@@ -42,7 +43,26 @@ class DownloadController extends ChangeNotifier {
   String? get error => _error;
   File? get file => _file;
 
+  bool _disposed = false;
+  bool get _busy =>
+      _phase == DownloadPhase.fetchingChecksum ||
+      _phase == DownloadPhase.downloading ||
+      _phase == DownloadPhase.verifying;
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) super.notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    _disposed = true;
+    _token?.cancel();
+    super.dispose();
+  }
+
   void _set(DownloadPhase p, {String? error}) {
+    if (_disposed) return;
     _phase = p;
     _error = error;
     notifyListeners();
@@ -50,7 +70,14 @@ class DownloadController extends ChangeNotifier {
 
   void cancel() => _token?.cancel();
 
+  Future<void> _rm(File f) async {
+    try {
+      if (f.existsSync()) await f.delete();
+    } catch (_) {}
+  }
+
   Future<void> start(IsoAsset iso) async {
+    if (_busy) return;
     _received = 0;
     _total = null;
     _file = null;
@@ -65,13 +92,17 @@ class DownloadController extends ChangeNotifier {
       _set(DownloadPhase.fetchingChecksum);
       await targetDir.create(recursive: true);
       sumsFile = File('${targetDir.path}/${iso.fileName}.sha256sums.tmp');
-      if (sumsFile.existsSync()) await sumsFile.delete();
-      await downloader.download(Uri.parse(iso.checksumUrl), sumsFile, cancel: token);
-      final sums = parseChecksums(await sumsFile.readAsString());
+      // The checksum file never resumes: always fetched fresh from 0.
+      await _rm(sumsFile);
+      await _rm(File('${sumsFile.path}.part'));
+      await downloader.download(Uri.parse(iso.checksumUrl), sumsFile,
+          cancel: token, maxBytes: 1 << 20);
+      final sums = parseChecksums(
+          utf8.decode(await sumsFile.readAsBytes(), allowMalformed: true));
       final expected = expectedHashFor(sums, iso.fileName);
       if (expected == null) {
         _set(DownloadPhase.failed,
-            error: 'Sağlama dosyasında ${iso.fileName} bulunamadı; doğrulanamadı.');
+            error: 'Sağlama dosyası geçersiz veya dosya adı bulunamadı; doğrulanamadı.');
         return;
       }
 
@@ -79,6 +110,7 @@ class DownloadController extends ChangeNotifier {
       final dest = File('${targetDir.path}/${iso.fileName}');
       await downloader.download(Uri.parse(iso.url), dest, cancel: token,
           onProgress: (r, t) {
+        if (_disposed) return;
         _received = r;
         _total = t;
         notifyListeners();
@@ -88,28 +120,30 @@ class DownloadController extends ChangeNotifier {
       _set(DownloadPhase.cancelled);
     } on DownloadException catch (e) {
       _set(DownloadPhase.failed, error: 'İndirme başarısız: ${e.message}');
-    } on FormatException catch (e) {
-      _set(DownloadPhase.failed, error: 'Geçersiz adres: ${e.message}');
-    } on FileSystemException catch (e) {
-      _set(DownloadPhase.failed, error: 'Dosya yazılamadı: ${e.message}');
-    } catch (e) {
-      _set(DownloadPhase.failed, error: 'Beklenmeyen hata: $e');
+    } on FormatException {
+      _set(DownloadPhase.failed, error: 'Geçersiz adres.');
+    } on FileSystemException {
+      _set(DownloadPhase.failed, error: 'Disk hatası: dosya yazılamadı.');
+    } catch (_) {
+      _set(DownloadPhase.failed, error: 'Beklenmeyen hata.');
     } finally {
-      try {
-        if (sumsFile != null && sumsFile.existsSync()) await sumsFile.delete();
-      } catch (_) {}
+      if (sumsFile != null) {
+        await _rm(sumsFile);
+        await _rm(File('${sumsFile.path}.part'));
+      }
     }
   }
 
   /// Windows "my own ISO" path: verify only.
   Future<void> startWithManualHash(File isoFile, String expectedSha256) async {
+    if (_busy) return;
     _received = 0;
     _total = null;
     _file = null;
     try {
       await _verify(isoFile, expectedSha256);
-    } catch (e) {
-      _set(DownloadPhase.failed, error: 'Doğrulama başarısız: $e');
+    } catch (_) {
+      _set(DownloadPhase.failed, error: 'Doğrulama başarısız (disk hatası).');
     }
   }
 

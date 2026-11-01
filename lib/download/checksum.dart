@@ -8,10 +8,15 @@ final _safeName = RegExp(r'^[A-Za-z0-9][A-Za-z0-9._+-]*$');
 /// Parses SHA256SUMS text: name -> lowercase hex. Bad lines are skipped.
 Map<String, String> parseChecksums(String text) {
   final out = <String, String>{};
+  final conflicts = <String>{};
   for (final raw in text.split('\n')) {
     final m = _line.firstMatch(raw.trim());
-    if (m != null) out[m.group(2)!] = m.group(1)!.toLowerCase();
+    if (m == null) continue;
+    final name = m.group(2)!, h = m.group(1)!.toLowerCase();
+    if (out.containsKey(name) && out[name] != h) conflicts.add(name);
+    out[name] = h;
   }
+  out.removeWhere((k, _) => conflicts.contains(k)); // fail closed on ambiguity
   return out;
 }
 

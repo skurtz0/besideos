@@ -95,6 +95,7 @@ void main() {
         final from = int.parse(
             RegExp(r'bytes=(\d+)-').firstMatch(r.headers.value('range')!)!.group(1)!);
         r.response.statusCode = 206;
+        r.response.headers.set('content-range', 'bytes $from-${data.length - 1}/${data.length}');
         r.response.add(data.sublist(from));
         await r.response.close();
         return;
@@ -103,8 +104,10 @@ void main() {
       r.response.add(data.sublist(0, 20000));
       await r.response.flush();
       await gate.future;
-      r.response.add(data.sublist(20000));
-      await r.response.close();
+      try {
+        r.response.add(data.sublist(20000));
+        await r.response.close();
+      } catch (_) {} // client may already be gone after cancel
     };
     final c = ctl();
     c.addListener(() {
@@ -163,6 +166,111 @@ void main() {
       DownloadPhase.verifying,
       DownloadPhase.verified,
     ]);
+  });
+
+  test('oversize checksum file ends failed and leaves no files', () async {
+    final c = ctl();
+    final big = iso();
+    await server.close(force: true);
+    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    server.listen((r) async {
+      for (var i = 0; i < 20; i++) {
+        r.response.add(List.filled(100 * 1024, 0x61));
+      }
+      await r.response.close();
+    });
+    await c.start(IsoAsset(
+        arch: IsoArch.x86_64,
+        url: big.url.replaceFirst(RegExp(r':\d+'), ':${server.port}'),
+        checksumUrl: 'http://127.0.0.1:${server.port}/sums',
+        fileName: 'a.iso'));
+    expect(c.phase, DownloadPhase.failed);
+    expect(dir.listSync(), isEmpty);
+  });
+
+  test('cancel during checksum fetch leaves no .tmp or .part', () async {
+    await server.close(force: true);
+    server = await HttpServer.bind(InternetAddress.loopbackIPv4, 0);
+    server.listen((r) async {
+      try {
+        r.response.contentLength = 1000;
+        r.response.add(List.filled(10, 0x61));
+        await r.response.flush();
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+        r.response.add(List.filled(10, 0x61));
+        await r.response.flush();
+      } catch (_) {}
+    });
+    final c = ctl();
+    final f = c.start(iso());
+    await Future<void>.delayed(const Duration(milliseconds: 30));
+    c.cancel();
+    await f;
+    expect(c.phase, DownloadPhase.cancelled);
+    expect(dir.listSync(), isEmpty);
+  });
+
+  test('second start during a run is a no-op; cancel still cancels first', () async {
+    final gate = Completer<void>();
+    isoHandler = (r) async {
+      r.response.contentLength = data.length;
+      r.response.add(data.sublist(0, 20000));
+      await r.response.flush();
+      await gate.future;
+      try {
+        await r.response.close();
+      } catch (_) {}
+    };
+    final c = ctl();
+    c.addListener(() {
+      if (c.phase == DownloadPhase.downloading && c.received > 0) {
+        c.start(iso()); // re-entrant call
+        c.cancel();
+        gate.complete();
+      }
+    });
+    final before = hits;
+    await c.start(iso());
+    expect(c.phase, DownloadPhase.cancelled, reason: '${c.error}');
+    expect(hits - before, 2); // one sums + one iso, no second run
+  });
+
+  test('stalled server ends failed within idle timeout', () async {
+    isoHandler = (r) async {
+      r.response.contentLength = data.length;
+      r.response.add(data.sublist(0, 10));
+      await r.response.flush();
+    };
+    final c = DownloadController(
+        downloader: Downloader(
+            allowInsecureForTesting: true,
+            idleTimeout: const Duration(milliseconds: 200)),
+        targetDir: dir);
+    await c.start(iso()).timeout(const Duration(seconds: 5));
+    expect(c.phase, DownloadPhase.failed);
+    expect(c.error, contains('yanıt vermiyor'));
+  });
+
+  test('dispose mid-download does not throw', () async {
+    final gate = Completer<void>();
+    isoHandler = (r) async {
+      r.response.contentLength = data.length;
+      r.response.add(data.sublist(0, 20000));
+      await r.response.flush();
+      await gate.future;
+      try {
+        r.response.add(data.sublist(20000));
+        await r.response.close();
+      } catch (_) {}
+    };
+    final c = ctl();
+    final f = c.start(iso());
+    while (c.received == 0) {
+      await Future<void>.delayed(const Duration(milliseconds: 10));
+    }
+    c.dispose();
+    gate.complete();
+    await f;
   });
 
   test('defaultDownloadDir ends in BesideOS', () {

@@ -25,6 +25,10 @@ void main() {
   test('uppercase hash normalized to lowercase', () {
     expect(parseChecksums('${_h2.toUpperCase()}  a.iso')['a.iso'], _h2);
   });
+  test('duplicate names: conflicting hashes dropped, identical kept', () {
+    final m = parseChecksums('$_h1  a.iso\n$_h2  a.iso\n$_h1  b.iso\n$_h1  b.iso\n');
+    expect(m, {'b.iso': _h1});
+  });
   test('expectedHashFor missing name returns null', () {
     expect(expectedHashFor({'a': _h1}, 'b'), isNull);
     expect(expectedHashFor({'a': _h1}, 'a'), _h1);
