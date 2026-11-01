@@ -1,8 +1,15 @@
 use crate::checks::{check, staging_size};
-use crate::facts::{HostFacts, IsoFacts, Request};
+use crate::facts::{Arch, HostFacts, IsoFacts, Request};
 use crate::plan::{fmt_gib, Fs, Plan, PlannedStep, Refusal, Step};
 
 const LABEL: &str = "BESIDEOS";
+
+fn removable_loader(arch: Arch) -> &'static str {
+    match arch {
+        Arch::X86_64 => "\\EFI\\BOOT\\BOOTX64.EFI",
+        Arch::Arm64 => "\\EFI\\BOOT\\BOOTAA64.EFI",
+    }
+}
 
 pub fn plan_windows_to_linux(
     host: &HostFacts,
@@ -12,7 +19,7 @@ pub fn plan_windows_to_linux(
 ) -> Result<Plan, Refusal> {
     let (disk, part, shrink) = check(host, iso, req)?;
     let staging = staging_size(iso)?;
-    let loader = "\\EFI\\BOOT\\BOOTX64.EFI";
+    let loader = removable_loader(host.arch);
     let boot_desc = "BesideOS kurulumu";
     let step = |description: String, step: Step, undo: Option<Step>| PlannedStep {
         description,
@@ -62,7 +69,10 @@ pub fn plan_windows_to_linux(
             None,
         ),
         step(
-            "Bir sonraki açılış için tek seferlik UEFI önyükleme girdisi eklenecek".into(),
+            format!(
+                "Bir sonraki açılış için tek seferlik UEFI önyükleme girdisi ({}) eklenecek",
+                host.arch.as_str()
+            ),
             Step::AddOneShotBootEntry {
                 loader_path: loader.into(),
                 description: boot_desc.into(),
@@ -73,13 +83,16 @@ pub fn plan_windows_to_linux(
         ),
         step("Bilgisayar yeniden başlatılacak".into(), Step::Reboot, None),
     ];
-    let risks = vec![
+    let mut risks = vec![
         "Bölüm küçültme geri alınamaz; işleme başlamadan önce yedek al (yedek uyarısı).".into(),
         "Bir adım yarıda kalırsa geri alma adımları uygulanmalı.".into(),
         "Secure Boot açıksa Linux yükleyicisi imzalı değilse açılmayabilir (Secure Boot notu)."
             .into(),
         "Kurulum sonrası BESIDEOS bölümü silinebilir.".into(),
     ];
+    if host.arch == Arch::Arm64 {
+        risks.push("arm64 yolu şimdilik yalnız kuru çalıştırmayla (dry-run) doğrulandı.".into());
+    }
     Ok(Plan {
         steps,
         risks,
@@ -119,6 +132,7 @@ mod tests {
     }
     fn iso() -> IsoFacts {
         IsoFacts {
+            arch: Arch::X86_64,
             size_bytes: 3 * GIB,
             extracted_bytes: 3 * GIB,
             largest_file_bytes: GIB,
@@ -248,13 +262,45 @@ mod tests {
                 && r.contains("yarıda kalırsa geri alma adımları uygulanmalı")
         );
     }
+    fn loader_of(p: &Plan) -> (String, String) {
+        let Step::AddOneShotBootEntry { loader_path, .. } = &p.steps[3].step else {
+            panic!()
+        };
+        (loader_path.clone(), p.steps[3].description.clone())
+    }
     #[test]
-    fn arm64_is_refused() {
+    fn x86_64_uses_bootx64_and_has_no_arm_note() {
+        let p = plan();
+        let (l, d) = loader_of(&p);
+        assert_eq!(l, "\\EFI\\BOOT\\BOOTX64.EFI");
+        assert!(d.contains("x86_64"));
+        assert!(!p.risks.join(" ").contains("arm64"));
+    }
+    #[test]
+    fn arm64_pair_uses_bootaa64_and_notes_dry_run() {
+        let mut h = host();
+        h.arch = Arch::Arm64;
+        let mut i = iso();
+        i.arch = Arch::Arm64;
+        let p = plan_windows_to_linux(&h, &i, &req(), "x").unwrap();
+        let (l, d) = loader_of(&p);
+        assert_eq!(l, "\\EFI\\BOOT\\BOOTAA64.EFI");
+        assert!(d.contains("arm64"));
+        assert!(p.risks.join(" ").contains("dry-run"));
+    }
+    #[test]
+    fn arch_mismatch_is_refused() {
         let mut h = host();
         h.arch = Arch::Arm64;
         assert!(matches!(
             plan_windows_to_linux(&h, &iso(), &req(), "x"),
-            Err(Refusal::UnsupportedArch { .. })
+            Err(Refusal::ArchMismatch { .. })
+        ));
+        let mut i = iso();
+        i.arch = Arch::Arm64;
+        assert!(matches!(
+            plan_windows_to_linux(&host(), &i, &req(), "x"),
+            Err(Refusal::ArchMismatch { .. })
         ));
     }
     #[test]

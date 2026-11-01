@@ -62,3 +62,43 @@ fn bitlocker_refusal_matches_golden() {
     let golden = std::fs::read_to_string(data("refusal_bitlocker.golden.json")).unwrap();
     assert_eq!(String::from_utf8(o.stdout).unwrap(), golden);
 }
+
+#[test]
+fn arm64_host_matches_golden_plan() {
+    let o = Command::new(env!("CARGO_BIN_EXE_besideos-plan"))
+        .args([
+            "--host",
+            &data("host_arm64.json"),
+            "--iso",
+            &data("iso_arm64.json"),
+            "--request",
+            &data("request.json"),
+            "--iso-path",
+            "C:\\iso\\ubuntu.iso",
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(o.status.code(), Some(0));
+    let golden = std::fs::read_to_string(data("plan_arm64.golden.json")).unwrap();
+    assert_eq!(String::from_utf8(o.stdout).unwrap(), golden);
+}
+
+#[test]
+fn arch_mismatch_exits_2() {
+    let o = Command::new(env!("CARGO_BIN_EXE_besideos-plan"))
+        .args([
+            "--host",
+            &data("host_arm64.json"),
+            "--iso",
+            &data("iso.json"),
+            "--request",
+            &data("request.json"),
+            "--iso-path",
+            "x",
+        ])
+        .output()
+        .unwrap();
+    assert_eq!(o.status.code(), Some(2));
+    let v: serde_json::Value = serde_json::from_slice(&o.stdout).unwrap();
+    assert_eq!(v["refused"], "arch_mismatch");
+}

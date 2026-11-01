@@ -46,3 +46,13 @@ Minors: MBR/GPT limits via `len()+2 > 4 / 128` (boundary tests 126 ok, 127 refus
 - Decision: window `arm64` message names the arch as "arm64" (only other variant).
 - Decision: golden files regenerated and hand-checked (shrink 50+3+0.5 = 53.5 GiB = 57445187584; Windows reserve 40 GiB of 400 GiB; available 210 GiB); refusal golden is the CLI's pretty JSON with keys sorted by serde_json (message, refused).
 - Decision: sample data: `min_size_bytes` = used_bytes, `arch` x86_64.
+
+# arm64 host support
+
+Commit: "feat(core): arm64 host support". Tests-first (compile/unknown-field failures observed before wiring). Result: see commit; cargo test, clippy --all-targets -D warnings, fmt --check clean; flutter test 114 passed.
+
+- `Refusal::UnsupportedArch` removed (variant, code, message, tests). New `Refusal::ArchMismatch{host,iso}` (code `arch_mismatch`), checked right after NotUefi. `IsoFacts.arch` required; `Arch::as_str` added.
+- `removable_loader(Arch)` -> BOOTX64.EFI / BOOTAA64.EFI; boot-entry description names the arch; arm64 plans add a risk note that the path is only dry-run validated (x86_64 plans do not). Static x86_64 hedge was already removed in the previous pass.
+- Tests: arm64+arm64 plan with BOOTAA64; both mismatch directions (checks + planner); mismatch ordering; iso arch required at parse; CLI golden for arm64 (`plan_arm64.golden.json`) and CLI mismatch exit 2.
+- Decision: x86_64 golden is NOT byte-identical: only the boot-entry step description changed ("... girdisi (x86_64) eklenecek"), because the description now mentions the arch as requested; verified by diff. arm64 golden vs x86_64 golden differs only in that description, loader path and the extra dry-run risk.
+- Decision: sample data: iso.json gained `arch`; added host_arm64.json, iso_arm64.json.

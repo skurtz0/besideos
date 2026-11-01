@@ -41,6 +41,15 @@ pub enum Arch {
     Arm64,
 }
 
+impl Arch {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Arch::X86_64 => "x86_64",
+            Arch::Arm64 => "arm64",
+        }
+    }
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct HostFacts {
@@ -79,6 +88,7 @@ mod win_part {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
 pub struct IsoFacts {
+    pub arch: Arch,
     pub size_bytes: u64,
     pub extracted_bytes: u64,
     pub largest_file_bytes: u64,
@@ -174,6 +184,17 @@ mod tests {
         assert_eq!(HostFacts::from_json(&j).unwrap().arch, Arch::Arm64);
         let j = HOST.replace("x86_64", "riscv");
         assert!(HostFacts::from_json(&j).is_err());
+    }
+
+    #[test]
+    fn iso_arch_is_required() {
+        let ok = r#"{"arch":"arm64","size_bytes":1,"extracted_bytes":1,"largest_file_bytes":1,"largest_file_name":"f"}"#;
+        assert_eq!(IsoFacts::from_json(ok).unwrap().arch, Arch::Arm64);
+        let bad = ok.replace("\"arch\":\"arm64\",", "");
+        assert!(matches!(
+            IsoFacts::from_json(&bad),
+            Err(Refusal::InvalidInput(_))
+        ));
     }
 
     #[test]

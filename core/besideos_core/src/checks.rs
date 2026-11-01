@@ -1,4 +1,4 @@
-use crate::facts::{Arch, Disk, HostFacts, IsoFacts, Partition, PartitionStyle, Request};
+use crate::facts::{Disk, HostFacts, IsoFacts, Partition, PartitionStyle, Request};
 use crate::plan::Refusal;
 
 const GIB: u64 = 1024 * 1024 * 1024;
@@ -36,9 +36,10 @@ pub fn check<'a>(
     if !host.uefi {
         return Err(Refusal::NotUefi);
     }
-    if host.arch != Arch::X86_64 {
-        return Err(Refusal::UnsupportedArch {
-            arch: "arm64".into(),
+    if host.arch != iso.arch {
+        return Err(Refusal::ArchMismatch {
+            host: host.arch.as_str().into(),
+            iso: iso.arch.as_str().into(),
         });
     }
     let (dn, pn) = host.windows_partition;
@@ -125,6 +126,7 @@ pub fn check<'a>(
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::facts::Arch;
 
     fn part(n: u32) -> Partition {
         Partition {
@@ -153,6 +155,7 @@ mod tests {
     }
     fn iso() -> IsoFacts {
         IsoFacts {
+            arch: Arch::X86_64,
             size_bytes: 3 * GIB,
             extracted_bytes: 3 * GIB,
             largest_file_bytes: GIB,
@@ -181,13 +184,40 @@ mod tests {
         assert_eq!(err(&h, &iso(), &req()), Refusal::NotUefi);
     }
     #[test]
-    fn refuses_arm64() {
+    fn arch_mismatch_is_refused_both_ways() {
+        let mut h = host();
+        let mut i = iso();
+        i.arch = Arch::Arm64;
+        assert_eq!(
+            err(&h, &i, &req()),
+            Refusal::ArchMismatch {
+                host: "x86_64".into(),
+                iso: "arm64".into()
+            }
+        );
+        h.arch = Arch::Arm64;
+        i.arch = Arch::X86_64;
+        assert_eq!(
+            err(&h, &i, &req()),
+            Refusal::ArchMismatch {
+                host: "arm64".into(),
+                iso: "x86_64".into()
+            }
+        );
+        i.arch = Arch::Arm64;
+        assert!(check(&h, &i, &req()).is_ok());
+    }
+    #[test]
+    fn arch_mismatch_checked_right_after_not_uefi() {
         let mut h = host();
         h.arch = Arch::Arm64;
+        h.disks[0].dynamic = true;
         assert!(matches!(
             err(&h, &iso(), &req()),
-            Refusal::UnsupportedArch { .. }
+            Refusal::ArchMismatch { .. }
         ));
+        h.uefi = false;
+        assert_eq!(err(&h, &iso(), &req()), Refusal::NotUefi);
     }
     #[test]
     fn refuses_missing_windows_partition() {
@@ -373,6 +403,7 @@ mod tests {
         h.disks[0].size_bytes = 1000 * GIB;
         win(&mut h).size_bytes = 500 * GIB;
         let at = |extracted: u64| IsoFacts {
+            arch: Arch::X86_64,
             size_bytes: extracted,
             extracted_bytes: extracted,
             largest_file_bytes: GIB,

@@ -64,7 +64,7 @@ pub enum Refusal {
     NoSuitableDisk,
     InvalidInput(String),
     LinuxSpaceTooSmall { min: u64, given: u64 },
-    UnsupportedArch { arch: String },
+    ArchMismatch { host: String, iso: String },
     StagingTooLarge { max: u64, given: u64 },
 }
 
@@ -88,7 +88,7 @@ impl Refusal {
             Refusal::NoSuitableDisk => "no_suitable_disk",
             Refusal::InvalidInput(_) => "invalid_input",
             Refusal::LinuxSpaceTooSmall { .. } => "linux_space_too_small",
-            Refusal::UnsupportedArch { .. } => "unsupported_arch",
+            Refusal::ArchMismatch { .. } => "arch_mismatch",
             Refusal::StagingTooLarge { .. } => "staging_too_large",
         }
     }
@@ -114,9 +114,9 @@ impl Refusal {
                 fmt_gib(*min),
                 fmt_gib(*given)
             ),
-            Refusal::UnsupportedArch { arch } => {
-                format!("'{arch}' mimarisi desteklenmiyor; şimdilik yalnız x86_64.")
-            }
+            Refusal::ArchMismatch { host, iso } => format!(
+                "Mimari uyuşmuyor: bilgisayar {host}, ISO {iso}."
+            ),
             Refusal::StagingTooLarge { max, given } => format!(
                 "Geçici FAT32 bölümü çok büyük: en çok {} GiB olabilir, {} GiB gerekiyor.",
                 fmt_gib(*max),
@@ -183,8 +183,9 @@ mod tests {
             Refusal::NoSuitableDisk,
             Refusal::InvalidInput("x".into()),
             Refusal::LinuxSpaceTooSmall { min: 2, given: 1 },
-            Refusal::UnsupportedArch {
-                arch: "arm64".into(),
+            Refusal::ArchMismatch {
+                host: "a".into(),
+                iso: "b".into(),
             },
             Refusal::StagingTooLarge { max: 2, given: 3 },
         ];

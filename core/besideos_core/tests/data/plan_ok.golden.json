@@ -35,7 +35,7 @@
       "undo": null
     },
     {
-      "description": "Bir sonraki açılış için tek seferlik UEFI önyükleme girdisi eklenecek",
+      "description": "Bir sonraki açılış için tek seferlik UEFI önyükleme girdisi (x86_64) eklenecek",
       "step": {
         "type": "add_one_shot_boot_entry",
         "loader_path": "\\EFI\\BOOT\\BOOTX64.EFI",
