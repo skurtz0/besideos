@@ -80,7 +80,7 @@
 
 **Interfaces:**
 - Consumes: `Catalog.parse`, `Distro` (Task 1)
-- Produces: `assets/catalog/catalog.json`, sürüm anahtarı yok; en az 5 dağıtım: `ubuntu`, `linux-mint`, `fedora`, `debian` (family linux), `windows-11` (family windows, `userSuppliedIso: true`).
+- Produces: `assets/catalog/catalog.json`, sürüm anahtarı yok; en az 5 dağıtım; `hosts` yalnız gerçekten desteklenen yönleri içerir: Linux dağıtımları `[windows]`, yalnız `fedora` ayrıca `mac-m1m2` (Fedora Asahi Remix), `windows-11` `[windows, linux]`: `ubuntu`, `linux-mint`, `fedora`, `debian` (family linux), `windows-11` (family windows, `userSuppliedIso: true`).
 
 - [ ] **Step 1: Write failing test** `bundled catalog parses and is sane`: `rootBundle.loadString('assets/catalog/catalog.json')` → `Catalog.parse`; `distros.length >= 5`; her `id` benzersiz küçük harf/tire; `windows-11.userSuppliedIso == true`; hiçbir Windows kaydında `downloadPage` `.iso` ile bitmez; her kayıtta `guide.length >= 3` ve `hosts` boş değil; hiçbir kayıtta `hosts` içinde `macos` yok.
 - [ ] **Step 2: Run** → FAIL (asset yok).
@@ -91,7 +91,8 @@
 ### Task 4: Katalog sayfası
 
 **Files:**
-- Create: `lib/catalog/catalog_page.dart`
+- Create: `lib/catalog/catalog_page.dart`, `lib/theme.dart`
+- Modify: `lib/main.dart` (renkleri `theme.dart`'a taşı, adlar aynı kalır: `kBg`, `kPanel`, `kText`, `kMuted`, `kAccent`)
 - Test: `test/catalog/catalog_page_test.dart`
 
 **Interfaces:**
@@ -100,7 +101,7 @@
 
 - [ ] **Step 1: Write failing widget tests**: `lists every distro name`, `family filter shows only windows`, `host filter "Mac M1/M2" hides windows distros`, `empty catalog shows "Katalog boş"`, `does not overflow at 320x640` (hata fırlamaz), `tapping a card calls onOpen with that distro`.
 - [ ] **Step 2: Run** `flutter test test/catalog/catalog_page_test.dart` → FAIL.
-- [ ] **Step 3: Implement** `CatalogPage`: ailelere göre `FilterChip` + ana sistem seçici (`Host`), `Wrap` kart ızgarası; kartta ad, `tagline`, vurgu rengi şeridi. Filtre `supportFor(host, distro.family).supported` ile yapılır. Mevcut `_bg`/`_panel` renkleri `main.dart`'tan ortak `lib/theme.dart`'a taşınır (tek değişiklik, mevcut test geçmeli).
+- [ ] **Step 3: Implement** `CatalogPage`: ailelere göre `FilterChip` + ana sistem seçici (`Host`), `Wrap` kart ızgarası; kartta ad, `tagline`, vurgu rengi şeridi. Ana sistem filtresi `distro.hosts` alanıyla yapılır (`Host.windows`→`windows`, `Host.linux`→`linux`, `Host.macM1M2`→`mac-m1m2`); `Host.macOther` seçilirse hiçbir dağıtım eşleşmez ve `supportFor(...).reason` gösterilir. Mevcut `_bg`/`_panel` renkleri `main.dart`'tan ortak `lib/theme.dart`'a taşınır (tek değişiklik, mevcut test geçmeli).
 - [ ] **Step 4: Run** bu test + `flutter test` → PASS.
 - [ ] **Step 5: Checkpoint** SECOND_HAND.md satırı.
 
