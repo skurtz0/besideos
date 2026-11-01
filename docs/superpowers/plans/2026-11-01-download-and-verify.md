@@ -145,7 +145,7 @@
 
 **Interfaces:**
 - Consumes: `DownloadController`, `Distro.isoFor`, `IsoArch`, `kIsWeb`
-- Produces: `class DownloadSection extends StatefulWidget { const DownloadSection({required Distro distro, DownloadController Function()? controllerFactory, IsoArch? hostArch}); }` (varsayılan `hostArch` = `Abi.current()` eşlemesi); `DistroPage` içinde mevcut devre dışı "İndir (sonraki aşamada)" düğmesinin yerine geçer.
+- Produces: `class DownloadSection extends StatefulWidget { const DownloadSection({required Distro distro, DownloadController Function()? controllerFactory, IsoArch? hostArch, bool? isWeb}); }` (varsayılan `hostArch` = `Abi.current()` eşlemesi, varsayılan `isWeb` = `kIsWeb`); `DistroPage` içinde mevcut devre dışı "İndir (sonraki aşamada)" düğmesinin yerine geçer.
 
 - [ ] **Step 1: Write failing widget tests** (sahte controller): `web build shows disabled button with reason` (kIsWeb simülasyonu için `isWeb` parametresi), `enabled button when iso exists for host arch`, `shows "bu mimari için ISO yok" when arch missing`, `progress bar and percentage while downloading`, `verified state says "İndirildi ve doğrulandı", not "kuruldu"`, `mismatch state shows both hashes and a retry button`, `windows distro shows path and SHA-256 fields and verify button, no download button`, `cancel button works`, `no overflow at 320x640`.
 - [ ] **Step 2: Run** `flutter test test/download/download_section_test.dart` → FAIL.
