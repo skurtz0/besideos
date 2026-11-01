@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:besideos_site/catalog/distro.dart';
 import 'package:besideos_site/catalog/support_matrix.dart';
+import 'package:besideos_site/download/checksum.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -30,5 +31,34 @@ void main() {
     expect(catalog.byId('ubuntu')!.basedOn, 'Debian');
     expect(catalog.byId('fedora')!.basedOn, isNull);
     expect(catalog.byId('fedora')!.hosts, contains('mac-m1m2'));
+  });
+
+  bundledIsoTests();
+}
+
+void bundledIsoTests() {
+  late Catalog catalog;
+  setUpAll(() async {
+    catalog = Catalog.parse(await rootBundle.loadString('assets/catalog/catalog.json'));
+  });
+
+  test('bundled isos are https, have checksumUrl, safe fileName, and windows has none', () {
+    for (final d in catalog.distros) {
+      if (d.family == DistroFamily.windows) {
+        expect(d.isos, isEmpty, reason: d.id);
+      }
+      for (final i in d.isos) {
+        expect(Uri.parse(i.url).scheme, 'https', reason: d.id);
+        expect(Uri.parse(i.checksumUrl).scheme, 'https', reason: d.id);
+        expect(isSafeFileName(i.fileName), isTrue, reason: d.id);
+        expect(i.url.endsWith(i.fileName), isTrue, reason: d.id);
+      }
+    }
+  });
+
+  test('every non-windows distro has an x86_64 iso', () {
+    for (final d in catalog.distros.where((d) => d.family != DistroFamily.windows)) {
+      expect(d.isoFor(IsoArch.x86_64), isNotNull, reason: d.id);
+    }
   });
 }

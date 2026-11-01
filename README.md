@@ -28,3 +28,14 @@ flutter build linux --release     # not verified (needs a Linux machine)
 ```
 
 Web release build (`flutter build web --release --no-web-resources-cdn`) verified. Windows and Linux: doğrulanmadı.
+
+
+## İndirme ve doğrulama
+
+Rehber sayfasındaki **İndir** düğmesi (yalnız masaüstü uygulamada) ISO dosyasını resmi dağıtım sunucusundan `~/Downloads/BesideOS` klasörüne indirir. Önce resmi sağlama dosyası (SHA256SUMS / CHECKSUM) alınır, indirme bitince dosyanın SHA-256 değeri karşılaştırılır; eşleşmezse dosya silinir. Katalog sağlama değeri taşımaz, sağlama dosyası her seferinde çalışma anında alınır. Arayüz yalnız "İndirildi ve doğrulandı" der; **kurulum motoru yok**, hiçbir şey kurulmaz. Fedora CHECKSUM dosyasının PGP imzası uygulamada doğrulanmaz.
+
+Windows için BesideOS ISO sağlamaz: kendi ISO dosyanın yolunu ve Microsoft sayfasındaki SHA-256 değerini girip "Doğrula"ya basarsın.
+
+Web sürümünde indirme kapalıdır. macOS sandbox'ı için `macos/Runner/*.entitlements` dosyalarına `com.apple.security.network.client` ve `com.apple.security.files.downloads.read-write` eklendi. Windows ve Linux derlemeleri doğrulanmadı.
+
+ISO girdileri `assets/catalog/catalog.json` içinde (`isos`); Debian `current/` ve Fedora sürüm adresleri yeni sürümde değişir, katalog elle güncellenmelidir.
