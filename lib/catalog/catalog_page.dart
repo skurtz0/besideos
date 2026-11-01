@@ -90,26 +90,37 @@ class _DistroCard extends StatefulWidget {
 }
 
 class _DistroCardState extends State<_DistroCard> {
+  bool _active = false; // hover veya klavye odağı
   bool _hover = false;
+  bool _focus = false;
+
+  void _set({bool? hover, bool? focus}) => setState(() {
+        _hover = hover ?? _hover;
+        _focus = focus ?? _focus;
+        _active = _hover || _focus;
+      });
 
   @override
   Widget build(BuildContext context) {
     final d = widget.distro;
     return ConstrainedBox(
       constraints: const BoxConstraints(maxWidth: 280, minWidth: 0),
-      child: MouseRegion(
-        onEnter: (_) => setState(() => _hover = true),
-        onExit: (_) => setState(() => _hover = false),
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
+      child: Material(
+        color: kPanel,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: BorderSide(color: _active ? kAccent.withAlpha(170) : const Color(0x00000000)),
+        ),
+        child: InkWell(
           onTap: widget.onTap,
-          child: Container(
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: kPanel,
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: _hover ? kAccent.withAlpha(170) : const Color(0x00000000)),
-            ),
+          onHover: (v) => _set(hover: v),
+          onFocusChange: (v) => _set(focus: v),
+          mouseCursor: SystemMouseCursors.click,
+          child: Semantics(
+            button: true,
+            label: d.name,
+            excludeSemantics: true,
             child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               Container(height: 4, color: Color(d.accent)),
               Padding(

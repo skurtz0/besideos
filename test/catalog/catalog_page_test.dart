@@ -1,6 +1,7 @@
 import 'package:besideos_site/catalog/catalog_page.dart';
 import 'package:besideos_site/catalog/distro.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Distro d(String id, DistroFamily f, List<String> hosts) => Distro(
@@ -78,6 +79,24 @@ void main() {
     Distro? opened;
     await pump(t, catalog, onOpen: (x) => opened = x);
     await t.tap(find.text('Ad win'));
+    expect(opened?.id, 'win');
+  });
+
+  testWidgets('card exposes button semantics with the distro name', (t) async {
+    final h = t.ensureSemantics();
+    await pump(t, catalog);
+    final n = t.getSemantics(find.text('Ad win'));
+    expect(n.label, contains('Ad win'));
+    expect(n.flagsCollection.isButton, isTrue);
+    h.dispose();
+  });
+
+  testWidgets('focused card activates with Enter', (t) async {
+    Distro? opened;
+    await pump(t, catalog, onOpen: (x) => opened = x);
+    Focus.of(t.element(find.text('Ad win'))).requestFocus();
+    await t.pump();
+    await t.sendKeyEvent(LogicalKeyboardKey.enter);
     expect(opened?.id, 'win');
   });
 }
