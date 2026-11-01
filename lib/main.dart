@@ -1,17 +1,56 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
+import 'catalog/distro.dart';
+import 'catalog/routes.dart';
 import 'theme.dart';
 
 void main() => runApp(const BesideSite());
 
-class BesideSite extends StatelessWidget {
-  const BesideSite({super.key});
+Future<String> _loadCatalogAsset() => rootBundle.loadString('assets/catalog/catalog.json');
+
+class BesideSite extends StatefulWidget {
+  /// [catalog] is injected by tests; otherwise it is loaded (lazily, only for /distros) via [catalogLoader].
+  const BesideSite({this.catalog, this.catalogLoader, super.key});
+  final Catalog? catalog;
+  final Future<String> Function()? catalogLoader;
+
+  @override
+  State<BesideSite> createState() => _BesideSiteState();
+}
+
+class _BesideSiteState extends State<BesideSite> {
+  late final Future<Catalog> _catalog = widget.catalog != null
+      ? Future.value(widget.catalog)
+      : (widget.catalogLoader ?? _loadCatalogAsset)().then(Catalog.parse);
+
+  Route<dynamic> _route(RouteSettings s) {
+    final seg = (Uri.tryParse(s.name ?? '')?.pathSegments ?? const <String>[]).where((e) => e.isNotEmpty);
+    if (seg.isEmpty || seg.first != 'distros') {
+      return MaterialPageRoute(settings: s, builder: (_) => const HomePage());
+    }
+    return MaterialPageRoute(
+      settings: s,
+      builder: (context) => FutureBuilder<Catalog>(
+        future: _catalog,
+        builder: (context, snap) {
+          if (snap.hasData) {
+            // catalogRoute always returns a MaterialPageRoute; reuse its page.
+            return (catalogRoute(s, snap.data!) as MaterialPageRoute).builder(context);
+          }
+          if (snap.hasError) return _CatalogError(snap.error);
+          return const Scaffold(backgroundColor: kBg, body: Center(child: CircularProgressIndicator()));
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      onGenerateRoute: _route,
       title: 'BesideOS',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -24,7 +63,26 @@ class BesideSite extends StatelessWidget {
           surface: kBg,
         ),
       ),
-      home: const HomePage(),
+    );
+  }
+}
+
+class _CatalogError extends StatelessWidget {
+  const _CatalogError(this.error);
+  final Object? error;
+
+  @override
+  Widget build(BuildContext context) {
+    final msg = error is CatalogException ? (error as CatalogException).message : '$error';
+    return Scaffold(
+      backgroundColor: kBg,
+      appBar: AppBar(backgroundColor: kBg, foregroundColor: kText),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text('Katalog yüklenemedi: $msg', style: const TextStyle(color: kText, fontSize: 18)),
+        ),
+      ),
     );
   }
 }
@@ -225,7 +283,12 @@ class _Hero extends StatelessWidget {
             _Chip('Open source, MIT'),
           ],
         ),
-        const SizedBox(height: 40),
+        const SizedBox(height: 16),
+        TextButton(
+          onPressed: () => Navigator.pushNamed(context, '/distros'),
+          child: const Text('Dağıtımlara göz at'),
+        ),
+        const SizedBox(height: 24),
         const _DiskDemo(),
       ],
     );
