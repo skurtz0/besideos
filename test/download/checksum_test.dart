@@ -18,6 +18,10 @@ void main() {
     final m = parseChecksums('$_h1  a.iso\n$_h2 *b.iso\n');
     expect(m, {'a.iso': _h1, 'b.iso': _h2});
   });
+  test('parses BSD-style lines (Fedora CHECKSUM, clearsigned)', () {
+    final m = parseChecksums('-----BEGIN PGP SIGNED MESSAGE-----\nHash: SHA256\n\nSHA256 (F.x86_64.iso) = $_h1\nSHA256 (bad.iso) = zz\n-----BEGIN PGP SIGNATURE-----\n');
+    expect(m, {'F.x86_64.iso': _h1});
+  });
   test('ignores comments and blank and bad lines', () {
     final m = parseChecksums('# c\n\nzz  bad.iso\n$_h1  ok.iso\n${_h1}x  no.iso\n');
     expect(m, {'ok.iso': _h1});

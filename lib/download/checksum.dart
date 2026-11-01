@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 
 final _line = RegExp(r'^([0-9A-Fa-f]{64}) [ *](.+)$');
+final _bsd = RegExp(r'^SHA256 \((.+)\) = ([0-9A-Fa-f]{64})$');
 final _hex64 = RegExp(r'^[0-9a-f]{64}$');
 final _safeName = RegExp(r'^[A-Za-z0-9][A-Za-z0-9._+-]*$');
 
@@ -10,9 +11,12 @@ Map<String, String> parseChecksums(String text) {
   final out = <String, String>{};
   final conflicts = <String>{};
   for (final raw in text.split('\n')) {
-    final m = _line.firstMatch(raw.trim());
+    final t = raw.trim();
+    final b = _bsd.firstMatch(t);
+    final m = b ?? _line.firstMatch(t);
     if (m == null) continue;
-    final name = m.group(2)!, h = m.group(1)!.toLowerCase();
+    final name = b != null ? m.group(1)! : m.group(2)!;
+    final h = (b != null ? m.group(2)! : m.group(1)!).toLowerCase();
     if (out.containsKey(name) && out[name] != h) conflicts.add(name);
     out[name] = h;
   }
