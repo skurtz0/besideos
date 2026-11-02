@@ -19,7 +19,8 @@
 
   Heuristics (documented per request):
     uefi      registry Control\PEFirmwareType (2=UEFI, 1=BIOS); fallback:
-              bcdedit path contains ".efi"; otherwise false.
+              kernel32 GetFirmwareType (no admin needed); fallback: bcdedit
+              winload.efi/.exe. Undeterminable -> abort (never guessed false).
     arch      PROCESSOR_ARCHITEW6432 (32-bit PS on 64-bit OS) else
               PROCESSOR_ARCHITECTURE; AMD64->x86_64, ARM64->arm64, else abort.
     dynamic   any Win32_DiskPartition on that disk whose Type contains
@@ -46,7 +47,8 @@ function Log([string]$m) {
     [void]$script:logLines.Add(('{0} {1}' -f (Get-Date -Format 's'), $m))
 }
 function Save-Log {
-    try { [System.IO.File]::WriteAllText($logPath, (($script:logLines -join "`r`n") + "`r`n"), $utf8) } catch { }
+    # BOM so Windows PowerShell 5.1 / Notepad read the Turkish text as UTF-8 (facts.json stays BOM-less).
+    try { [System.IO.File]::WriteAllText($logPath, (($script:logLines -join "`r`n") + "`r`n"), (New-Object System.Text.UTF8Encoding($true))) } catch { }
 }
 function Fail([string]$m) {
     Log "FATAL: $m"; Log 'facts.json NOT written.'
@@ -78,19 +80,33 @@ switch ($a) {
 Log "arch=$arch"
 
 # ---- uefi ----
-$uefi = $false
+$uefi = $null
 try {
     $t = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control' -Name PEFirmwareType).PEFirmwareType
-    if ($t -eq 2) { $uefi = $true }
+    if ($t -eq 2) { $uefi = $true } elseif ($t -eq 1) { $uefi = $false }
     Log "PEFirmwareType=$t"
-} catch {
-    Log "PEFirmwareType unreadable: $($_.Exception.Message)"
+} catch { Log "PEFirmwareType unreadable: $($_.Exception.Message)" }
+if ($uefi -eq $null) {
+    # GetFirmwareType (Windows 8+) needs no Administrator: 1=BIOS, 2=UEFI.
     try {
-        $bcd = (& bcdedit /enum '{current}' 2>&1 | Out-String)
-        if ($bcd -match '(?i)\.efi') { $uefi = $true }
-        Log 'uefi decided via bcdedit'
+        Add-Type -Namespace BesideOS -Name Fw -MemberDefinition '[System.Runtime.InteropServices.DllImport("kernel32.dll")] public static extern bool GetFirmwareType(ref uint t);'
+        [uint32]$ft = 0
+        if ([BesideOS.Fw]::GetFirmwareType([ref]$ft)) {
+            if ($ft -eq 2) { $uefi = $true } elseif ($ft -eq 1) { $uefi = $false }
+            Log "GetFirmwareType=$ft"
+        } else { Log 'GetFirmwareType returned false' }
+    } catch { Log "GetFirmwareType failed: $($_.Exception.Message)" }
+}
+if ($uefi -eq $null) {
+    # bcdedit fails without Administrator (access denied text, no exception), so only a positive match counts.
+    try {
+        $bcd = (& bcdedit /enum '{current}' 2>&1 | Out-String).ToLowerInvariant()
+        if ($bcd -match 'winload\.efi') { $uefi = $true }
+        elseif ($bcd -match 'winload\.exe') { $uefi = $false }
+        Log "uefi via bcdedit: $uefi"
     } catch { Log "bcdedit failed: $($_.Exception.Message)" }
 }
+if ($uefi -eq $null) { Fail 'cannot determine UEFI/BIOS (run as Administrator)' }
 Log "uefi=$uefi"
 
 # ---- BitLocker helper: $true / $false / $null ----
@@ -126,7 +142,7 @@ $disks = @()
 try { $diskList = @(Get-Disk) } catch { Fail "Get-Disk failed: $($_.Exception.Message)" }
 
 foreach ($d in $diskList) {
-    $style = ([string]$d.PartitionStyle).ToLower()
+    $style = ([string]$d.PartitionStyle).ToLowerInvariant()
     if ($style -ne 'gpt' -and $style -ne 'mbr') { Log "disk $($d.Number): style '$style' skipped"; continue }
     $parts = @()
     try { $plist = @(Get-Partition -DiskNumber $d.Number -ErrorAction Stop) }
@@ -135,13 +151,13 @@ foreach ($d in $diskList) {
         $size = [uint64]$p.Size
         $letter = $null
         if ($p.DriveLetter -and [int]$p.DriveLetter -ne 0) { $letter = [string]$p.DriveLetter }
-        $isMsr = ($style -eq 'gpt' -and ([string]$p.GptType).Trim('{}').ToLower() -eq $MSR)
+        $isMsr = ($style -eq 'gpt' -and ([string]$p.GptType).Trim('{}').ToLowerInvariant() -eq $MSR)
         $fs = ''; $used = $size; $min = $size; $enc = $null
         if ($isMsr) { $fs = 'msr' }
         try {
             $vol = $p | Get-Volume -ErrorAction Stop
             if ($vol) {
-                $fs = ([string]$vol.FileSystem).ToLower()
+                $fs = ([string]$vol.FileSystem).ToLowerInvariant()
                 if ($vol.SizeRemaining -ne $null -and [uint64]$vol.SizeRemaining -le $size) { $used = $size - [uint64]$vol.SizeRemaining }
                 else { Log "disk $($d.Number) part $($p.PartitionNumber): used unknown -> used=size" }
             }

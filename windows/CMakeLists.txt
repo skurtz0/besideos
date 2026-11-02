@@ -106,3 +106,19 @@ install(DIRECTORY "${PROJECT_BUILD_DIR}/${FLUTTER_ASSET_DIR_NAME}"
 install(FILES "${AOT_LIBRARY}" DESTINATION "${INSTALL_BUNDLE_DATA_DIR}"
   CONFIGURATIONS Profile;Release
   COMPONENT Runtime)
+
+# Installer engine (lib/install/engine.dart looks for engine/ next to the executable):
+# the probe/apply/inspect scripts and the Rust planner. Build the planner first with
+# tool/build_windows.ps1; without it the app runs but the one-click install reports a missing engine.
+set(ENGINE_SCRIPT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../probe/windows")
+set(ENGINE_PLAN_EXE "${CMAKE_CURRENT_SOURCE_DIR}/../core/target/release/besideos-plan.exe")
+install(FILES
+  "${ENGINE_SCRIPT_DIR}/collect-host-facts.ps1"
+  "${ENGINE_SCRIPT_DIR}/apply-plan.ps1"
+  "${ENGINE_SCRIPT_DIR}/inspect-iso.ps1"
+  DESTINATION "${CMAKE_INSTALL_PREFIX}/engine" COMPONENT Runtime)
+if(EXISTS "${ENGINE_PLAN_EXE}")
+  install(FILES "${ENGINE_PLAN_EXE}" DESTINATION "${CMAKE_INSTALL_PREFIX}/engine" COMPONENT Runtime)
+else()
+  message(WARNING "besideos-plan.exe not found at ${ENGINE_PLAN_EXE}; run tool/build_windows.ps1")
+endif()

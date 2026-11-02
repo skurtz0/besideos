@@ -77,7 +77,7 @@ void main() {
     await t.pumpWidget(sec(dist(), Fake(), arch: IsoArch.arm64));
     expect(find.textContaining('Bu mimari için ISO yok'), findsOneWidget);
     expect(t.widget<FilledButton>(find.byType(FilledButton)).onPressed, isNull);
-    await t.pumpWidget(sec(dist(), Fake(), arch: null));
+    await t.pumpWidget(sec(dist(isos: const []), Fake(), arch: null));
     expect(find.textContaining('Bu mimari için ISO yok'), findsOneWidget);
   });
 

@@ -40,6 +40,16 @@ Web sürümünde indirme kapalıdır. macOS sandbox'ı için `macos/Runner/*.ent
 
 ISO girdileri `assets/catalog/catalog.json` içinde (`isos`); Debian `current/` ve Fedora sürüm adresleri yeni sürümde değişir, katalog elle güncellenmelidir.
 
+## Tek tıkla kurulum (yalnız Windows masaüstü uygulaması)
+
+Dağıtım sayfasındaki **"<dağıtım> kur"** düğmesi sırayla: ISO'yu indirip doğrular → ISO'yu bağlayıp içeriğini ölçer (`probe/windows/inspect-iso.ps1`) → disk bilgisini toplar (`collect-host-facts.ps1`, UAC ister) → `besideos-plan` ile planı üretir. **Bu noktaya kadar diske hiçbir şey yazılmaz.** Plan, riskler ve Linux için ayrılacak alan (20–120 GiB) gösterilir; yedek kutusu işaretlenip `KUR` yazılmadan uygulama başlamaz. Onaydan sonra `apply-plan.ps1 -Execute -Reboot` (UAC ister): Windows bölümünü küçültür, FAT32 `BESIDEOS` bölümü açar, ISO içeriğini kopyalar, tek seferlik UEFI önyükleme girdisi ekler ve yeniden başlatır. Açılışta dağıtımın kendi kurulum ekranı gelir; kurulumun kendisi o ekranda yapılır. Hata olursa ya da vazgeçilirse **"Değişiklikleri geri al"** (`-Undo -Execute`) uygulanan adımları tersine çevirir. Çalışma dosyaları ve günlükler `%LOCALAPPDATA%\BesideOS\work` altındadır.
+
+Derleme (Rust planlayıcıyı da pakete koyar): `powershell -File tool\build_windows.ps1`. Gerekenler: Flutter, Rust (cargo), Visual Studio "Desktop development with C++". Motor `build\windows\x64\runner\Release\engine\` altına kopyalanır; geliştirirken `flutter run -d windows` depo içindeki betikleri ve `core\target\release\besideos-plan.exe` dosyasını kullanır.
+
+Sınırlar: ISO içeriğini FAT32 bölüme açıp UEFI ile açma yöntemi yalnız Ubuntu arm64 ile sanal makinede denendi. Fedora Live ISO etiketiyle kurulum ortamını aradığı için açılmayabilir (arayüz uyarır). 4 GiB'dan büyük dosya içeren ISO'lar (ör. Ubuntu masaüstü) planlayıcı tarafından reddedilir. Gerçek bir diskte `-Execute` ve yeniden başlatma bu depoda denenmedi; kuru çalıştırma (preflight) gerçek Windows 10 üzerinde doğrulandı.
+
+Türkçe yerel ayar (tr-TR) notu: PowerShell'de büyük/küçük harf duyarsız `[A-Za-z]` eşleşmesi büyük `I`'yı kaçırır ve `ToLower()` `I`'yı `ı` yapar. Betiklerde `-cmatch` ve `ToLowerInvariant()` kullanılır; yeni regex eklerken buna dikkat et.
+
 ## Çekirdek (Rust)
 
 `core/` altında, Windows yanına Linux kurulumunun planını üreten saf bir Rust kütüphanesi ve `besideos-plan` aracı bulunur. Diske dokunmaz, yalnız plan (JSON) ya da gerekçeli ret üretir; gerçek host bilgisi toplama (3b) ve planı uygulama (3c) sonraki aşamalardır. Ayrıntı: `core/README.md`.

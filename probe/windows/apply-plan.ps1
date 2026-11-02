@@ -112,7 +112,7 @@ function Save-State {
     [System.IO.File]::WriteAllText($statePath, (ConvertTo-Json -InputObject $script:State -Depth 8), $utf8)
 }
 # Partition NUMBERS are not stable (Windows renumbers by disk order after create). Identify by Guid / letter / offset.
-function NormGuid($g) { return (([string]$g) -replace '[{}]', '').ToLower() }
+function NormGuid($g) { return (([string]$g) -replace '[{}]', '').ToLowerInvariant() }
 $PROTECTED_GPT = @('c12a7328-f81f-11d2-ba4b-00a0c93ec93b', 'e3c9e316-0b5c-4db8-817d-f92df00215ae', 'de94bba4-06d1-4d40-a16a-bfd50179d6ac')
 function Get-VolOf($p) { try { return ($p | Get-Volume -ErrorAction Stop) } catch { return $null } }
 function Test-Protected($p) {
@@ -321,7 +321,8 @@ Req ($shrink -eq $total) 'shrink_bytes ile total_shrink_bytes esit degil.' "shri
 Req ($stageSize -le $shrink) 'Hazirlik bolumu kucultulen alandan buyuk.' 'Staging size must fit in the shrunk space.'
 Req ($cr.filesystem -eq 'fat32') 'Dosya sistemi fat32 olmali.' 'create_partition filesystem must be fat32'
 Req ([int]$cr.disk -eq $dn) 'create_partition baska bir diski gosteriyor.' 'create_partition disk differs from shrink disk'
-Req ($label -match '^[A-Za-z0-9_]{1,11}$') 'Etiket gecersiz (1-11 harf/rakam).' "Invalid FAT32 label '$label'"
+# -cmatch, not -match: under tr-TR a case-insensitive [A-Za-z] rejects the capital I (BESIDEOS would fail).
+Req ($label -cmatch '^[A-Za-z0-9_]{1,11}$') 'Etiket gecersiz (1-11 harf/rakam).' "Invalid FAT32 label '$label'"
 Req ([string]$ex.target_label -ceq $label) 'extract_iso hedef etiketi uyusmuyor.' 'extract_iso target_label differs from created label'
 $desc = [string]$bo.description; $loader = [string]$bo.loader_path
 Req ($desc -match '^[\x20-\x7E]+$' -and $desc -notmatch '["{}]') 'Onyukleme aciklamasi yalniz ASCII, tirnaksiz olmali.' 'Boot entry description must be printable ASCII without quotes/braces'
@@ -329,26 +330,36 @@ $a = $env:PROCESSOR_ARCHITEW6432; if (-not $a) { $a = $env:PROCESSOR_ARCHITECTUR
 $leaf = Split-Path -Leaf $loader
 $wantLeaf = $null
 if ($a -eq 'ARM64') { $wantLeaf = 'BOOTAA64.EFI' } elseif ($a -eq 'AMD64') { $wantLeaf = 'BOOTX64.EFI' }
-Req ($wantLeaf -and $leaf -ieq $wantLeaf -and $loader -imatch '^\\EFI\\BOOT\\[^\\]+$') "Yukleyici yolu bu mimariyle ($a) uyusmuyor: $loader" "loader_path '$loader' does not match architecture '$a'"
+Req ($wantLeaf -and $leaf -ieq $wantLeaf -and $loader.ToLowerInvariant() -match '^\\efi\\boot\\[^\\]+$') "Yukleyici yolu bu mimariyle ($a) uyusmuyor: $loader" "loader_path '$loader' does not match architecture '$a'"
 Stop-IfFailed
 
 # --- firmware ---
-# Mirrors collect-host-facts.ps1: registry PEFirmwareType first, then bcdedit fallback (boot manager path ends in .efi).
-# Unknown => $false => abort (fail-closed).
-$uefi = $false
+# Mirrors collect-host-facts.ps1: registry PEFirmwareType, then kernel32 GetFirmwareType, then bcdedit winload.efi/.exe.
+# Unknown => $null => abort (fail-closed).
+$uefi = $null
 try {
     $t = (Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control' -Name PEFirmwareType).PEFirmwareType
-    if ($t -eq 2) { $uefi = $true }
+    if ($t -eq 2) { $uefi = $true } elseif ($t -eq 1) { $uefi = $false }
     Log "PEFirmwareType=$t" 'DEBUG' -NoConsole
-} catch {
-    Log "PEFirmwareType unreadable: $($_.Exception.Message)" 'DEBUG' -NoConsole
+} catch { Log "PEFirmwareType unreadable: $($_.Exception.Message)" 'DEBUG' -NoConsole }
+if ($uefi -eq $null) {
     try {
-        $bcd = (& bcdedit /enum '{current}' 2>&1 | Out-String)
-        if ($bcd -match '(?i)\.efi') { $uefi = $true }
-        Log 'uefi decided via bcdedit'
+        Add-Type -Namespace BesideOS -Name Fw -MemberDefinition '[System.Runtime.InteropServices.DllImport("kernel32.dll")] public static extern bool GetFirmwareType(ref uint t);'
+        [uint32]$ft = 0
+        if ([BesideOS.Fw]::GetFirmwareType([ref]$ft)) {
+            if ($ft -eq 2) { $uefi = $true } elseif ($ft -eq 1) { $uefi = $false }
+            Log "GetFirmwareType=$ft" 'DEBUG' -NoConsole
+        }
+    } catch { Log "GetFirmwareType failed: $($_.Exception.Message)" 'WARN' }
+}
+if ($uefi -eq $null) {
+    try {
+        $bcd = (& bcdedit /enum '{current}' 2>&1 | Out-String).ToLowerInvariant()
+        if ($bcd -match 'winload\.efi') { $uefi = $true } elseif ($bcd -match 'winload\.exe') { $uefi = $false }
+        Log "uefi via bcdedit: $uefi"
     } catch { Log "bcdedit failed: $($_.Exception.Message)" 'WARN' }
 }
-Req $uefi 'UEFI degil (veya belirlenemedi).' 'UEFI boot required (undetermined counts as not UEFI)'
+Req ($uefi -eq $true) 'UEFI degil (veya belirlenemedi).' 'UEFI boot required (undetermined counts as not UEFI)'
 
 # --- target disk/partition ---
 $part = $null; $winPart = $null; $vol = $null; $disk = $null
@@ -385,8 +396,8 @@ Req ($null -ne $existing -and $existing.Count -eq 0) "'$label' etiketli bir biri
 
 # --- media source ---
 $srcPath = [string]$ex.iso_path
-$srcIsRoot = ($srcPath -match '^[A-Za-z]:\\?$')
-$srcIsIso = ($srcPath -imatch '\.iso$')
+$srcIsRoot = ($srcPath -cmatch '^[A-Za-z]:\\?$')
+$srcIsIso = ($srcPath.ToLowerInvariant() -match '\.iso$')
 if ($srcIsRoot) { $srcPath = $srcPath.TrimEnd('\') + '\' }
 if ($srcIsRoot) { Req (Test-Path -LiteralPath $srcPath -PathType Container) "Ortam yok: $srcPath" "Media root not found: $srcPath" }
 elseif ($srcIsIso) { Req (Test-Path -LiteralPath $srcPath -PathType Leaf) "ISO yok: $srcPath" "ISO file not found: $srcPath" }
