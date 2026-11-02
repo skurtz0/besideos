@@ -8,6 +8,7 @@ import 'brand.dart';
 import 'catalog/catalog_page.dart' show DistroSections;
 import 'catalog/distro.dart';
 import 'catalog/routes.dart';
+import 'home_sections.dart';
 import 'site_mode.dart';
 import 'theme.dart';
 
@@ -123,20 +124,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SiteBar(actions: [
-        TextButton.icon(
-          onPressed: () => Navigator.pushNamed(context, '/distros'),
-          icon: const Icon(Icons.apps_rounded, size: 20),
-          label: const Text('Dağıtımlar'),
-        ),
-      ]),
+      appBar: const SiteBar(showCatalog: true, maxWidth: 960, padding: 20),
       body: PageScroll(
         child: Column(
           children: [
             const _GlowBackground(child: _Section(child: _Hero())),
-            const _Section(child: _HowItWorks()),
-            const _Section(child: _Platforms()),
-            const _Section(child: _Safety()),
+            const _Section(child: HowItWorks()),
+            const _Section(child: Platforms()),
+            const _Section(child: Safety()),
             if (catalog != null) _Section(child: _Showcase(catalog: catalog!)),
             const _Section(child: _Status()),
             const _Footer(),
@@ -171,9 +166,8 @@ class _Section extends StatelessWidget {
 
 /// Fades and slides its child in the first time it is near the visible part of the page.
 class _Reveal extends StatefulWidget {
-  const _Reveal({required this.child, this.delay = Duration.zero});
+  const _Reveal({required this.child});
   final Widget child;
-  final Duration delay;
 
   @override
   State<_Reveal> createState() => _RevealState();
@@ -187,7 +181,6 @@ class _RevealState extends State<_Reveal> with SingleTickerProviderStateMixin {
   late final Animation<Offset> _slide =
       Tween<Offset>(begin: const Offset(0, 0.06), end: Offset.zero).animate(_curve);
   ScrollPosition? _position;
-  Timer? _timer;
   bool _started = false;
 
   @override
@@ -211,15 +204,12 @@ class _RevealState extends State<_Reveal> with SingleTickerProviderStateMixin {
     final top = box.localToGlobal(Offset.zero).dy;
     if (top < MediaQuery.sizeOf(context).height * 0.92) {
       _started = true;
-      _timer = Timer(widget.delay, () {
-        if (mounted) _controller.forward();
-      });
+      _controller.forward();
     }
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
     _position?.removeListener(_check);
     _controller.dispose();
     super.dispose();
@@ -297,65 +287,83 @@ class _Hero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = Theme.of(context).textTheme;
-    final text = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 12),
-        Text(
-          'Bilgisayarına ikinci bir sistem kur. USB bellek gerekmez.',
-          style: t.displaySmall?.copyWith(color: kText, fontWeight: FontWeight.w800, height: 1.15),
-        ),
-        const SizedBox(height: 16),
-        Text(
-          'BesideOS diskinde yer açar, kurulumu hazırlar ve bilgisayarı yeniden başlatır. '
-          "Windows'un olduğu gibi yerinde kalır.",
-          style: t.titleMedium?.copyWith(color: kMuted, height: 1.5),
-        ),
-        const SizedBox(height: 28),
-        SizedBox(
-          height: 64,
-          child: FilledButton.icon(
-            // On the website the button gets the app; inside the app it opens the list of systems.
-            onPressed: () => SiteMode.isWeb(context) ? SiteMode.download(context) : Navigator.pushNamed(context, '/distros'),
-            icon: Icon(SiteMode.isWeb(context) ? Icons.download_rounded : Icons.touch_app_rounded, size: 28),
-            label: Text(SiteMode.isWeb(context) ? 'İndirmek için tıklayın' : 'Başlamak için tıklayın'),
-            style: FilledButton.styleFrom(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              textStyle: const TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+    final web = SiteMode.isWeb(context);
+    return LayoutBuilder(builder: (context, box) {
+      final w = box.maxWidth;
+      final narrow = w < 480;
+      final wide = w >= 760;
+      final text = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Bilgisayarına ikinci bir sistem kur. USB bellek gerekmez.',
+            style: TextStyle(
+              color: kText,
+              fontSize: narrow ? 30 : (wide ? 46 : 38),
+              fontWeight: FontWeight.w800,
+              height: 1.12,
+              letterSpacing: -0.8,
             ),
           ),
-        ),
-        const SizedBox(height: 24),
-        const Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: [
-            _Chip('Windows'),
-            _Chip('Linux'),
-            _Chip('Mac → Linux (M1/M2, rehberli)'),
-            _Chip('Açık kaynak, MIT'),
+          const SizedBox(height: 18),
+          Text(
+            'BesideOS diskinde yer açar, kurulumu hazırlar ve bilgisayarı yeniden başlatır. '
+            "Windows'un olduğu gibi yerinde kalır.",
+            style: TextStyle(color: kMuted, fontSize: narrow ? 17 : 19, height: 1.6),
+          ),
+          const SizedBox(height: 30),
+          SizedBox(
+            height: narrow ? 58 : 64,
+            width: narrow ? double.infinity : null,
+            child: FilledButton.icon(
+              // On the website the button gets the app; inside the app it opens the list of systems.
+              onPressed: () => web ? SiteMode.download(context) : Navigator.pushNamed(context, '/distros'),
+              icon: Icon(web ? Icons.download_rounded : Icons.touch_app_rounded, size: narrow ? 24 : 28),
+              label: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(web ? 'İndirmek için tıklayın' : 'Başlamak için tıklayın'),
+              ),
+              style: FilledButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: narrow ? 18 : 32),
+                textStyle: TextStyle(fontSize: narrow ? 18 : 21, fontWeight: FontWeight.w800),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+              ),
+            ),
+          ),
+          const SizedBox(height: 26),
+          const Wrap(
+            spacing: 10,
+            runSpacing: 10,
+            children: [
+              _Chip('Windows'),
+              _Chip('Linux'),
+              _Chip('Mac → Linux (M1/M2, rehberli)'),
+              _Chip('Açık kaynak, MIT'),
+            ],
+          ),
+        ],
+      );
+      return Padding(
+        padding: EdgeInsets.only(top: narrow ? 8 : 24),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          if (wide)
+            Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              Expanded(child: text),
+              const SizedBox(width: 56),
+              const BesideMark(size: 240),
+            ])
+          else ...[
+            BesideMark(size: narrow ? 72 : 96),
+            SizedBox(height: narrow ? 18 : 24),
+            text,
           ],
-        ),
-      ],
-    );
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      LayoutBuilder(
-        builder: (context, box) => box.maxWidth < 760
-            ? text
-            : Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-                Expanded(child: text),
-                const SizedBox(width: 48),
-                const BesideMark(size: 230),
-              ]),
-      ),
-      const SizedBox(height: 28),
-      const _DiskDemo(),
-    ]);
+          const SizedBox(height: 36),
+          const _DiskDemo(),
+        ]),
+      );
+    });
   }
 }
-
 class _Chip extends StatelessWidget {
   const _Chip(this.label);
   final String label;
@@ -511,164 +519,6 @@ class _DiskPainter extends CustomPainter {
   bool shouldRepaint(_DiskPainter oldDelegate) => oldDelegate.t != t;
 }
 
-class _Heading extends StatelessWidget {
-  const _Heading(this.text);
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Text(
-        text,
-        style: Theme.of(context)
-            .textTheme
-            .headlineSmall
-            ?.copyWith(color: kText, fontWeight: FontWeight.w700),
-      ),
-    );
-  }
-}
-
-class _CardData {
-  const _CardData(this.title, this.body);
-  final String title;
-  final String body;
-}
-
-/// A wrapping row of cards. Each one fades in a little after the one before it.
-class _CardGrid extends StatelessWidget {
-  const _CardGrid({required this.cards, this.width = 290});
-  final List<_CardData> cards;
-  final double width;
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 16,
-      runSpacing: 16,
-      children: [
-        for (var i = 0; i < cards.length; i++)
-          _Reveal(
-            delay: Duration(milliseconds: 120 * i),
-            child: _HoverCard(data: cards[i], width: width),
-          ),
-      ],
-    );
-  }
-}
-
-class _HoverCard extends StatefulWidget {
-  const _HoverCard({required this.data, required this.width});
-  final _CardData data;
-  final double width;
-
-  @override
-  State<_HoverCard> createState() => _HoverCardState();
-}
-
-class _HoverCardState extends State<_HoverCard> {
-  bool _hover = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (_) => setState(() => _hover = true),
-      onExit: (_) => setState(() => _hover = false),
-      child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: widget.width),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          curve: Curves.easeOut,
-          transform: Matrix4.translationValues(0, _hover ? -4 : 0, 0),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: kPanel,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-                color: _hover ? kAccent.withAlpha(170) : const Color(0x00000000)),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(widget.data.title,
-                  style: const TextStyle(
-                      color: kText, fontSize: 17, fontWeight: FontWeight.w600)),
-              const SizedBox(height: 8),
-              Text(widget.data.body, style: const TextStyle(color: kMuted, height: 1.5)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _HowItWorks extends StatelessWidget {
-  const _HowItWorks();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _Heading('Nasıl çalışır?'),
-        _CardGrid(cards: [
-          _CardData('1. Yer açılır',
-              'Planı görüp dosyalarını yedeklediğini onayladıktan sonra diskte boş yer açılır.'),
-          _CardData('2. Kurulum hazırlanır',
-              'Kurulum dosyaları aynı diskteki küçük bir bölüme konur. USB bellek gerekmez.'),
-          _CardData('3. Bir kez yeniden başlar',
-              'Bir sonraki açılışta kurulum ekranı gelir. Sonrasında bilgisayar her zamanki gibi açılır.'),
-        ]),
-      ],
-    );
-  }
-}
-
-class _Platforms extends StatelessWidget {
-  const _Platforms();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _Heading('Hangi bilgisayarlarda?'),
-        _CardGrid(cards: [
-          _CardData("Windows'tan Linux'a",
-              'İlk hedef. UEFI ile açılan bir bilgisayar gerekir. Davranışı, bu projenin temelini oluşturan hop izler.'),
-          _CardData("Linux'tan Windows'a", 'Sırada. Windows ISO dosyasını sen getirirsin.'),
-          _CardData('macOS',
-              'En son ve sınırlarını dürüstçe söyleyerek. Apple Silicon\'da UEFI ve Boot Camp yok; bu yüzden BesideOS orada yalnızca resmi Asahi kurulumunu anlatır.'),
-        ]),
-      ],
-    );
-  }
-}
-
-class _Safety extends StatelessWidget {
-  const _Safety();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _Heading('Önce güvenlik'),
-        _CardGrid(width: 220, cards: [
-          _CardData('Önce plan', 'Diske dokunmadan önce her adımı görürsün.'),
-          _CardData('Yedek uyarısı', 'Bir bölüm küçülmeden önce yedek aldığını onaylarsın.'),
-          _CardData('Açık onay', 'Başlamadan önce son kez sorulur.'),
-          _CardData('Geri alma',
-              'Bir adım başarısız olursa ya da vazgeçersen, yapılanlar tersine geri alınır.'),
-        ]),
-      ],
-    );
-  }
-}
-
 /// The systems BesideOS can set up, right on the home page (above the status note).
 class _Showcase extends StatelessWidget {
   const _Showcase({required this.catalog});
@@ -677,7 +527,11 @@ class _Showcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      const _Heading('Hangi sistemleri kurabilirsin?'),
+      const SectionHeader(
+        eyebrow: 'Katalog',
+        title: 'Hangi sistemleri kurabilirsin?',
+        subtitle: 'Birini seç; nasıl göründüğünü ve nelerin gerektiğini gör.',
+      ),
       FutureBuilder<Catalog>(
         future: catalog,
         builder: (context, snap) {
@@ -703,27 +557,41 @@ class _Status extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: kPanel,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: kAccent.withAlpha(120)),
+        borderRadius: BorderRadius.circular(22),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [kWarn.withAlpha(40), kPanel],
+        ),
+        border: Border.all(color: kWarn.withAlpha(120)),
       ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Durum: erken geliştirme',
-              style: TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700)),
-          SizedBox(height: 8),
-          Text(
-            'Windows uygulaması dağıtımı indirip kuruluma hazırlayabiliyor, ama henüz geniş çapta denenmedi. '
-            'Kurmadan önce önemli dosyalarını mutlaka yedekle.',
-            style: TextStyle(color: kMuted, height: 1.5),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(color: kWarn.withAlpha(40), borderRadius: BorderRadius.circular(14)),
+          child: const Icon(Icons.construction_rounded, color: kWarn, size: 26),
+        ),
+        const SizedBox(width: 16),
+        const Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Durum: erken geliştirme',
+                  style: TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
+              SizedBox(height: 8),
+              Text(
+                'Windows uygulaması dağıtımı indirip kuruluma hazırlayabiliyor, ama henüz geniş çapta denenmedi. '
+                'Kurmadan önce önemli dosyalarını mutlaka yedekle.',
+                style: TextStyle(color: kMuted, fontSize: 16, height: 1.6),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ]),
     );
   }
 }
-
 class _Footer extends StatelessWidget {
   const _Footer();
 

@@ -13,7 +13,7 @@ Route<dynamic> catalogRoute(RouteSettings s, Catalog catalog) {
     body = Builder(
       builder: (context) => Scaffold(
         backgroundColor: kBg,
-        appBar: const SiteBar(page: 'Dağıtımlar'),
+        appBar: const SiteBar(page: 'Dağıtımlar', maxWidth: 1180, padding: 24),
         body: CatalogPage(catalog: catalog, onOpen: (d) => Navigator.pushNamed(context, '/distros/${d.id}')),
       ),
     );

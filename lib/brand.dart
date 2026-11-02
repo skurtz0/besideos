@@ -92,70 +92,105 @@ class BesideLogo extends StatelessWidget {
   }
 }
 
-/// Top bar shared by every page: logo (home link), an optional page name, and actions.
+/// Top bar shared by every page: logo (home link), an optional page name and the website's download button.
+/// Its content sits in the same centred column as the page below ([maxWidth], [padding]) so the logo and the
+/// right-hand buttons line up with the content instead of the window edges. Adapts down to 320 px wide.
 class SiteBar extends StatelessWidget implements PreferredSizeWidget {
-  const SiteBar({super.key, this.page, this.leading, this.actions = const []});
+  const SiteBar({
+    super.key,
+    this.page,
+    this.leading,
+    this.showCatalog = false,
+    this.maxWidth = 1180,
+    this.padding = 24,
+  });
   final String? page;
   final Widget? leading;
-  final List<Widget> actions;
+
+  /// Adds a "Dağıtımlar" link (the home page uses it).
+  final bool showCatalog;
+  final double maxWidth;
+  final double padding;
 
   @override
   Size get preferredSize => const Size.fromHeight(64);
 
   @override
   Widget build(BuildContext context) {
-    // on phones the word would crowd out the page name: keep only the mark there
-    final narrow = MediaQuery.sizeOf(context).width < 480 && page != null;
-    return AppBar(
-      backgroundColor: kBg,
-      foregroundColor: kText,
-      toolbarHeight: 64,
-      scrolledUnderElevation: 0,
-      leading: leading,
-      automaticallyImplyLeading: leading != null,
-      titleSpacing: leading == null ? 20 : 0,
-      shape: const Border(bottom: BorderSide(color: Color(0x1FFFFFFF))),
-      title: Row(children: [
-        BesideLogo(
-          height: 34,
-          showWord: !narrow,
-          onTap: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false),
-        ),
-        if (page != null) ...[
-          const SizedBox(width: 10),
-          const Icon(Icons.chevron_right_rounded, color: kMuted),
-          const SizedBox(width: 4),
-          Flexible(
-            child: Text(page!,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w600)),
-          ),
-        ],
-      ]),
-      actions: [
-        ...actions,
-        if (SiteMode.isWeb(context)) ...[
-          const SizedBox(width: 4),
-          if (MediaQuery.sizeOf(context).width < 520)
-            IconButton.filled(
-              onPressed: () => SiteMode.download(context),
-              tooltip: 'İndir',
-              icon: const Icon(Icons.download_rounded),
-            )
-          else
-            FilledButton.icon(
-              onPressed: () => SiteMode.download(context),
-              icon: const Icon(Icons.download_rounded, size: 20),
-              label: const Text('İndir'),
-              style: FilledButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),
+    final w = MediaQuery.sizeOf(context).width;
+    final compact = w < 680;
+    // Little room: keep only the mark (the page name or the buttons matter more than the word).
+    final showWord = w >= 400 && !(page != null && w < 520);
+    final web = SiteMode.isWeb(context);
+    final side = w < 400 ? 12.0 : padding;
+    return Material(
+      color: kBg,
+      child: Container(
+        height: 64,
+        decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Color(0x1FFFFFFF)))),
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: maxWidth),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: side),
+              child: Row(children: [
+                if (leading != null) ...[leading!, const SizedBox(width: 4)],
+                BesideLogo(
+                  height: 34,
+                  showWord: showWord,
+                  onTap: () => Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false),
+                ),
+                if (page != null) ...[
+                  const SizedBox(width: 6),
+                  const Icon(Icons.chevron_right_rounded, color: kMuted),
+                  const SizedBox(width: 2),
+                  Flexible(
+                    child: Text(page!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700)),
+                  ),
+                ],
+                const Spacer(),
+                if (showCatalog)
+                  compact
+                      ? IconButton(
+                          onPressed: () => Navigator.pushNamed(context, '/distros'),
+                          tooltip: 'Dağıtımlar',
+                          icon: const Icon(Icons.apps_rounded),
+                        )
+                      : TextButton.icon(
+                          onPressed: () => Navigator.pushNamed(context, '/distros'),
+                          icon: const Icon(Icons.apps_rounded, size: 20),
+                          label: const Text('Dağıtımlar'),
+                        ),
+                if (web) ...[
+                  const SizedBox(width: 6),
+                  if (compact)
+                    IconButton.filled(
+                      onPressed: () => SiteMode.download(context),
+                      tooltip: 'İndir',
+                      icon: const Icon(Icons.download_rounded),
+                    )
+                  else
+                    FilledButton.icon(
+                      onPressed: () => SiteMode.download(context),
+                      icon: const Icon(Icons.download_rounded, size: 20),
+                      label: const Text('İndir'),
+                      style: FilledButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                      ),
+                    ),
+                ],
+              ]),
             ),
-        ],
-        const SizedBox(width: 12),
-      ],
+          ),
+        ),
+      ),
     );
   }
 }
-
 /// A page body that scrolls with the scrollbar pinned to the far right edge of the window
 /// (always visible), while the content sits in a centred column of at most [maxWidth].
 class PageScroll extends StatefulWidget {

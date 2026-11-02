@@ -118,6 +118,8 @@ class _DistroBody extends StatelessWidget {
     return Scaffold(
       backgroundColor: kBg,
       appBar: SiteBar(
+        maxWidth: 920,
+        padding: 20,
         page: d.name,
         leading: Navigator.canPop(context)
             ? const BackButton()

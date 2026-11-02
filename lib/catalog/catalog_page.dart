@@ -97,9 +97,17 @@ class DistroSections extends StatelessWidget {
             child: Text(fam == DistroFamily.linux ? 'Linux sistemleri' : 'Windows sistemleri',
                 style: const TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
           ),
-          Wrap(spacing: 12, runSpacing: 12, children: [
-            for (final d in items.where((d) => d.family == fam)) _DistroCard(distro: d, onTap: () => onOpen(d)),
-          ]),
+          LayoutBuilder(builder: (context, box) {
+            // as many cards per row as fit (min 260 px), then share the row evenly, so nothing is cut off on a phone
+            const gap = 12.0;
+            final avail = box.maxWidth.isFinite ? box.maxWidth : 1000.0;
+            final cols = ((avail + gap) / (260 + gap)).floor().clamp(1, 6);
+            final width = (avail - (cols - 1) * gap) / cols;
+            return Wrap(spacing: gap, runSpacing: gap, children: [
+              for (final d in items.where((d) => d.family == fam))
+                _DistroCard(distro: d, width: width, onTap: () => onOpen(d)),
+            ]);
+          }),
           const SizedBox(height: 20),
         ],
     ]);
@@ -107,8 +115,9 @@ class DistroSections extends StatelessWidget {
 }
 
 class _DistroCard extends StatefulWidget {
-  const _DistroCard({required this.distro, required this.onTap});
+  const _DistroCard({required this.distro, required this.width, required this.onTap});
   final Distro distro;
+  final double width;
   final VoidCallback onTap;
 
   @override
@@ -131,7 +140,7 @@ class _DistroCardState extends State<_DistroCard> {
     final d = widget.distro;
     final accent = Color(d.accent);
     return SizedBox(
-      width: 272,
+      width: widget.width,
       height: d.screens.isEmpty ? 176 : 270,
       child: Material(
         color: kPanel,
