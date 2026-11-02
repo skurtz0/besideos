@@ -2,11 +2,14 @@ import 'dart:io';
 
 /// The scripts and the planner binary the installer drives.
 class Engine {
-  const Engine({required this.probe, required this.apply, required this.inspect, required this.plan});
+  const Engine({required this.probe, required this.apply, required this.inspect, required this.plan, this.boot});
   final File probe;
   final File apply;
   final File inspect;
   final File plan;
+
+  /// Lists the installed systems and chooses which one starts next. Optional: older bundles lack it.
+  final File? boot;
 
   bool get complete => probe.existsSync() && apply.existsSync() && inspect.existsSync() && plan.existsSync();
 }
@@ -25,6 +28,7 @@ Engine? locateEngine({String? exePath}) {
     apply: File('${bundled.path}${sep}apply-plan.ps1'),
     inspect: File('${bundled.path}${sep}inspect-iso.ps1'),
     plan: File('${bundled.path}$sep$_planExe'),
+    boot: File('${bundled.path}${sep}boot-entries.ps1'),
   );
   if (e.complete) return e;
 
@@ -38,6 +42,7 @@ Engine? locateEngine({String? exePath}) {
           apply: File('$scripts${sep}apply-plan.ps1'),
           inspect: File('$scripts${sep}inspect-iso.ps1'),
           plan: File('${dir.path}${sep}core${sep}target$sep$profile$sep$_planExe'),
+          boot: File('$scripts${sep}boot-entries.ps1'),
         );
         if (dev.complete) return dev;
       }

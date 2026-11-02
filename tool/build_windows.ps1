@@ -11,4 +11,5 @@ try { flutter build windows --release; if ($LASTEXITCODE -ne 0) { throw 'flutter
 
 $out = Join-Path $root 'build\windows\x64\runner\Release'
 if (-not (Test-Path (Join-Path $out 'engine\besideos-plan.exe'))) { throw "engine\besideos-plan.exe missing in $out" }
-Write-Host "OK: $out\besideos_site.exe"
+if (-not (Test-Path (Join-Path $out 'BesideOS.exe'))) { throw "BesideOS.exe missing in $out" }
+Write-Host "OK: $out\BesideOS.exe"

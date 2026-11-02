@@ -73,6 +73,15 @@ void main() {
     expect(apply, isNot(contains('-Include')));              // ignored together with -LiteralPath
   });
 
+  test('the boot chooser changes nothing without -Execute and only accepts listed entries', () {
+    final boot = File('probe/windows/boot-entries.ps1').readAsStringSync();
+    expect(boot, contains('DRY-RUN'));
+    expect(boot, contains('if (-not \$Execute)'));
+    expect(boot, contains('is not a firmware boot entry of this computer'));
+    // $Id is the parameter; PowerShell variables are case-insensitive, so no loop may reuse $id
+    expect(RegExp(r'^\s*\$id\s*=', multiLine: true, caseSensitive: false).hasMatch(boot), isFalse);
+  });
+
   test('the app never restarts the computer on its own', () {
     final dart = File('lib/install/install_controller.dart').readAsStringSync();
     expect(dart, isNot(contains("'-Reboot'")));

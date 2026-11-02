@@ -164,6 +164,19 @@ class SiteBar extends StatelessWidget implements PreferredSizeWidget {
                           icon: const Icon(Icons.apps_rounded, size: 20),
                           label: const Text('Dağıtımlar'),
                         ),
+                // The desktop app (not the website) can choose which installed system starts.
+                if (showCatalog && !web)
+                  compact
+                      ? IconButton(
+                          onPressed: () => Navigator.pushNamed(context, '/boot'),
+                          tooltip: 'Açılış sistemi',
+                          icon: const Icon(Icons.power_settings_new_rounded),
+                        )
+                      : TextButton.icon(
+                          onPressed: () => Navigator.pushNamed(context, '/boot'),
+                          icon: const Icon(Icons.power_settings_new_rounded, size: 20),
+                          label: const Text('Açılış sistemi'),
+                        ),
                 if (web) ...[
                   const SizedBox(width: 6),
                   if (compact)

@@ -89,12 +89,12 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
+            VALUE "CompanyName", "BesideOS" "\0"
             VALUE "FileDescription", "BesideOS" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "besideos_site" "\0"
+            VALUE "InternalName", "BesideOS" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 BesideOS. MIT License." "\0"
-            VALUE "OriginalFilename", "besideos_site.exe" "\0"
+            VALUE "OriginalFilename", "BesideOS.exe" "\0"
             VALUE "ProductName", "BesideOS" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END

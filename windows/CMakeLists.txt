@@ -4,7 +4,7 @@ project(besideos_site LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-set(BINARY_NAME "besideos_site")
+set(BINARY_NAME "BesideOS")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.
@@ -116,6 +116,7 @@ install(FILES
   "${ENGINE_SCRIPT_DIR}/collect-host-facts.ps1"
   "${ENGINE_SCRIPT_DIR}/apply-plan.ps1"
   "${ENGINE_SCRIPT_DIR}/inspect-iso.ps1"
+  "${ENGINE_SCRIPT_DIR}/boot-entries.ps1"
   DESTINATION "${CMAKE_INSTALL_PREFIX}/engine" COMPONENT Runtime)
 if(EXISTS "${ENGINE_PLAN_EXE}")
   install(FILES "${ENGINE_PLAN_EXE}" DESTINATION "${CMAKE_INSTALL_PREFIX}/engine" COMPONENT Runtime)

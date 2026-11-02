@@ -150,7 +150,8 @@ bool Win32Window::Create(const std::wstring& title,
 }
 
 bool Win32Window::Show() {
-  return ShowWindow(window_handle_, SW_SHOWNORMAL);
+  // The app opens maximized; restoring the window gives back the size set in main.cpp.
+  return ShowWindow(window_handle_, SW_SHOWMAXIMIZED);
 }
 
 // static
