@@ -360,7 +360,7 @@ class _InstallSectionState extends State<InstallSection> {
             Text(label,
                 style: TextStyle(
                     color: state == 0 ? kMuted : kText,
-                    fontWeight: state == 2 ? FontWeight.w700 : FontWeight.w500,
+                    fontWeight: state == 2 ? FontWeight.w700 : FontWeight.w600,
                     fontSize: 16,
                     height: 1.5)),
             if (detail != null) detail,

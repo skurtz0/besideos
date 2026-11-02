@@ -70,11 +70,14 @@ class _BesideSiteState extends State<BesideSite> {
       debugShowCheckedModeBanner: false,
       theme: base.copyWith(
         textTheme: tt.copyWith(
-          bodyLarge: tt.bodyLarge?.copyWith(fontSize: 17, height: 1.55),
-          bodyMedium: tt.bodyMedium?.copyWith(fontSize: 16, height: 1.55),
-          bodySmall: tt.bodySmall?.copyWith(fontSize: 14, height: 1.5),
-          labelLarge: tt.labelLarge?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
-          titleMedium: tt.titleMedium?.copyWith(fontSize: 18, height: 1.5),
+          // semi-bold by default so text stays crisp on dark backgrounds
+          bodyLarge: tt.bodyLarge?.copyWith(fontSize: 17, height: 1.55, fontWeight: FontWeight.w600),
+          bodyMedium: tt.bodyMedium?.copyWith(fontSize: 16, height: 1.55, fontWeight: FontWeight.w600),
+          bodySmall: tt.bodySmall?.copyWith(fontSize: 14, height: 1.5, fontWeight: FontWeight.w600),
+          labelLarge: tt.labelLarge?.copyWith(fontSize: 15, fontWeight: FontWeight.w700),
+          labelMedium: tt.labelMedium?.copyWith(fontWeight: FontWeight.w700),
+          titleSmall: tt.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+          titleMedium: tt.titleMedium?.copyWith(fontSize: 18, height: 1.5, fontWeight: FontWeight.w700),
         ),
       ),
     );

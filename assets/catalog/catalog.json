@@ -1149,10 +1149,9 @@
       "license": "Ticari (Microsoft lisansı)",
       "screens": [
         {
-          "file": "assets/screens/windows-10-setup.jpg",
-          "caption": "Windows 10 kurulum ekranı (IoT Enterprise LTSC 2021 sürümünden görüntü)",
-          "credit": "Görsel: OS: Microsoft Corporation Screenshot: PantheraLeo1359531 😺… · Public domain · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:VirtualBox_Windows_10_IoT_Enterprise_LTSC_2021_22_12_2024_11_08_36.png"
+          "file": "assets/screens/windows-10.jpg",
+          "caption": "Windows 10 masaüstü: Başlat menüsü ve bildirim paneli",
+          "credit": "Görsel: proje sahibi tarafından sağlandı"
         }
       ]
     },
@@ -1197,9 +1196,8 @@
       "screens": [
         {
           "file": "assets/screens/windows-11.jpg",
-          "caption": "Windows 11: başlat menüsü ve Ayarlar",
-          "credit": "Görsel: Microsoft; for the icons: https://notepad-plus-plus.org htt… · Public domain · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Windows_11_screenshot.png"
+          "caption": "Windows 11 masaüstü ve Başlat menüsü",
+          "credit": "Görsel: proje sahibi tarafından sağlandı"
         }
       ]
     },
