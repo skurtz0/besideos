@@ -10,7 +10,7 @@ void main() {
 
     await tester.pumpWidget(const BesideSite());
 
-    expect(find.textContaining('Bilgisayarına ikinci bir sistem kur'), findsOneWidget);
+    expect(find.textContaining('Bilgisayarına USB bellek gerekmeden ikinci bir sistem kur.'), findsOneWidget);
     expect(find.text('Başlamak için tıklayın'), findsOneWidget);
     expect(find.text('Durum: erken geliştirme'), findsOneWidget);
   });

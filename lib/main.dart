@@ -296,7 +296,7 @@ class _Hero extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Bilgisayarına ikinci bir sistem kur. USB bellek gerekmez.',
+            'Bilgisayarına USB bellek gerekmeden ikinci bir sistem kur.',
             style: TextStyle(
               color: kText,
               fontSize: narrow ? 30 : (wide ? 46 : 38),
