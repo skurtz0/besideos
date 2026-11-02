@@ -53,6 +53,22 @@ void main() {
     expect(preflight, lessThan(firstDiskChange));
     expect(apply, contains('BIOS-only media cannot be installed this way'));
   });
+  test('Windows media boots boot.wim as a RAM disk instead of a copy of {bootmgr}', () {
+    final apply = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(apply, contains(r"'ramdisksdipath', '\boot\boot.sdi'"));
+    expect(apply, contains('winload.efi'));
+    expect(apply, contains("'winpe', 'yes'"));
+    expect(apply, contains("'{bootmgr}', 'bootsequence'"));
+    // undo knows both objects it created and removes them together with the boot sequence
+    expect(apply, contains("kind -eq 'ramdisk'"));
+    expect(apply, contains('options_guid'));
+  });
+
+  test('the app never restarts the computer on its own', () {
+    final dart = File('lib/install/install_controller.dart').readAsStringSync();
+    expect(dart, isNot(contains("'-Reboot'")));
+  });
+
   test('undo can run without -PlanFile (the app never passes it)', () {
     final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
     expect(text, contains(r'if (-not $PlanFile)'));

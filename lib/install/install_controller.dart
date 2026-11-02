@@ -35,7 +35,11 @@ class InstallPlan {
   final int shrinkBytes;
 
   factory InstallPlan.fromJson(Map<String, dynamic> j) => InstallPlan(
-        steps: [for (final s in j['steps'] as List) '${(s as Map)['description']}'],
+        // The restart is the person's own button press afterwards, never part of the run, so it is not listed as a step.
+        steps: [
+          for (final s in j['steps'] as List)
+            if (((s as Map)['step'] as Map?)?['type'] != 'reboot') '${s['description']}'
+        ],
         risks: [for (final r in j['risks'] as List) '$r'],
         shrinkBytes: (j['total_shrink_bytes'] as num).toInt(),
       );
@@ -350,14 +354,51 @@ class InstallController extends ChangeNotifier {
     }
   }
 
-  /// Applies the plan and reboots into the installer. Does nothing unless the user [confirmed] (backup box + dialog).
+  bool _restarting = false;
+  String? _restartError;
+
+  /// A restart countdown is running (started by [restart], stoppable with [cancelRestart]).
+  bool get restarting => _restarting;
+  String? get restartError => _restartError;
+
+  /// Restarts into the installer. Only the person's own press of the restart button calls this; [apply] never restarts.
+  /// Windows counts down 15 seconds, so [cancelRestart] can still stop it.
+  Future<void> restart() async {
+    if (_phase != InstallPhase.applied || _restarting) return;
+    _restarting = true;
+    _restartError = null;
+    notifyListeners();
+    try {
+      final r = await runner.exec('shutdown', ['/r', '/t', '15', '/c', 'BesideOS: kurulum ekranı için yeniden başlatılıyor.']);
+      if (r.exitCode != 0) {
+        _restarting = false;
+        _restartError = 'Yeniden başlatılamadı. Bilgisayarı kendin yeniden başlat.';
+      }
+    } catch (e) {
+      _restarting = false;
+      _restartError = 'Yeniden başlatılamadı. Bilgisayarı kendin yeniden başlat.';
+    }
+    notifyListeners();
+  }
+
+  Future<void> cancelRestart() async {
+    if (!_restarting) return;
+    try {
+      await runner.exec('shutdown', ['/a']);
+    } catch (_) {}
+    _restarting = false;
+    notifyListeners();
+  }
+
+  /// Prepares the installer (partition, files, one-shot boot entry). Does NOT restart the computer.
+  /// Does nothing unless the user [confirmed] (backup box + dialog).
   Future<void> apply({required bool confirmed}) async {
     if (_phase != InstallPhase.ready || !confirmed) return;
     _set(InstallPhase.applying);
     try {
       final r = await runner.script(
         engine.apply,
-        ['-PlanFile', _f('plan.json').path, '-Execute', '-Reboot', '-OutDir', workDir.path],
+        ['-PlanFile', _f('plan.json').path, '-Execute', '-OutDir', workDir.path],
         elevated: true,
       );
       if (r.exitCode == kElevationDeclined) {

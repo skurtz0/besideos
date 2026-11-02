@@ -214,7 +214,7 @@ class _InstallSectionState extends State<InstallSection> {
         return _progress(c);
       case InstallPhase.applying:
         return _busy('Kurulum hazırlanıyor…',
-            'Windows izin isteyecek: «Evet» de. Bilgisayar kendiliğinden yeniden başlayabilir. Bu pencereyi kapatma.');
+            'Windows izin isteyecek: «Evet» de. Bu pencereyi kapatma. Bilgisayar kendiliğinden yeniden başlamaz.');
       case InstallPhase.undoing:
         return _busy('Değişiklikler geri alınıyor…', 'Windows izin isteyecek: «Evet» de.');
       case InstallPhase.ready:
@@ -223,10 +223,22 @@ class _InstallSectionState extends State<InstallSection> {
         return _refused(c);
       case InstallPhase.applied:
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          _header(Icons.check_circle_rounded, 'Hazır! Bilgisayar yeniden başlıyor',
-              '${_sys(c)} kurulum ekranı birazdan açılacak. Ekrandaki yönergeleri izle.', color: kGreen),
+          _header(Icons.check_circle_rounded, c.restarting ? 'Bilgisayar 15 saniye içinde yeniden başlıyor' : 'Hazır! Şimdi yeniden başlatabilirsin',
+              c.restarting
+                  ? 'Açık işin varsa kaydet. Vazgeçersen aşağıdaki düğmeye bas.'
+                  : '${_sys(c)} kurulum ekranı bir sonraki açılışta bir kez açılır. Açık işlerini kaydedince yeniden başlat.',
+              color: kGreen),
           const SizedBox(height: 16),
-          _small('Açılmazsa: bilgisayarın açılış menüsünden "BesideOS kurulumu"nu seç. Kurulum bitince BESIDEOS adlı geçici bölümü silebilirsin.'),
+          if (c.restartError != null) _banner(kWarn, Icons.warning_amber_rounded, lines: [c.restartError!]),
+          if (c.restarting)
+            OutlinedButton(onPressed: c.cancelRestart, child: const Text('Yeniden başlatmaktan vazgeç'))
+          else ...[
+            _bigButton('Şimdi yeniden başlat', Icons.restart_alt_rounded, () => _confirmRestart(c)),
+            const SizedBox(height: 10),
+            OutlinedButton(onPressed: c.undo, child: const Text('Vazgeç, değişiklikleri geri al')),
+            const SizedBox(height: 12),
+            _small('Daha sonra başlatmak istersen bilgisayarı kendin yeniden başlat; kurulum ekranı ilk açılışta gelir. Açılmazsa açılış menüsünden "BesideOS kurulumu"nu seç. Kurulum bitince BESIDEOS adlı geçici bölümü silebilirsin.'),
+          ],
         ]);
       case InstallPhase.failed:
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -576,7 +588,7 @@ class _InstallSectionState extends State<InstallSection> {
               ? '${c.target!.letter}: sürücüsünde yaklaşık $gb GB boş yer açılır.'
               : "Windows'un yanında yaklaşık $gb GB boş yer açılır."),
       _bullet(Icons.file_copy_rounded, '${_sys(c)} kurulum dosyaları bu yere kopyalanır.'),
-      _bullet(Icons.restart_alt_rounded, 'Bilgisayar yeniden başlar ve ${_sys(c)} kurulum ekranı açılır.'),
+      _bullet(Icons.restart_alt_rounded, 'Hazır olunca sen yeniden başlatırsın ve ${_sys(c)} kurulum ekranı açılır.'),
       const SizedBox(height: 6),
       if (widget.distro.family == DistroFamily.windows)
         _banner(kAccent, Icons.lightbulb_outline_rounded,
@@ -613,12 +625,27 @@ class _InstallSectionState extends State<InstallSection> {
     ]);
   }
 
+  Future<void> _confirmRestart(InstallController c) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Şimdi yeniden başlatalım mı?'),
+        content: Text('Bilgisayar 15 saniye sonra yeniden başlayacak ve ${_sys(c)} kurulum ekranı açılacak. Açık işlerini şimdi kaydet.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Şimdi değil')),
+          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Evet, yeniden başlat')),
+        ],
+      ),
+    );
+    if (ok == true) await c.restart();
+  }
+
   Future<void> _confirmAndApply(InstallController c) async {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Başlayalım mı?'),
-        content: Text('Bilgisayar yeniden başlayacak ve ${_sys(c)} kurulum ekranı açılacak. Açık işlerini şimdi kaydet.'),
+        content: const Text('Kurulum hazırlanacak: boş yer açılacak ve dosyalar kopyalanacak. Bilgisayar kendiliğinden yeniden BAŞLAMAZ; bunu sonra sen seçeceksin.'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Vazgeç')),
           FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Evet, başlat')),

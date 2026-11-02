@@ -307,7 +307,7 @@ class _Hero extends StatelessWidget {
           ),
           const SizedBox(height: 18),
           Text(
-            'BesideOS diskinde yer açar, kurulumu hazırlar ve bilgisayarı yeniden başlatır. '
+            'BesideOS diskinde yer açar ve kurulumu hazırlar; hazır olunca sen yeniden başlatırsın. '
             "Windows'un olduğu gibi yerinde kalır.",
             style: TextStyle(color: kMuted, fontSize: narrow ? 17 : 19, height: 1.6),
           ),

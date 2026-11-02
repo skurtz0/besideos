@@ -230,8 +230,17 @@ void main() {
     });
     await t.pump();
     expect(c.phase, InstallPhase.applied);
-    expect(runner.calls.last, startsWith('apply-plan.ps1* -PlanFile -Execute -Reboot'));
-    expect(find.textContaining('Bilgisayar yeniden başlıyor'), findsOneWidget);
+    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -OutDir');
+    // the computer is NOT restarted by itself: the person gets a button and a confirmation
+    expect(runner.calls.any((x) => x.startsWith('shutdown')), isFalse);
+    expect(find.text('Hazır! Şimdi yeniden başlatabilirsin'), findsOneWidget);
+    expect(find.text('Şimdi yeniden başlat'), findsOneWidget);
+    await t.tap(find.text('Şimdi yeniden başlat'));
+    await t.pumpAndSettle();
+    expect(find.text('Şimdi yeniden başlatalım mı?'), findsOneWidget);
+    await t.tap(find.text('Şimdi değil'));
+    await t.pumpAndSettle();
+    expect(runner.calls.any((x) => x.startsWith('shutdown')), isFalse);
   });
 
   testWidgets('the idle card states the ISO size, with no scary wording', (t) async {

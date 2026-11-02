@@ -20,7 +20,7 @@ class FakeRunner implements ProcessRunner {
   FakeRunner(this.work);
   final Directory work;
   final calls = <String>[];
-  int inspectExit = 0, probeExit = 0, applyExit = 0, planExit = 0;
+  int inspectExit = 0, probeExit = 0, applyExit = 0, planExit = 0, shutdownExit = 0;
   String planOut = planJson;
   String? drivesJson;
   final hosts = <String>[];
@@ -29,6 +29,10 @@ class FakeRunner implements ProcessRunner {
 
   @override
   Future<RunResult> exec(String exe, List<String> args) async {
+    if (exe == 'shutdown') {
+      calls.add('shutdown ${args.where((a) => a.startsWith('/')).join(' ')}');
+      return RunResult(shutdownExit, '', '');
+    }
     hosts.add(File(_arg(args, '--host')).readAsStringSync());
     calls.add('plan ${_arg(args, '--iso-path')} ${File(_arg(args, '--request')).readAsStringSync()}');
     return RunResult(planExit, planOut, '');
@@ -206,14 +210,43 @@ void main() {
     expect(c.isLocalIso, isFalse);
     expect(dl.starts, 1);
   });
-  test('apply needs explicit confirmation and then runs elevated with -Execute -Reboot', () async {
+  test('apply needs explicit confirmation, runs elevated with -Execute and never restarts the computer', () async {
     await c.begin(iso, IsoArch.x86_64);
     await c.apply(confirmed: false);
     expect(c.phase, InstallPhase.ready);
     expect(runner.calls.any((x) => x.startsWith('apply-plan.ps1')), isFalse);
     await c.apply(confirmed: true);
     expect(c.phase, InstallPhase.applied);
-    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -Reboot -OutDir');
+    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -OutDir');
+    expect(runner.calls.any((x) => x.contains('-Reboot') || x.startsWith('shutdown')), isFalse);
+    expect(c.restarting, isFalse);
+  });
+
+  test('the plan does not list the restart as a step', () async {
+    await c.begin(iso, IsoArch.x86_64);
+    expect(c.plan!.steps.any((s) => s.contains('yeniden başlat')), isFalse);
+  });
+
+  test('restart happens only when the person asks, with a 15 second countdown that can be cancelled', () async {
+    await c.begin(iso, IsoArch.x86_64);
+    await c.restart(); // not applied yet: ignored
+    expect(runner.calls.any((x) => x.startsWith('shutdown')), isFalse);
+    await c.apply(confirmed: true);
+    await c.restart();
+    expect(runner.calls.last, 'shutdown /r /t /c');
+    expect(c.restarting, isTrue);
+    await c.cancelRestart();
+    expect(runner.calls.last, 'shutdown /a');
+    expect(c.restarting, isFalse);
+  });
+
+  test('a failed restart tells the person to restart by hand', () async {
+    await c.begin(iso, IsoArch.x86_64);
+    await c.apply(confirmed: true);
+    runner.shutdownExit = 5;
+    await c.restart();
+    expect(c.restarting, isFalse);
+    expect(c.restartError, isNotNull);
   });
 
   test('apply does nothing before a plan is ready', () async {

@@ -193,7 +193,35 @@ if ($Undo) {
         return @($found)
     }
     # 1. boot entry (idempotent: consumed bootsequence / already-deleted entry are skips, not errors)
-    if ($st.boot_entry -and $st.boot_entry.guid) {
+    if ($st.boot_entry -and ($st.boot_entry.guid -or $st.boot_entry.options_guid) -and [string]$st.boot_entry.kind -eq 'ramdisk') {
+        # Windows media: an osloader entry plus its RAM disk options object (both created by us, both recorded in state)
+        function Test-BcdObj([string]$guid) {
+            $x = Invoke-Native 'bcdedit' @('/enum', $guid)   # read-only existence check; exit code alone proves nothing
+            return ($x.Code -eq 0 -and ([string]$x.Out) -match [regex]::Escape($guid))
+        }
+        $g = [string]$st.boot_entry.guid; $og = [string]$st.boot_entry.options_guid
+        foreach ($x in @($g, $og)) { if ($x -and $x -notmatch "^$GUID_RE`$") { Abort 'Durum dosyasindaki GUID gecersiz.' "Bad GUID in state: $x" } }
+        Log "UNDO 1: ramdisk boot entry $g (options $og)"
+        if ($g) {
+            $bm = Invoke-Native 'bcdedit' @('/enum', '{bootmgr}')   # read-only
+            $inSeq = @(Get-BcdElementGuids $bm.Out 'bootsequence' | Where-Object { $_ -ieq $g }).Count -gt 0
+            if (-not $inSeq) { [void]$undoSkipped.Add('1a bootsequence') }
+            elseif (-not $Execute) { Log 'DRY-RUN: would run bcdedit /deletevalue {bootmgr} bootsequence' }
+            else {
+                $r = Invoke-Native 'bcdedit' @('/deletevalue', '{bootmgr}', 'bootsequence')
+                if ($r.Code -ne 0) { Abort 'bootsequence silinemedi.' 'bcdedit /deletevalue {bootmgr} bootsequence failed although it lists our entry.' }
+                [void]$undoDone.Add('1a bootsequence')
+            }
+        }
+        foreach ($x in @($g, $og)) {
+            if (-not $x) { continue }
+            if (-not (Test-BcdObj $x)) { Log "boot object $x already gone." 'WARN'; [void]$undoSkipped.Add("1b $x"); continue }
+            if (-not $Execute) { Log "DRY-RUN: would run bcdedit /delete $x /cleanup"; continue }
+            $r = Invoke-Native 'bcdedit' @('/delete', $x, '/cleanup')
+            if ($r.Code -ne 0 -and (Test-BcdObj $x)) { Abort 'Onyukleme girdisi silinemedi.' "bcdedit /delete $x failed and the object still exists." }
+            [void]$undoDone.Add("1b $x")
+        }
+    } elseif ($st.boot_entry -and $st.boot_entry.guid) {
         $g = [string]$st.boot_entry.guid
         if ($g -notmatch "^$GUID_RE`$") { Abort 'Durum dosyasindaki GUID gecersiz.' "Bad GUID in state: $g" }
         Log "UNDO 1: boot entry $g"
@@ -442,7 +470,7 @@ $fails_before_iso = $script:fails
 # --- the ISO itself must boot by UEFI (mounted read-only for a moment; nothing on the disks changes) ---
 # Old BIOS-only installers (Windows XP/7, some live images) have no \EFI\BOOT\BOOTx64.EFI: refuse now, not after the partition exists.
 function Get-IsoBootInfo([string]$iso) {
-    $info = [ordered]@{ Loader = $false; WimBytes = [int64]0; Error = $null }
+    $info = [ordered]@{ Loader = $false; WimBytes = [int64]0; WinPE = $false; Error = $null }
     $m = $false
     try {
         [void](Mount-DiskImage -ImagePath $iso -PassThru -ErrorAction Stop); $m = $true
@@ -455,16 +483,20 @@ function Get-IsoBootInfo([string]$iso) {
         $info.Loader = [bool](Test-Path -LiteralPath (Join-Path "${l}:\" $loader.TrimStart('\')) -PathType Leaf)
         $w = Join-Path "${l}:\" 'sources\install.wim'
         if (Test-Path -LiteralPath $w -PathType Leaf) { $info.WimBytes = [int64](Get-Item -LiteralPath $w).Length }
+        $info.WinPE = [bool]((Test-Path -LiteralPath (Join-Path "${l}:\" 'sources\boot.wim') -PathType Leaf) -and (Test-Path -LiteralPath (Join-Path "${l}:\" 'boot\boot.sdi') -PathType Leaf))
     } catch { $info.Error = $_.Exception.Message }
     finally { if ($m) { try { Dismount-DiskImage -ImagePath $iso | Out-Null } catch { } } }
     return $info
 }
+$isWinMedia = $false   # decided again from the staged files right before the boot entry is made
 if ($srcIsIso -and $fails_before_iso -eq 0) {
     $isoInfo = Get-IsoBootInfo $srcPath
+    $isWinMedia = [bool]$isoInfo.WinPE
     Req ($null -eq $isoInfo.Error) "ISO acilamadi: $($isoInfo.Error)" "Cannot open the ISO: $($isoInfo.Error)"
     if ($null -eq $isoInfo.Error) {
         Req $isoInfo.Loader "Bu ISO UEFI ile acilamiyor ($loader yok). Eski BIOS'lu surumler (ornegin Windows XP ve 7) bu yontemle kurulamaz." "ISO has no UEFI loader $loader (BIOS-only media cannot be installed this way)"
         if ($isoInfo.WimBytes -gt 4294967295) { Log "sources\install.wim is $($isoInfo.WimBytes) bytes: will be split into install.swm parts (DISM) so it fits FAT32." }
+        if ($isoInfo.WinPE) { Log 'Windows installation media: the boot entry will load sources\boot.wim as a RAM disk (WinPE) through the Windows boot manager.' }
     }
 }
 $stateExists = Test-Path -LiteralPath $statePath
@@ -600,11 +632,45 @@ foreach ($ps in @($plan.steps)) {
                 }
             }
             'add_one_shot_boot_entry' {
-                if (-not $Execute) {
+                if ($Execute) { $isWinMedia = ((Test-Path -LiteralPath "${stageLetter}:\sources\boot.wim" -PathType Leaf) -and (Test-Path -LiteralPath "${stageLetter}:\boot\boot.sdi" -PathType Leaf)) }
+                if (-not $Execute -and $isWinMedia) {
+                    Log "DRY-RUN: Windows media: would run bcdedit /create /d `"$desc`" /device   (RAM disk options object)"
+                    Log 'DRY-RUN: then bcdedit /set {options} ramdisksdidevice partition=<staging-letter>: and ramdisksdipath \boot\boot.sdi'
+                    Log "DRY-RUN: then bcdedit /create /d `"$desc`" /application osloader   (boots <staging-letter>:\sources\boot.wim with \windows\system32\winload.efi, winpe yes)"
+                    Log 'DRY-RUN: then bcdedit /set {bootmgr} bootsequence {guid}   (one-shot)'
+                } elseif (-not $Execute) {
                     Log "DRY-RUN: would run bcdedit /copy {bootmgr} /d `"$desc`"   (parse new {guid} from output)"
                     Log "DRY-RUN: then bcdedit /set {guid} device partition=<staging-letter>:"
                     Log "DRY-RUN: then bcdedit /set {guid} path $loader"
                     Log "DRY-RUN: then bcdedit /set {fwbootmgr} bootsequence {guid}   (one-shot)"
+                } elseif ($isWinMedia) {
+                    # Windows media cannot be started as a copy of {bootmgr}: its own boot manager looks the entry's GUID up in the
+                    # media's BCD and fails (0xc0000034). Instead the installed Windows boot manager starts WinPE from boot.wim as a RAM disk.
+                    $r = Invoke-Native 'bcdedit' @('/create', '/d', "$desc (ramdisk)", '/device')
+                    $m = [regex]::Matches($r.Out, $GUID_RE)
+                    if ($r.Code -ne 0 -or $m.Count -ne 1) { throw "bcdedit /create /device failed or GUID not found (exit $($r.Code), matches $($m.Count))" }
+                    $og = $m[0].Value
+                    $script:State.boot_entry = [ordered]@{ guid = $null; description = $desc; kind = 'ramdisk'; options_guid = $og }; Save-State
+                    $r = Invoke-Native 'bcdedit' @('/create', '/d', $desc, '/application', 'osloader')
+                    $m = [regex]::Matches($r.Out, $GUID_RE)
+                    if ($r.Code -ne 0 -or $m.Count -ne 1) { throw "bcdedit /create /application osloader failed or GUID not found (exit $($r.Code), matches $($m.Count))" }
+                    $g = $m[0].Value
+                    $script:State.boot_entry.guid = $g; Save-State
+                    $rd = "ramdisk=[${stageLetter}:]\sources\boot.wim,$og"
+                    foreach ($args2 in @(
+                            @('/set', $og, 'ramdisksdidevice', "partition=${stageLetter}:"),
+                            @('/set', $og, 'ramdisksdipath', '\boot\boot.sdi'),
+                            @('/set', $g, 'device', $rd),
+                            @('/set', $g, 'osdevice', $rd),
+                            @('/set', $g, 'path', '\windows\system32\winload.efi'),
+                            @('/set', $g, 'systemroot', '\windows'),
+                            @('/set', $g, 'winpe', 'yes'),
+                            @('/set', $g, 'detecthal', 'yes'),
+                            @('/set', '{bootmgr}', 'bootsequence', $g))) {
+                        $r = Invoke-Native 'bcdedit' $args2
+                        if ($r.Code -ne 0) { throw "bcdedit $($args2 -join ' ') failed (exit $($r.Code))" }
+                    }
+                    [void](Invoke-Native 'bcdedit' @('/enum', $g))
                 } else {
                     $r = Invoke-Native 'bcdedit' @('/copy', '{bootmgr}', '/d', $desc)
                     $m = [regex]::Matches($r.Out, $GUID_RE)
