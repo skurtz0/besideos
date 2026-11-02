@@ -119,7 +119,9 @@ void main() {
     expect(find.text('80 GB · önerilen'), findsOneWidget);
     expect(find.text('30 GB · önerilen'), findsNothing);
     expect(find.textContaining('Windows için en az 64 GB'), findsOneWidget);
-    expect(find.text('Windows kurulurken'), findsOneWidget);
+    expect(find.textContaining('kurulurken diski doğru seç'), findsOneWidget);
+    expect(find.textContaining('"Ayrılmamış alan"ı seç'), findsOneWidget);
+    expect(find.textContaining('"Diskin tamamını sil"'), findsNothing);
   });
   testWidgets('cancelling the file dialog changes nothing', (t) async {
     await t.runAsync(() async {
@@ -196,6 +198,16 @@ void main() {
     await t.pump();
     expect(c.target!.letter, 'D');
     expect(find.textContaining('D: sürücüsünde yaklaşık'), findsOneWidget);
+  });
+
+  testWidgets('Linux installs are told not to wipe the whole disk, before and after the preparation', (t) async {
+    t.view.physicalSize = const Size(900, 2600);
+    t.view.devicePixelRatio = 1.0;
+    addTearDown(t.view.reset);
+    await toReady(t);
+    expect(find.textContaining('kurulurken diski doğru seç'), findsOneWidget);
+    expect(find.textContaining('"Diskin tamamını sil" seçeneğini SEÇME'), findsOneWidget);
+    expect(find.textContaining('"Ayrılmamış alan"ı seç'), findsNothing);
   });
 
   testWidgets('a single drive shows no picker', (t) async {

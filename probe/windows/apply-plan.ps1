@@ -468,6 +468,44 @@ if ($srcIsRoot) {
 
 $fails_before_iso = $script:fails
 # --- the ISO itself must boot by UEFI (mounted read-only for a moment; nothing on the disks changes) ---
+# The ISO 9660 volume label (primary volume descriptor, up to 32 characters). Windows shows it cut short, so it is read from the file.
+# Returns '' for anything that is not an ISO 9660 image.
+function Get-IsoVolumeLabel([string]$iso) {
+    try {
+        $fs = [System.IO.File]::Open($iso, 'Open', 'Read', 'ReadWrite')
+        try {
+            $b = New-Object byte[] 2048
+            [void]$fs.Seek(16 * 2048, 'Begin')
+            if ($fs.Read($b, 0, 2048) -lt 2048) { return '' }
+            if ($b[0] -ne 1 -or [System.Text.Encoding]::ASCII.GetString($b, 1, 5) -ne 'CD001') { return '' }
+            return [System.Text.Encoding]::ASCII.GetString($b, 40, 32).Trim()
+        } finally { $fs.Dispose() }
+    } catch { return '' }
+}
+# Points the text boot configs under $root at our staging label instead of the ISO's identity; returns how many files changed.
+# Two things are rewritten: the ISO volume label ($old, when it has one), and archiso's archisosearchuuid=<iso date>, which a
+# FAT32 partition can never match (archisolabel=<label> makes it look the device up by label instead).
+# Bytes are round-tripped as Latin-1 so nothing else in the file changes.
+function Update-BootLabel([string]$root, [string]$old, [string]$new) {
+    $latin = [System.Text.Encoding]::GetEncoding(28591)
+    $esc = $old.Replace(' ', '\x20')   # grub escapes spaces like this
+    $n = 0
+    # The Include filter is ignored together with -LiteralPath, so the extension is checked by hand (binary files and grubenv stay untouched)
+    foreach ($f in @(Get-ChildItem -LiteralPath $root -Recurse -File -Force -ErrorAction SilentlyContinue)) {
+        if (@('.cfg', '.conf', '.lst', '.menu') -notcontains $f.Extension.ToLowerInvariant()) { continue }
+        if ($f.Length -gt 262144) { continue }
+        $txt = $latin.GetString([System.IO.File]::ReadAllBytes($f.FullName))
+        $out = $txt
+        if ($old) { $out = $out.Replace($esc, $new).Replace($old, $new) }
+        $out = [regex]::Replace($out, 'archisosearchuuid=\S+', "archisolabel=$new")
+        if ($out -ceq $txt) { continue }
+        if ($f.IsReadOnly) { $f.IsReadOnly = $false }   # robocopy keeps the ISO's read-only flag
+        [System.IO.File]::WriteAllBytes($f.FullName, $latin.GetBytes($out))
+        $n++
+        Log ('boot label patched: ' + $f.FullName.Substring($root.Length))
+    }
+    return $n
+}
 # Old BIOS-only installers (Windows XP/7, some live images) have no \EFI\BOOT\BOOTx64.EFI: refuse now, not after the partition exists.
 function Get-IsoBootInfo([string]$iso) {
     $info = [ordered]@{ Loader = $false; WimBytes = [int64]0; WinPE = $false; Error = $null }
@@ -577,12 +615,13 @@ foreach ($ps in @($plan.steps)) {
                     else { $srcRoot = $srcPath }
                     Log "DRY-RUN: would run robocopy $srcRoot <staging-letter>:\ /E /R:1 /W:1 /NFL /NDL /NP /XD 'System Volume Information' '`$RECYCLE.BIN'  (exit < 8 = ok)"
                     Log 'DRY-RUN: if sources\install.wim is over 4 GiB it is skipped by robocopy (/XF install.wim) and written as install.swm parts: dism /Split-Image /ImageFile:<iso-letter>:\sources\install.wim /SWMFile:<staging-letter>:\sources\install.swm /FileSize:3800'
+                    Log 'DRY-RUN: for non-Windows media, boot configs (*.cfg, *.conf, *.lst, *.menu) that name the ISO volume label are rewritten to the staging label'
                     Log "DRY-RUN: then verify <staging-letter>:$loader exists$(if ($srcIsIso) { '; Dismount-DiskImage' })"
                 } else {
                     $fv = Get-Volume -DriveLetter $stageLetter -ErrorAction Stop
                     if ([string]$fv.FileSystemLabel -ne [string]$ex.target_label) { throw "staging volume label mismatch ($($fv.FileSystemLabel))" }
                     $mounted = $false; $srcRoot = $srcPath
-                    $splitWim = $false
+                    $splitWim = $false; $isoLabel = ''
                     try {
                         if ($srcIsIso) {
                             Log "RUN: Mount-DiskImage -ImagePath '$srcPath' -PassThru"
@@ -595,6 +634,7 @@ foreach ($ps in @($plan.steps)) {
                                 if ($iv -and $iv.DriveLetter) { $il = [string]$iv.DriveLetter } else { Start-Sleep -Seconds 1 }
                             }
                             if (-not $il) { throw 'mounted ISO has no drive letter' }
+                            $isoLabel = Get-IsoVolumeLabel $srcPath
                             if ($il -eq $stageLetter) { throw 'ISO mounted on staging letter (refusing)' }
                             $srcRoot = "${il}:\"
                             $wimSrc = Join-Path $srcRoot 'sources\install.wim'
@@ -610,6 +650,12 @@ foreach ($ps in @($plan.steps)) {
                         $lp = Join-Path $dst $loader.TrimStart('\')
                         if (-not (Test-Path -LiteralPath $lp -PathType Leaf)) { throw "loader missing after copy: $lp" }
                         Log "copy verified: $lp"
+                        # Fedora, openSUSE, the Arch family and others find their live system by the ISO volume label, which a FAT32
+                        # partition cannot carry (11 characters at most). Point those boot options at our label instead.
+                        if ($srcIsIso -and -not (Test-Path -LiteralPath (Join-Path $dst 'sources\boot.wim'))) {
+                            $np = Update-BootLabel $dst $(if ($isoLabel -ine $label) { $isoLabel } else { '' }) $label
+                            Log "boot label: ISO label '$isoLabel' -> '$label' in $np boot config file(s)"
+                        }
                         if ($splitWim) {
                             # FAT32 holds no file of 4 GiB or more; Windows Setup reads install.swm, install2.swm ... instead of install.wim.
                             $sd = "${stageLetter}:\sources"

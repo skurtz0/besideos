@@ -14,9 +14,16 @@ import 'iso_picker.dart';
 import 'process_runner.dart';
 
 /// Known reasons the extracted-ISO method may not boot for a distro. Shown before the user starts.
+const _labelCaveat =
+    'Bu sistem kurulum ortamını ISO etiketiyle arar. BesideOS bu ayarı senin için düzeltir, ama gerçek bir açılışta henüz doğrulanmadı. Açılmazsa "Değişiklikleri geri al" ile eski haline dönersin.';
+
 const oneClickCaveats = {
-  'fedora':
-      'Fedora Live, kurulum ortamını ISO etiketiyle arar; bölüm "BESIDEOS" etiketli olduğu için açılmayabilir. Bu yöntem Fedora ile doğrulanmadı.',
+  'fedora': _labelCaveat,
+  'bazzite': _labelCaveat,
+  'manjaro': _labelCaveat,
+  'cachyos': _labelCaveat,
+  'omarchy': _labelCaveat,
+  'opensuse': _labelCaveat,
   'windows-xp': _oldWindowsCaveat,
   'windows-7': _oldWindowsCaveat,
   'windows-8-1': _oldWindowsCaveat,
@@ -150,6 +157,22 @@ class _InstallSectionState extends State<InstallSection> {
     ]);
   }
 
+  /// What to pick in the installer's own disk screen. Getting this wrong (wiping the whole disk, formatting the
+  /// wrong partition) is the one way the person can still lose data after BesideOS did its part.
+  Widget _diskAdvice(InstallController c) {
+    final other = c.target != null && !c.target!.isWindows && c.drives.length > 1;
+    final isWin = widget.distro.family == DistroFamily.windows;
+    return _banner(kWarn, Icons.disc_full_rounded, title: '${_sys(c)} kurulurken diski doğru seç', lines: [
+      if (isWin)
+        'Disk ekranında "Ayrılmamış alan"ı seç ve "İleri" de. Windows kendi bölümlerini oraya açar.'
+      else
+        'Disk sorusunda "Diskin tamamını sil" seçeneğini SEÇME. "Yanına kur" ya da "Başka bir şey" (elle bölümleme) seç ve yalnızca "boş alan"ı kullan.',
+      if (other) 'Boş yer ${c.target!.letter}: sürücüsünün bulunduğu diskte açıldı; kurulum ekranında o diski seç.',
+      'Biçimlendirme (format) yalnızca yeni açılan boş alanda olsun. Windows bölümlerine ve BESIDEOS bölümüne dokunma.',
+      'Emin olamazsan kurulumu o ekranda bırak; bilgisayarını kapatıp Windows\'a dönebilirsin, BesideOS\'tan "geri al" demen yeter.',
+    ]);
+  }
+
   Widget _banner(Color color, IconData icon, {String? title, List<String> lines = const []}) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -230,6 +253,7 @@ class _InstallSectionState extends State<InstallSection> {
               color: kGreen),
           const SizedBox(height: 16),
           if (c.restartError != null) _banner(kWarn, Icons.warning_amber_rounded, lines: [c.restartError!]),
+          _diskAdvice(c),
           if (c.restarting)
             OutlinedButton(onPressed: c.cancelRestart, child: const Text('Yeniden başlatmaktan vazgeç'))
           else ...[
@@ -590,9 +614,7 @@ class _InstallSectionState extends State<InstallSection> {
       _bullet(Icons.file_copy_rounded, '${_sys(c)} kurulum dosyaları bu yere kopyalanır.'),
       _bullet(Icons.restart_alt_rounded, 'Hazır olunca sen yeniden başlatırsın ve ${_sys(c)} kurulum ekranı açılır.'),
       const SizedBox(height: 6),
-      if (widget.distro.family == DistroFamily.windows)
-        _banner(kAccent, Icons.lightbulb_outline_rounded,
-            title: 'Windows kurulurken', lines: ['"Ayrılmamış alan"ı seç. BESIDEOS bölümüne dokunma: kurulum dosyaları orada.']),
+      _diskAdvice(c),
       if (plan.risks.isNotEmpty)
         _banner(kWarn, Icons.warning_amber_rounded, title: 'Bilmen gerekenler', lines: plan.risks),
       // The panel's DecoratedBox would hide the tile's ink; give it its own Material.

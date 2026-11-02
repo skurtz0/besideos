@@ -64,6 +64,15 @@ void main() {
     expect(apply, contains('options_guid'));
   });
 
+  test('boot configs that name the ISO label or archiso uuid are pointed at the staging label', () {
+    final apply = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(apply, contains('function Update-BootLabel'));
+    expect(apply, contains('function Get-IsoVolumeLabel'));   // Windows shows the label cut to 16 characters
+    expect(apply, contains('archisosearchuuid='));
+    expect(apply, contains('IsReadOnly'));                   // ISO files keep their read-only flag after robocopy
+    expect(apply, isNot(contains('-Include')));              // ignored together with -LiteralPath
+  });
+
   test('the app never restarts the computer on its own', () {
     final dart = File('lib/install/install_controller.dart').readAsStringSync();
     expect(dart, isNot(contains("'-Reboot'")));
