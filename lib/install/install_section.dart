@@ -16,14 +16,10 @@ import 'process_runner.dart';
 const oneClickCaveats = {
   'fedora':
       'Fedora Live, kurulum ortamını ISO etiketiyle arar; bölüm "BESIDEOS" etiketli olduğu için açılmayabilir. Bu yöntem Fedora ile doğrulanmadı.',
-  'xubuntu': _bigIsoCaveat,
-  'kubuntu': _bigIsoCaveat,
-  'omarchy': _bigIsoCaveat,
-  'bazzite': _bigIsoCaveat,
 };
 
-const _bigIsoCaveat = 'Bu ISO çok büyük (5-10 GB) ve içinde 4 GB üstü dosya olabilir; bölümü FAT32 olan yöntemimiz bunu kabul etmeyebilir. '
-    'Öyleyse indirme bittikten sonra "kurulamıyor" der ve bilgisayarında hiçbir şey değişmez.';
+/// Size of the download the click starts, e.g. "3,0 GB".
+String isoSizeText(int bytes) => '${(bytes / 1e9).toStringAsFixed(1).replaceAll('.', ',')} GB';
 
 /// One-click install only exists in the Windows desktop app.
 bool installerSupported() => !kIsWeb && Platform.isWindows;
@@ -246,7 +242,8 @@ class _InstallSectionState extends State<InstallSection> {
         _bigButton('Kurmak için tıklayın', Icons.touch_app_rounded, iso == null ? null : () => _begin(c)),
         _small(iso == null
             ? 'Bu bilgisayarın işlemcisi için ISO yok.'
-            : 'Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.'),
+            : '${iso.sizeBytes != null ? 'İndirilecek ISO dosyası: ${isoSizeText(iso.sizeBytes!)}. ' : ''}'
+                'Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.'),
       ],
     ]);
   }

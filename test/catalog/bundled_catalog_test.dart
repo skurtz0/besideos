@@ -86,6 +86,20 @@ void bundledIsoTests() {
     }
   });
 
+  test('related systems sit side by side and Linux comes before Windows', () {
+    final ids = catalog.distros.map((d) => d.id).toList();
+    int at(String id) => ids.indexOf(id);
+    expect((at('xubuntu') - at('ubuntu')).abs(), 1);
+    expect((at('kubuntu') - at('xubuntu')).abs(), 1);
+    expect(at('windows-xp'), lessThan(at('windows-7')));
+    expect(at('windows-7'), lessThan(at('windows-8-1')));
+    expect(at('windows-8-1'), lessThan(at('windows-10')));
+    expect(at('windows-10'), lessThan(at('windows-11')));
+    final lastLinux = ids.lastIndexWhere((id) => catalog.byId(id)!.family == DistroFamily.linux);
+    final firstWin = ids.indexWhere((id) => catalog.byId(id)!.family == DistroFamily.windows);
+    expect(lastLinux, lessThan(firstWin));
+  });
+
   test('requested distros are present', () {
     for (final id in ['cachyos', 'omarchy', 'bazzite', 'windows-xp', 'windows-7', 'windows-8-1']) {
       expect(catalog.byId(id), isNotNull, reason: id);
@@ -107,8 +121,12 @@ void bundledIsoTests() {
         expect(f.existsSync(), isTrue, reason: '${d.id}: ${s.file}');
         expect(f.lengthSync(), greaterThan(5 * 1024), reason: s.file);
         expect(s.caption, isNotEmpty);
-        expect(s.credit, contains('Wikimedia Commons'), reason: d.id);
-        expect(s.source, startsWith('https://commons.wikimedia.org/'), reason: d.id);
+        expect(s.credit, isNotEmpty, reason: d.id);
+        // pictures from Wikimedia Commons name it and link the file page; user-supplied ones carry no link
+        if (s.source != null) {
+          expect(s.credit, contains('Wikimedia Commons'), reason: d.id);
+          expect(s.source, startsWith('https://commons.wikimedia.org/'), reason: d.id);
+        }
       }
     }
   });

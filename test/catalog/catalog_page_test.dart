@@ -77,6 +77,9 @@ void main() {
 
   testWidgets('tapping a card calls onOpen with that distro', (t) async {
     Distro? opened;
+    t.view.physicalSize = const Size(1000, 2000);
+    t.view.devicePixelRatio = 1;
+    addTearDown(t.view.reset);
     await pump(t, catalog, onOpen: (x) => opened = x);
     await t.tap(find.text('Ad win'));
     expect(opened?.id, 'win');

@@ -141,6 +141,19 @@ void main() {
     expect(find.textContaining('Bilgisayar yeniden başlıyor'), findsOneWidget);
   });
 
+  testWidgets('the idle card states the ISO size, with no scary wording', (t) async {
+    const sized = IsoAsset(
+        arch: IsoArch.x86_64, url: 'https://e.org/a.iso', checksumUrl: 'https://e.org/S', fileName: 'a.iso', sizeBytes: 6448529408);
+    final d = Distro(
+        id: 'big', name: 'U', family: DistroFamily.linux, tagline: 't', description: 'd', bestFor: 'b', look: 'l',
+        accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['windows'], downloadPage: 'https://e.org',
+        userSuppliedIso: false, license: 'l', isos: const [sized]);
+    await t.pumpWidget(section(d: d));
+    expect(find.textContaining('İndirilecek ISO dosyası: 6,4 GB'), findsOneWidget);
+    expect(find.textContaining('çok büyük'), findsNothing);
+    expect(isoSizeText(3033710592), '3,0 GB');
+  });
+
   testWidgets('Fedora shows its boot caveat before starting', (t) async {
     await t.pumpWidget(section(d: dist(id: 'fedora')));
     expect(find.textContaining('doğrulanmadı'), findsOneWidget);

@@ -62,6 +62,114 @@
       ]
     },
     {
+      "id": "xubuntu",
+      "name": "Xubuntu",
+      "family": "linux",
+      "tagline": "Ubuntu'nun hafif ve sade hâli.",
+      "description": "Xubuntu, Ubuntu'nun Xfce masaüstlü sürümüdür. Ubuntu deposundan yazılım alır ama daha az kaynak kullanır.",
+      "bestFor": "Ubuntu uyumluluğunu isteyip daha hafif bir sistem arayanlar.",
+      "desktop": "Xfce",
+      "basedOn": "Ubuntu",
+      "look": "Üstte ince bir panel, altta açılır bir uygulama çubuğu ve mavi tonlarda sade bir masaüstü.",
+      "accent": 4281167071,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Xubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Xubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://xubuntu.org/download/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://cdimage.ubuntu.com/xubuntu/releases/26.04.1/release/xubuntu-26.04.1-desktop-amd64.iso",
+          "checksumUrl": "https://cdimage.ubuntu.com/xubuntu/releases/26.04.1/release/SHA256SUMS",
+          "fileName": "xubuntu-26.04.1-desktop-amd64.iso",
+          "sizeBytes": 5186390016
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/xubuntu.jpg",
+          "caption": "Xubuntu 24.04 LTS masaüstü",
+          "credit": "Görsel: The Xubuntu team · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Xubuntu_24.04_LTS_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "kubuntu",
+      "name": "Kubuntu",
+      "family": "linux",
+      "tagline": "Ubuntu tabanlı, çok özelleştirilebilir KDE Plasma.",
+      "description": "Kubuntu, Ubuntu'nun KDE Plasma masaüstlü sürümüdür. Görünümü ve davranışı neredeyse her yönüyle değiştirebilirsin.",
+      "bestFor": "Windows'a benzer bir düzen isteyip her şeyi ayarlamayı sevenler.",
+      "desktop": "KDE Plasma",
+      "basedOn": "Ubuntu",
+      "look": "Altta Windows'a benzer görev çubuğu, mavi tonlar ve şeffaf efektli modern pencereler.",
+      "accent": 4280130035,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Kubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Kubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://kubuntu.org/getkubuntu/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/kubuntu-26.04.1-desktop-amd64.iso",
+          "checksumUrl": "https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/SHA256SUMS",
+          "fileName": "kubuntu-26.04.1-desktop-amd64.iso",
+          "sizeBytes": 5072990208
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/kubuntu.jpg",
+          "caption": "Kubuntu 24.04 LTS masaüstü",
+          "credit": "Görsel: The Kubuntu Community · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Kubuntu_24.04_LTS_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
       "id": "linux-mint",
       "basedOn": "Ubuntu",
       "name": "Linux Mint",
@@ -172,355 +280,6 @@
               "source": "https://commons.wikimedia.org/wiki/File:Linux-Mint-MATE-20-desktop.png"
             }
           ]
-        }
-      ]
-    },
-    {
-      "id": "fedora",
-      "name": "Fedora",
-      "family": "linux",
-      "tagline": "Güncel yazılımlar sunan, topluluk destekli bir dağıtım.",
-      "description": "Fedora Workstation, GNOME masaüstüyle gelen ve Fedora Projesi tarafından geliştirilen bir Linux dağıtımıdır. Apple Silicon (M1/M2) Mac'lerde Asahi Linux projesinin Fedora Asahi Remix'i kullanılır.",
-      "bestFor": "Güncel yazılımları ve geliştirici araçlarını görmek isteyenler.",
-      "desktop": "GNOME",
-      "look": "Üstte ince bir çubuk, tam ekran uygulama ve etkinlik görünümü olan, mavi tonlu sade bir GNOME masaüstü.",
-      "accent": 4282150580,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Fedora sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Fedora kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar veya Apple Silicon (M1/M2) Mac",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows",
-        "mac-m1m2"
-      ],
-      "downloadPage": "https://fedoraproject.org/workstation/download",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Workstation/x86_64/iso/Fedora-Workstation-Live-44-1.7.x86_64.iso",
-          "checksumUrl": "https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Workstation/x86_64/iso/Fedora-Workstation-44-1.7-x86_64-CHECKSUM",
-          "fileName": "Fedora-Workstation-Live-44-1.7.x86_64.iso",
-          "sizeBytes": 2851612672
-        },
-        {
-          "arch": "arm64",
-          "url": "https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Workstation/aarch64/iso/Fedora-Workstation-Live-44-1.7.aarch64.iso",
-          "checksumUrl": "https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Workstation/aarch64/iso/Fedora-Workstation-44-1.7-aarch64-CHECKSUM",
-          "fileName": "Fedora-Workstation-Live-44-1.7.aarch64.iso",
-          "sizeBytes": 2689781760
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/fedora.jpg",
-          "caption": "Fedora 42 Workstation masaüstü",
-          "credit": "Görsel: The Fedora Project · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Fedora_42_Workstation_Desktop_English.png"
-        },
-        {
-          "file": "assets/screens/fedora-install.jpg",
-          "caption": "Fedora kurulum ekranı (Anaconda, Fedora 42)",
-          "credit": "Görsel: Anaconda Team · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Anaconda_WebUI_Installer_-_Fedora_Workstation_42.png"
-        }
-      ]
-    },
-    {
-      "id": "debian",
-      "name": "Debian",
-      "family": "linux",
-      "tagline": "Kararlılığıyla bilinen, topluluk işletmeli evrensel işletim sistemi.",
-      "description": "Debian, gönüllü bir topluluk tarafından geliştirilen ve kararlılığıyla tanınan bir işletim sistemidir. Pek çok başka dağıtımın temelini oluşturur.",
-      "bestFor": "Kararlı ve sade bir sistem isteyen, biraz Linux bilgisi olanlar.",
-      "desktop": null,
-      "look": "Seçtiğin masaüstü ortamına göre değişir; varsayılan görünüm sade ve gösterişsizdir.",
-      "accent": 4289200176,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Debian sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Debian kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://www.debian.org/distrib/",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso",
-          "checksumUrl": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS",
-          "fileName": "debian-13.7.0-amd64-netinst.iso",
-          "sizeBytes": 792723456
-        },
-        {
-          "arch": "arm64",
-          "url": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-13.7.0-arm64-netinst.iso",
-          "checksumUrl": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/SHA256SUMS",
-          "fileName": "debian-13.7.0-arm64-netinst.iso",
-          "sizeBytes": 735358976
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/debian.jpg",
-          "caption": "Debian 13 (Trixie) GNOME masaüstü",
-          "credit": "Görsel: TOMats · CC0 · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Debian_13_(Trixie)_-_GNOME_desktop.png"
-        }
-      ],
-      "variants": [
-        {
-          "id": "netinst",
-          "label": "Normal kurulum (küçük dosya)",
-          "note": "Küçük bir dosya indirirsin, gerisi kurulum sırasında internetten gelir. Önerilen.",
-          "isos": [
-            {
-              "arch": "x86_64",
-              "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso",
-              "checksumUrl": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS",
-              "fileName": "debian-13.7.0-amd64-netinst.iso",
-              "sizeBytes": 792723456
-            },
-            {
-              "arch": "arm64",
-              "url": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-13.7.0-arm64-netinst.iso",
-              "checksumUrl": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/SHA256SUMS",
-              "fileName": "debian-13.7.0-arm64-netinst.iso",
-              "sizeBytes": 735358976
-            }
-          ]
-        },
-        {
-          "id": "live-xfce",
-          "label": "Canlı: Xfce (önce dene)",
-          "note": "Kurmadan önce sistemi deneyebilirsin. Hafif Xfce masaüstü.",
-          "isos": [
-            {
-              "arch": "x86_64",
-              "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-xfce.iso",
-              "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
-              "fileName": "debian-live-13.7.0-amd64-xfce.iso",
-              "sizeBytes": 3826974720
-            }
-          ],
-          "screens": [
-            {
-              "file": "assets/screens/debian-xfce.jpg",
-              "caption": "Debian 13 Xfce masaüstü",
-              "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
-              "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_Xfce_default_desktop_-_English.png"
-            }
-          ]
-        },
-        {
-          "id": "live-kde",
-          "label": "Canlı: KDE Plasma (önce dene)",
-          "note": "Kurmadan önce sistemi deneyebilirsin. Zengin ve özelleştirilebilir KDE masaüstü.",
-          "isos": [
-            {
-              "arch": "x86_64",
-              "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-kde.iso",
-              "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
-              "fileName": "debian-live-13.7.0-amd64-kde.iso",
-              "sizeBytes": 4186112000
-            }
-          ],
-          "screens": [
-            {
-              "file": "assets/screens/debian-kde.jpg",
-              "caption": "Debian 13 KDE Plasma masaüstü",
-              "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
-              "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_KDE_default_desktop_-_English.png"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "windows-11",
-      "name": "Windows 11",
-      "family": "windows",
-      "tagline": "Microsoft'un güncel Windows sürümü.",
-      "description": "Windows 11, Microsoft'un ticari işletim sistemidir. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu seçersin veya Microsoft'un resmi sayfasından indirirsin.",
-      "bestFor": "Windows'a ihtiyaç duyan uygulama ve oyunları çalıştırmak isteyenler.",
-      "desktop": null,
-      "look": "Ortalanmış görev çubuğu ve başlat menüsü, yuvarlatılmış köşeli pencereler.",
-      "accent": 4278221012,
-      "guide": [
-        {
-          "title": "ISO'nu seç veya indir",
-          "body": "Kendi Windows 11 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
-        },
-        {
-          "title": "İndirileni doğrula",
-          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
-        },
-        {
-          "title": "Elle kur",
-          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
-        }
-      ],
-      "requirements": [
-        "UEFI desteği ve Secure Boot yapabilen bir bilgisayar",
-        "TPM 2.0 (resmi gereksinim)",
-        "64 bit işlemci",
-        "Kurulum için yeterli boş disk alanı",
-        "Geçerli bir Windows lisansı"
-      ],
-      "hosts": [
-        "windows",
-        "linux"
-      ],
-      "downloadPage": "https://www.microsoft.com/software-download/windows11",
-      "userSuppliedIso": true,
-      "license": "Ticari (Microsoft lisansı)",
-      "screens": [
-        {
-          "file": "assets/screens/windows-11.jpg",
-          "caption": "Windows 11: başlat menüsü ve Ayarlar",
-          "credit": "Görsel: Microsoft; for the icons: https://notepad-plus-plus.org htt… · Public domain · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Windows_11_screenshot.png"
-        }
-      ]
-    },
-    {
-      "id": "xubuntu",
-      "name": "Xubuntu",
-      "family": "linux",
-      "tagline": "Ubuntu'nun hafif ve sade hâli.",
-      "description": "Xubuntu, Ubuntu'nun Xfce masaüstlü sürümüdür. Ubuntu deposundan yazılım alır ama daha az kaynak kullanır.",
-      "bestFor": "Ubuntu uyumluluğunu isteyip daha hafif bir sistem arayanlar.",
-      "desktop": "Xfce",
-      "basedOn": "Ubuntu",
-      "look": "Üstte ince bir panel, altta açılır bir uygulama çubuğu ve mavi tonlarda sade bir masaüstü.",
-      "accent": 4281167071,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Xubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Xubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://xubuntu.org/download/",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://cdimage.ubuntu.com/xubuntu/releases/26.04.1/release/xubuntu-26.04.1-desktop-amd64.iso",
-          "checksumUrl": "https://cdimage.ubuntu.com/xubuntu/releases/26.04.1/release/SHA256SUMS",
-          "fileName": "xubuntu-26.04.1-desktop-amd64.iso",
-          "sizeBytes": 5186390016
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/xubuntu.jpg",
-          "caption": "Xubuntu 24.04 LTS masaüstü",
-          "credit": "Görsel: The Xubuntu team · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Xubuntu_24.04_LTS_default_desktop_-_English.png"
-        }
-      ]
-    },
-    {
-      "id": "kubuntu",
-      "name": "Kubuntu",
-      "family": "linux",
-      "tagline": "Ubuntu tabanlı, çok özelleştirilebilir KDE Plasma.",
-      "description": "Kubuntu, Ubuntu'nun KDE Plasma masaüstlü sürümüdür. Görünümü ve davranışı neredeyse her yönüyle değiştirebilirsin.",
-      "bestFor": "Windows'a benzer bir düzen isteyip her şeyi ayarlamayı sevenler.",
-      "desktop": "KDE Plasma",
-      "basedOn": "Ubuntu",
-      "look": "Altta Windows'a benzer görev çubuğu, mavi tonlar ve şeffaf efektli modern pencereler.",
-      "accent": 4280130035,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Kubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Kubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://kubuntu.org/getkubuntu/",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/kubuntu-26.04.1-desktop-amd64.iso",
-          "checksumUrl": "https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/SHA256SUMS",
-          "fileName": "kubuntu-26.04.1-desktop-amd64.iso",
-          "sizeBytes": 5072990208
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/kubuntu.jpg",
-          "caption": "Kubuntu 24.04 LTS masaüstü",
-          "credit": "Görsel: The Kubuntu Community · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Kubuntu_24.04_LTS_default_desktop_-_English.png"
         }
       ]
     },
@@ -666,92 +425,129 @@
       ]
     },
     {
-      "id": "manjaro",
-      "name": "Manjaro",
+      "id": "debian",
+      "name": "Debian",
       "family": "linux",
-      "tagline": "Arch Linux'un kolay kurulan hâli.",
-      "description": "Manjaro, Arch Linux tabanlı, güncel yazılımlı bir sistemdir. Kurulumu kolaydır ve sürekli güncellenir.",
-      "bestFor": "En yeni yazılımları isteyen ve biraz deneyimi olanlar.",
-      "desktop": "KDE Plasma / GNOME / Xfce",
-      "basedOn": "Arch Linux",
-      "look": "Seçtiğin masaüstüne göre değişir; yeşil vurgulu, modern bir görünüm.",
-      "accent": 4281712476,
+      "tagline": "Kararlılığıyla bilinen, topluluk işletmeli evrensel işletim sistemi.",
+      "description": "Debian, gönüllü bir topluluk tarafından geliştirilen ve kararlılığıyla tanınan bir işletim sistemidir. Pek çok başka dağıtımın temelini oluşturur.",
+      "bestFor": "Kararlı ve sade bir sistem isteyen, biraz Linux bilgisi olanlar.",
+      "desktop": null,
+      "look": "Seçtiğin masaüstü ortamına göre değişir; varsayılan görünüm sade ve gösterişsizdir.",
+      "accent": 4289200176,
       "guide": [
         {
-          "title": "ISO'nu indir",
-          "body": "Manjaro için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+          "title": "Kurmak için tıklayın",
+          "body": "Debian sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
         },
         {
-          "title": "ISO'nu doğrula",
-          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
         },
         {
-          "title": "Elle kur",
-          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Debian kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
         }
       ],
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
+        "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
         "windows"
       ],
-      "downloadPage": "https://manjaro.org/products/download/x86",
-      "userSuppliedIso": true,
+      "downloadPage": "https://www.debian.org/distrib/",
+      "userSuppliedIso": false,
       "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "screens": [
+      "isos": [
         {
-          "file": "assets/screens/manjaro.jpg",
-          "caption": "Manjaro 24.0 KDE Plasma masaüstü",
-          "credit": "Görsel: NotRepubilcTV · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Manjaro_Linux_24.0_KDE_Plasma_Desktop_English.png"
-        }
-      ]
-    },
-    {
-      "id": "opensuse",
-      "name": "openSUSE",
-      "family": "linux",
-      "tagline": "Güçlü yönetim araçlarıyla sağlam bir sistem.",
-      "description": "openSUSE, Almanya kökenli köklü bir dağıtımdır. YaST ile sistem yönetimi kolaydır; Tumbleweed sürümü sürekli güncellenir.",
-      "bestFor": "Sağlam altyapı ve güçlü yönetim araçları isteyenler.",
-      "desktop": "KDE Plasma / GNOME",
-      "basedOn": null,
-      "look": "Yeşil vurgulu, modern ve temiz bir masaüstü.",
-      "accent": 4285774373,
-      "guide": [
-        {
-          "title": "ISO'nu indir",
-          "body": "openSUSE için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+          "arch": "x86_64",
+          "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso",
+          "checksumUrl": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS",
+          "fileName": "debian-13.7.0-amd64-netinst.iso",
+          "sizeBytes": 792723456
         },
         {
-          "title": "ISO'nu doğrula",
-          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
-        },
-        {
-          "title": "Elle kur",
-          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+          "arch": "arm64",
+          "url": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-13.7.0-arm64-netinst.iso",
+          "checksumUrl": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/SHA256SUMS",
+          "fileName": "debian-13.7.0-arm64-netinst.iso",
+          "sizeBytes": 735358976
         }
       ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://get.opensuse.org/",
-      "userSuppliedIso": true,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
       "screens": [
         {
-          "file": "assets/screens/opensuse.jpg",
-          "caption": "openSUSE Tumbleweed, KDE Plasma 6 masaüstü",
-          "credit": "Görsel: GatoVerde95 · CC BY 4.0 · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:OpenSUSE_Tumbleweed_in_KDE_6.jpg"
+          "file": "assets/screens/debian.jpg",
+          "caption": "Debian 13 (Trixie) GNOME masaüstü",
+          "credit": "Görsel: TOMats · CC0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Debian_13_(Trixie)_-_GNOME_desktop.png"
+        }
+      ],
+      "variants": [
+        {
+          "id": "netinst",
+          "label": "Normal kurulum (küçük dosya)",
+          "note": "Küçük bir dosya indirirsin, gerisi kurulum sırasında internetten gelir. Önerilen.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso",
+              "checksumUrl": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS",
+              "fileName": "debian-13.7.0-amd64-netinst.iso",
+              "sizeBytes": 792723456
+            },
+            {
+              "arch": "arm64",
+              "url": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-13.7.0-arm64-netinst.iso",
+              "checksumUrl": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/SHA256SUMS",
+              "fileName": "debian-13.7.0-arm64-netinst.iso",
+              "sizeBytes": 735358976
+            }
+          ]
+        },
+        {
+          "id": "live-xfce",
+          "label": "Canlı: Xfce (önce dene)",
+          "note": "Kurmadan önce sistemi deneyebilirsin. Hafif Xfce masaüstü.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-xfce.iso",
+              "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
+              "fileName": "debian-live-13.7.0-amd64-xfce.iso",
+              "sizeBytes": 3826974720
+            }
+          ],
+          "screens": [
+            {
+              "file": "assets/screens/debian-xfce.jpg",
+              "caption": "Debian 13 Xfce masaüstü",
+              "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
+              "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_Xfce_default_desktop_-_English.png"
+            }
+          ]
+        },
+        {
+          "id": "live-kde",
+          "label": "Canlı: KDE Plasma (önce dene)",
+          "note": "Kurmadan önce sistemi deneyebilirsin. Zengin ve özelleştirilebilir KDE masaüstü.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-kde.iso",
+              "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
+              "fileName": "debian-live-13.7.0-amd64-kde.iso",
+              "sizeBytes": 4186112000
+            }
+          ],
+          "screens": [
+            {
+              "file": "assets/screens/debian-kde.jpg",
+              "caption": "Debian 13 KDE Plasma masaüstü",
+              "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
+              "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_KDE_default_desktop_-_English.png"
+            }
+          ]
         }
       ]
     },
@@ -801,157 +597,19 @@
       ]
     },
     {
-      "id": "windows-10",
-      "name": "Windows 10",
-      "family": "windows",
-      "tagline": "Microsoft'un yaygın kullanılan önceki sürümü.",
-      "description": "Windows 10, Microsoft'un ticari işletim sistemidir. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu seçersin ya da Microsoft'un resmi sayfasından indirirsin.",
-      "bestFor": "Windows 11 gereksinimlerini karşılamayan bilgisayarlarda Windows kullanmak isteyenler.",
-      "desktop": null,
-      "basedOn": null,
-      "look": "Solda başlat menüsü, canlı kutucuklar, altta görev çubuğu.",
-      "accent": 4278221015,
-      "guide": [
-        {
-          "title": "ISO'nu seç veya indir",
-          "body": "Kendi Windows 10 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
-        },
-        {
-          "title": "İndirileni doğrula",
-          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
-        },
-        {
-          "title": "Elle kur",
-          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemci",
-        "Kurulum için yeterli boş disk alanı",
-        "Geçerli bir Windows lisansı"
-      ],
-      "hosts": [
-        "windows",
-        "linux"
-      ],
-      "downloadPage": "https://www.microsoft.com/software-download/windows10ISO",
-      "userSuppliedIso": true,
-      "license": "Ticari (Microsoft lisansı)",
-      "screens": [
-        {
-          "file": "assets/screens/windows-10-setup.jpg",
-          "caption": "Windows 10 kurulum ekranı (IoT Enterprise LTSC 2021 sürümünden görüntü)",
-          "credit": "Görsel: OS: Microsoft Corporation Screenshot: PantheraLeo1359531 😺… · Public domain · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:VirtualBox_Windows_10_IoT_Enterprise_LTSC_2021_22_12_2024_11_08_36.png"
-        }
-      ]
-    },
-    {
-      "id": "windows-server-2025",
-      "name": "Windows Server 2025",
-      "family": "windows",
-      "tagline": "Sunucu ve laboratuvar denemeleri için Windows.",
-      "description": "Windows Server 2025, Microsoft'un sunucu işletim sistemidir. Deneme sürümü Microsoft'un resmi sayfasından indirilir; BesideOS ISO dosyasını dağıtmaz.",
-      "bestFor": "Sunucu rollerini ve yönetim araçlarını öğrenmek isteyenler.",
-      "desktop": null,
-      "basedOn": null,
-      "look": "Windows 11'e benzeyen görev çubuğu ve başlat menüsü; sunucu yönetim araçlarıyla gelir.",
-      "accent": 4279987906,
-      "guide": [
-        {
-          "title": "ISO'nu seç veya indir",
-          "body": "Kendi Windows Server 2025 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
-        },
-        {
-          "title": "İndirileni doğrula",
-          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
-        },
-        {
-          "title": "Elle kur",
-          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
-        }
-      ],
-      "requirements": [
-        "UEFI desteği olan 64 bit bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "Deneme veya geçerli bir sunucu lisansı"
-      ],
-      "hosts": [
-        "windows",
-        "linux"
-      ],
-      "downloadPage": "https://www.microsoft.com/evalcenter/evaluate-windows-server-2025",
-      "userSuppliedIso": true,
-      "license": "Ticari (Microsoft lisansı)",
-      "screens": [
-        {
-          "file": "assets/screens/windows-server.jpg",
-          "caption": "Windows Server 2025 masaüstü (Almanca arayüz)",
-          "credit": "Görsel: OS: Microsoft Corporation Screenshot+Hintergrundfoto: Panth… · Public domain · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:VirtualBox_Windows_Server_2025_26100.1.240331-1435.GE_DE_12_01_2025_11_55_08.png"
-        }
-      ]
-    },
-    {
-      "id": "cachyos",
-      "name": "CachyOS",
+      "id": "fedora",
+      "name": "Fedora",
       "family": "linux",
-      "tagline": "Hızlı ve ayarlı Arch tabanlı sistem.",
-      "description": "CachyOS, Arch Linux tabanlı, işlemciye göre optimize edilmiş paketler ve ayarlı çekirdekle gelen hızlı bir sistemdir. Kurulumda masaüstünü kendin seçersin.",
-      "bestFor": "Performans arayan ve biraz deneyimi olan kullanıcılar.",
-      "desktop": "KDE Plasma / GNOME / Hyprland ve daha fazlası",
-      "basedOn": "Arch Linux",
-      "look": "Seçtiğin masaüstüne göre değişir; varsayılanda koyu temalı, modern bir KDE Plasma.",
-      "accent": 4279939212,
-      "guide": [
-        {
-          "title": "ISO'nu indir",
-          "body": "CachyOS için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
-        },
-        {
-          "title": "ISO'nu doğrula",
-          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
-        },
-        {
-          "title": "Elle kur",
-          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://cachyos.org/download/",
-      "userSuppliedIso": true,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "screens": [
-        {
-          "file": "assets/screens/cachyos.jpg",
-          "caption": "CachyOS KDE Plasma masaüstü (2025.08)",
-          "credit": "Görsel: Peter Jung and the CachyOS Developer Team · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:CachyOS_2025.08.25_KDE_default_desktop_-_English.png"
-        }
-      ]
-    },
-    {
-      "id": "omarchy",
-      "name": "Omarchy",
-      "family": "linux",
-      "tagline": "Klavyeyle kullanılan, hazır kurulu şık bir geliştirici masaüstü.",
-      "description": "Omarchy, Arch Linux üzerine kurulu, Hyprland pencere yöneticisiyle gelen ve geliştirici araçları hazır sunan bir sistemdir. Çok sayıda temayla gelir.",
-      "bestFor": "Klavye ağırlıklı çalışan, yazılım geliştiren ve sistemini kurcalamayı sevenler.",
-      "desktop": "Hyprland",
-      "basedOn": "Arch Linux",
-      "look": "Düz, kenarlıksız pencereler yan yana dizilir; koyu ve zarif temalar, üstte ince bir çubuk.",
-      "accent": 4286227191,
+      "tagline": "Güncel yazılımlar sunan, topluluk destekli bir dağıtım.",
+      "description": "Fedora Workstation, GNOME masaüstüyle gelen ve Fedora Projesi tarafından geliştirilen bir Linux dağıtımıdır. Apple Silicon (M1/M2) Mac'lerde Asahi Linux projesinin Fedora Asahi Remix'i kullanılır.",
+      "bestFor": "Güncel yazılımları ve geliştirici araçlarını görmek isteyenler.",
+      "desktop": "GNOME",
+      "look": "Üstte ince bir çubuk, tam ekran uygulama ve etkinlik görünümü olan, mavi tonlu sade bir GNOME masaüstü.",
+      "accent": 4282150580,
       "guide": [
         {
           "title": "Kurmak için tıklayın",
-          "body": "Omarchy sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+          "body": "Fedora sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
         },
         {
           "title": "Yer ve onay",
@@ -959,35 +617,49 @@
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Omarchy kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+          "body": "Bilgisayar yeniden başlar ve Fedora kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
         }
       ],
       "requirements": [
-        "64 bit işlemcili bir bilgisayar",
+        "64 bit işlemcili bir bilgisayar veya Apple Silicon (M1/M2) Mac",
         "Kurulum için yeterli boş disk alanı",
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "mac-m1m2"
       ],
-      "downloadPage": "https://omarchy.org/",
+      "downloadPage": "https://fedoraproject.org/workstation/download",
       "userSuppliedIso": false,
-      "license": "Özgür yazılım (MIT)",
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
       "isos": [
         {
           "arch": "x86_64",
-          "url": "https://iso.omarchy.org/omarchy-4.0.6.iso",
-          "checksumUrl": "https://iso.omarchy.org/omarchy-4.0.6.iso.sha256",
-          "fileName": "omarchy-4.0.6.iso",
-          "sizeBytes": 6448529408
+          "url": "https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Workstation/x86_64/iso/Fedora-Workstation-Live-44-1.7.x86_64.iso",
+          "checksumUrl": "https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Workstation/x86_64/iso/Fedora-Workstation-44-1.7-x86_64-CHECKSUM",
+          "fileName": "Fedora-Workstation-Live-44-1.7.x86_64.iso",
+          "sizeBytes": 2851612672
+        },
+        {
+          "arch": "arm64",
+          "url": "https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Workstation/aarch64/iso/Fedora-Workstation-Live-44-1.7.aarch64.iso",
+          "checksumUrl": "https://dl.fedoraproject.org/pub/fedora/linux/releases/44/Workstation/aarch64/iso/Fedora-Workstation-44-1.7-aarch64-CHECKSUM",
+          "fileName": "Fedora-Workstation-Live-44-1.7.aarch64.iso",
+          "sizeBytes": 2689781760
         }
       ],
       "screens": [
         {
-          "file": "assets/screens/omarchy.jpg",
-          "caption": "Omarchy varsayılan masaüstü",
-          "credit": "Görsel: SchÃ¼tzenpanzer · CC0 · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Try_Omarchy_Default_Desktop.png"
+          "file": "assets/screens/fedora.jpg",
+          "caption": "Fedora 42 Workstation masaüstü",
+          "credit": "Görsel: The Fedora Project · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Fedora_42_Workstation_Desktop_English.png"
+        },
+        {
+          "file": "assets/screens/fedora-install.jpg",
+          "caption": "Fedora kurulum ekranı (Anaconda, Fedora 42)",
+          "credit": "Görsel: Anaconda Team · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Anaconda_WebUI_Installer_-_Fedora_Workstation_42.png"
         }
       ]
     },
@@ -1112,96 +784,191 @@
       ]
     },
     {
-      "id": "windows-8-1",
-      "name": "Windows 8.1",
-      "family": "windows",
-      "tagline": "Başlat ekranı kutucuklu eski Windows.",
-      "description": "Windows 8.1, Microsoft'un ticari işletim sistemidir ve artık güvenlik güncellemesi almıyor. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu getirirsin.",
-      "bestFor": "Eski bir program ya da donanım için Windows 8.1 gerekenler.",
-      "desktop": null,
-      "basedOn": null,
-      "look": "Tam ekran renkli kutucuklardan oluşan Başlangıç ekranı ve klasik masaüstü.",
-      "accent": 4278232303,
+      "id": "manjaro",
+      "name": "Manjaro",
+      "family": "linux",
+      "tagline": "Arch Linux'un kolay kurulan hâli.",
+      "description": "Manjaro, Arch Linux tabanlı, güncel yazılımlı bir sistemdir. Kurulumu kolaydır ve sürekli güncellenir.",
+      "bestFor": "En yeni yazılımları isteyen ve biraz deneyimi olanlar.",
+      "desktop": "KDE Plasma / GNOME / Xfce",
+      "basedOn": "Arch Linux",
+      "look": "Seçtiğin masaüstüne göre değişir; yeşil vurgulu, modern bir görünüm.",
+      "accent": 4281712476,
       "guide": [
         {
-          "title": "ISO'nu seç veya indir",
-          "body": "Kendi Windows 8.1 ISO dosyanı seçersin. BesideOS ISO dosyası sağlamaz."
+          "title": "ISO'nu indir",
+          "body": "Manjaro için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
         },
         {
-          "title": "İndirileni doğrula",
-          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
         },
         {
           "title": "Elle kur",
-          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu kendi yönergeleriyle yaparsın."
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
         }
       ],
       "requirements": [
-        "64 bit ya da 32 bit işlemci",
+        "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Geçerli bir Windows lisansı",
-        "Güvenlik için internete bağlamamanı öneririz"
+        "Resmi siteden indirilmiş bir ISO dosyası"
       ],
       "hosts": [
-        "windows",
-        "linux"
+        "windows"
       ],
-      "downloadPage": "https://learn.microsoft.com/lifecycle/products/windows-81",
+      "downloadPage": "https://manjaro.org/products/download/x86",
       "userSuppliedIso": true,
-      "license": "Ticari (Microsoft lisansı)",
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
       "screens": [
         {
-          "file": "assets/screens/windows-8-1.jpg",
-          "caption": "Windows 8.x Başlangıç ekranı (renkli kutucuklar)",
-          "credit": "Görsel: Microsoft · Public domain · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Start81.png"
+          "file": "assets/screens/manjaro.jpg",
+          "caption": "Manjaro 24.0 KDE Plasma masaüstü",
+          "credit": "Görsel: NotRepubilcTV · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Manjaro_Linux_24.0_KDE_Plasma_Desktop_English.png"
         }
       ]
     },
     {
-      "id": "windows-7",
-      "name": "Windows 7",
-      "family": "windows",
-      "tagline": "Şeffaf pencereli klasik Windows.",
-      "description": "Windows 7, Microsoft'un ticari işletim sistemidir ve artık güvenlik güncellemesi almıyor. Yeni bilgisayarlarda (UEFI) çalışmayabilir. BesideOS ISO dosyasını dağıtmaz.",
-      "bestFor": "Eski programları ve eski donanımı çalıştırmak isteyenler.",
-      "desktop": null,
-      "basedOn": null,
-      "look": "Şeffaf cam efektli pencereler, altta büyük görev çubuğu ve klasik başlat menüsü.",
-      "accent": 4282027990,
+      "id": "cachyos",
+      "name": "CachyOS",
+      "family": "linux",
+      "tagline": "Hızlı ve ayarlı Arch tabanlı sistem.",
+      "description": "CachyOS, Arch Linux tabanlı, işlemciye göre optimize edilmiş paketler ve ayarlı çekirdekle gelen hızlı bir sistemdir. Kurulumda masaüstünü kendin seçersin.",
+      "bestFor": "Performans arayan ve biraz deneyimi olan kullanıcılar.",
+      "desktop": "KDE Plasma / GNOME / Hyprland ve daha fazlası",
+      "basedOn": "Arch Linux",
+      "look": "Seçtiğin masaüstüne göre değişir; varsayılanda koyu temalı, modern bir KDE Plasma.",
+      "accent": 4279939212,
       "guide": [
         {
-          "title": "ISO'nu seç veya indir",
-          "body": "Kendi Windows 7 ISO dosyanı seçersin. BesideOS ISO dosyası sağlamaz."
+          "title": "ISO'nu indir",
+          "body": "CachyOS için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
         },
         {
-          "title": "İndirileni doğrula",
-          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
         },
         {
           "title": "Elle kur",
-          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu kendi yönergeleriyle yaparsın."
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
         }
       ],
       "requirements": [
-        "32 ya da 64 bit işlemci",
+        "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Geçerli bir Windows lisansı",
-        "Eski tip (BIOS/CSM) önyükleme önerilir; yeni UEFI bilgisayarlarda kurulmayabilir"
+        "Resmi siteden indirilmiş bir ISO dosyası"
       ],
       "hosts": [
-        "windows",
-        "linux"
+        "windows"
       ],
-      "downloadPage": "https://learn.microsoft.com/lifecycle/products/windows-7",
+      "downloadPage": "https://cachyos.org/download/",
       "userSuppliedIso": true,
-      "license": "Ticari (Microsoft lisansı)",
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
       "screens": [
         {
-          "file": "assets/screens/windows-7.jpg",
-          "caption": "Windows 7 açılış menüsü (Gelişmiş Önyükleme Seçenekleri)",
-          "credit": "Görsel: Microsoft Corporation · Public domain · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Advanced_Boot_Options_-_Windows_Vista,_Windows_7.png"
+          "file": "assets/screens/cachyos.jpg",
+          "caption": "CachyOS KDE Plasma masaüstü (2025.08)",
+          "credit": "Görsel: Peter Jung and the CachyOS Developer Team · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:CachyOS_2025.08.25_KDE_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "omarchy",
+      "name": "Omarchy",
+      "family": "linux",
+      "tagline": "Klavyeyle kullanılan, hazır kurulu şık bir geliştirici masaüstü.",
+      "description": "Omarchy, Arch Linux üzerine kurulu, Hyprland pencere yöneticisiyle gelen ve geliştirici araçları hazır sunan bir sistemdir. Çok sayıda temayla gelir.",
+      "bestFor": "Klavye ağırlıklı çalışan, yazılım geliştiren ve sistemini kurcalamayı sevenler.",
+      "desktop": "Hyprland",
+      "basedOn": "Arch Linux",
+      "look": "Düz, kenarlıksız pencereler yan yana dizilir; koyu ve zarif temalar, üstte ince bir çubuk.",
+      "accent": 4286227191,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Omarchy sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Omarchy kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://omarchy.org/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (MIT)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://iso.omarchy.org/omarchy-4.0.6.iso",
+          "checksumUrl": "https://iso.omarchy.org/omarchy-4.0.6.iso.sha256",
+          "fileName": "omarchy-4.0.6.iso",
+          "sizeBytes": 6448529408
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/omarchy.jpg",
+          "caption": "Omarchy varsayılan masaüstü",
+          "credit": "Görsel: SchÃ¼tzenpanzer · CC0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Try_Omarchy_Default_Desktop.png"
+        }
+      ]
+    },
+    {
+      "id": "opensuse",
+      "name": "openSUSE",
+      "family": "linux",
+      "tagline": "Güçlü yönetim araçlarıyla sağlam bir sistem.",
+      "description": "openSUSE, Almanya kökenli köklü bir dağıtımdır. YaST ile sistem yönetimi kolaydır; Tumbleweed sürümü sürekli güncellenir.",
+      "bestFor": "Sağlam altyapı ve güçlü yönetim araçları isteyenler.",
+      "desktop": "KDE Plasma / GNOME",
+      "basedOn": null,
+      "look": "Yeşil vurgulu, modern ve temiz bir masaüstü.",
+      "accent": 4285774373,
+      "guide": [
+        {
+          "title": "ISO'nu indir",
+          "body": "openSUSE için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+        },
+        {
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Resmi siteden indirilmiş bir ISO dosyası"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://get.opensuse.org/",
+      "userSuppliedIso": true,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "screens": [
+        {
+          "file": "assets/screens/opensuse.jpg",
+          "caption": "openSUSE Tumbleweed, KDE Plasma 6 masaüstü",
+          "credit": "Görsel: GatoVerde95 · CC BY 4.0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:OpenSUSE_Tumbleweed_in_KDE_6.jpg"
         }
       ]
     },
@@ -1246,9 +1013,239 @@
       "screens": [
         {
           "file": "assets/screens/windows-xp.jpg",
-          "caption": "Windows XP'nin ünlü «Bliss» duvar kâğıdının çekildiği tepe (gerçek fotoğraf, ekran görüntüsü değil)",
-          "credit": "Görsel: Exoplanetaryscience · CC0 · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Bliss_hill_July_2017.jpg"
+          "caption": "Windows XP masaüstü: Başlat menüsü ve Bilgisayarım penceresi",
+          "credit": "Görsel: proje sahibi tarafından sağlandı"
+        }
+      ]
+    },
+    {
+      "id": "windows-7",
+      "name": "Windows 7",
+      "family": "windows",
+      "tagline": "Şeffaf pencereli klasik Windows.",
+      "description": "Windows 7, Microsoft'un ticari işletim sistemidir ve artık güvenlik güncellemesi almıyor. Yeni bilgisayarlarda (UEFI) çalışmayabilir. BesideOS ISO dosyasını dağıtmaz.",
+      "bestFor": "Eski programları ve eski donanımı çalıştırmak isteyenler.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Şeffaf cam efektli pencereler, altta büyük görev çubuğu ve klasik başlat menüsü.",
+      "accent": 4282027990,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows 7 ISO dosyanı seçersin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "32 ya da 64 bit işlemci",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı",
+        "Eski tip (BIOS/CSM) önyükleme önerilir; yeni UEFI bilgisayarlarda kurulmayabilir"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://learn.microsoft.com/lifecycle/products/windows-7",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-7.jpg",
+          "caption": "Windows 7 masaüstü ve Başlat menüsü",
+          "credit": "Görsel: proje sahibi tarafından sağlandı"
+        }
+      ]
+    },
+    {
+      "id": "windows-8-1",
+      "name": "Windows 8.1",
+      "family": "windows",
+      "tagline": "Başlat ekranı kutucuklu eski Windows.",
+      "description": "Windows 8.1, Microsoft'un ticari işletim sistemidir ve artık güvenlik güncellemesi almıyor. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu getirirsin.",
+      "bestFor": "Eski bir program ya da donanım için Windows 8.1 gerekenler.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Tam ekran renkli kutucuklardan oluşan Başlangıç ekranı ve klasik masaüstü.",
+      "accent": 4278232303,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows 8.1 ISO dosyanı seçersin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit ya da 32 bit işlemci",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı",
+        "Güvenlik için internete bağlamamanı öneririz"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://learn.microsoft.com/lifecycle/products/windows-81",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-8-1.jpg",
+          "caption": "Windows 8.1 Başlangıç ekranı",
+          "credit": "Görsel: proje sahibi tarafından sağlandı"
+        }
+      ]
+    },
+    {
+      "id": "windows-10",
+      "name": "Windows 10",
+      "family": "windows",
+      "tagline": "Microsoft'un yaygın kullanılan önceki sürümü.",
+      "description": "Windows 10, Microsoft'un ticari işletim sistemidir. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu seçersin ya da Microsoft'un resmi sayfasından indirirsin.",
+      "bestFor": "Windows 11 gereksinimlerini karşılamayan bilgisayarlarda Windows kullanmak isteyenler.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Solda başlat menüsü, canlı kutucuklar, altta görev çubuğu.",
+      "accent": 4278221015,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows 10 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemci",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://www.microsoft.com/software-download/windows10ISO",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-10-setup.jpg",
+          "caption": "Windows 10 kurulum ekranı (IoT Enterprise LTSC 2021 sürümünden görüntü)",
+          "credit": "Görsel: OS: Microsoft Corporation Screenshot: PantheraLeo1359531 😺… · Public domain · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:VirtualBox_Windows_10_IoT_Enterprise_LTSC_2021_22_12_2024_11_08_36.png"
+        }
+      ]
+    },
+    {
+      "id": "windows-11",
+      "name": "Windows 11",
+      "family": "windows",
+      "tagline": "Microsoft'un güncel Windows sürümü.",
+      "description": "Windows 11, Microsoft'un ticari işletim sistemidir. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu seçersin veya Microsoft'un resmi sayfasından indirirsin.",
+      "bestFor": "Windows'a ihtiyaç duyan uygulama ve oyunları çalıştırmak isteyenler.",
+      "desktop": null,
+      "look": "Ortalanmış görev çubuğu ve başlat menüsü, yuvarlatılmış köşeli pencereler.",
+      "accent": 4278221012,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows 11 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "UEFI desteği ve Secure Boot yapabilen bir bilgisayar",
+        "TPM 2.0 (resmi gereksinim)",
+        "64 bit işlemci",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://www.microsoft.com/software-download/windows11",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-11.jpg",
+          "caption": "Windows 11: başlat menüsü ve Ayarlar",
+          "credit": "Görsel: Microsoft; for the icons: https://notepad-plus-plus.org htt… · Public domain · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Windows_11_screenshot.png"
+        }
+      ]
+    },
+    {
+      "id": "windows-server-2025",
+      "name": "Windows Server 2025",
+      "family": "windows",
+      "tagline": "Sunucu ve laboratuvar denemeleri için Windows.",
+      "description": "Windows Server 2025, Microsoft'un sunucu işletim sistemidir. Deneme sürümü Microsoft'un resmi sayfasından indirilir; BesideOS ISO dosyasını dağıtmaz.",
+      "bestFor": "Sunucu rollerini ve yönetim araçlarını öğrenmek isteyenler.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Windows 11'e benzeyen görev çubuğu ve başlat menüsü; sunucu yönetim araçlarıyla gelir.",
+      "accent": 4279987906,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows Server 2025 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "UEFI desteği olan 64 bit bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Deneme veya geçerli bir sunucu lisansı"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://www.microsoft.com/evalcenter/evaluate-windows-server-2025",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-server.jpg",
+          "caption": "Windows Server 2025 masaüstü (Almanca arayüz)",
+          "credit": "Görsel: OS: Microsoft Corporation Screenshot+Hintergrundfoto: Panth… · Public domain · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:VirtualBox_Windows_Server_2025_26100.1.240331-1435.GE_DE_12_01_2025_11_55_08.png"
         }
       ]
     }

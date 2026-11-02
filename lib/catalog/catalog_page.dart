@@ -73,9 +73,18 @@ class _CatalogPageState extends State<CatalogPage> {
         if (items.isEmpty)
           Text(empty, style: const TextStyle(color: kMuted, height: 1.5))
         else
-          Wrap(spacing: 12, runSpacing: 12, children: [
-            for (final d in items) _DistroCard(distro: d, onTap: () => widget.onOpen(d)),
-          ]),
+          for (final fam in DistroFamily.values)
+            if (items.any((d) => d.family == fam)) ...[
+              Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 12),
+                child: Text(fam == DistroFamily.linux ? 'Linux sistemleri' : 'Windows sistemleri',
+                    style: const TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
+              ),
+              Wrap(spacing: 12, runSpacing: 12, children: [
+                for (final d in items.where((d) => d.family == fam)) _DistroCard(distro: d, onTap: () => widget.onOpen(d)),
+              ]),
+              const SizedBox(height: 20),
+            ],
       ]),
     );
   }
