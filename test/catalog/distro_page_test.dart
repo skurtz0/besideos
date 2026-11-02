@@ -145,6 +145,33 @@ void main() {
     expect(find.text('Slogan mint'), findsOneWidget);
   });
 
+  testWidgets('a distro with variants asks which one on its own page and switches', (t) async {
+    t.view.physicalSize = const Size(900, 2600);
+    t.view.devicePixelRatio = 1;
+    addTearDown(t.view.reset);
+    const a = IsoAsset(arch: IsoArch.x86_64, url: 'https://e.org/a.iso', checksumUrl: 'https://e.org/S', fileName: 'a.iso');
+    const b = IsoAsset(arch: IsoArch.x86_64, url: 'https://e.org/b.iso', checksumUrl: 'https://e.org/S', fileName: 'b.iso');
+    final x = Distro(
+      id: 'v', name: 'Ad v', family: DistroFamily.linux, tagline: '', description: '', bestFor: '',
+      look: '', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['windows'],
+      downloadPage: '', userSuppliedIso: false, license: '', isos: const [a],
+      variants: const [
+        DistroVariant(id: 'one', label: 'Birinci secenek', note: 'n1', isos: [a]),
+        DistroVariant(id: 'two', label: 'Ikinci secenek', note: 'n2', isos: [b]),
+      ],
+    );
+    await t.pumpWidget(page(x));
+    expect(find.text('Hangisini istersin?'), findsOneWidget);
+    expect(find.text('Birinci secenek'), findsOneWidget);
+    await t.tap(find.text('Ikinci secenek'));
+    await t.pumpAndSettle();
+    expect(find.byIcon(Icons.radio_button_checked_rounded), findsOneWidget);
+    expect(t.takeException(), isNull);
+    // a distro with a single choice shows no picker
+    await t.pumpWidget(page(catalog.distros.first));
+    expect(find.text('Hangisini istersin?'), findsNothing);
+  });
+
   testWidgets('summary excludes hosts the matrix rejects', (t) async {
     final x = Distro(
       id: 'lx', name: 'Ad lx', family: DistroFamily.linux, tagline: '', description: '', bestFor: '',

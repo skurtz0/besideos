@@ -64,6 +64,43 @@ void main() {
     }
   });
 
+  Map<String, dynamic> variant(String id, {List? isos}) => {
+        'id': id,
+        'label': 'Etiket $id',
+        'note': 'Not $id',
+        'isos': isos ??
+            [
+              {'arch': 'x86_64', 'url': 'https://e.org/$id.iso', 'checksumUrl': 'https://e.org/SUMS', 'fileName': '$id.iso'}
+            ],
+      };
+
+  test('variants parse, and withVariant swaps ISOs and pictures only', () {
+    final x = Catalog.parse(cat([
+      d('a', over: {
+        'screens': [shot()],
+        'variants': [variant('one'), {...variant('two'), 'screens': [shot(file: 'assets/screens/two.jpg')]}],
+      })
+    ])).byId('a')!;
+    expect(x.variants.map((v) => v.id), ['one', 'two']);
+    final two = x.withVariant(x.variants[1]);
+    expect(two.name, x.name);
+    expect(two.isoFor(IsoArch.x86_64)!.fileName, 'two.iso');
+    expect(two.screens.single.file, 'assets/screens/two.jpg');
+    expect(x.withVariant(x.variants[0]).screens.single.file, 'assets/screens/a.jpg');
+  });
+
+  test('rejects malformed or duplicate variants', () {
+    for (final bad in <Object>[
+      [variant('x'), variant('x')],
+      [{...variant('x'), 'label': ''}],
+      [{...variant('x'), 'isos': [{'arch': 'sparc'}]}],
+      ['x'],
+      'nope',
+    ]) {
+      expect(() => Catalog.parse(cat([d('a', over: {'variants': bad})])), throwsA(isA<CatalogException>()), reason: '$bad');
+    }
+  });
+
   test('rejects duplicate ids', () {
     expect(() => Catalog.parse(cat([d('a'), d('a')])), throwsA(isA<CatalogException>()));
   });

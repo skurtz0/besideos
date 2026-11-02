@@ -15,12 +15,92 @@ const _hostNames = {
   Host.macOther: 'Diğer Mac',
 };
 
-class DistroPage extends StatelessWidget {
+class DistroPage extends StatefulWidget {
   const DistroPage({super.key, required this.distro, this.installFactory});
   final Distro distro;
 
   /// Test hook: supplies the installer controller instead of locating the real engine.
   final InstallController? Function()? installFactory;
+
+  @override
+  State<DistroPage> createState() => _DistroPageState();
+}
+
+class _DistroPageState extends State<DistroPage> {
+  String? _variantId;
+
+  @override
+  Widget build(BuildContext context) {
+    final d = widget.distro;
+    final vs = d.variants;
+    final v = vs.isEmpty ? null : vs.firstWhere((x) => x.id == _variantId, orElse: () => vs.first);
+    return _DistroBody(
+      distro: v == null ? d : d.withVariant(v),
+      installFactory: widget.installFactory,
+      sectionKey: ValueKey('${d.id}/${v?.id}'),
+      picker: vs.length < 2
+          ? null
+          : _VariantPicker(variants: vs, selected: v!.id, onPick: (id) => setState(() => _variantId = id)),
+    );
+  }
+}
+
+/// "Which one do you want?" for distros with several editions (desktop, live, GPU...).
+class _VariantPicker extends StatelessWidget {
+  const _VariantPicker({required this.variants, required this.selected, required this.onPick});
+  final List<DistroVariant> variants;
+  final String selected;
+  final ValueChanged<String> onPick;
+
+  @override
+  Widget build(BuildContext context) {
+    return Panel(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const SectionTitle('Hangisini istersin?', icon: Icons.tune_rounded),
+        const Text('Birini seç. Emin değilsen ilkini seçebilirsin.',
+            style: TextStyle(color: kMuted, height: 1.5)),
+        const SizedBox(height: 12),
+        for (final v in variants)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Material(
+              color: v.id == selected ? kAccent.withAlpha(30) : kPanel2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(14),
+                side: BorderSide(color: v.id == selected ? kAccent : const Color(0x14FFFFFF), width: v.id == selected ? 2 : 1),
+              ),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(14),
+                onTap: v.id == selected ? null : () => onPick(v.id),
+                child: Padding(
+                  padding: const EdgeInsets.all(14),
+                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                    Icon(v.id == selected ? Icons.radio_button_checked_rounded : Icons.radio_button_unchecked_rounded,
+                        color: v.id == selected ? kAccent : kMuted),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(v.label, style: const TextStyle(color: kText, fontWeight: FontWeight.w700, fontSize: 15)),
+                        const SizedBox(height: 2),
+                        Text(v.note, style: const TextStyle(color: kMuted, height: 1.4)),
+                      ]),
+                    ),
+                  ]),
+                ),
+              ),
+            ),
+          ),
+      ]),
+    );
+  }
+}
+
+class _DistroBody extends StatelessWidget {
+  const _DistroBody({required this.distro, this.installFactory, this.picker, this.sectionKey});
+  final Distro distro;
+  final InstallController? Function()? installFactory;
+  final Widget? picker;
+  final Key? sectionKey;
 
   @override
   Widget build(BuildContext context) {
@@ -53,9 +133,13 @@ class DistroPage extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 860),
             child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               _hero(d, accent),
+              if (picker != null) ...[
+                const SizedBox(height: 16),
+                picker!,
+              ],
               if (canOneClick && installerSupported()) ...[
                 const SizedBox(height: 16),
-                InstallSection(distro: d, controllerFactory: installFactory),
+                InstallSection(key: sectionKey, distro: d, controllerFactory: installFactory),
               ],
               if (canOneClick && !installerSupported()) ...[
                 const SizedBox(height: 16),
@@ -159,7 +243,7 @@ class DistroPage extends StatelessWidget {
                         style: FilledButton.styleFrom(backgroundColor: kPanel2, foregroundColor: kText),
                       ),
                     ),
-                    child: DownloadSection(distro: d),
+                    child: DownloadSection(key: sectionKey, distro: d),
                   ),
                 ],
               ),

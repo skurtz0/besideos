@@ -16,7 +16,14 @@ import 'process_runner.dart';
 const oneClickCaveats = {
   'fedora':
       'Fedora Live, kurulum ortamını ISO etiketiyle arar; bölüm "BESIDEOS" etiketli olduğu için açılmayabilir. Bu yöntem Fedora ile doğrulanmadı.',
+  'xubuntu': _bigIsoCaveat,
+  'kubuntu': _bigIsoCaveat,
+  'omarchy': _bigIsoCaveat,
+  'bazzite': _bigIsoCaveat,
 };
+
+const _bigIsoCaveat = 'Bu ISO çok büyük (5-10 GB) ve içinde 4 GB üstü dosya olabilir; bölümü FAT32 olan yöntemimiz bunu kabul etmeyebilir. '
+    'Öyleyse indirme bittikten sonra "kurulamıyor" der ve bilgisayarında hiçbir şey değişmez.';
 
 /// One-click install only exists in the Windows desktop app.
 bool installerSupported() => !kIsWeb && Platform.isWindows;

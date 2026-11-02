@@ -113,6 +113,66 @@
           "credit": "Görsel: Breno Martins de Oliveira Vasconcelos · GPLv3 · Wikimedia Commons",
           "source": "https://commons.wikimedia.org/wiki/File:Linux_Mint_Cinnamon_22.3.png"
         }
+      ],
+      "variants": [
+        {
+          "id": "cinnamon",
+          "label": "Cinnamon (önerilen)",
+          "note": "Windows'a tanıdık gelen, sakin ve şık masaüstü. Çoğu kişi için en iyisi.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-cinnamon-64bit.iso",
+              "checksumUrl": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt",
+              "fileName": "linuxmint-22.3-cinnamon-64bit.iso",
+              "sizeBytes": 3091660800
+            }
+          ]
+        },
+        {
+          "id": "xfce",
+          "label": "Xfce (hafif)",
+          "note": "Eski ya da yavaş bilgisayarlar için daha hafif ve hızlı.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-xfce-64bit.iso",
+              "checksumUrl": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt",
+              "fileName": "linuxmint-22.3-xfce-64bit.iso",
+              "sizeBytes": 3033710592
+            }
+          ],
+          "screens": [
+            {
+              "file": "assets/screens/mint-xfce.jpg",
+              "caption": "Linux Mint Xfce masaüstü (eski bir sürümden görüntü)",
+              "credit": "Görsel: Funkruf · GPL · Wikimedia Commons",
+              "source": "https://commons.wikimedia.org/wiki/File:Linux_Mint_19.3_Xfce-Desktop.png"
+            }
+          ]
+        },
+        {
+          "id": "mate",
+          "label": "MATE (klasik)",
+          "note": "Eski tarz, sade ve çok ayarlanabilir bir masaüstü.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-mate-64bit.iso",
+              "checksumUrl": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt",
+              "fileName": "linuxmint-22.3-mate-64bit.iso",
+              "sizeBytes": 3134275584
+            }
+          ],
+          "screens": [
+            {
+              "file": "assets/screens/mint-mate.jpg",
+              "caption": "Linux Mint MATE masaüstü (20. sürümden görüntü)",
+              "credit": "Görsel: Michal Stanke · CC BY-SA 4.0 · Wikimedia Commons",
+              "source": "https://commons.wikimedia.org/wiki/File:Linux-Mint-MATE-20-desktop.png"
+            }
+          ]
+        }
       ]
     },
     {
@@ -240,6 +300,73 @@
           "credit": "Görsel: TOMats · CC0 · Wikimedia Commons",
           "source": "https://commons.wikimedia.org/wiki/File:Debian_13_(Trixie)_-_GNOME_desktop.png"
         }
+      ],
+      "variants": [
+        {
+          "id": "netinst",
+          "label": "Normal kurulum (küçük dosya)",
+          "note": "Küçük bir dosya indirirsin, gerisi kurulum sırasında internetten gelir. Önerilen.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso",
+              "checksumUrl": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS",
+              "fileName": "debian-13.7.0-amd64-netinst.iso",
+              "sizeBytes": 792723456
+            },
+            {
+              "arch": "arm64",
+              "url": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-13.7.0-arm64-netinst.iso",
+              "checksumUrl": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/SHA256SUMS",
+              "fileName": "debian-13.7.0-arm64-netinst.iso",
+              "sizeBytes": 735358976
+            }
+          ]
+        },
+        {
+          "id": "live-xfce",
+          "label": "Canlı: Xfce (önce dene)",
+          "note": "Kurmadan önce sistemi deneyebilirsin. Hafif Xfce masaüstü.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-xfce.iso",
+              "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
+              "fileName": "debian-live-13.7.0-amd64-xfce.iso",
+              "sizeBytes": 3826974720
+            }
+          ],
+          "screens": [
+            {
+              "file": "assets/screens/debian-xfce.jpg",
+              "caption": "Debian 13 Xfce masaüstü",
+              "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
+              "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_Xfce_default_desktop_-_English.png"
+            }
+          ]
+        },
+        {
+          "id": "live-kde",
+          "label": "Canlı: KDE Plasma (önce dene)",
+          "note": "Kurmadan önce sistemi deneyebilirsin. Zengin ve özelleştirilebilir KDE masaüstü.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-kde.iso",
+              "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
+              "fileName": "debian-live-13.7.0-amd64-kde.iso",
+              "sizeBytes": 4186112000
+            }
+          ],
+          "screens": [
+            {
+              "file": "assets/screens/debian-kde.jpg",
+              "caption": "Debian 13 KDE Plasma masaüstü",
+              "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
+              "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_KDE_default_desktop_-_English.png"
+            }
+          ]
+        }
       ]
     },
     {
@@ -286,114 +413,6 @@
           "caption": "Windows 11: başlat menüsü ve Ayarlar",
           "credit": "Görsel: Microsoft; for the icons: https://notepad-plus-plus.org htt… · Public domain · Wikimedia Commons",
           "source": "https://commons.wikimedia.org/wiki/File:Windows_11_screenshot.png"
-        }
-      ]
-    },
-    {
-      "id": "linux-mint-xfce",
-      "name": "Linux Mint Xfce",
-      "family": "linux",
-      "tagline": "Eski ve yavaş bilgisayarlar için hafif Mint.",
-      "description": "Linux Mint Xfce, Mint'in hafif masaüstlü sürümüdür. Az bellekle ve eski işlemcilerle bile akıcı çalışır, Mint'in kolay kullanımını korur.",
-      "bestFor": "Eski ya da düşük özellikli bilgisayarı yeniden hızlandırmak isteyenler.",
-      "desktop": "Xfce",
-      "basedOn": "Ubuntu",
-      "look": "Altta klasik bir görev çubuğu, yeşil tonlarda sade bir masaüstü ve sol altta başlat menüsü.",
-      "accent": 4285509724,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Linux Mint Xfce sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Linux Mint Xfce kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://linuxmint.com/download.php",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-xfce-64bit.iso",
-          "checksumUrl": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt",
-          "fileName": "linuxmint-22.3-xfce-64bit.iso",
-          "sizeBytes": 3033710592
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/mint-xfce.jpg",
-          "caption": "Linux Mint Xfce masaüstü (eski bir sürümden görüntü)",
-          "credit": "Görsel: Funkruf · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Linux_Mint_19.3_Xfce-Desktop.png"
-        }
-      ]
-    },
-    {
-      "id": "linux-mint-mate",
-      "name": "Linux Mint MATE",
-      "family": "linux",
-      "tagline": "Klasik görünümü sevenler için Mint.",
-      "description": "Linux Mint MATE, eski tarz GNOME 2 masaüstünü sürdürür. Tanıdık, sakin ve kararlıdır; çok özelleştirilebilir.",
-      "bestFor": "Eski tarz, sade bir masaüstü isteyenler.",
-      "desktop": "MATE",
-      "basedOn": "Ubuntu",
-      "look": "Üstte menü ve görev çubuğu, klasik pencereler ve yeşil temalı bir masaüstü.",
-      "accent": 4286294616,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Linux Mint MATE sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Linux Mint MATE kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://linuxmint.com/download.php",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-mate-64bit.iso",
-          "checksumUrl": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt",
-          "fileName": "linuxmint-22.3-mate-64bit.iso",
-          "sizeBytes": 3134275584
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/mint-mate.jpg",
-          "caption": "Linux Mint MATE masaüstü (20. sürümden görüntü)",
-          "credit": "Görsel: Michal Stanke · CC BY-SA 4.0 · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Linux-Mint-MATE-20-desktop.png"
         }
       ]
     },
@@ -452,60 +471,6 @@
       ]
     },
     {
-      "id": "lubuntu",
-      "name": "Lubuntu",
-      "family": "linux",
-      "tagline": "En hafif Ubuntu çeşitlerinden biri.",
-      "description": "Lubuntu, Ubuntu'nun LXQt masaüstlü sürümüdür. Çok az bellek kullanır; eski bilgisayarlara iyi gelir.",
-      "bestFor": "Çok eski bilgisayarı yeniden kullanmak isteyenler.",
-      "desktop": "LXQt",
-      "basedOn": "Ubuntu",
-      "look": "Altta Windows'a benzer bir görev çubuğu ve sade, açık renkli bir masaüstü.",
-      "accent": 4278216904,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Lubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Lubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://lubuntu.me/downloads/",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://cdimage.ubuntu.com/lubuntu/releases/26.04.1/release/lubuntu-26.04.1-desktop-amd64.iso",
-          "checksumUrl": "https://cdimage.ubuntu.com/lubuntu/releases/26.04.1/release/SHA256SUMS",
-          "fileName": "lubuntu-26.04.1-desktop-amd64.iso",
-          "sizeBytes": 3927552000
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/lubuntu.jpg",
-          "caption": "Lubuntu 24.04 LTS masaüstü",
-          "credit": "Görsel: The Lubuntu Community · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Lubuntu_24.04_LTS_default_desktop_-_English.jpg"
-        }
-      ]
-    },
-    {
       "id": "kubuntu",
       "name": "Kubuntu",
       "family": "linux",
@@ -556,114 +521,6 @@
           "caption": "Kubuntu 24.04 LTS masaüstü",
           "credit": "Görsel: The Kubuntu Community · GPL · Wikimedia Commons",
           "source": "https://commons.wikimedia.org/wiki/File:Kubuntu_24.04_LTS_default_desktop_-_English.png"
-        }
-      ]
-    },
-    {
-      "id": "debian-live-xfce",
-      "name": "Debian Live (Xfce)",
-      "family": "linux",
-      "tagline": "Önce dene, sonra kur: hafif Debian.",
-      "description": "Debian Live, kurmadan önce sistemi deneyebileceğin Debian sürümüdür. Xfce masaüstü hafif ve kararlıdır.",
-      "bestFor": "Debian'ı kurmadan önce görmek isteyenler.",
-      "desktop": "Xfce",
-      "basedOn": null,
-      "look": "Üstte ince bir panel, sade ve koyu mavi-kırmızı tonlarda bir masaüstü.",
-      "accent": 4292282963,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Debian Live (Xfce) sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Debian Live (Xfce) kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://www.debian.org/CD/live/",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-xfce.iso",
-          "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
-          "fileName": "debian-live-13.7.0-amd64-xfce.iso",
-          "sizeBytes": 3826974720
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/debian-xfce.jpg",
-          "caption": "Debian 13 Xfce masaüstü",
-          "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_Xfce_default_desktop_-_English.png"
-        }
-      ]
-    },
-    {
-      "id": "debian-live-kde",
-      "name": "Debian Live (KDE Plasma)",
-      "family": "linux",
-      "tagline": "Önce dene, sonra kur: KDE ile Debian.",
-      "description": "Debian Live KDE, Debian'ın kararlılığını KDE Plasma masaüstüyle birleştirir ve kurmadan önce denemene izin verir.",
-      "bestFor": "Kararlı bir sistemde zengin bir masaüstü isteyenler.",
-      "desktop": "KDE Plasma",
-      "basedOn": null,
-      "look": "Altta görev çubuğu, modern şeffaf pencereler ve mavi tonlu bir masaüstü.",
-      "accent": 4290910299,
-      "guide": [
-        {
-          "title": "Kurmak için tıklayın",
-          "body": "Debian Live (KDE Plasma) sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
-        },
-        {
-          "title": "Yer ve onay",
-          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
-        },
-        {
-          "title": "Yeniden başlat ve kur",
-          "body": "Bilgisayar yeniden başlar ve Debian Live (KDE Plasma) kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
-        }
-      ],
-      "requirements": [
-        "64 bit işlemcili bir bilgisayar",
-        "Kurulum için yeterli boş disk alanı",
-        "İnternet bağlantısı (indirme için)"
-      ],
-      "hosts": [
-        "windows"
-      ],
-      "downloadPage": "https://www.debian.org/CD/live/",
-      "userSuppliedIso": false,
-      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
-      "isos": [
-        {
-          "arch": "x86_64",
-          "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-kde.iso",
-          "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
-          "fileName": "debian-live-13.7.0-amd64-kde.iso",
-          "sizeBytes": 4186112000
-        }
-      ],
-      "screens": [
-        {
-          "file": "assets/screens/debian-kde.jpg",
-          "caption": "Debian 13 KDE Plasma masaüstü",
-          "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
-          "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_KDE_default_desktop_-_English.png"
         }
       ]
     },
@@ -1032,6 +889,366 @@
           "caption": "Windows Server 2025 masaüstü (Almanca arayüz)",
           "credit": "Görsel: OS: Microsoft Corporation Screenshot+Hintergrundfoto: Panth… · Public domain · Wikimedia Commons",
           "source": "https://commons.wikimedia.org/wiki/File:VirtualBox_Windows_Server_2025_26100.1.240331-1435.GE_DE_12_01_2025_11_55_08.png"
+        }
+      ]
+    },
+    {
+      "id": "cachyos",
+      "name": "CachyOS",
+      "family": "linux",
+      "tagline": "Hızlı ve ayarlı Arch tabanlı sistem.",
+      "description": "CachyOS, Arch Linux tabanlı, işlemciye göre optimize edilmiş paketler ve ayarlı çekirdekle gelen hızlı bir sistemdir. Kurulumda masaüstünü kendin seçersin.",
+      "bestFor": "Performans arayan ve biraz deneyimi olan kullanıcılar.",
+      "desktop": "KDE Plasma / GNOME / Hyprland ve daha fazlası",
+      "basedOn": "Arch Linux",
+      "look": "Seçtiğin masaüstüne göre değişir; varsayılanda koyu temalı, modern bir KDE Plasma.",
+      "accent": 4279939212,
+      "guide": [
+        {
+          "title": "ISO'nu indir",
+          "body": "CachyOS için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+        },
+        {
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Resmi siteden indirilmiş bir ISO dosyası"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://cachyos.org/download/",
+      "userSuppliedIso": true,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "screens": [
+        {
+          "file": "assets/screens/cachyos.jpg",
+          "caption": "CachyOS KDE Plasma masaüstü (2025.08)",
+          "credit": "Görsel: Peter Jung and the CachyOS Developer Team · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:CachyOS_2025.08.25_KDE_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "omarchy",
+      "name": "Omarchy",
+      "family": "linux",
+      "tagline": "Klavyeyle kullanılan, hazır kurulu şık bir geliştirici masaüstü.",
+      "description": "Omarchy, Arch Linux üzerine kurulu, Hyprland pencere yöneticisiyle gelen ve geliştirici araçları hazır sunan bir sistemdir. Çok sayıda temayla gelir.",
+      "bestFor": "Klavye ağırlıklı çalışan, yazılım geliştiren ve sistemini kurcalamayı sevenler.",
+      "desktop": "Hyprland",
+      "basedOn": "Arch Linux",
+      "look": "Düz, kenarlıksız pencereler yan yana dizilir; koyu ve zarif temalar, üstte ince bir çubuk.",
+      "accent": 4286227191,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Omarchy sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Omarchy kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://omarchy.org/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (MIT)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://iso.omarchy.org/omarchy-4.0.6.iso",
+          "checksumUrl": "https://iso.omarchy.org/omarchy-4.0.6.iso.sha256",
+          "fileName": "omarchy-4.0.6.iso",
+          "sizeBytes": 6448529408
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/omarchy.jpg",
+          "caption": "Omarchy varsayılan masaüstü",
+          "credit": "Görsel: SchÃ¼tzenpanzer · CC0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Try_Omarchy_Default_Desktop.png"
+        }
+      ]
+    },
+    {
+      "id": "bazzite",
+      "name": "Bazzite",
+      "family": "linux",
+      "tagline": "Oyun için hazır Linux.",
+      "description": "Bazzite, oyun oynamak için hazırlanmış, Fedora tabanlı bir sistemdir. Steam ve ekran kartı sürücüleri hazır gelir; sistem dosyaları korunduğu için bozulması zordur.",
+      "bestFor": "Bilgisayarda oyun oynamak isteyenler ve Steam Deck benzeri bir deneyim arayanlar.",
+      "desktop": "KDE Plasma / GNOME",
+      "basedOn": "Fedora",
+      "look": "KDE ile Windows'a benzer bir görev çubuğu; konsol modunda Steam arayüzü tam ekran açılır.",
+      "accent": 4287323382,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Bazzite sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Bazzite kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı (ISO yaklaşık 8 GB)",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://bazzite.gg/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://download.bazzite.gg/bazzite-stable-amd64.iso",
+          "checksumUrl": "https://download.bazzite.gg/bazzite-stable-amd64.iso-CHECKSUM",
+          "fileName": "bazzite-stable-amd64.iso",
+          "sizeBytes": 7907770368
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/bazzite.jpg",
+          "caption": "Bazzite 42 KDE masaüstü",
+          "credit": "Görsel: The Bazzite Team · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Bazzite_42_KDE_default_desktop_-_English.png"
+        }
+      ],
+      "variants": [
+        {
+          "id": "kde",
+          "label": "Masaüstü, KDE (AMD / Intel ekran kartı)",
+          "note": "Çoğu bilgisayar için doğru seçim. Ekran kartın Nvidia değilse bunu seç.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://download.bazzite.gg/bazzite-stable-amd64.iso",
+              "checksumUrl": "https://download.bazzite.gg/bazzite-stable-amd64.iso-CHECKSUM",
+              "fileName": "bazzite-stable-amd64.iso",
+              "sizeBytes": 7907770368
+            }
+          ]
+        },
+        {
+          "id": "nvidia",
+          "label": "Masaüstü, KDE (Nvidia ekran kartı)",
+          "note": "Ekran kartın Nvidia ise bunu seç; sürücüler hazır gelir.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://download.bazzite.gg/bazzite-nvidia-open-stable-amd64.iso",
+              "checksumUrl": "https://download.bazzite.gg/bazzite-nvidia-open-stable-amd64.iso-CHECKSUM",
+              "fileName": "bazzite-nvidia-open-stable-amd64.iso",
+              "sizeBytes": 8079671296
+            }
+          ]
+        },
+        {
+          "id": "gnome",
+          "label": "Masaüstü, GNOME (AMD / Intel ekran kartı)",
+          "note": "KDE yerine sade GNOME masaüstünü sevenler için.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://download.bazzite.gg/bazzite-gnome-stable-amd64.iso",
+              "checksumUrl": "https://download.bazzite.gg/bazzite-gnome-stable-amd64.iso-CHECKSUM",
+              "fileName": "bazzite-gnome-stable-amd64.iso",
+              "sizeBytes": 7037911040
+            }
+          ],
+          "screens": [
+            {
+              "file": "assets/screens/bazzite-gnome.jpg",
+              "caption": "Bazzite 42 GNOME masaüstü",
+              "credit": "Görsel: The Bazzite Team · GPL · Wikimedia Commons",
+              "source": "https://commons.wikimedia.org/wiki/File:Bazzite_42_GNOME_default_desktop_-_English.png"
+            }
+          ]
+        },
+        {
+          "id": "deck",
+          "label": "Steam Deck tarzı konsol modu",
+          "note": "Bilgisayarı açınca doğrudan Steam arayüzü açılır. TV'ye bağlı bilgisayarlar ve el konsolları için.",
+          "isos": [
+            {
+              "arch": "x86_64",
+              "url": "https://download.bazzite.gg/bazzite-deck-stable-amd64.iso",
+              "checksumUrl": "https://download.bazzite.gg/bazzite-deck-stable-amd64.iso-CHECKSUM",
+              "fileName": "bazzite-deck-stable-amd64.iso",
+              "sizeBytes": 9589096448
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "windows-8-1",
+      "name": "Windows 8.1",
+      "family": "windows",
+      "tagline": "Başlat ekranı kutucuklu eski Windows.",
+      "description": "Windows 8.1, Microsoft'un ticari işletim sistemidir ve artık güvenlik güncellemesi almıyor. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu getirirsin.",
+      "bestFor": "Eski bir program ya da donanım için Windows 8.1 gerekenler.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Tam ekran renkli kutucuklardan oluşan Başlangıç ekranı ve klasik masaüstü.",
+      "accent": 4278232303,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows 8.1 ISO dosyanı seçersin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit ya da 32 bit işlemci",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı",
+        "Güvenlik için internete bağlamamanı öneririz"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://learn.microsoft.com/lifecycle/products/windows-81",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-8-1.jpg",
+          "caption": "Windows 8.x Başlangıç ekranı (renkli kutucuklar)",
+          "credit": "Görsel: Microsoft · Public domain · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Start81.png"
+        }
+      ]
+    },
+    {
+      "id": "windows-7",
+      "name": "Windows 7",
+      "family": "windows",
+      "tagline": "Şeffaf pencereli klasik Windows.",
+      "description": "Windows 7, Microsoft'un ticari işletim sistemidir ve artık güvenlik güncellemesi almıyor. Yeni bilgisayarlarda (UEFI) çalışmayabilir. BesideOS ISO dosyasını dağıtmaz.",
+      "bestFor": "Eski programları ve eski donanımı çalıştırmak isteyenler.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Şeffaf cam efektli pencereler, altta büyük görev çubuğu ve klasik başlat menüsü.",
+      "accent": 4282027990,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows 7 ISO dosyanı seçersin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "32 ya da 64 bit işlemci",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı",
+        "Eski tip (BIOS/CSM) önyükleme önerilir; yeni UEFI bilgisayarlarda kurulmayabilir"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://learn.microsoft.com/lifecycle/products/windows-7",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-7.jpg",
+          "caption": "Windows 7 açılış menüsü (Gelişmiş Önyükleme Seçenekleri)",
+          "credit": "Görsel: Microsoft Corporation · Public domain · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Advanced_Boot_Options_-_Windows_Vista,_Windows_7.png"
+        }
+      ]
+    },
+    {
+      "id": "windows-xp",
+      "name": "Windows XP",
+      "family": "windows",
+      "tagline": "Yeşil tepeli, mavi görev çubuklu efsane Windows.",
+      "description": "Windows XP, Microsoft'un çok eski ticari işletim sistemidir ve uzun süredir güvenlik güncellemesi almıyor. Yeni bilgisayarlarda büyük olasılıkla çalışmaz. BesideOS ISO dosyasını dağıtmaz.",
+      "bestFor": "Çok eski programları ve donanımı kullanmak ya da merak edenler. İnternete bağlamamanı öneririz.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Mavi görev çubuğu, yeşil «Başlat» düğmesi ve yeşil tepeli ünlü masaüstü resmi.",
+      "accent": 4282161724,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows XP ISO dosyanı seçersin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "Eski bir bilgisayar (BIOS önyükleme)",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı",
+        "Yeni (UEFI) bilgisayarlarda çalışmaz; sanal makinede denemek daha güvenlidir"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://learn.microsoft.com/lifecycle/products/windows-xp",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-xp.jpg",
+          "caption": "Windows XP'nin ünlü «Bliss» duvar kâğıdının çekildiği tepe (gerçek fotoğraf, ekran görüntüsü değil)",
+          "credit": "Görsel: Exoplanetaryscience · CC0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Bliss_hill_July_2017.jpg"
         }
       ]
     }

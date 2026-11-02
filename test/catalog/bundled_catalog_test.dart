@@ -68,15 +68,41 @@ void bundledIsoTests() {
     }
   });
 
+  test('no separate "live" entries on the home catalog; choices live in variants', () {
+    for (final d in catalog.distros) {
+      expect(d.name.toLowerCase(), isNot(contains('live')), reason: d.id);
+    }
+    expect(catalog.byId('lubuntu'), isNull);
+    final deb = catalog.byId('debian')!;
+    expect(deb.variants.map((v) => v.id), containsAll(['netinst', 'live-xfce', 'live-kde']));
+    expect(catalog.byId('linux-mint')!.variants.length, 3);
+    expect(catalog.byId('bazzite')!.variants.length, greaterThanOrEqualTo(3));
+    for (final d in catalog.distros.where((d) => d.variants.isNotEmpty)) {
+      expect(d.isos, d.variants.first.isos.isEmpty ? isEmpty : isNotEmpty, reason: d.id);
+      for (final v in d.variants) {
+        expect(v.isos, isNotEmpty, reason: '${d.id}/${v.id}');
+        expect(v.isos.every((i) => i.url.endsWith(i.fileName)), isTrue, reason: '${d.id}/${v.id}');
+      }
+    }
+  });
+
+  test('requested distros are present', () {
+    for (final id in ['cachyos', 'omarchy', 'bazzite', 'windows-xp', 'windows-7', 'windows-8-1']) {
+      expect(catalog.byId(id), isNotNull, reason: id);
+    }
+    expect(catalog.byId('cachyos')!.userSuppliedIso, isTrue);
+    expect(catalog.byId('omarchy')!.userSuppliedIso, isFalse);
+  });
+
   test('catalog offers many Linux and several Windows options', () {
     expect(catalog.distros.where((d) => d.family == DistroFamily.linux).length, greaterThanOrEqualTo(15));
-    expect(catalog.distros.where((d) => d.family == DistroFamily.windows).length, greaterThanOrEqualTo(3));
+    expect(catalog.distros.where((d) => d.family == DistroFamily.windows).length, greaterThanOrEqualTo(6));
   });
 
   test('every distro has a screenshot that exists, with a caption and credit', () {
     for (final d in catalog.distros) {
       expect(d.screens, isNotEmpty, reason: d.id);
-      for (final s in d.screens) {
+      for (final s in [...d.screens, for (final v in d.variants) ...v.screens]) {
         final f = File(s.file);
         expect(f.existsSync(), isTrue, reason: '${d.id}: ${s.file}');
         expect(f.lengthSync(), greaterThan(5 * 1024), reason: s.file);
