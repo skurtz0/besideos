@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../brand.dart';
 import '../theme.dart';
 import 'distro.dart';
 import 'support_matrix.dart';
@@ -41,8 +42,9 @@ class _CatalogPageState extends State<CatalogPage> {
     final empty = widget.catalog.distros.isEmpty
         ? 'Katalog boş'
         : (note ?? 'Eşleşen dağıtım yok');
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
+    return PageScroll(
+      maxWidth: 1180,
+      padding: const EdgeInsets.all(24),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Text('Hangi sistemi kurmak istersin?',
             style: TextStyle(color: kText, fontSize: 28, fontWeight: FontWeight.w800, height: 1.2)),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../download/download_section.dart';
+import '../brand.dart';
 import '../install/install_controller.dart';
 import '../install/install_section.dart';
 import '../theme.dart';
@@ -113,9 +114,8 @@ class _DistroBody extends StatelessWidget {
     ];
     return Scaffold(
       backgroundColor: kBg,
-      appBar: AppBar(
-        backgroundColor: kBg,
-        foregroundColor: kText,
+      appBar: SiteBar(
+        page: d.name,
         leading: Navigator.canPop(context)
             ? const BackButton()
             : IconButton(
@@ -123,15 +123,11 @@ class _DistroBody extends StatelessWidget {
                 tooltip: 'Dağıtımlar',
                 onPressed: () => Navigator.pushReplacementNamed(context, '/distros'),
               ),
-        title: Text(d.name, overflow: TextOverflow.ellipsis),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 40),
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 860),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      body: PageScroll(
+        maxWidth: 920,
+        padding: const EdgeInsets.fromLTRB(20, 20, 20, 48),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
               _hero(d, accent),
               if (picker != null) ...[
                 const SizedBox(height: 16),
@@ -253,8 +249,6 @@ class _DistroBody extends StatelessWidget {
               const Text('Resmi sayfa', style: TextStyle(color: kMuted, fontSize: 13)),
               SelectableText(d.downloadPage, style: const TextStyle(color: kAccent)),
             ]),
-          ),
-        ),
       ),
     );
   }

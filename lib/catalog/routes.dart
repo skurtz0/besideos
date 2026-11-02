@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../brand.dart';
 import '../theme.dart';
 import 'catalog_page.dart';
 import 'distro.dart';
@@ -12,7 +13,7 @@ Route<dynamic> catalogRoute(RouteSettings s, Catalog catalog) {
     body = Builder(
       builder: (context) => Scaffold(
         backgroundColor: kBg,
-        appBar: AppBar(backgroundColor: kBg, foregroundColor: kText, title: const Text('Dağıtımlar')),
+        appBar: const SiteBar(page: 'Dağıtımlar'),
         body: CatalogPage(catalog: catalog, onOpen: (d) => Navigator.pushNamed(context, '/distros/${d.id}')),
       ),
     );
@@ -28,7 +29,7 @@ class _NotFound extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: kBg,
-        appBar: AppBar(backgroundColor: kBg, foregroundColor: kText, title: const Text('Bulunamadı')),
+        appBar: const SiteBar(page: 'Bulunamadı'),
         body: Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             const Text('Böyle bir dağıtım yok.', style: TextStyle(color: kText, fontSize: 18)),

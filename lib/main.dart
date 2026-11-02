@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'brand.dart';
 import 'catalog/distro.dart';
 import 'catalog/routes.dart';
 import 'theme.dart';
@@ -13,7 +14,8 @@ Future<String> _loadCatalogAsset() => rootBundle.loadString('assets/catalog/cata
 
 class BesideSite extends StatefulWidget {
   /// [catalog] is injected by tests; otherwise it is loaded (lazily, only for /distros) via [catalogLoader].
-  const BesideSite({this.catalog, this.catalogLoader, super.key});
+  const BesideSite({this.catalog, this.catalogLoader, this.initialRoute = '/', super.key});
+  final String initialRoute;
   final Catalog? catalog;
   final Future<String> Function()? catalogLoader;
 
@@ -49,18 +51,30 @@ class _BesideSiteState extends State<BesideSite> {
 
   @override
   Widget build(BuildContext context) {
+    final base = ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: kBg,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: kAccent,
+        brightness: Brightness.dark,
+        surface: kBg,
+      ),
+    );
+    // Larger, airier body text: this is what everything without an explicit size inherits.
+    final tt = base.textTheme;
     return MaterialApp(
       onGenerateRoute: _route,
+      initialRoute: widget.initialRoute,
       title: 'BesideOS',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: kBg,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: kAccent,
-          brightness: Brightness.dark,
-          surface: kBg,
+      theme: base.copyWith(
+        textTheme: tt.copyWith(
+          bodyLarge: tt.bodyLarge?.copyWith(fontSize: 17, height: 1.55),
+          bodyMedium: tt.bodyMedium?.copyWith(fontSize: 16, height: 1.55),
+          bodySmall: tt.bodySmall?.copyWith(fontSize: 14, height: 1.5),
+          labelLarge: tt.labelLarge?.copyWith(fontSize: 15, fontWeight: FontWeight.w600),
+          titleMedium: tt.titleMedium?.copyWith(fontSize: 18, height: 1.5),
         ),
       ),
     );
@@ -76,7 +90,7 @@ class _CatalogError extends StatelessWidget {
     final msg = error is CatalogException ? (error as CatalogException).message : '$error';
     return Scaffold(
       backgroundColor: kBg,
-      appBar: AppBar(backgroundColor: kBg, foregroundColor: kText),
+      appBar: const SiteBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -92,8 +106,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: SingleChildScrollView(
+    return Scaffold(
+      appBar: SiteBar(actions: [
+        TextButton.icon(
+          onPressed: () => Navigator.pushNamed(context, '/distros'),
+          icon: const Icon(Icons.apps_rounded, size: 20),
+          label: const Text('Dağıtımlar'),
+        ),
+      ]),
+      body: const PageScroll(
         child: Column(
           children: [
             _GlowBackground(child: _Section(child: _Hero())),
@@ -165,6 +186,11 @@ class _RevealState extends State<_Reveal> with SingleTickerProviderStateMixin {
     if (!mounted || _started) return;
     final box = context.findRenderObject();
     if (box is! RenderBox || !box.attached) return;
+    if (!box.hasSize) {
+      // not laid out yet (e.g. inside a LayoutBuilder); look again after the next frame
+      WidgetsBinding.instance.addPostFrameCallback((_) => _check());
+      return;
+    }
     final top = box.localToGlobal(Offset.zero).dy;
     if (top < MediaQuery.sizeOf(context).height * 0.92) {
       _started = true;
@@ -255,13 +281,10 @@ class _Hero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final t = Theme.of(context).textTheme;
-    return Column(
+    final text = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 24),
-        Text('BesideOS',
-            style: t.titleLarge?.copyWith(color: kAccent, fontWeight: FontWeight.w700)),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         Text(
           'Bilgisayarına ikinci bir sistem kur. USB bellek gerekmez.',
           style: t.displaySmall?.copyWith(color: kText, fontWeight: FontWeight.w800, height: 1.15),
@@ -297,10 +320,21 @@ class _Hero extends StatelessWidget {
             _Chip('Açık kaynak, MIT'),
           ],
         ),
-        const SizedBox(height: 24),
-        const _DiskDemo(),
       ],
     );
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      LayoutBuilder(
+        builder: (context, box) => box.maxWidth < 760
+            ? text
+            : Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
+                Expanded(child: text),
+                const SizedBox(width: 48),
+                const BesideMark(size: 230),
+              ]),
+      ),
+      const SizedBox(height: 28),
+      const _DiskDemo(),
+    ]);
   }
 }
 
