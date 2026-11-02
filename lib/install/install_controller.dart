@@ -25,6 +25,7 @@ enum InstallPhase {
 
 const linuxSpaceChoicesGiB = [20, 30, 50, 80, 120];
 const defaultLinuxSpaceGiB = 30;
+const windowsSpaceGiB = 80;
 const _gib = 1 << 30;
 
 class InstallPlan {
@@ -104,6 +105,7 @@ class InstallController extends ChangeNotifier {
   String? _refusal;
   InstallPlan? _plan;
   int _linuxGiB = defaultLinuxSpaceGiB;
+  int _recommendedGiB = defaultLinuxSpaceGiB;
   File? _iso;
   String? _isoName;
   bool _disposed = false;
@@ -119,6 +121,17 @@ class InstallController extends ChangeNotifier {
   String? get refusal => _refusal;
   InstallPlan? get plan => _plan;
   int get linuxGiB => _linuxGiB;
+
+  /// The size marked as recommended (Windows needs far more room than a Linux desktop).
+  int get recommendedGiB => _recommendedGiB;
+
+  /// Sets the recommended size and selects it. Only before a run starts.
+  void useSpace(int gib) {
+    if (busy || _phase != InstallPhase.idle) return;
+    _recommendedGiB = gib;
+    _linuxGiB = gib;
+    notifyListeners();
+  }
 
   /// A previous run left changes behind that [undo] can reverse.
   bool get hasPendingState => _f('apply-state.json').existsSync();
@@ -164,8 +177,11 @@ class InstallController extends ChangeNotifier {
   String _logTail(String name) {
     try {
       final lines = const LineSplitter().convert(utf8.decode(_f(name).readAsBytesSync(), allowMalformed: true));
+      // the script logs the reason as "... [ERROR] FAIL: <reason>"; that is what the person needs to read
+      final fails = lines.where((l) => l.contains('] FAIL:')).toList();
       final errs = lines.where((l) => l.contains('[ERROR]') || l.contains('FATAL')).toList();
-      final pick = (errs.isNotEmpty ? errs : lines).reversed.take(3).toList().reversed;
+      final src = fails.isNotEmpty ? fails : (errs.isNotEmpty ? errs : lines);
+      final pick = src.reversed.take(fails.isNotEmpty ? 2 : 3).toList().reversed.map((l) => l.replaceFirst(RegExp(r'^\S+ \[\w+\] (FAIL: )?'), ''));
       return pick.isEmpty ? '' : '\n${pick.join('\n')}';
     } catch (_) {
       return '';

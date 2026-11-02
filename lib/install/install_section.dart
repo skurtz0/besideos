@@ -248,6 +248,7 @@ class _InstallSectionState extends State<InstallSection> {
   void _begin(InstallController c) {
     final iso = widget.distro.isoFor(_arch);
     if (iso == null) return;
+    if (widget.distro.family == DistroFamily.windows) c.useSpace(windowsSpaceGiB);
     setState(() => _backup = false);
     c.begin(iso, _arch);
   }
@@ -261,6 +262,7 @@ class _InstallSectionState extends State<InstallSection> {
   Future<void> _beginOwn(InstallController c, [File? chosen]) async {
     final file = chosen ?? await (widget.pickIso ?? () => pickIsoFile(c.runner))();
     if (file == null || !mounted) return;
+    if (widget.distro.family == DistroFamily.windows) c.useSpace(windowsSpaceGiB);
     setState(() => _backup = false);
     c.beginWithFile(file, _arch);
   }
@@ -491,7 +493,7 @@ class _InstallSectionState extends State<InstallSection> {
   Widget _sizeChips(InstallController c) => Wrap(spacing: 8, runSpacing: 8, children: [
         for (final g in linuxSpaceChoicesGiB)
           ChoiceChip(
-            label: Text(g == defaultLinuxSpaceGiB ? '$g GB · önerilen' : '$g GB'),
+            label: Text(g == c.recommendedGiB ? '$g GB · önerilen' : '$g GB'),
             selected: c.linuxGiB == g,
             onSelected: c.busy ? null : (_) => c.replan(g),
           ),
@@ -558,10 +560,12 @@ class _InstallSectionState extends State<InstallSection> {
           'Bilgisayarında henüz hiçbir şey değişmedi. Neler olacağına bak, sonra başla.', color: kGreen),
       const SizedBox(height: 22),
       ..._drivePicker(c),
-      const Text('Linux için ne kadar yer ayıralım?',
+      const Text('Yeni sistem için ne kadar yer ayıralım?',
           style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
       const SizedBox(height: 4),
-      _detail('Çoğu kişi için 30 GB yeter. Çok program kuracaksan daha fazlasını seç.'),
+      _detail(widget.distro.family == DistroFamily.windows
+          ? 'Windows için en az 64 GB gerekir; 80 GB rahat eder. Çok program kuracaksan daha fazlasını seç.'
+          : 'Çoğu kişi için 30 GB yeter. Çok program kuracaksan daha fazlasını seç.'),
       const SizedBox(height: 10),
       _sizeChips(c),
       const SizedBox(height: 22),
@@ -574,6 +578,9 @@ class _InstallSectionState extends State<InstallSection> {
       _bullet(Icons.file_copy_rounded, '${_sys(c)} kurulum dosyaları bu yere kopyalanır.'),
       _bullet(Icons.restart_alt_rounded, 'Bilgisayar yeniden başlar ve ${_sys(c)} kurulum ekranı açılır.'),
       const SizedBox(height: 6),
+      if (widget.distro.family == DistroFamily.windows)
+        _banner(kAccent, Icons.lightbulb_outline_rounded,
+            title: 'Windows kurulurken', lines: ['"Ayrılmamış alan"ı seç. BESIDEOS bölümüne dokunma: kurulum dosyaları orada.']),
       if (plan.risks.isNotEmpty)
         _banner(kWarn, Icons.warning_amber_rounded, title: 'Bilmen gerekenler', lines: plan.risks),
       // The panel's DecoratedBox would hide the tile's ink; give it its own Material.

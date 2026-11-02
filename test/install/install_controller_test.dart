@@ -160,6 +160,16 @@ void main() {
     expect(runner.hosts.length, before);
   });
 
+  test('useSpace sets the recommended size before a run, and is ignored once a plan exists', () async {
+    expect(c.recommendedGiB, defaultLinuxSpaceGiB);
+    c.useSpace(windowsSpaceGiB);
+    expect(c.linuxGiB, windowsSpaceGiB);
+    expect(c.recommendedGiB, windowsSpaceGiB);
+    await c.begin(iso, IsoArch.x86_64);
+    expect(runner.calls.firstWhere((x) => x.startsWith('plan ')), contains('"linux_space_bytes":${windowsSpaceGiB * (1 << 30)}'));
+    c.useSpace(20);
+    expect(c.linuxGiB, windowsSpaceGiB);
+  });
   test('a picked ISO skips the download and goes straight to inspecting', () async {
     final mine = File('${tmp.path}/mine.iso')..writeAsStringSync('iso');
     await c.beginWithFile(mine, IsoArch.x86_64);

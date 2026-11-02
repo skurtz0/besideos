@@ -91,8 +91,13 @@ pub struct IsoFacts {
     pub arch: Arch,
     pub size_bytes: u64,
     pub extracted_bytes: u64,
+    /// Largest file that has to fit in FAT32 as it is (a splittable install.wim is not counted here).
     pub largest_file_bytes: u64,
     pub largest_file_name: String,
+    /// Size of `sources/install.wim` when it is over the FAT32 4 GiB file limit (0 = none). The installer splits it
+    /// into `install.swm` parts, which Windows Setup reads. Already included in `extracted_bytes`.
+    #[serde(default)]
+    pub splittable_wim_bytes: u64,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]

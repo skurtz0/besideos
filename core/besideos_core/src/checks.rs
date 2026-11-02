@@ -89,6 +89,9 @@ pub fn check<'a>(
     if iso.extracted_bytes == 0 {
         return invalid("ISO içeriği boş");
     }
+    if iso.splittable_wim_bytes > iso.extracted_bytes {
+        return invalid("install.wim toplam içerikten büyük");
+    }
     if iso.largest_file_bytes > iso.extracted_bytes {
         return invalid("en büyük dosya toplam içerikten büyük");
     }
@@ -160,6 +163,7 @@ mod tests {
             extracted_bytes: 3 * GIB,
             largest_file_bytes: GIB,
             largest_file_name: "big".into(),
+            splittable_wim_bytes: 0,
         }
     }
     fn req() -> Request {
@@ -364,6 +368,35 @@ mod tests {
         assert!(check(&host(), &i, &req()).is_ok());
     }
     #[test]
+    fn accepts_oversized_install_wim_because_it_gets_split() {
+        let mut i = iso();
+        i.splittable_wim_bytes = 5 * GIB;
+        i.extracted_bytes = 7 * GIB; // includes the wim
+        assert!(check(&host(), &i, &req()).is_ok());
+    }
+    #[test]
+    fn still_refuses_another_oversized_file_next_to_a_wim() {
+        let mut i = iso();
+        i.splittable_wim_bytes = 5 * GIB;
+        i.extracted_bytes = 12 * GIB;
+        i.largest_file_bytes = FAT32_MAX_FILE + 1;
+        assert!(matches!(
+            err(&host(), &i, &req()),
+            Refusal::IsoFileTooLargeForFat32 { .. }
+        ));
+    }
+    #[test]
+    fn refuses_wim_bigger_than_the_whole_content() {
+        let mut i = iso();
+        i.splittable_wim_bytes = i.extracted_bytes + 1;
+        assert!(invalid_input(err(&host(), &i, &req())));
+    }
+    #[test]
+    fn older_facts_without_the_wim_field_still_parse_as_no_wim() {
+        let j = r#"{"arch":"x86_64","size_bytes":1,"extracted_bytes":1,"largest_file_bytes":1,"largest_file_name":"f"}"#;
+        assert_eq!(IsoFacts::from_json(j).unwrap().splittable_wim_bytes, 0);
+    }
+    #[test]
     fn refuses_largest_file_bigger_than_content() {
         let mut i = iso();
         i.largest_file_bytes = i.extracted_bytes + 1;
@@ -408,6 +441,7 @@ mod tests {
             extracted_bytes: extracted,
             largest_file_bytes: GIB,
             largest_file_name: "f".into(),
+            splittable_wim_bytes: 0,
         };
         assert!(check(&h, &at(MAX_STAGING - STAGING_MARGIN), &req()).is_ok());
         assert_eq!(

@@ -97,6 +97,30 @@ void main() {
     expect(find.textContaining('my-system kurulum dosyaları'), findsOneWidget);
   });
 
+  testWidgets('a Windows ISO: 80 GB recommended, "Yeni sistem" wording and a hint about the unallocated space', (t) async {
+    t.view.physicalSize = const Size(900, 3000);
+    t.view.devicePixelRatio = 1.0;
+    addTearDown(t.view.reset);
+    final win = Distro(
+        id: 'w', name: 'Win', family: DistroFamily.windows, tagline: 't', description: 'd', bestFor: 'b', look: 'l',
+        accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['windows'], downloadPage: 'https://e.org',
+        userSuppliedIso: true, license: 'l');
+    final mine = File('${tmp.path}/win.iso')..writeAsBytesSync([1]);
+    await t.runAsync(() async {
+      await t.pumpWidget(section(d: win, pick: () async => mine));
+      await t.tap(find.textContaining('ISO dosyamı seçip kurmak için tıklayın'));
+      for (var i = 0; i < 250 && c.phase != InstallPhase.ready; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+      }
+    });
+    await t.pump();
+    expect(c.phase, InstallPhase.ready);
+    expect(find.text('Yeni sistem için ne kadar yer ayıralım?'), findsOneWidget);
+    expect(find.text('80 GB · önerilen'), findsOneWidget);
+    expect(find.text('30 GB · önerilen'), findsNothing);
+    expect(find.textContaining('Windows için en az 64 GB'), findsOneWidget);
+    expect(find.text('Windows kurulurken'), findsOneWidget);
+  });
   testWidgets('cancelling the file dialog changes nothing', (t) async {
     await t.runAsync(() async {
       await t.pumpWidget(section(d: dist(win: true), pick: () async => null));

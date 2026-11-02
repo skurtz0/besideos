@@ -423,10 +423,11 @@ if ($srcIsRoot) { $srcPath = $srcPath.TrimEnd('\') + '\' }
 if ($srcIsRoot) { Req (Test-Path -LiteralPath $srcPath -PathType Container) "Ortam yok: $srcPath" "Media root not found: $srcPath" }
 elseif ($srcIsIso) { Req (Test-Path -LiteralPath $srcPath -PathType Leaf) "ISO yok: $srcPath" "ISO file not found: $srcPath" }
 else { Req $false "iso_path ne .iso ne surucu koku: $srcPath" "iso_path is neither a .iso file nor a drive root: $srcPath" }
-function Test-SourceTree([string]$root, [int64]$cap) {
+function Test-SourceTree([string]$root, [int64]$cap, [bool]$allowWim = $false) {
     $sum = 0L
     foreach ($f in @(Get-ChildItem -LiteralPath $root -Recurse -File -Force -ErrorAction Stop)) {
-        if ($f.Length -ge 4GB) { throw "File too large for FAT32: $($f.FullName)" }
+        $isWim = $allowWim -and ($f.FullName.Substring($root.Length) -ieq 'sources\install.wim')
+        if ($f.Length -ge 4GB -and -not $isWim) { throw "File too large for FAT32: $($f.FullName)" }
         $sum += $f.Length
     }
     if ($sum -gt $cap) { throw "Media ($sum bytes) does not fit staging partition ($cap bytes)" }
@@ -437,6 +438,35 @@ if ($srcIsRoot) {
     Req $ok 'Ortam icerigi FAT32 bolumune sigmiyor.' 'Media tree does not fit FAT32 staging partition'
 }
 
+$fails_before_iso = $script:fails
+# --- the ISO itself must boot by UEFI (mounted read-only for a moment; nothing on the disks changes) ---
+# Old BIOS-only installers (Windows XP/7, some live images) have no \EFI\BOOT\BOOTx64.EFI: refuse now, not after the partition exists.
+function Get-IsoBootInfo([string]$iso) {
+    $info = [ordered]@{ Loader = $false; WimBytes = [int64]0; Error = $null }
+    $m = $false
+    try {
+        [void](Mount-DiskImage -ImagePath $iso -PassThru -ErrorAction Stop); $m = $true
+        $l = $null
+        for ($k = 0; $k -lt 15 -and -not $l; $k++) {
+            $v = Get-DiskImage -ImagePath $iso | Get-Volume
+            if ($v -and $v.DriveLetter) { $l = [string]$v.DriveLetter } else { Start-Sleep -Seconds 1 }
+        }
+        if (-not $l) { throw 'mounted ISO has no drive letter' }
+        $info.Loader = [bool](Test-Path -LiteralPath (Join-Path "${l}:\" $loader.TrimStart('\')) -PathType Leaf)
+        $w = Join-Path "${l}:\" 'sources\install.wim'
+        if (Test-Path -LiteralPath $w -PathType Leaf) { $info.WimBytes = [int64](Get-Item -LiteralPath $w).Length }
+    } catch { $info.Error = $_.Exception.Message }
+    finally { if ($m) { try { Dismount-DiskImage -ImagePath $iso | Out-Null } catch { } } }
+    return $info
+}
+if ($srcIsIso -and $fails_before_iso -eq 0) {
+    $isoInfo = Get-IsoBootInfo $srcPath
+    Req ($null -eq $isoInfo.Error) "ISO acilamadi: $($isoInfo.Error)" "Cannot open the ISO: $($isoInfo.Error)"
+    if ($null -eq $isoInfo.Error) {
+        Req $isoInfo.Loader "Bu ISO UEFI ile acilamiyor ($loader yok). Eski BIOS'lu surumler (ornegin Windows XP ve 7) bu yontemle kurulamaz." "ISO has no UEFI loader $loader (BIOS-only media cannot be installed this way)"
+        if ($isoInfo.WimBytes -gt 4294967295) { Log "sources\install.wim is $($isoInfo.WimBytes) bytes: will be split into install.swm parts (DISM) so it fits FAT32." }
+    }
+}
 $stateExists = Test-Path -LiteralPath $statePath
 if ($Execute) { Req (-not $stateExists) 'apply-state.json zaten var; once -Undo calistirin.' 'apply-state.json exists; run -Undo first (or move it away).' }
 elseif ($stateExists) { Log 'apply-state.json exists; -Execute would refuse.' 'WARN' }
@@ -514,11 +544,13 @@ foreach ($ps in @($plan.steps)) {
                     if ($srcIsIso) { Log "DRY-RUN: would run Mount-DiskImage -ImagePath '$srcPath' -PassThru ; read its drive letter" ; $srcRoot = '<iso-letter>:\' }
                     else { $srcRoot = $srcPath }
                     Log "DRY-RUN: would run robocopy $srcRoot <staging-letter>:\ /E /R:1 /W:1 /NFL /NDL /NP /XD 'System Volume Information' '`$RECYCLE.BIN'  (exit < 8 = ok)"
+                    Log 'DRY-RUN: if sources\install.wim is over 4 GiB it is skipped by robocopy (/XF install.wim) and written as install.swm parts: dism /Split-Image /ImageFile:<iso-letter>:\sources\install.wim /SWMFile:<staging-letter>:\sources\install.swm /FileSize:3800'
                     Log "DRY-RUN: then verify <staging-letter>:$loader exists$(if ($srcIsIso) { '; Dismount-DiskImage' })"
                 } else {
                     $fv = Get-Volume -DriveLetter $stageLetter -ErrorAction Stop
                     if ([string]$fv.FileSystemLabel -ne [string]$ex.target_label) { throw "staging volume label mismatch ($($fv.FileSystemLabel))" }
                     $mounted = $false; $srcRoot = $srcPath
+                    $splitWim = $false
                     try {
                         if ($srcIsIso) {
                             Log "RUN: Mount-DiskImage -ImagePath '$srcPath' -PassThru"
@@ -533,15 +565,32 @@ foreach ($ps in @($plan.steps)) {
                             if (-not $il) { throw 'mounted ISO has no drive letter' }
                             if ($il -eq $stageLetter) { throw 'ISO mounted on staging letter (refusing)' }
                             $srcRoot = "${il}:\"
-                            Test-SourceTree $srcRoot ([int64]$script:State.created.size_bytes)
+                            $wimSrc = Join-Path $srcRoot 'sources\install.wim'
+                            $splitWim = ((Test-Path -LiteralPath $wimSrc -PathType Leaf) -and ([int64](Get-Item -LiteralPath $wimSrc).Length -gt 4294967295))
+                            Test-SourceTree $srcRoot ([int64]$script:State.created.size_bytes) $splitWim
                         }
                         $dst = "${stageLetter}:\"
                         # drive roots have no spaces, so PS 5.1 passes them unquoted (no trailing-backslash quote bug)
-                        $r = Invoke-Native 'robocopy' @($srcRoot, $dst, '/E', '/R:1', '/W:1', '/NFL', '/NDL', '/NP', '/XD', 'System Volume Information', '$RECYCLE.BIN')
+                        $rc = @($srcRoot, $dst, '/E', '/R:1', '/W:1', '/NFL', '/NDL', '/NP', '/XD', 'System Volume Information', '$RECYCLE.BIN')
+                        if ($splitWim) { $rc += @('/XF', 'install.wim') }
+                        $r = Invoke-Native 'robocopy' $rc
                         if ($r.Code -ge 8) { throw "robocopy failed (exit $($r.Code))" }
                         $lp = Join-Path $dst $loader.TrimStart('\')
                         if (-not (Test-Path -LiteralPath $lp -PathType Leaf)) { throw "loader missing after copy: $lp" }
                         Log "copy verified: $lp"
+                        if ($splitWim) {
+                            # FAT32 holds no file of 4 GiB or more; Windows Setup reads install.swm, install2.swm ... instead of install.wim.
+                            $sd = "${stageLetter}:\sources"
+                            if (-not (Test-Path -LiteralPath $sd -PathType Container)) { New-Item -ItemType Directory -Path $sd -ErrorAction Stop | Out-Null }
+                            $wimLen = [int64](Get-Item -LiteralPath $wimSrc).Length
+                            Log "RUN: dism /Split-Image (install.wim $wimLen bytes -> install.swm parts of at most 3800 MB)"
+                            $dm = Invoke-Native 'dism.exe' @('/Split-Image', "/ImageFile:$wimSrc", "/SWMFile:$sd\install.swm", '/FileSize:3800')
+                            if ($dm.Code -ne 0) { throw "DISM split failed (exit $($dm.Code))" }
+                            $parts = @(Get-ChildItem -LiteralPath $sd -Filter 'install*.swm' -File -ErrorAction Stop)
+                            $partSum = [int64]0; foreach ($pp in $parts) { $partSum += [int64]$pp.Length }
+                            if ($parts.Count -lt 2 -or $partSum -lt [int64]($wimLen * 0.98)) { throw "split result looks wrong ($($parts.Count) parts, $partSum of $wimLen bytes)" }
+                            Log "split verified: $($parts.Count) parts, $partSum bytes"
+                        }
                     } finally {
                         if ($mounted) {
                             try { Dismount-DiskImage -ImagePath $srcPath | Out-Null; Log 'ISO dismounted.' }

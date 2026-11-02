@@ -58,10 +58,18 @@ pub fn plan_windows_to_linux(
             }),
         ),
         step(
-            format!(
-                "ISO içeriği ({} GiB) '{LABEL}' bölümüne açılacak",
-                fmt_gib(iso.extracted_bytes)
-            ),
+            if iso.splittable_wim_bytes > 0 {
+                format!(
+                    "ISO içeriği ({} GiB) '{LABEL}' bölümüne açılacak; sources/install.wim ({} GiB) 4 GiB sınırı için parçalara bölünecek",
+                    fmt_gib(iso.extracted_bytes),
+                    fmt_gib(iso.splittable_wim_bytes)
+                )
+            } else {
+                format!(
+                    "ISO içeriği ({} GiB) '{LABEL}' bölümüne açılacak",
+                    fmt_gib(iso.extracted_bytes)
+                )
+            },
             Step::ExtractIso {
                 iso_path: iso_path.into(),
                 target_label: LABEL.into(),
@@ -137,6 +145,7 @@ mod tests {
             extracted_bytes: 3 * GIB,
             largest_file_bytes: GIB,
             largest_file_name: "f".into(),
+            splittable_wim_bytes: 0,
         }
     }
     fn req() -> Request {
@@ -214,6 +223,16 @@ mod tests {
         );
         assert!(p.steps[0].description.contains("küçültülecek"));
         assert!(p.steps.iter().all(|s| !s.description.is_empty()));
+    }
+    #[test]
+    fn extract_step_mentions_the_split_when_there_is_a_big_wim() {
+        let mut i = iso();
+        i.splittable_wim_bytes = 5 * GIB;
+        i.extracted_bytes = 7 * GIB;
+        let p = plan_windows_to_linux(&host(), &i, &req(), "C:\\iso\\w.iso").unwrap();
+        assert!(p.steps[2].description.contains("parçalara bölünecek"));
+        assert!(p.steps[2].description.contains("5,0 GiB"));
+        assert!(!plan().steps[2].description.contains("bölünecek"));
     }
     #[test]
     fn fmt_gib_rounds_to_one_decimal_with_comma() {

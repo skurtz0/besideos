@@ -33,6 +33,26 @@ void main() {
     expect(text, isNot(contains(r'$e2.Code -ne 0')));
   });
 
+  test('a Windows ISO with an install.wim over 4 GiB is split instead of refused', () {
+    final inspect = File('probe/windows/inspect-iso.ps1').readAsStringSync();
+    expect(inspect, contains('splittable_wim_bytes'));
+    expect(inspect, contains('sources/install.wim'));
+    final apply = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(apply, contains('/Split-Image'));
+    expect(apply, contains('/FileSize:3800'));
+    expect(apply, contains("'/XF', 'install.wim'"));
+    // the copy still refuses any other file of 4 GiB or more
+    expect(apply, contains('File too large for FAT32'));
+  });
+
+  test('an ISO without a UEFI loader is refused before the disk is touched', () {
+    final apply = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    final preflight = apply.indexOf('Get-IsoBootInfo');
+    final firstDiskChange = apply.indexOf("'shrink_partition' {");
+    expect(preflight, greaterThan(0));
+    expect(preflight, lessThan(firstDiskChange));
+    expect(apply, contains('BIOS-only media cannot be installed this way'));
+  });
   test('undo can run without -PlanFile (the app never passes it)', () {
     final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
     expect(text, contains(r'if (-not $PlanFile)'));
