@@ -23,3 +23,10 @@ The odd "PASS: Unknown field ..." lines were passing checks printed with their f
 as DEBUG "check ok" (file only, console only with -Verbose). Summary lines "PREFLIGHT TAMAM / PREFLIGHT OK" and
 "PREFLIGHT BASARISIZ / PREFLIGHT FAILED (n)"; dry-run prints a header before the per-step "DRY-RUN: would run ..." action list.
 Still unrun on Windows after this edit.
+
+## Finding: partition numbers are not stable
+In the VM, New-Partition reported number 5 but the disk then listed the new partition as 4 (Recovery became 5). Undo's label/size
+check refused to touch the Recovery partition, as intended. Fix: partitions are now identified by Guid/UniqueId/offset/drive letter
+(state version 2); Windows partition resolved by drive letter; undo resolves by Guid, with a strict v1 fallback (label BESIDEOS +
+FAT32 + size within 1 MiB, exactly one, never a system/recovery/EFI/MSR partition); undo dry-run prints the resolved target.
+Unrun on Windows after this edit.

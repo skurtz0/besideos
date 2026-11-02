@@ -31,3 +31,10 @@ Line-by-line review done for PS 5.1: no ternary/`?.`/`&&`, no pwsh-only cmdlets,
     remove_boot_entry as forward steps are rejected (they only appear as `undo`).
 14. Undo removes any bootsequence value when it lists our GUID (would also drop other entries if the sequence had several).
 15. `extract_iso` size estimates in `iso_ubuntu_arm64.json` (4154798080 / 3221225472) are placeholders, not measured.
+16. (VM finding) Partition numbers are NOT stable: after New-Partition the reported number (5) became 4 on disk (Recovery became 5).
+    Script now identifies partitions by Guid/UniqueId/offset/drive letter: Windows partition via `-DriveLetter` (plan numbers only
+    cross-checked in preflight and at the shrink step), the created partition re-resolved by offset+size after creation, undo by
+    recorded Guid (v1 state fallback: label + FAT32 + size within 1 MiB, exactly one non-system match, else refuse).
+    Verify: `Get-Partition.Guid`/`UniqueId`/`Offset`/`GptType`/`Type` are populated; `Resize-Partition`/`Get-PartitionSupportedSize`
+    accept `-DriveLetter`; GptType compares after stripping braces; `Remove-Partition` with freshly resolved numbers.
+17. State file is version 2 (adds guid, unique_id, offset, letter); version 1 files are still read.

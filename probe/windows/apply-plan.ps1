@@ -111,13 +111,50 @@ function Save-State {
     if (-not $Execute) { return }
     [System.IO.File]::WriteAllText($statePath, (ConvertTo-Json -InputObject $script:State -Depth 8), $utf8)
 }
-function Get-LetterOf([int]$disk, [int]$pn) {
+# Partition NUMBERS are not stable (Windows renumbers by disk order after create). Identify by Guid / letter / offset.
+function NormGuid($g) { return (([string]$g) -replace '[{}]', '').ToLower() }
+$PROTECTED_GPT = @('c12a7328-f81f-11d2-ba4b-00a0c93ec93b', 'e3c9e316-0b5c-4db8-817d-f92df00215ae', 'de94bba4-06d1-4d40-a16a-bfd50179d6ac')
+function Get-VolOf($p) { try { return ($p | Get-Volume -ErrorAction Stop) } catch { return $null } }
+function Test-Protected($p) {
+    return ([bool]$p.IsSystem -or [bool]$p.IsBoot -or ($PROTECTED_GPT -contains (NormGuid $p.GptType)) -or (@('System', 'Reserved', 'Recovery') -contains [string]$p.Type))
+}
+function Describe-Part($p) {
+    $v = Get-VolOf $p
+    $lbl = ''; $fs = ''
+    if ($v) { $lbl = [string]$v.FileSystemLabel; $fs = [string]$v.FileSystem }
+    return "disk=$($p.DiskNumber) number=$($p.PartitionNumber) guid=$($p.Guid) letter=$($p.DriveLetter) label='$lbl' fs=$fs size=$($p.Size) offset=$($p.Offset)"
+}
+# After New-Partition the reported number is stale: find the new partition by offset+size and wait for its letter.
+function Find-Created([int]$disk, $np) {
     for ($i = 0; $i -lt 15; $i++) {
-        $l = (Get-Partition -DiskNumber $disk -PartitionNumber $pn).DriveLetter
-        if ($l) { return [string]$l }
+        $hit = @(Get-Partition -DiskNumber $disk -ErrorAction Stop | Where-Object { [int64]$_.Offset -eq [int64]$np.Offset -and [int64]$_.Size -eq [int64]$np.Size -and $_.DriveLetter })
+        if ($hit.Count -eq 1) { return $hit[0] }
+        if ($hit.Count -gt 1) { throw 'ambiguous new partition' }
         Start-Sleep -Seconds 1
     }
     return $null
+}
+# Undo: locate the staging partition we created. Guid first; v1 state (no guid): label+FAT32+size(+-1MiB), exactly one.
+function Resolve-Staging($c) {
+    $all = @(Get-Partition -DiskNumber ([int]$c.disk) -ErrorAction Stop)
+    $want = [int64]$c.size_bytes; $tol = 1MB
+    if ($c.guid) {
+        $hit = @($all | Where-Object { (NormGuid $_.Guid) -eq (NormGuid $c.guid) })
+        if ($hit.Count -eq 0) { return $null }
+    } else {
+        Log 'state has no partition Guid (v1); using label+FAT32+size fallback.' 'WARN'
+        $hit = @($all | Where-Object {
+                $v = Get-VolOf $_
+                $v -and [string]$v.FileSystemLabel -eq [string]$c.label -and [string]$v.FileSystem -eq 'FAT32' -and [math]::Abs([int64]$_.Size - $want) -le $tol -and -not (Test-Protected $_)
+            })
+        if ($hit.Count -ne 1) { Abort "Tam olarak 1 aday bulunamadi ($($hit.Count)); silinmedi." "Fallback matched $($hit.Count) partitions (need exactly 1); refusing." }
+    }
+    if ($hit.Count -ne 1) { Abort 'Birden fazla eslesme; silinmedi.' 'Multiple matches; refusing.' }
+    $p = $hit[0]; $v = Get-VolOf $p
+    if (Test-Protected $p) { Abort 'Aday bolum sistem/kurtarma/EFI/MSR; silinmedi.' 'Candidate is a system/recovery/EFI/MSR partition; refusing.' }
+    if (-not ($v -and [string]$v.FileSystemLabel -eq [string]$c.label)) { Abort 'Aday bolumun etiketi uyusmuyor; silinmedi.' 'Candidate label mismatch; refusing.' }
+    if ([math]::Abs([int64]$p.Size - $want) -gt $tol) { Abort 'Aday bolumun boyutu uyusmuyor; silinmedi.' 'Candidate size mismatch; refusing.' }
+    return $p
 }
 
 $mode = 'DRY-RUN'; if ($Execute) { $mode = 'EXECUTE' }
@@ -158,40 +195,33 @@ if ($Undo) {
         }
     }
 
-    # 2. staging partition (only the one we created)
-    if ($st.created -and $st.created.partition) {
-        $cd = [int]$st.created.disk; $cp = [int]$st.created.partition
-        Log "UNDO 2: remove staging partition disk $cd partition $cp label $($st.created.label)"
-        $p = $null
-        try { $p = Get-Partition -DiskNumber $cd -PartitionNumber $cp -ErrorAction Stop } catch { }
-        if (-not $p) { Log 'staging partition not present; skipping.' 'WARN' }
+    # 2. staging partition (only the one we created; resolved by Guid, never by number)
+    if ($st.created -and ($st.created.guid -or $st.created.partition)) {
+        Log "UNDO 2: remove staging partition (state: disk $($st.created.disk), number $($st.created.partition), guid $($st.created.guid), label $($st.created.label), size $($st.created.size_bytes))"
+        $p = Resolve-Staging $st.created
+        if (-not $p) { Log 'staging partition not present (Guid not found); skipping.' 'WARN' }
         else {
-            $v = $null
-            try { $v = $p | Get-Volume -ErrorAction Stop } catch { }
-            $okLabel = ($v -and ([string]$v.FileSystemLabel -eq [string]$st.created.label))
-            $okSize = ([int64]$p.Size -eq [int64]$st.created.size_bytes)
-            if (-not ($okLabel -and $okSize)) {
-                Abort "Bolum $cd/$cp etiketi/boyutu durum dosyasiyla uyusmuyor; silinmedi." "Partition $cd/$cp label/size do not match state; refusing to remove."
-            }
-            $cmd = "Remove-Partition -DiskNumber $cd -PartitionNumber $cp -Confirm:`$false"
+            Log ('TARGET to remove: ' + (Describe-Part $p))
+            $cmd = "Remove-Partition -DiskNumber $($p.DiskNumber) -PartitionNumber $($p.PartitionNumber) -Confirm:`$false"
             if (-not $Execute) { Log "DRY-RUN: would run $cmd" }
-            else { Log "RUN: $cmd"; Remove-Partition -DiskNumber $cd -PartitionNumber $cp -Confirm:$false -ErrorAction Stop }
+            else { Log "RUN: $cmd"; Remove-Partition -DiskNumber $p.DiskNumber -PartitionNumber $p.PartitionNumber -Confirm:$false -ErrorAction Stop }
         }
     }
 
     # 3. grow Windows partition back
-    if ($st.windows -and $st.windows.partition -ne $null) {
-        $wd = [int]$st.windows.disk; $wn = [int]$st.windows.partition
-        Log "UNDO 3: grow Windows partition disk $wd partition $wn to SizeMax (original size $($st.original_size))"
-        $wp = Get-Partition -DiskNumber $wd -PartitionNumber $wn -ErrorAction Stop
-        if ([string]$wp.DriveLetter -ne $sd) { Abort 'Durum dosyasindaki bolum Windows bolumu degil.' 'State partition is not the Windows partition.' }
-        $sup = Get-PartitionSupportedSize -DiskNumber $wd -PartitionNumber $wn
+    if ($st.windows -and $st.windows.disk -ne $null) {
+        $wd = [int]$st.windows.disk
+        $wp = Get-Partition -DriveLetter $sd -ErrorAction Stop
+        Log ('UNDO 3: grow Windows partition to SizeMax: ' + (Describe-Part $wp) + " (original size $($st.original_size))")
+        if ($wp.DiskNumber -ne $wd) { Abort 'Windows bolumu durum dosyasindaki diskte degil.' 'Windows partition is not on the disk recorded in state.' }
+        if ($st.windows.guid -and (NormGuid $st.windows.guid) -ne (NormGuid $wp.Guid)) { Abort 'Windows bolumunun Guid degeri uyusmuyor.' 'Windows partition Guid differs from state.' }
+        $sup = Get-PartitionSupportedSize -DriveLetter $sd
         Log "current=$($wp.Size) SizeMax=$($sup.SizeMax) original=$($st.original_size)"
         if ([int64]$sup.SizeMax -le [int64]$wp.Size) { Log 'already at SizeMax; nothing to grow.' }
         else {
-            $cmd = "Resize-Partition -DiskNumber $wd -PartitionNumber $wn -Size $($sup.SizeMax)"
-            if (-not $Execute) { Log "DRY-RUN: would run $cmd" }
-            else { Log "RUN: $cmd"; Resize-Partition -DiskNumber $wd -PartitionNumber $wn -Size ([uint64]$sup.SizeMax) -ErrorAction Stop }
+            $cmd = "Resize-Partition -DriveLetter $sd -Size $($sup.SizeMax)"
+            if (-not $Execute) { Log "DRY-RUN: would run $cmd (SizeMax shown is before the staging partition is removed)" }
+            else { Log "RUN: $cmd"; Resize-Partition -DriveLetter $sd -Size ([uint64]$sup.SizeMax) -ErrorAction Stop }
         }
     }
     if ($Execute) {
@@ -309,7 +339,7 @@ Req ($enc -eq $false) 'BitLocker acik ya da durumu belirlenemedi.' "BitLocker mu
 # --- shrink feasibility ---
 $cur = [int64]$part.Size; $newSize = $cur - $shrink
 $sup = $null
-try { $sup = Get-PartitionSupportedSize -DiskNumber $dn -PartitionNumber $pn -ErrorAction Stop } catch { }
+try { $sup = Get-PartitionSupportedSize -DriveLetter $sdl -ErrorAction Stop } catch { }
 Req ($null -ne $sup) 'Desteklenen boyut okunamadi.' 'Get-PartitionSupportedSize failed'
 Stop-IfFailed
 Req ($newSize -gt 0 -and $newSize -ge [int64]$sup.SizeMin) 'Kucultme mumkun degil (SizeMin asiliyor).' "Shrink impossible: new size $newSize < SizeMin $($sup.SizeMin)"
@@ -353,7 +383,7 @@ Log "PREFLIGHT TAMAM / PREFLIGHT OK (disk $dn part $pn, size $cur -> $newSize, S
 # =====================================================================
 if ($Execute) { Log 'Adimlar uygulanacak / Executing steps:' } else { Log 'KURU CALISTIRMA: asagidaki eylemler yapilacakti (hicbiri yapilmiyor) / DRY-RUN: the actions below WOULD be taken (none are):' }
 $script:State = [ordered]@{
-    version = 1; started = (Get-Date -Format 's'); plan_file = $PlanFile
+    version = 2; started = (Get-Date -Format 's'); plan_file = $PlanFile
     windows = $null; original_size = $null; shrunk_size = $null
     created = $null; boot_entry = $null; iso = $null
     steps_done = @(); failed_step = $null
@@ -366,19 +396,21 @@ foreach ($ps in @($plan.steps)) {
     try {
         switch ($t) {
             'shrink_partition' {
-                $p = Get-Partition -DiskNumber $dn -PartitionNumber $pn -ErrorAction Stop
+                # resolve by drive letter; plan numbers are only cross-checked
+                $p = Get-Partition -DriveLetter $sdl -ErrorAction Stop
+                if ($p.DiskNumber -ne $dn -or $p.PartitionNumber -ne $pn) { throw "Windows partition ($($p.DiskNumber)/$($p.PartitionNumber)) differs from plan ($dn/$pn)" }
                 $cur = [int64]$p.Size; $newSize = $cur - $shrink
-                $sup = Get-PartitionSupportedSize -DiskNumber $dn -PartitionNumber $pn -ErrorAction Stop
+                $sup = Get-PartitionSupportedSize -DriveLetter $sdl -ErrorAction Stop
                 if ($newSize -lt [int64]$sup.SizeMin) { throw "new size $newSize < SizeMin $($sup.SizeMin)" }
-                $cmd = "Resize-Partition -DiskNumber $dn -PartitionNumber $pn -Size $newSize"
+                $cmd = "Resize-Partition -DriveLetter $sdl -Size $newSize"
                 if (-not $Execute) { Log "DRY-RUN: would run $cmd  (current $cur, SizeMin $($sup.SizeMin))" }
                 else {
-                    $script:State.windows = [ordered]@{ disk = $dn; partition = $pn }
+                    $script:State.windows = [ordered]@{ disk = $dn; partition = $pn; letter = $sdl; guid = [string]$p.Guid; unique_id = [string]$p.UniqueId }
                     $script:State.original_size = $cur
                     Save-State   # recorded BEFORE the change so a half-done resize is still undoable
                     Log "RUN: $cmd"
-                    Resize-Partition -DiskNumber $dn -PartitionNumber $pn -Size ([uint64]$newSize) -ErrorAction Stop
-                    $script:State.shrunk_size = [int64](Get-Partition -DiskNumber $dn -PartitionNumber $pn).Size
+                    Resize-Partition -DriveLetter $sdl -Size ([uint64]$newSize) -ErrorAction Stop
+                    $script:State.shrunk_size = [int64](Get-Partition -DriveLetter $sdl).Size
                     Log "shrunk: $cur -> $($script:State.shrunk_size)"
                 }
             }
@@ -389,18 +421,27 @@ foreach ($ps in @($plan.steps)) {
                 else {
                     Log "RUN: $cmd1"
                     $np = New-Partition -DiskNumber $dn -Size ([uint64]$stageSize) -AssignDriveLetter -ErrorAction Stop
-                    $npn = [int]$np.PartitionNumber
-                    $script:State.created = [ordered]@{ disk = $dn; partition = $npn; label = $label; size_bytes = [int64]$np.Size; letter = $null }
+                    # np.PartitionNumber is stale (Windows renumbers); record offset/size first, then resolve the real object
+                    $script:State.created = [ordered]@{ disk = $dn; partition = $null; label = $label; size_bytes = [int64]$np.Size; offset = [int64]$np.Offset; letter = $null; guid = [string]$np.Guid; unique_id = [string]$np.UniqueId }
                     Save-State
-                    $stageLetter = Get-LetterOf $dn $npn
-                    if (-not $stageLetter) { throw 'new partition got no drive letter' }
-                    $script:State.created.letter = $stageLetter; Save-State
+                    $cp = Find-Created $dn $np
+                    if (-not $cp) { throw 'new partition not found by offset/size or got no drive letter' }
+                    if (Test-Protected $cp) { throw 'new partition unexpectedly looks like a system partition' }
+                    $stageLetter = [string]$cp.DriveLetter
+                    $script:State.created.partition = [int]$cp.PartitionNumber
+                    $script:State.created.letter = $stageLetter
+                    $script:State.created.guid = [string]$cp.Guid
+                    $script:State.created.unique_id = [string]$cp.UniqueId
+                    $script:State.created.size_bytes = [int64]$cp.Size
+                    Save-State
                     Log "RUN: Format-Volume -DriveLetter $stageLetter -FileSystem FAT32 -NewFileSystemLabel $label -Confirm:`$false"
                     [void](Format-Volume -DriveLetter $stageLetter -FileSystem FAT32 -NewFileSystemLabel $label -Confirm:$false -ErrorAction Stop)
                     $fv = Get-Volume -DriveLetter $stageLetter -ErrorAction Stop
                     if ([string]$fv.FileSystem -ne 'FAT32' -or [string]$fv.FileSystemLabel -ne $label) { throw "format verify failed ($($fv.FileSystem)/$($fv.FileSystemLabel))" }
-                    $script:State.created.size_bytes = [int64](Get-Partition -DiskNumber $dn -PartitionNumber $npn).Size
-                    Log "created partition $npn, letter ${stageLetter}:"
+                    $cp = Get-Partition -DriveLetter $stageLetter -ErrorAction Stop
+                    $script:State.created.partition = [int]$cp.PartitionNumber
+                    $script:State.created.size_bytes = [int64]$cp.Size
+                    Log ('created: ' + (Describe-Part $cp))
                 }
             }
             'extract_iso' {
