@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:besideos_site/catalog/distro.dart';
@@ -56,9 +58,32 @@ void bundledIsoTests() {
     }
   });
 
-  test('every non-windows distro has an x86_64 iso', () {
+  test('every non-windows distro without a user-supplied ISO has an x86_64 iso', () {
     for (final d in catalog.distros.where((d) => d.family != DistroFamily.windows)) {
-      expect(d.isoFor(IsoArch.x86_64), isNotNull, reason: d.id);
+      if (d.userSuppliedIso) {
+        expect(d.isos, isEmpty, reason: d.id);
+      } else {
+        expect(d.isoFor(IsoArch.x86_64), isNotNull, reason: d.id);
+      }
+    }
+  });
+
+  test('catalog offers many Linux and several Windows options', () {
+    expect(catalog.distros.where((d) => d.family == DistroFamily.linux).length, greaterThanOrEqualTo(15));
+    expect(catalog.distros.where((d) => d.family == DistroFamily.windows).length, greaterThanOrEqualTo(3));
+  });
+
+  test('every distro has a screenshot that exists, with a caption and credit', () {
+    for (final d in catalog.distros) {
+      expect(d.screens, isNotEmpty, reason: d.id);
+      for (final s in d.screens) {
+        final f = File(s.file);
+        expect(f.existsSync(), isTrue, reason: '${d.id}: ${s.file}');
+        expect(f.lengthSync(), greaterThan(5 * 1024), reason: s.file);
+        expect(s.caption, isNotEmpty);
+        expect(s.credit, contains('Wikimedia Commons'), reason: d.id);
+        expect(s.source, startsWith('https://commons.wikimedia.org/'), reason: d.id);
+      }
     }
   });
 }

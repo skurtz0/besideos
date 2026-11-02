@@ -5,6 +5,7 @@ import '../install/install_controller.dart';
 import '../install/install_section.dart';
 import '../theme.dart';
 import 'distro.dart';
+import 'screenshot_view.dart';
 import 'support_matrix.dart';
 
 const _hostNames = {
@@ -76,16 +77,19 @@ class DistroPage extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: 16),
-              _pair(
-                _card(Icons.lightbulb_outline_rounded, 'Bu sistem nedir?', [
-                  Text(d.description, style: const TextStyle(color: kText, height: 1.6)),
-                  const SizedBox(height: 10),
-                  Text('Kimler için: ${d.bestFor}', style: const TextStyle(color: kMuted, height: 1.5)),
-                ]),
-                _card(Icons.palette_outlined, 'Nasıl görünür?', [
-                  Text(d.look, style: const TextStyle(color: kText, height: 1.6)),
-                ]),
-              ),
+              _card(Icons.lightbulb_outline_rounded, 'Bu sistem nedir?', [
+                Text(d.description, style: const TextStyle(color: kText, height: 1.6)),
+                const SizedBox(height: 10),
+                Text('Kimler için: ${d.bestFor}', style: const TextStyle(color: kMuted, height: 1.5)),
+              ]),
+              const SizedBox(height: 16),
+              _card(Icons.palette_outlined, 'Nasıl görünür?', [
+                Text(d.look, style: const TextStyle(color: kText, height: 1.6)),
+                for (final s in d.screens) ...[
+                  const SizedBox(height: 16),
+                  ScreenShotView(shot: s),
+                ],
+              ]),
               const SizedBox(height: 16),
               _pair(
                 _card(Icons.checklist_rounded, 'Bilgisayarında neler olmalı?', [

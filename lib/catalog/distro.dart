@@ -15,6 +15,15 @@ class GuideStep {
   const GuideStep({required this.title, required this.body});
 }
 
+/// A bundled picture of what the system looks like, with where it came from.
+class ScreenShot {
+  final String file;
+  final String caption;
+  final String credit;
+  final String? source;
+  const ScreenShot({required this.file, required this.caption, required this.credit, this.source});
+}
+
 enum IsoArch { x86_64, arm64 }
 
 class IsoAsset {
@@ -52,6 +61,7 @@ class Distro {
   final bool userSuppliedIso;
   final String license;
   final List<IsoAsset> isos;
+  final List<ScreenShot> screens;
 
   const Distro({
     required this.id,
@@ -71,6 +81,7 @@ class Distro {
     required this.userSuppliedIso,
     required this.license,
     this.isos = const [],
+    this.screens = const [],
   });
 
   IsoAsset? isoFor(IsoArch arch) => isos.where((i) => i.arch == arch).firstOrNull;
@@ -163,6 +174,30 @@ class Distro {
       ));
     }
 
+    final rawScreens = raw['screens'] ?? const [];
+    if (rawScreens is! List) throw CatalogException('$id: screens must be a list');
+    final screens = <ScreenShot>[];
+    for (var i = 0; i < rawScreens.length; i++) {
+      final e = rawScreens[i];
+      final at = '$id: screens[$i]';
+      if (e is! Map) throw CatalogException('$at: not an object');
+      String str(String f) {
+        final v = e[f];
+        if (v is! String || v.isEmpty) throw CatalogException('$at.$f must be a non-empty String');
+        return v;
+      }
+
+      final file = str('file');
+      if (!file.startsWith('assets/screens/') || file.contains('..') || file.contains(r'\')) {
+        throw CatalogException('$at.file must be under assets/screens/');
+      }
+      final source = e['source'];
+      if (source != null && (source is! String || !source.startsWith('https://'))) {
+        throw CatalogException('$at.source must be an https URL or null');
+      }
+      screens.add(ScreenShot(file: file, caption: str('caption'), credit: str('credit'), source: source as String?));
+    }
+
     return Distro(
       id: id,
       name: get<String>('name'),
@@ -181,6 +216,7 @@ class Distro {
       userSuppliedIso: get<bool>('userSuppliedIso'),
       license: get<String>('license'),
       isos: List.unmodifiable(isos),
+      screens: List.unmodifiable(screens),
     );
   }
 }

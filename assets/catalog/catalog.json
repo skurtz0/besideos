@@ -13,16 +13,16 @@
       "accent": 4293481504,
       "guide": [
         {
-          "title": "Seç ve indir",
-          "body": "Planlanan: Ubuntu için resmi indirme sayfasını açıp ISO dosyasını oradan indirirsin. BesideOS geliştirildiğinde bu adıma yönlendirmesi hedefleniyor."
+          "title": "Kurmak için tıklayın",
+          "body": "Ubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
         },
         {
-          "title": "Yedek al ve yer aç",
-          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Planlanan: Bilgisayarını yeniden başlatıp Ubuntu kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
+          "body": "Bilgisayar yeniden başlar ve Ubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
         }
       ],
       "requirements": [
@@ -51,6 +51,14 @@
           "fileName": "ubuntu-26.04.1-desktop-arm64.iso",
           "sizeBytes": 4154798080
         }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/ubuntu.jpg",
+          "caption": "Ubuntu 24.04 LTS masaüstü",
+          "credit": "Görsel: Canonical Inc · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Ubuntu_24.04_LTS_default_desktop_-_English.png"
+        }
       ]
     },
     {
@@ -66,16 +74,16 @@
       "accent": 4287079766,
       "guide": [
         {
-          "title": "Seç ve indir",
-          "body": "Planlanan: Linux Mint için resmi indirme sayfasını açıp ISO dosyasını oradan indirirsin. BesideOS geliştirildiğinde bu adıma yönlendirmesi hedefleniyor."
+          "title": "Kurmak için tıklayın",
+          "body": "Linux Mint sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
         },
         {
-          "title": "Yedek al ve yer aç",
-          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Planlanan: Bilgisayarını yeniden başlatıp Linux Mint kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
+          "body": "Bilgisayar yeniden başlar ve Linux Mint kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
         }
       ],
       "requirements": [
@@ -97,6 +105,14 @@
           "fileName": "linuxmint-22.3-cinnamon-64bit.iso",
           "sizeBytes": 3091660800
         }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/linux-mint.jpg",
+          "caption": "Linux Mint Cinnamon 22.3 masaüstü",
+          "credit": "Görsel: Breno Martins de Oliveira Vasconcelos · GPLv3 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Linux_Mint_Cinnamon_22.3.png"
+        }
       ]
     },
     {
@@ -111,16 +127,16 @@
       "accent": 4282150580,
       "guide": [
         {
-          "title": "Seç ve indir",
-          "body": "Windows yolunda Fedora'nın resmi indirme sayfasından Fedora Workstation ISO'sunu indirirsin. Apple Silicon (M1/M2) Mac yolunda ise Fedora Asahi Remix, Asahi projesinin kendi yükleyicisiyle başlar; bu sayfadan bir ISO indirilmez."
+          "title": "Kurmak için tıklayın",
+          "body": "Fedora sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
         },
         {
-          "title": "Yedek al ve yer aç",
-          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Planlanan: Bilgisayarını yeniden başlatıp Fedora kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
+          "body": "Bilgisayar yeniden başlar ve Fedora kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
         }
       ],
       "requirements": [
@@ -150,6 +166,20 @@
           "fileName": "Fedora-Workstation-Live-44-1.7.aarch64.iso",
           "sizeBytes": 2689781760
         }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/fedora.jpg",
+          "caption": "Fedora 42 Workstation masaüstü",
+          "credit": "Görsel: The Fedora Project · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Fedora_42_Workstation_Desktop_English.png"
+        },
+        {
+          "file": "assets/screens/fedora-install.jpg",
+          "caption": "Fedora kurulum ekranı (Anaconda, Fedora 42)",
+          "credit": "Görsel: Anaconda Team · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Anaconda_WebUI_Installer_-_Fedora_Workstation_42.png"
+        }
       ]
     },
     {
@@ -164,16 +194,16 @@
       "accent": 4289200176,
       "guide": [
         {
-          "title": "Seç ve indir",
-          "body": "Planlanan: Debian için resmi indirme sayfasını açıp ISO dosyasını oradan indirirsin. BesideOS geliştirildiğinde bu adıma yönlendirmesi hedefleniyor."
+          "title": "Kurmak için tıklayın",
+          "body": "Debian sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
         },
         {
-          "title": "Yedek al ve yer aç",
-          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
         },
         {
           "title": "Yeniden başlat ve kur",
-          "body": "Planlanan: Bilgisayarını yeniden başlatıp Debian kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
+          "body": "Bilgisayar yeniden başlar ve Debian kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
         }
       ],
       "requirements": [
@@ -202,6 +232,14 @@
           "fileName": "debian-13.7.0-arm64-netinst.iso",
           "sizeBytes": 735358976
         }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/debian.jpg",
+          "caption": "Debian 13 (Trixie) GNOME masaüstü",
+          "credit": "Görsel: TOMats · CC0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Debian_13_(Trixie)_-_GNOME_desktop.png"
+        }
       ]
     },
     {
@@ -220,12 +258,12 @@
           "body": "Kendi Windows 11 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
         },
         {
-          "title": "Yedek al ve yer aç",
-          "body": "Planlanan: Kuruluma başlamadan önce önemli dosyalarının yedeğini alırsın ve diskinde yer açarsın. BesideOS geliştirildiğinde bu adımda sana yardımcı olması hedefleniyor."
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
         },
         {
-          "title": "Yeniden başlat ve kur",
-          "body": "Planlanan: Bilgisayarını yeniden başlatıp Windows kurulum ekranından devam edersin. BesideOS geliştirildiğinde bu adımı kolaylaştırmak hedefleniyor."
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
         }
       ],
       "requirements": [
@@ -241,7 +279,761 @@
       ],
       "downloadPage": "https://www.microsoft.com/software-download/windows11",
       "userSuppliedIso": true,
-      "license": "Ticari (Microsoft lisansı)"
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-11.jpg",
+          "caption": "Windows 11: başlat menüsü ve Ayarlar",
+          "credit": "Görsel: Microsoft; for the icons: https://notepad-plus-plus.org htt… · Public domain · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Windows_11_screenshot.png"
+        }
+      ]
+    },
+    {
+      "id": "linux-mint-xfce",
+      "name": "Linux Mint Xfce",
+      "family": "linux",
+      "tagline": "Eski ve yavaş bilgisayarlar için hafif Mint.",
+      "description": "Linux Mint Xfce, Mint'in hafif masaüstlü sürümüdür. Az bellekle ve eski işlemcilerle bile akıcı çalışır, Mint'in kolay kullanımını korur.",
+      "bestFor": "Eski ya da düşük özellikli bilgisayarı yeniden hızlandırmak isteyenler.",
+      "desktop": "Xfce",
+      "basedOn": "Ubuntu",
+      "look": "Altta klasik bir görev çubuğu, yeşil tonlarda sade bir masaüstü ve sol altta başlat menüsü.",
+      "accent": 4285509724,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Linux Mint Xfce sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Linux Mint Xfce kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://linuxmint.com/download.php",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-xfce-64bit.iso",
+          "checksumUrl": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt",
+          "fileName": "linuxmint-22.3-xfce-64bit.iso",
+          "sizeBytes": 3033710592
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/mint-xfce.jpg",
+          "caption": "Linux Mint Xfce masaüstü (eski bir sürümden görüntü)",
+          "credit": "Görsel: Funkruf · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Linux_Mint_19.3_Xfce-Desktop.png"
+        }
+      ]
+    },
+    {
+      "id": "linux-mint-mate",
+      "name": "Linux Mint MATE",
+      "family": "linux",
+      "tagline": "Klasik görünümü sevenler için Mint.",
+      "description": "Linux Mint MATE, eski tarz GNOME 2 masaüstünü sürdürür. Tanıdık, sakin ve kararlıdır; çok özelleştirilebilir.",
+      "bestFor": "Eski tarz, sade bir masaüstü isteyenler.",
+      "desktop": "MATE",
+      "basedOn": "Ubuntu",
+      "look": "Üstte menü ve görev çubuğu, klasik pencereler ve yeşil temalı bir masaüstü.",
+      "accent": 4286294616,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Linux Mint MATE sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Linux Mint MATE kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://linuxmint.com/download.php",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-mate-64bit.iso",
+          "checksumUrl": "https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt",
+          "fileName": "linuxmint-22.3-mate-64bit.iso",
+          "sizeBytes": 3134275584
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/mint-mate.jpg",
+          "caption": "Linux Mint MATE masaüstü (20. sürümden görüntü)",
+          "credit": "Görsel: Michal Stanke · CC BY-SA 4.0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Linux-Mint-MATE-20-desktop.png"
+        }
+      ]
+    },
+    {
+      "id": "xubuntu",
+      "name": "Xubuntu",
+      "family": "linux",
+      "tagline": "Ubuntu'nun hafif ve sade hâli.",
+      "description": "Xubuntu, Ubuntu'nun Xfce masaüstlü sürümüdür. Ubuntu deposundan yazılım alır ama daha az kaynak kullanır.",
+      "bestFor": "Ubuntu uyumluluğunu isteyip daha hafif bir sistem arayanlar.",
+      "desktop": "Xfce",
+      "basedOn": "Ubuntu",
+      "look": "Üstte ince bir panel, altta açılır bir uygulama çubuğu ve mavi tonlarda sade bir masaüstü.",
+      "accent": 4281167071,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Xubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Xubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://xubuntu.org/download/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://cdimage.ubuntu.com/xubuntu/releases/26.04.1/release/xubuntu-26.04.1-desktop-amd64.iso",
+          "checksumUrl": "https://cdimage.ubuntu.com/xubuntu/releases/26.04.1/release/SHA256SUMS",
+          "fileName": "xubuntu-26.04.1-desktop-amd64.iso",
+          "sizeBytes": 5186390016
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/xubuntu.jpg",
+          "caption": "Xubuntu 24.04 LTS masaüstü",
+          "credit": "Görsel: The Xubuntu team · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Xubuntu_24.04_LTS_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "lubuntu",
+      "name": "Lubuntu",
+      "family": "linux",
+      "tagline": "En hafif Ubuntu çeşitlerinden biri.",
+      "description": "Lubuntu, Ubuntu'nun LXQt masaüstlü sürümüdür. Çok az bellek kullanır; eski bilgisayarlara iyi gelir.",
+      "bestFor": "Çok eski bilgisayarı yeniden kullanmak isteyenler.",
+      "desktop": "LXQt",
+      "basedOn": "Ubuntu",
+      "look": "Altta Windows'a benzer bir görev çubuğu ve sade, açık renkli bir masaüstü.",
+      "accent": 4278216904,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Lubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Lubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://lubuntu.me/downloads/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://cdimage.ubuntu.com/lubuntu/releases/26.04.1/release/lubuntu-26.04.1-desktop-amd64.iso",
+          "checksumUrl": "https://cdimage.ubuntu.com/lubuntu/releases/26.04.1/release/SHA256SUMS",
+          "fileName": "lubuntu-26.04.1-desktop-amd64.iso",
+          "sizeBytes": 3927552000
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/lubuntu.jpg",
+          "caption": "Lubuntu 24.04 LTS masaüstü",
+          "credit": "Görsel: The Lubuntu Community · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Lubuntu_24.04_LTS_default_desktop_-_English.jpg"
+        }
+      ]
+    },
+    {
+      "id": "kubuntu",
+      "name": "Kubuntu",
+      "family": "linux",
+      "tagline": "Ubuntu tabanlı, çok özelleştirilebilir KDE Plasma.",
+      "description": "Kubuntu, Ubuntu'nun KDE Plasma masaüstlü sürümüdür. Görünümü ve davranışı neredeyse her yönüyle değiştirebilirsin.",
+      "bestFor": "Windows'a benzer bir düzen isteyip her şeyi ayarlamayı sevenler.",
+      "desktop": "KDE Plasma",
+      "basedOn": "Ubuntu",
+      "look": "Altta Windows'a benzer görev çubuğu, mavi tonlar ve şeffaf efektli modern pencereler.",
+      "accent": 4280130035,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Kubuntu sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Kubuntu kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://kubuntu.org/getkubuntu/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/kubuntu-26.04.1-desktop-amd64.iso",
+          "checksumUrl": "https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/SHA256SUMS",
+          "fileName": "kubuntu-26.04.1-desktop-amd64.iso",
+          "sizeBytes": 5072990208
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/kubuntu.jpg",
+          "caption": "Kubuntu 24.04 LTS masaüstü",
+          "credit": "Görsel: The Kubuntu Community · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Kubuntu_24.04_LTS_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "debian-live-xfce",
+      "name": "Debian Live (Xfce)",
+      "family": "linux",
+      "tagline": "Önce dene, sonra kur: hafif Debian.",
+      "description": "Debian Live, kurmadan önce sistemi deneyebileceğin Debian sürümüdür. Xfce masaüstü hafif ve kararlıdır.",
+      "bestFor": "Debian'ı kurmadan önce görmek isteyenler.",
+      "desktop": "Xfce",
+      "basedOn": null,
+      "look": "Üstte ince bir panel, sade ve koyu mavi-kırmızı tonlarda bir masaüstü.",
+      "accent": 4292282963,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Debian Live (Xfce) sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Debian Live (Xfce) kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://www.debian.org/CD/live/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-xfce.iso",
+          "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
+          "fileName": "debian-live-13.7.0-amd64-xfce.iso",
+          "sizeBytes": 3826974720
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/debian-xfce.jpg",
+          "caption": "Debian 13 Xfce masaüstü",
+          "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_Xfce_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "debian-live-kde",
+      "name": "Debian Live (KDE Plasma)",
+      "family": "linux",
+      "tagline": "Önce dene, sonra kur: KDE ile Debian.",
+      "description": "Debian Live KDE, Debian'ın kararlılığını KDE Plasma masaüstüyle birleştirir ve kurmadan önce denemene izin verir.",
+      "bestFor": "Kararlı bir sistemde zengin bir masaüstü isteyenler.",
+      "desktop": "KDE Plasma",
+      "basedOn": null,
+      "look": "Altta görev çubuğu, modern şeffaf pencereler ve mavi tonlu bir masaüstü.",
+      "accent": 4290910299,
+      "guide": [
+        {
+          "title": "Kurmak için tıklayın",
+          "body": "Debian Live (KDE Plasma) sayfasındaki büyük düğmeye basarsın. BesideOS ISO dosyasını indirir ve bozuk olmadığını doğrular."
+        },
+        {
+          "title": "Yer ve onay",
+          "body": "Hangi sürücüden ne kadar yer açılacağını seçer, yedeğini aldığını onaylarsın. Sen onaylamadan bilgisayarında hiçbir şey değişmez."
+        },
+        {
+          "title": "Yeniden başlat ve kur",
+          "body": "Bilgisayar yeniden başlar ve Debian Live (KDE Plasma) kurulum ekranı açılır. Ekrandaki yönergeleri izlersin."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "İnternet bağlantısı (indirme için)"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://www.debian.org/CD/live/",
+      "userSuppliedIso": false,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "isos": [
+        {
+          "arch": "x86_64",
+          "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-kde.iso",
+          "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
+          "fileName": "debian-live-13.7.0-amd64-kde.iso",
+          "sizeBytes": 4186112000
+        }
+      ],
+      "screens": [
+        {
+          "file": "assets/screens/debian-kde.jpg",
+          "caption": "Debian 13 KDE Plasma masaüstü",
+          "credit": "Görsel: The Debian Project · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Debian_13.0.0_KDE_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "pop-os",
+      "name": "Pop!_OS",
+      "family": "linux",
+      "tagline": "Geliştiriciler ve oyuncular için pratik sistem.",
+      "description": "Pop!_OS, System76 firmasının Ubuntu tabanlı sistemidir. Pencereleri otomatik dizme ve oyun ekran kartı desteğiyle öne çıkar.",
+      "bestFor": "Yazılım geliştirenler ve oyun oynayanlar.",
+      "desktop": "COSMIC",
+      "basedOn": "Ubuntu",
+      "look": "Üstte ince bir çubuk, koyu temalı ve turkuaz vurgulu sade bir masaüstü.",
+      "accent": 4282956231,
+      "guide": [
+        {
+          "title": "ISO'nu indir",
+          "body": "Pop!_OS için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+        },
+        {
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Resmi siteden indirilmiş bir ISO dosyası"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://system76.com/pop/download/",
+      "userSuppliedIso": true,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "screens": [
+        {
+          "file": "assets/screens/popos.jpg",
+          "caption": "Pop!_OS 24.04 LTS masaüstü",
+          "credit": "Görsel: System76 · GPLv3 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Pop!_OS_24.04_LTS_default_desktop_-_English.png"
+        },
+        {
+          "file": "assets/screens/popos-install.jpg",
+          "caption": "Pop!_OS kurulum ekranı (20.04 sürümünden görüntü)",
+          "credit": "Görsel: System76 · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Pop!_OS_20.04_Install_01_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "zorin-os",
+      "name": "Zorin OS",
+      "family": "linux",
+      "tagline": "Windows'tan geçenler için tanıdık Linux.",
+      "description": "Zorin OS, Windows ya da macOS'a benzeyen düzenleriyle Linux'a geçişi kolaylaştırır. Ubuntu tabanlıdır.",
+      "bestFor": "Windows'tan geçip yadırgamak istemeyenler.",
+      "desktop": "GNOME (özelleştirilmiş)",
+      "basedOn": "Ubuntu",
+      "look": "Windows'a benzeyen görev çubuğu ve başlat menüsü; mavi tonlu şık bir masaüstü.",
+      "accent": 4279609072,
+      "guide": [
+        {
+          "title": "ISO'nu indir",
+          "body": "Zorin OS için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+        },
+        {
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Resmi siteden indirilmiş bir ISO dosyası"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://zorin.com/os/download/",
+      "userSuppliedIso": true,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "screens": [
+        {
+          "file": "assets/screens/zorin.jpg",
+          "caption": "Zorin OS 17.3 masaüstü",
+          "credit": "Görsel: Average USA patriot · CC0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Zorin_OS_17.3_Desktop.png"
+        }
+      ]
+    },
+    {
+      "id": "elementary-os",
+      "name": "elementary OS",
+      "family": "linux",
+      "tagline": "macOS'a benzeyen şık ve sade Linux.",
+      "description": "elementary OS, sade tasarımı ve kendi uygulamalarıyla bilinir. Ubuntu tabanlıdır ve Pantheon masaüstünü kullanır.",
+      "bestFor": "Şık ve sade bir arayüz isteyenler.",
+      "desktop": "Pantheon",
+      "basedOn": "Ubuntu",
+      "look": "Üstte ince bir çubuk, altta ortalanmış bir dock ve macOS'u andıran yuvarlak köşeli pencereler.",
+      "accent": 4284791551,
+      "guide": [
+        {
+          "title": "ISO'nu indir",
+          "body": "elementary OS için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+        },
+        {
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Resmi siteden indirilmiş bir ISO dosyası"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://elementary.io/",
+      "userSuppliedIso": true,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "screens": [
+        {
+          "file": "assets/screens/elementary.jpg",
+          "caption": "elementary OS 8.0 masaüstü",
+          "credit": "Görsel: elementary, Inc. · GPLv3 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Elementary_OS_8.0_default_desktop_-_English.png"
+        }
+      ]
+    },
+    {
+      "id": "manjaro",
+      "name": "Manjaro",
+      "family": "linux",
+      "tagline": "Arch Linux'un kolay kurulan hâli.",
+      "description": "Manjaro, Arch Linux tabanlı, güncel yazılımlı bir sistemdir. Kurulumu kolaydır ve sürekli güncellenir.",
+      "bestFor": "En yeni yazılımları isteyen ve biraz deneyimi olanlar.",
+      "desktop": "KDE Plasma / GNOME / Xfce",
+      "basedOn": "Arch Linux",
+      "look": "Seçtiğin masaüstüne göre değişir; yeşil vurgulu, modern bir görünüm.",
+      "accent": 4281712476,
+      "guide": [
+        {
+          "title": "ISO'nu indir",
+          "body": "Manjaro için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+        },
+        {
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Resmi siteden indirilmiş bir ISO dosyası"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://manjaro.org/products/download/x86",
+      "userSuppliedIso": true,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "screens": [
+        {
+          "file": "assets/screens/manjaro.jpg",
+          "caption": "Manjaro 24.0 KDE Plasma masaüstü",
+          "credit": "Görsel: NotRepubilcTV · GPL · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:Manjaro_Linux_24.0_KDE_Plasma_Desktop_English.png"
+        }
+      ]
+    },
+    {
+      "id": "opensuse",
+      "name": "openSUSE",
+      "family": "linux",
+      "tagline": "Güçlü yönetim araçlarıyla sağlam bir sistem.",
+      "description": "openSUSE, Almanya kökenli köklü bir dağıtımdır. YaST ile sistem yönetimi kolaydır; Tumbleweed sürümü sürekli güncellenir.",
+      "bestFor": "Sağlam altyapı ve güçlü yönetim araçları isteyenler.",
+      "desktop": "KDE Plasma / GNOME",
+      "basedOn": null,
+      "look": "Yeşil vurgulu, modern ve temiz bir masaüstü.",
+      "accent": 4285774373,
+      "guide": [
+        {
+          "title": "ISO'nu indir",
+          "body": "openSUSE için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+        },
+        {
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Resmi siteden indirilmiş bir ISO dosyası"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://get.opensuse.org/",
+      "userSuppliedIso": true,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "screens": [
+        {
+          "file": "assets/screens/opensuse.jpg",
+          "caption": "openSUSE Tumbleweed, KDE Plasma 6 masaüstü",
+          "credit": "Görsel: GatoVerde95 · CC BY 4.0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:OpenSUSE_Tumbleweed_in_KDE_6.jpg"
+        }
+      ]
+    },
+    {
+      "id": "mx-linux",
+      "name": "MX Linux",
+      "family": "linux",
+      "tagline": "Kararlı, hafif ve araç dolu.",
+      "description": "MX Linux, Debian tabanlıdır ve kendi küçük araçlar topluluğuyla gelir. Orta ve eski bilgisayarlarda akıcıdır.",
+      "bestFor": "Hafif ve kararlı bir sistem isteyenler.",
+      "desktop": "Xfce",
+      "basedOn": "Debian",
+      "look": "Kenarda bir panel, mavi-yeşil bir duvar kâğıdı ve saat gibi bilgi gösteren masaüstü.",
+      "accent": 4281105036,
+      "guide": [
+        {
+          "title": "ISO'nu indir",
+          "body": "MX Linux için resmi sayfadan ISO dosyasını indirirsin. BesideOS bu sistem için ISO dosyası sağlamaz."
+        },
+        {
+          "title": "ISO'nu doğrula",
+          "body": "İndirdiğin dosyayı bu sayfadaki bölümde seçip bozuk olmadığını kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "Tek tıkla kurulum şimdilik yalnızca BesideOS ISO dosyasını kendisi indirebildiği sistemler için var. Kurulumu sistemin kendi yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemcili bir bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Resmi siteden indirilmiş bir ISO dosyası"
+      ],
+      "hosts": [
+        "windows"
+      ],
+      "downloadPage": "https://mxlinux.org/download-links/",
+      "userSuppliedIso": true,
+      "license": "Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)",
+      "screens": [
+        {
+          "file": "assets/screens/mx.jpg",
+          "caption": "MX Linux 18.3 varsayılan masaüstü (eski bir sürümden görüntü)",
+          "credit": "Görsel: MX Linux team · CC BY-SA 4.0 · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:MX_Linux_18.3_Default_Desktop.png"
+        }
+      ]
+    },
+    {
+      "id": "windows-10",
+      "name": "Windows 10",
+      "family": "windows",
+      "tagline": "Microsoft'un yaygın kullanılan önceki sürümü.",
+      "description": "Windows 10, Microsoft'un ticari işletim sistemidir. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu seçersin ya da Microsoft'un resmi sayfasından indirirsin.",
+      "bestFor": "Windows 11 gereksinimlerini karşılamayan bilgisayarlarda Windows kullanmak isteyenler.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Solda başlat menüsü, canlı kutucuklar, altta görev çubuğu.",
+      "accent": 4278221015,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows 10 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "64 bit işlemci",
+        "Kurulum için yeterli boş disk alanı",
+        "Geçerli bir Windows lisansı"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://www.microsoft.com/software-download/windows10ISO",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-10-setup.jpg",
+          "caption": "Windows 10 kurulum ekranı (IoT Enterprise LTSC 2021 sürümünden görüntü)",
+          "credit": "Görsel: OS: Microsoft Corporation Screenshot: PantheraLeo1359531 😺… · Public domain · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:VirtualBox_Windows_10_IoT_Enterprise_LTSC_2021_22_12_2024_11_08_36.png"
+        }
+      ]
+    },
+    {
+      "id": "windows-server-2025",
+      "name": "Windows Server 2025",
+      "family": "windows",
+      "tagline": "Sunucu ve laboratuvar denemeleri için Windows.",
+      "description": "Windows Server 2025, Microsoft'un sunucu işletim sistemidir. Deneme sürümü Microsoft'un resmi sayfasından indirilir; BesideOS ISO dosyasını dağıtmaz.",
+      "bestFor": "Sunucu rollerini ve yönetim araçlarını öğrenmek isteyenler.",
+      "desktop": null,
+      "basedOn": null,
+      "look": "Windows 11'e benzeyen görev çubuğu ve başlat menüsü; sunucu yönetim araçlarıyla gelir.",
+      "accent": 4279987906,
+      "guide": [
+        {
+          "title": "ISO'nu seç veya indir",
+          "body": "Kendi Windows Server 2025 ISO dosyanı seçersin ya da Microsoft'un resmi indirme sayfasından indirirsin. BesideOS ISO dosyası sağlamaz."
+        },
+        {
+          "title": "İndirileni doğrula",
+          "body": "ISO dosyasının bozuk olmadığını bu sayfadaki bölümden kontrol edersin."
+        },
+        {
+          "title": "Elle kur",
+          "body": "BesideOS şimdilik Windows kurulumunu kendisi yapmaz. Yedek aldıktan sonra kurulumu Microsoft yönergeleriyle yaparsın."
+        }
+      ],
+      "requirements": [
+        "UEFI desteği olan 64 bit bilgisayar",
+        "Kurulum için yeterli boş disk alanı",
+        "Deneme veya geçerli bir sunucu lisansı"
+      ],
+      "hosts": [
+        "windows",
+        "linux"
+      ],
+      "downloadPage": "https://www.microsoft.com/evalcenter/evaluate-windows-server-2025",
+      "userSuppliedIso": true,
+      "license": "Ticari (Microsoft lisansı)",
+      "screens": [
+        {
+          "file": "assets/screens/windows-server.jpg",
+          "caption": "Windows Server 2025 masaüstü (Almanca arayüz)",
+          "credit": "Görsel: OS: Microsoft Corporation Screenshot+Hintergrundfoto: Panth… · Public domain · Wikimedia Commons",
+          "source": "https://commons.wikimedia.org/wiki/File:VirtualBox_Windows_Server_2025_26100.1.240331-1435.GE_DE_12_01_2025_11_55_08.png"
+        }
+      ]
     }
   ]
 }

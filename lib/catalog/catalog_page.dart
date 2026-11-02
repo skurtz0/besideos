@@ -107,7 +107,7 @@ class _DistroCardState extends State<_DistroCard> {
     final accent = Color(d.accent);
     return SizedBox(
       width: 272,
-      height: 176,
+      height: d.screens.isEmpty ? 176 : 270,
       child: Material(
         color: kPanel,
         clipBehavior: Clip.antiAlias,
@@ -132,23 +132,47 @@ class _DistroCardState extends State<_DistroCard> {
                   colors: [accent.withAlpha(_active ? 90 : 55), kPanel],
                 ),
               ),
-              padding: const EdgeInsets.all(18),
               child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Row(children: [
-                  LetterBadge(name: d.name, color: accent, size: 44),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(d.name, style: const TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
+                if (d.screens.isNotEmpty)
+                  SizedBox(
+                    height: 112,
+                    width: double.infinity,
+                    child: Image.asset(
+                      d.screens.first.file,
+                      fit: BoxFit.cover,
+                      alignment: Alignment.topCenter,
+                      excludeFromSemantics: true,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                    ),
                   ),
-                ]),
-                const SizedBox(height: 12),
-                Text(d.tagline, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(color: kMuted, height: 1.5)),
-                const Spacer(),
-                Row(children: [
-                  Text('Kurulumu gör', style: TextStyle(color: _active ? kText : kAccent, fontWeight: FontWeight.w700)),
-                  const SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_rounded, size: 18, color: _active ? kText : kAccent),
-                ]),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      Row(children: [
+                        LetterBadge(name: d.name, color: accent, size: d.screens.isEmpty ? 44 : 34),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Text(d.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(color: kText, fontSize: 19, fontWeight: FontWeight.w800)),
+                        ),
+                      ]),
+                      const SizedBox(height: 8),
+                      Text(d.tagline,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(color: kMuted, height: 1.45)),
+                      const Spacer(),
+                      Row(children: [
+                        Text('Kurulumu gör', style: TextStyle(color: _active ? kText : kAccent, fontWeight: FontWeight.w700)),
+                        const SizedBox(width: 4),
+                        Icon(Icons.arrow_forward_rounded, size: 18, color: _active ? kText : kAccent),
+                      ]),
+                    ]),
+                  ),
+                ),
               ]),
             ),
           ),

@@ -39,6 +39,31 @@ void main() {
     expect(x.userSuppliedIso, false);
   });
 
+  Map<String, dynamic> shot({String file = 'assets/screens/a.jpg'}) =>
+      {'file': file, 'caption': 'Masaüstü', 'credit': 'Görsel: X', 'source': 'https://commons.wikimedia.org/wiki/File:A.png'};
+
+  test('screens are optional and parsed when present', () {
+    expect(Catalog.parse(cat([d('a')])).byId('a')!.screens, isEmpty);
+    final s = Catalog.parse(cat([d('a', over: {'screens': [shot()]})])).byId('a')!.screens.single;
+    expect(s.file, 'assets/screens/a.jpg');
+    expect(s.caption, 'Masaüstü');
+    expect(s.source, startsWith('https://'));
+  });
+
+  test('rejects unsafe or malformed screens', () {
+    for (final bad in <Object>[
+      [shot(file: 'assets/catalog/catalog.json')],
+      [shot(file: 'assets/screens/../x.jpg')],
+      [shot(file: r'assets\screens\x.jpg')],
+      [{'file': 'assets/screens/a.jpg', 'caption': '', 'credit': 'c'}],
+      [{'file': 'assets/screens/a.jpg', 'caption': 'c', 'credit': 'c', 'source': 'http://x.org'}],
+      ['x'],
+      'nope',
+    ]) {
+      expect(() => Catalog.parse(cat([d('a', over: {'screens': bad})])), throwsA(isA<CatalogException>()), reason: '$bad');
+    }
+  });
+
   test('rejects duplicate ids', () {
     expect(() => Catalog.parse(cat([d('a'), d('a')])), throwsA(isA<CatalogException>()));
   });
