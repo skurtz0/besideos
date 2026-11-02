@@ -26,6 +26,13 @@ void main() {
     });
   }
 
+  test('undo decides a boot entry exists from bcdedit output, not its exit code', () {
+    final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(text, contains('function Test-BcdEntry'));
+    expect(text, isNot(contains(r'$e.Code -ne 0')));
+    expect(text, isNot(contains(r'$e2.Code -ne 0')));
+  });
+
   test('undo can run without -PlanFile (the app never passes it)', () {
     final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
     expect(text, contains(r'if (-not $PlanFile)'));

@@ -210,8 +210,13 @@ if ($Undo) {
             if ($r.Code -ne 0) { Abort 'bootsequence silinemedi.' 'bcdedit /deletevalue bootsequence failed although it lists our entry.' }
             [void]$undoDone.Add('1a bootsequence')
         }
-        $e = Invoke-Native 'bcdedit' @('/enum', $g)   # read-only existence check
-        if ($e.Code -ne 0) {
+        # bcdedit /enum <missing guid> prints "no matching objects" but still exits 0, so exit code alone proves nothing.
+        # The entry exists only if the output names its GUID (locale independent).
+        function Test-BcdEntry([string]$guid) {
+            $x = Invoke-Native 'bcdedit' @('/enum', $guid)   # read-only existence check
+            return ($x.Code -eq 0 -and ([string]$x.Out) -match [regex]::Escape($guid))
+        }
+        if (-not (Test-BcdEntry $g)) {
             Log 'boot entry already gone.' 'WARN'
             [void]$undoSkipped.Add('1b boot entry')
         } elseif (-not $Execute) {
@@ -219,8 +224,7 @@ if ($Undo) {
         } else {
             $r = Invoke-Native 'bcdedit' @('/delete', $g)
             if ($r.Code -ne 0) {
-                $e2 = Invoke-Native 'bcdedit' @('/enum', $g)
-                if ($e2.Code -ne 0) { Log 'bcdedit /delete reported an error but the entry is gone.' 'WARN'; [void]$undoSkipped.Add('1b boot entry') }
+                if (-not (Test-BcdEntry $g)) { Log 'bcdedit /delete reported an error but the entry is gone.' 'WARN'; [void]$undoSkipped.Add('1b boot entry') }
                 else { Abort 'Onyukleme girdisi silinemedi.' 'bcdedit /delete failed and the entry still exists.' }
             } else { [void]$undoDone.Add('1b boot entry') }
             # bcdedit /delete also removes the entry from displayorder (unless /nocleanup); verify, remove explicitly if not.
