@@ -139,6 +139,7 @@ try {
 
 $MSR = 'e3c9e316-0b5c-4db8-817d-f92df00215ae'
 $disks = @()
+$drives = @()
 try { $diskList = @(Get-Disk) } catch { Fail "Get-Disk failed: $($_.Exception.Message)" }
 
 foreach ($d in $diskList) {
@@ -152,7 +153,7 @@ foreach ($d in $diskList) {
         $letter = $null
         if ($p.DriveLetter -and [int]$p.DriveLetter -ne 0) { $letter = [string]$p.DriveLetter }
         $isMsr = ($style -eq 'gpt' -and ([string]$p.GptType).Trim('{}').ToLowerInvariant() -eq $MSR)
-        $fs = ''; $used = $size; $min = $size; $enc = $null
+        $fs = ''; $used = $size; $min = $size; $enc = $null; $vol = $null
         if ($isMsr) { $fs = 'msr' }
         try {
             $vol = $p | Get-Volume -ErrorAction Stop
@@ -175,6 +176,15 @@ foreach ($d in $diskList) {
             min_size_bytes = $min; filesystem = $fs
             is_system = [bool]($p.IsSystem -or $p.IsBoot); encrypted = $enc
         }
+        # Candidates the UI may offer as the place to carve Linux space from (GUI only; the planner re-checks everything).
+        if ($letter -and $fs -eq 'ntfs' -and $enc -eq $false -and $style -eq 'gpt' -and -not $ldm.ContainsKey([int]$d.Number)) {
+            $lbl = ''; if ($vol -and $vol.FileSystemLabel) { $lbl = [string]$vol.FileSystemLabel }
+            $drives += ,[ordered]@{
+                disk = [int]$d.Number; partition = [int]$p.PartitionNumber; letter = $letter; label = $lbl
+                disk_name = [string]$d.FriendlyName; disk_size_bytes = [uint64]$d.Size
+                size_bytes = $size; free_bytes = ($size - $used); is_windows = $false
+            }
+        }
     }
     $disks += ,[ordered]@{
         number = [int]$d.Number; size_bytes = [uint64]$d.Size; style = $style
@@ -194,6 +204,12 @@ try {
     $json = ConvertTo-Json -InputObject $facts -Depth 6
     [System.IO.File]::WriteAllText($factsPath, $json, $utf8)
 } catch { Fail "writing facts.json failed: $($_.Exception.Message)" }
+try {
+    foreach ($dr in $drives) { if ($dr.letter -eq $sd) { $dr.is_windows = $true } }
+    $dj = ConvertTo-Json -InputObject @($drives) -Depth 4
+    if (-not $dj) { $dj = '[]' }
+    [System.IO.File]::WriteAllText((Join-Path (Split-Path -Parent $factsPath) 'drives.json'), $dj, $utf8)
+} catch { Log "writing drives.json failed: $($_.Exception.Message) (non-fatal)" }
 Log "OK: facts.json written ($($disks.Count) disks)"
 Save-Log
 exit 0

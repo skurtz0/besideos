@@ -243,6 +243,8 @@ if ($Undo) {
     # 3. grow Windows partition back
     if ($st.windows -and $st.windows.disk -ne $null) {
         $wd = [int]$st.windows.disk
+        # the shrunk drive is the one recorded in state (may be a data drive, not the Windows drive); Guid is verified below
+        if ($st.windows.letter -and ([string]$st.windows.letter) -cmatch '^[A-Za-z]$') { $sd = [string]$st.windows.letter }
         $wp = Get-Partition -DriveLetter $sd -ErrorAction Stop
         Log ('UNDO 3: grow Windows partition to SizeMax: ' + (Describe-Part $wp) + " (original size $($st.original_size))")
         if ($wp.DiskNumber -ne $wd) { Abort 'Windows bolumu durum dosyasindaki diskte degil.' 'Windows partition is not on the disk recorded in state.' }
@@ -371,9 +373,19 @@ Req (-not $disk.IsReadOnly -and -not $disk.IsOffline) 'Disk salt okunur ya da ce
 try { $part = Get-Partition -DiskNumber $dn -PartitionNumber $pn -ErrorAction Stop } catch { }
 Req ($null -ne $part) "Bolum $dn/$pn bulunamadi." "Partition $dn/$pn not found"
 Stop-IfFailed
-$sdl = $env:SystemDrive.Substring(0, 1)
+# $sdl = drive letter of the partition that gets shrunk. Usually the Windows drive, but the user may pick
+# another NTFS data drive (e.g. a second disk). It must be an ordinary lettered NTFS data volume.
+$winLetter = $env:SystemDrive.Substring(0, 1)
+$sdl = $null
+if ($part.DriveLetter -and [int]$part.DriveLetter -ne 0) { $sdl = [string]$part.DriveLetter }
+Req ($null -ne $sdl) "Hedef bolumun surucu harfi yok ($dn/$pn)." "Target partition $dn/$pn has no drive letter"
+Stop-IfFailed
 try { $winPart = Get-Partition -DriveLetter $sdl -ErrorAction Stop } catch { }
 Req ($winPart -and $winPart.DiskNumber -eq $dn -and $winPart.PartitionNumber -eq $pn) "Hedef bolum ${sdl}: surucusunu icermiyor." "Target partition must be the one holding ${sdl}:"
+if ($sdl -ne $winLetter) {
+    Req (-not $part.IsSystem -and -not $part.IsBoot -and -not $part.IsHidden) 'Hedef bolum sistem/onyukleme/gizli bolum olamaz.' "Target ${sdl}: must not be a system/boot/hidden partition"
+    Log "Target drive ${sdl}: is not the Windows drive ($winLetter`:); shrinking a data drive on disk $dn."
+}
 try { $vol = Get-Volume -DriveLetter $sdl -ErrorAction Stop } catch { }
 Req ($vol -and [string]$vol.FileSystem -eq 'NTFS') 'Windows bolumu NTFS degil.' 'Windows volume must be NTFS'
 Stop-IfFailed

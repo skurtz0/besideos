@@ -86,6 +86,30 @@ void main() {
     expect(runner.calls.any((x) => x.startsWith('apply-plan.ps1')), isFalse);
   });
 
+  testWidgets('with two drives a picker appears and picking the second one re-plans from it', (t) async {
+    runner.drivesJson = '''
+[{"disk":0,"partition":3,"letter":"C","label":"","disk_name":"SSD","disk_size_bytes":500000000000,"size_bytes":400000000000,"free_bytes":20000000000,"is_windows":true},
+ {"disk":1,"partition":2,"letter":"D","label":"Veri","disk_name":"HDD","disk_size_bytes":1000000000000,"size_bytes":900000000000,"free_bytes":800000000000,"is_windows":false}]''';
+    await toReady(t);
+    expect(find.text('Yer hangi sürücüden açılsın?'), findsOneWidget);
+    expect(find.textContaining('C: sürücüsü · Windows burada'), findsOneWidget);
+    await t.runAsync(() async {
+      await t.tap(find.textContaining('D: sürücüsü (Veri)'));
+      for (var i = 0; i < 50 && c.target?.letter != 'D'; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+      }
+      await Future<void>.delayed(const Duration(milliseconds: 50));
+    });
+    await t.pump();
+    expect(c.target!.letter, 'D');
+    expect(find.textContaining('D: sürücüsünde yaklaşık'), findsOneWidget);
+  });
+
+  testWidgets('a single drive shows no picker', (t) async {
+    await toReady(t);
+    expect(find.text('Yer hangi sürücüden açılsın?'), findsNothing);
+  });
+
   testWidgets('the final dialog can be declined, nothing is applied', (t) async {
     await toReady(t);
     await t.tap(find.byType(Checkbox));

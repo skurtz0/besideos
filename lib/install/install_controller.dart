@@ -40,6 +40,44 @@ class InstallPlan {
       );
 }
 
+/// An NTFS drive the probe found that Linux space can be carved from (one entry of drives.json).
+class DriveChoice {
+  const DriveChoice({
+    required this.disk,
+    required this.partition,
+    required this.letter,
+    required this.label,
+    required this.diskName,
+    required this.diskSizeBytes,
+    required this.sizeBytes,
+    required this.freeBytes,
+    required this.isWindows,
+  });
+  final int disk;
+  final int partition;
+  final String letter;
+  final String label;
+  final String diskName;
+  final int diskSizeBytes;
+  final int sizeBytes;
+  final int freeBytes;
+  final bool isWindows;
+
+  factory DriveChoice.fromJson(Map<String, dynamic> j) => DriveChoice(
+        disk: (j['disk'] as num).toInt(),
+        partition: (j['partition'] as num).toInt(),
+        letter: '${j['letter']}',
+        label: '${j['label'] ?? ''}',
+        diskName: '${j['disk_name'] ?? ''}',
+        diskSizeBytes: (j['disk_size_bytes'] as num?)?.toInt() ?? 0,
+        sizeBytes: (j['size_bytes'] as num?)?.toInt() ?? 0,
+        freeBytes: (j['free_bytes'] as num?)?.toInt() ?? 0,
+        isWindows: j['is_windows'] == true,
+      );
+
+  bool same(DriveChoice o) => disk == o.disk && partition == o.partition;
+}
+
 Directory defaultWorkDir() {
   final base = Platform.environment['LOCALAPPDATA'];
   final root = base == null || base.isEmpty ? Directory.systemTemp.path : base;
@@ -69,6 +107,12 @@ class InstallController extends ChangeNotifier {
   File? _iso;
   String? _isoName;
   bool _disposed = false;
+  List<DriveChoice> _drives = const [];
+  DriveChoice? _target;
+
+  /// Drives Linux space can come from; the picker is only worth showing when there is more than one.
+  List<DriveChoice> get drives => _drives;
+  DriveChoice? get target => _target;
 
   InstallPhase get phase => _phase;
   String? get error => _error;
@@ -170,16 +214,45 @@ class InstallController extends ChangeNotifier {
         _fail('Disk bilgisi toplanamadı.${_logTail('probe.log')}');
         return;
       }
+      _loadDrives();
       await _makePlan();
     } catch (e) {
       _fail('Beklenmeyen hata: $e');
     }
   }
 
+  /// Reads drives.json (best effort: without it the planner simply uses the Windows drive).
+  void _loadDrives() {
+    var list = <DriveChoice>[];
+    try {
+      final raw = jsonDecode(utf8.decode(_f('drives.json').readAsBytesSync(), allowMalformed: true));
+      final items = raw is List ? raw : (raw is Map ? [raw] : const []);
+      list = [for (final e in items) DriveChoice.fromJson((e as Map).cast<String, dynamic>())];
+    } catch (_) {}
+    _drives = list;
+    DriveChoice? keep;
+    for (final d in list) {
+      if (_target != null && d.same(_target!)) keep = d;
+    }
+    _target = keep ?? (list.isEmpty ? null : list.firstWhere((d) => d.isWindows, orElse: () => list.first));
+  }
+
   /// Re-plans with another Linux size, reusing the ISO and host facts already collected.
   Future<void> replan(int gib) async {
     if (_phase != InstallPhase.ready && _phase != InstallPhase.refused) return;
     _linuxGiB = gib;
+    await _replan();
+  }
+
+  /// Re-plans taking the Linux space from another drive (e.g. the second disk).
+  Future<void> selectDrive(DriveChoice d) async {
+    if (_phase != InstallPhase.ready && _phase != InstallPhase.refused) return;
+    if (!_drives.any((x) => x.same(d))) return;
+    _target = _drives.firstWhere((x) => x.same(d));
+    await _replan();
+  }
+
+  Future<void> _replan() async {
     _plan = null;
     _refusal = null;
     try {
@@ -189,12 +262,24 @@ class InstallController extends ChangeNotifier {
     }
   }
 
+  /// The planner shrinks `windows_partition`; for another drive a copy of facts.json points it there.
+  Future<File> _hostFactsFor(DriveChoice? t) async {
+    final facts = _f('facts.json');
+    if (t == null) return facts;
+    final j = jsonDecode(utf8.decode(facts.readAsBytesSync(), allowMalformed: true)) as Map<String, dynamic>;
+    j['windows_partition'] = {'disk': t.disk, 'partition': t.partition};
+    final out = _f('facts.plan.json');
+    await out.writeAsString(jsonEncode(j));
+    return out;
+  }
+
   Future<void> _makePlan() async {
     _set(InstallPhase.planning);
     final req = _f('request.json');
     await req.writeAsString(jsonEncode({'linux_space_bytes': _linuxGiB * _gib}));
+    final hostFile = await _hostFactsFor(_target);
     final r = await runner.exec(engine.plan.path, [
-      '--host', _f('facts.json').path,
+      '--host', hostFile.path,
       '--iso', _f('iso.json').path,
       '--request', req.path,
       '--iso-path', _iso!.path,

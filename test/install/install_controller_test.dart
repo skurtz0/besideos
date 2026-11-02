@@ -22,11 +22,14 @@ class FakeRunner implements ProcessRunner {
   final calls = <String>[];
   int inspectExit = 0, probeExit = 0, applyExit = 0, planExit = 0;
   String planOut = planJson;
+  String? drivesJson;
+  final hosts = <String>[];
 
   String _arg(List<String> a, String flag) => a[a.indexOf(flag) + 1];
 
   @override
   Future<RunResult> exec(String exe, List<String> args) async {
+    hosts.add(File(_arg(args, '--host')).readAsStringSync());
     calls.add('plan ${_arg(args, '--iso-path')} ${File(_arg(args, '--request')).readAsStringSync()}');
     return RunResult(planExit, planOut, '');
   }
@@ -41,6 +44,7 @@ class FakeRunner implements ProcessRunner {
         return RunResult(inspectExit, '', 'boom');
       case 'collect-host-facts.ps1':
         if (probeExit == 0) File('${_arg(args, '-OutDir')}/facts.json').writeAsStringSync('{}');
+        if (probeExit == 0 && drivesJson != null) File('${_arg(args, '-OutDir')}/drives.json').writeAsStringSync(drivesJson!);
         return RunResult(probeExit, '', '');
       default:
         if (applyExit != 0 && args.contains('-Execute') && !args.contains('-Undo')) {
@@ -117,6 +121,43 @@ void main() {
     expect(runner.calls[2], contains('"linux_space_bytes":${30 * (1 << 30)}'));
     expect(runner.calls.any((x) => x.startsWith('apply-plan.ps1')), isFalse);
     expect(File('${tmp.path}/work/plan.json').readAsStringSync(), planJson);
+  });
+
+  const twoDrives = '''
+[{"disk":0,"partition":3,"letter":"C","label":"","disk_name":"SSD","disk_size_bytes":500000000000,"size_bytes":400000000000,"free_bytes":20000000000,"is_windows":true},
+ {"disk":1,"partition":2,"letter":"D","label":"Veri","disk_name":"HDD","disk_size_bytes":1000000000000,"size_bytes":900000000000,"free_bytes":800000000000,"is_windows":false}]''';
+
+  test('without drives.json the planner gets facts.json untouched', () async {
+    await c.begin(iso, IsoArch.x86_64);
+    expect(c.drives, isEmpty);
+    expect(c.target, isNull);
+    expect(runner.hosts.single, '{}');
+  });
+
+  test('with two drives the Windows drive is the default and another can be picked', () async {
+    runner.drivesJson = twoDrives;
+    await c.begin(iso, IsoArch.x86_64);
+    expect(c.drives.length, 2);
+    expect(c.target!.letter, 'C');
+    expect(jsonDecode(runner.hosts.last)['windows_partition'], {'disk': 0, 'partition': 3});
+
+    await c.selectDrive(c.drives[1]);
+    expect(c.phase, InstallPhase.ready);
+    expect(c.target!.letter, 'D');
+    expect(jsonDecode(runner.hosts.last)['windows_partition'], {'disk': 1, 'partition': 2});
+    // the pick survives a size change
+    await c.replan(50);
+    expect(jsonDecode(runner.hosts.last)['windows_partition'], {'disk': 1, 'partition': 2});
+    expect(runner.calls.any((x) => x.startsWith('apply-plan.ps1')), isFalse);
+  });
+
+  test('an unknown drive is ignored', () async {
+    runner.drivesJson = twoDrives;
+    await c.begin(iso, IsoArch.x86_64);
+    final before = runner.hosts.length;
+    await c.selectDrive(DriveChoice.fromJson({'disk': 9, 'partition': 9, 'letter': 'Z'}));
+    expect(c.target!.letter, 'C');
+    expect(runner.hosts.length, before);
   });
 
   test('apply needs explicit confirmation and then runs elevated with -Execute -Reboot', () async {

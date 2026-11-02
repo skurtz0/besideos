@@ -377,6 +377,59 @@ class _InstallSectionState extends State<InstallSection> {
           ),
       ]);
 
+  String _gb(int bytes) => '${(bytes / (1 << 30)).round()} GB';
+
+  /// Only shown with 2+ candidate drives (e.g. two disks). Picking one re-plans from that drive's free space.
+  List<Widget> _drivePicker(InstallController c) {
+    if (c.drives.length < 2) return const [];
+    return [
+      const Text('Yer hangi sürücüden açılsın?',
+          style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
+      const SizedBox(height: 4),
+      _detail('Linux için yer, seçtiğin sürücünün boş alanından ayrılır. Sürücüdeki dosyaların silinmez.'),
+      const SizedBox(height: 10),
+      for (final d in c.drives) _driveTile(c, d),
+      const SizedBox(height: 12),
+    ];
+  }
+
+  Widget _driveTile(InstallController c, DriveChoice d) {
+    final sel = c.target != null && d.same(c.target!);
+    final name = d.label.isEmpty ? '${d.letter}: sürücüsü' : '${d.letter}: sürücüsü (${d.label})';
+    final disk = d.diskName.isEmpty ? 'Disk ${d.disk}' : d.diskName;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        color: sel ? kAccent.withAlpha(30) : kPanel2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: BorderSide(color: sel ? kAccent : const Color(0x14FFFFFF), width: sel ? 2 : 1),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: c.busy || sel ? null : () => c.selectDrive(d),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Row(children: [
+              Icon(sel ? Icons.radio_button_checked_rounded : Icons.radio_button_unchecked_rounded,
+                  color: sel ? kAccent : kMuted),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(d.isWindows ? '$name · Windows burada' : name,
+                      style: const TextStyle(color: kText, fontWeight: FontWeight.w700, fontSize: 15)),
+                  const SizedBox(height: 2),
+                  Text('$disk · toplam ${_gb(d.sizeBytes)} · ${_gb(d.freeBytes)} boş',
+                      style: const TextStyle(color: kMuted, height: 1.4)),
+                ]),
+              ),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _ready(InstallController c) {
     final plan = c.plan!;
     final gb = (plan.shrinkBytes / (1 << 30)).round();
@@ -384,6 +437,7 @@ class _InstallSectionState extends State<InstallSection> {
       _header(Icons.check_circle_rounded, 'Her şey hazır!',
           'Bilgisayarında henüz hiçbir şey değişmedi. Neler olacağına bak, sonra başla.', color: kGreen),
       const SizedBox(height: 22),
+      ..._drivePicker(c),
       const Text('Linux için ne kadar yer ayıralım?',
           style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
       const SizedBox(height: 4),
@@ -393,7 +447,10 @@ class _InstallSectionState extends State<InstallSection> {
       const SizedBox(height: 22),
       const Text('Neler olacak?', style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
       const SizedBox(height: 10),
-      _bullet(Icons.content_cut_rounded, "Windows'un yanında yaklaşık $gb GB boş yer açılır."),
+      _bullet(Icons.content_cut_rounded,
+          c.target != null && !c.target!.isWindows && c.drives.length > 1
+              ? '${c.target!.letter}: sürücüsünde yaklaşık $gb GB boş yer açılır.'
+              : "Windows'un yanında yaklaşık $gb GB boş yer açılır."),
       _bullet(Icons.file_copy_rounded, '$_name kurulum dosyaları bu yere kopyalanır.'),
       _bullet(Icons.restart_alt_rounded, 'Bilgisayar yeniden başlar ve $_name kurulum ekranı açılır.'),
       const SizedBox(height: 6),
@@ -448,7 +505,8 @@ class _InstallSectionState extends State<InstallSection> {
         _header(Icons.info_rounded, 'Bu bilgisayara şu an kurulamıyor', 'Hiçbir şey değişmedi.', color: kWarn),
         const SizedBox(height: 16),
         _banner(kWarn, Icons.report_problem_rounded, lines: [c.refusal ?? 'Kurulum yapılamıyor.']),
-        const SizedBox(height: 4),
+        const SizedBox(height: 12),
+        ..._drivePicker(c),
         const Text('Daha küçük bir alan seçmeyi deneyebilirsin:',
             style: TextStyle(color: kText, fontWeight: FontWeight.w600)),
         const SizedBox(height: 10),
