@@ -4,16 +4,9 @@ name: Deploy site to Cloudflare Pages
 # Needs two repository secrets (Settings > Secrets and variables > Actions):
 #   CLOUDFLARE_API_TOKEN   token with "Cloudflare Pages: Edit"
 #   CLOUDFLARE_ACCOUNT_ID  your Cloudflare account id
+# Manual only for now: the site was first published by direct upload. To publish on every push,
+# add the two secrets above and put back a push: trigger.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'lib/**'
-      - 'assets/**'
-      - 'web/**'
-      - 'pubspec.yaml'
-      - 'pubspec.lock'
-      - '.github/workflows/deploy-web.yml'
   workflow_dispatch:
 
 permissions:
