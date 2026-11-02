@@ -41,15 +41,20 @@
 #>
 [CmdletBinding()]
 param(
-    [string]$PlanFile = (Join-Path $PSScriptRoot 'plan.json'),
+    [string]$PlanFile,
     [switch]$Execute,
     [switch]$Undo,
     [switch]$Reboot,
-    [string]$OutDir = $PSScriptRoot
+    [string]$OutDir
 )
 
 $ErrorActionPreference = 'Stop'
-if (-not $OutDir) { $OutDir = (Get-Location).Path }
+# Defaults are set here, not in param(): with [CmdletBinding()] Windows PowerShell 5.1 leaves $PSScriptRoot empty
+# inside param() defaults, which made `-Undo -OutDir <dir>` (no -PlanFile) die before any code ran.
+$here = $PSScriptRoot
+if (-not $here) { $here = Split-Path -Parent $MyInvocation.MyCommand.Path }
+if (-not $PlanFile) { $PlanFile = Join-Path $here 'plan.json' }
+if (-not $OutDir) { $OutDir = $here }
 $logPath   = Join-Path $OutDir 'apply.log'
 $statePath = Join-Path $OutDir 'apply-state.json'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
