@@ -38,3 +38,8 @@ Line-by-line review done for PS 5.1: no ternary/`?.`/`&&`, no pwsh-only cmdlets,
     Verify: `Get-Partition.Guid`/`UniqueId`/`Offset`/`GptType`/`Type` are populated; `Resize-Partition`/`Get-PartitionSupportedSize`
     accept `-DriveLetter`; GptType compares after stripping braces; `Remove-Partition` with freshly resolved numbers.
 17. State file is version 2 (adds guid, unique_id, offset, letter); version 1 files are still read.
+18. (VM finding) The one-shot bootsequence is consumed by the reboot, and `bcdedit /deletevalue` exits 1 for a missing element.
+    Undo now parses `bcdedit /enum {fwbootmgr}` line by line and only deletes `bootsequence` if that element lists our GUID;
+    a missing entry on `/delete` is a warning. Every undo step is idempotent and the summary lists done vs skipped.
+    Verify: element-name parsing (`bootsequence`, `displayorder` at column 0, values on indented continuation lines) and that
+    `bcdedit /delete` drops the GUID from displayorder (otherwise the explicit `/set {fwbootmgr} displayorder {guid} /remove` runs).

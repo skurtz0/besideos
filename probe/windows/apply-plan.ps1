@@ -174,37 +174,69 @@ if ($Undo) {
     catch { Abort "apply-state.json okunamadi: $($_.Exception.Message)" "Cannot parse state file: $($_.Exception.Message)" }
     $sd = $env:SystemDrive.Substring(0, 1)
 
-    # 1. boot entry
+    $undoDone = New-Object System.Collections.ArrayList
+    $undoSkipped = New-Object System.Collections.ArrayList
+    # Which {guid}s does a bcdedit element (e.g. bootsequence, displayorder) list? Element names are not localized;
+    # values may continue on following indented lines.
+    function Get-BcdElementGuids([string]$text, [string]$name) {
+        $found = @(); $inEl = $false
+        foreach ($ln in ($text -split "`r?`n")) {
+            if ($ln -match "^\s*$name(\s|$)" -and $ln -match '^\S') { $inEl = $true; $found += [regex]::Matches($ln, $GUID_RE) | ForEach-Object { $_.Value }; continue }
+            if ($inEl -and $ln -match '^\s+\S') { $found += [regex]::Matches($ln, $GUID_RE) | ForEach-Object { $_.Value }; continue }
+            $inEl = $false
+        }
+        return @($found)
+    }
+    # 1. boot entry (idempotent: consumed bootsequence / already-deleted entry are skips, not errors)
     if ($st.boot_entry -and $st.boot_entry.guid) {
         $g = [string]$st.boot_entry.guid
         if ($g -notmatch "^$GUID_RE`$") { Abort 'Durum dosyasindaki GUID gecersiz.' "Bad GUID in state: $g" }
         Log "UNDO 1: boot entry $g"
-        if (-not $Execute) {
-            Log "DRY-RUN: would run bcdedit /deletevalue {fwbootmgr} bootsequence (only if it lists $g), then bcdedit /delete $g"
+        $fw = Invoke-Native 'bcdedit' @('/enum', '{fwbootmgr}')   # read-only
+        if ($fw.Code -ne 0) { Abort 'fwbootmgr okunamadi.' 'bcdedit /enum {fwbootmgr} failed.' }
+        $inSeq = @(Get-BcdElementGuids $fw.Out 'bootsequence' | Where-Object { $_ -ieq $g }).Count -gt 0
+        if (-not $inSeq) {
+            Log 'bootsequence already consumed (or does not list our entry), nothing to remove.'
+            [void]$undoSkipped.Add('1a bootsequence')
+        } elseif (-not $Execute) {
+            Log 'DRY-RUN: would run bcdedit /deletevalue {fwbootmgr} bootsequence'
         } else {
-            $fw = Invoke-Native 'bcdedit' @('/enum', '{fwbootmgr}')
-            if ($fw.Out -match [regex]::Escape($g)) {
-                $r = Invoke-Native 'bcdedit' @('/deletevalue', '{fwbootmgr}', 'bootsequence')
-                if ($r.Code -ne 0) { Abort 'bootsequence silinemedi.' 'bcdedit /deletevalue bootsequence failed.' }
-            }
-            $e = Invoke-Native 'bcdedit' @('/enum', $g)
-            if ($e.Code -eq 0) {
-                $r = Invoke-Native 'bcdedit' @('/delete', $g)
-                if ($r.Code -ne 0) { Abort 'Onyukleme girdisi silinemedi.' 'bcdedit /delete failed.' }
-            } else { Log 'boot entry already gone.' }
+            $r = Invoke-Native 'bcdedit' @('/deletevalue', '{fwbootmgr}', 'bootsequence')
+            if ($r.Code -ne 0) { Abort 'bootsequence silinemedi.' 'bcdedit /deletevalue bootsequence failed although it lists our entry.' }
+            [void]$undoDone.Add('1a bootsequence')
         }
-    }
+        $e = Invoke-Native 'bcdedit' @('/enum', $g)   # read-only existence check
+        if ($e.Code -ne 0) {
+            Log 'boot entry already gone.' 'WARN'
+            [void]$undoSkipped.Add('1b boot entry')
+        } elseif (-not $Execute) {
+            Log "DRY-RUN: would run bcdedit /delete $g"
+        } else {
+            $r = Invoke-Native 'bcdedit' @('/delete', $g)
+            if ($r.Code -ne 0) {
+                $e2 = Invoke-Native 'bcdedit' @('/enum', $g)
+                if ($e2.Code -ne 0) { Log 'bcdedit /delete reported an error but the entry is gone.' 'WARN'; [void]$undoSkipped.Add('1b boot entry') }
+                else { Abort 'Onyukleme girdisi silinemedi.' 'bcdedit /delete failed and the entry still exists.' }
+            } else { [void]$undoDone.Add('1b boot entry') }
+            # bcdedit /delete also removes the entry from displayorder (unless /nocleanup); verify, remove explicitly if not.
+            $fw2 = Invoke-Native 'bcdedit' @('/enum', '{fwbootmgr}')
+            if (@(Get-BcdElementGuids $fw2.Out 'displayorder' | Where-Object { $_ -ieq $g }).Count -gt 0) {
+                $r = Invoke-Native 'bcdedit' @('/set', '{fwbootmgr}', 'displayorder', $g, '/remove')
+                if ($r.Code -ne 0) { Log 'could not remove entry from displayorder (non-fatal).' 'WARN' }
+            }
+        }
+    } else { [void]$undoSkipped.Add('1 boot entry (none recorded)') }
 
     # 2. staging partition (only the one we created; resolved by Guid, never by number)
     if ($st.created -and ($st.created.guid -or $st.created.partition)) {
         Log "UNDO 2: remove staging partition (state: disk $($st.created.disk), number $($st.created.partition), guid $($st.created.guid), label $($st.created.label), size $($st.created.size_bytes))"
         $p = Resolve-Staging $st.created
-        if (-not $p) { Log 'staging partition not present (Guid not found); skipping.' 'WARN' }
+        if (-not $p) { Log 'staging partition not present (Guid not found); skipping.' 'WARN'; [void]$undoSkipped.Add('2 staging partition') }
         else {
             Log ('TARGET to remove: ' + (Describe-Part $p))
             $cmd = "Remove-Partition -DiskNumber $($p.DiskNumber) -PartitionNumber $($p.PartitionNumber) -Confirm:`$false"
             if (-not $Execute) { Log "DRY-RUN: would run $cmd" }
-            else { Log "RUN: $cmd"; Remove-Partition -DiskNumber $p.DiskNumber -PartitionNumber $p.PartitionNumber -Confirm:$false -ErrorAction Stop }
+            else { Log "RUN: $cmd"; Remove-Partition -DiskNumber $p.DiskNumber -PartitionNumber $p.PartitionNumber -Confirm:$false -ErrorAction Stop; [void]$undoDone.Add('2 staging partition') }
         }
     }
 
@@ -217,13 +249,14 @@ if ($Undo) {
         if ($st.windows.guid -and (NormGuid $st.windows.guid) -ne (NormGuid $wp.Guid)) { Abort 'Windows bolumunun Guid degeri uyusmuyor.' 'Windows partition Guid differs from state.' }
         $sup = Get-PartitionSupportedSize -DriveLetter $sd
         Log "current=$($wp.Size) SizeMax=$($sup.SizeMax) original=$($st.original_size)"
-        if ([int64]$sup.SizeMax -le [int64]$wp.Size) { Log 'already at SizeMax; nothing to grow.' }
+        if ([int64]$sup.SizeMax -le [int64]$wp.Size) { Log 'already at SizeMax; nothing to grow.'; [void]$undoSkipped.Add('3 grow Windows') }
         else {
             $cmd = "Resize-Partition -DriveLetter $sd -Size $($sup.SizeMax)"
             if (-not $Execute) { Log "DRY-RUN: would run $cmd (SizeMax shown is before the staging partition is removed)" }
-            else { Log "RUN: $cmd"; Resize-Partition -DriveLetter $sd -Size ([uint64]$sup.SizeMax) -ErrorAction Stop }
+            else { Log "RUN: $cmd"; Resize-Partition -DriveLetter $sd -Size ([uint64]$sup.SizeMax) -ErrorAction Stop; [void]$undoDone.Add('3 grow Windows') }
         }
     }
+    Log ("UNDO ozet / summary: done=[" + ($undoDone -join ', ') + "] skipped(already undone)=[" + ($undoSkipped -join ', ') + ']')
     if ($Execute) {
         $done = Join-Path $OutDir ('apply-state.undone-' + (Get-Date -Format 'yyyyMMddHHmmss') + '.json')
         Move-Item -LiteralPath $statePath -Destination $done

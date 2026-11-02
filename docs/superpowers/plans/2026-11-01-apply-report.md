@@ -30,3 +30,8 @@ check refused to touch the Recovery partition, as intended. Fix: partitions are 
 (state version 2); Windows partition resolved by drive letter; undo resolves by Guid, with a strict v1 fallback (label BESIDEOS +
 FAT32 + size within 1 MiB, exactly one, never a system/recovery/EFI/MSR partition); undo dry-run prints the resolved target.
 Unrun on Windows after this edit.
+
+## Finding: undo must be idempotent
+The reboot consumes the one-shot bootsequence; `bcdedit /deletevalue` then fails (exit 1) and undo aborted. Undo step 1 now only
+removes bootsequence when that element lists the recorded GUID, treats an already-deleted entry as a warning, and the final
+"UNDO summary" line lists done vs skipped steps. Unrun on Windows after this edit.
