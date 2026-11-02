@@ -75,20 +75,34 @@ class _CatalogPageState extends State<CatalogPage> {
         if (items.isEmpty)
           Text(empty, style: const TextStyle(color: kMuted, height: 1.5))
         else
-          for (final fam in DistroFamily.values)
-            if (items.any((d) => d.family == fam)) ...[
-              Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 12),
-                child: Text(fam == DistroFamily.linux ? 'Linux sistemleri' : 'Windows sistemleri',
-                    style: const TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
-              ),
-              Wrap(spacing: 12, runSpacing: 12, children: [
-                for (final d in items.where((d) => d.family == fam)) _DistroCard(distro: d, onTap: () => widget.onOpen(d)),
-              ]),
-              const SizedBox(height: 20),
-            ],
+          DistroSections(items: items, onOpen: widget.onOpen),
       ]),
     );
+  }
+}
+
+/// Distro cards grouped under "Linux sistemleri" and "Windows sistemleri". Shared by the catalog and the home page.
+class DistroSections extends StatelessWidget {
+  const DistroSections({super.key, required this.items, required this.onOpen});
+  final List<Distro> items;
+  final void Function(Distro) onOpen;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      for (final fam in DistroFamily.values)
+        if (items.any((d) => d.family == fam)) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: 8, bottom: 12),
+            child: Text(fam == DistroFamily.linux ? 'Linux sistemleri' : 'Windows sistemleri',
+                style: const TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
+          ),
+          Wrap(spacing: 12, runSpacing: 12, children: [
+            for (final d in items.where((d) => d.family == fam)) _DistroCard(distro: d, onTap: () => onOpen(d)),
+          ]),
+          const SizedBox(height: 20),
+        ],
+    ]);
   }
 }
 

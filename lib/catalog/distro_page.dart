@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../download/download_section.dart';
 import '../brand.dart';
+import '../site_mode.dart';
 import '../install/install_controller.dart';
 import '../install/install_section.dart';
 import '../theme.dart';
@@ -108,6 +109,8 @@ class _DistroBody extends StatelessWidget {
     final d = distro;
     final accent = Color(d.accent);
     final canOneClick = !d.userSuppliedIso && d.hosts.contains('windows');
+    // The public website only presents the system and sends people to the app; manual steps and ISO tools stay in the app.
+    final web = SiteMode.isWeb(context);
     final installable = [
       for (final h in Host.values)
         if (_ok(h, d)) _hostNames[h]!,
@@ -133,13 +136,13 @@ class _DistroBody extends StatelessWidget {
                 const SizedBox(height: 16),
                 picker!,
               ],
-              if (canOneClick && installerSupported()) ...[
+              if (canOneClick && !web && installerSupported()) ...[
                 const SizedBox(height: 16),
                 InstallSection(key: sectionKey, distro: d, controllerFactory: installFactory),
               ],
-              if (canOneClick && !installerSupported()) ...[
+              if (canOneClick && (web || !installerSupported())) ...[
                 const SizedBox(height: 16),
-                const _DesktopOnlyNote(),
+                _DesktopOnlyNote(web: web),
               ],
               if (d.userSuppliedIso) ...[
                 const SizedBox(height: 16),
@@ -192,6 +195,7 @@ class _DistroBody extends StatelessWidget {
                   for (final h in Host.values) _hostRow(h, d),
                 ]),
               ),
+              if (!web) ...[
               const SizedBox(height: 16),
               _fold(Icons.menu_book_rounded, 'Elle kurmak istersen: adımlar', [
                 for (var i = 0; i < d.guide.length; i++)
@@ -248,6 +252,7 @@ class _DistroBody extends StatelessWidget {
               const SizedBox(height: 4),
               const Text('Resmi sayfa', style: TextStyle(color: kMuted, fontSize: 13)),
               SelectableText(d.downloadPage, style: const TextStyle(color: kAccent)),
+              ],
             ]),
       ),
     );
@@ -340,23 +345,36 @@ class _DistroBody extends StatelessWidget {
 }
 
 class _DesktopOnlyNote extends StatelessWidget {
-  const _DesktopOnlyNote();
+  const _DesktopOnlyNote({this.web = false});
+
+  /// On the website this offers the app download instead of describing a feature of the app.
+  final bool web;
 
   @override
   Widget build(BuildContext context) {
-    return const Panel(
+    return Panel(
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Icon(Icons.desktop_windows_rounded, color: kAccent, size: 28),
-        SizedBox(width: 14),
+        const Icon(Icons.desktop_windows_rounded, color: kAccent, size: 28),
+        const SizedBox(width: 14),
         Expanded(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Tek tıkla kurulum için uygulamayı aç',
-                style: TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700)),
-            SizedBox(height: 4),
+            Text(web ? 'Kurmak için BesideOS uygulamasını indir' : 'Tek tıkla kurulum için uygulamayı aç',
+                style: const TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700)),
+            const SizedBox(height: 4),
             Text(
-              'Bu özellik BesideOS masaüstü uygulamasında, bir Windows bilgisayarda çalışır. Buradan sistemi tanıyabilir ve ISO dosyasını indirebilirsin.',
-              style: TextStyle(color: kMuted, height: 1.5),
+              web
+                  ? 'Uygulama bir Windows bilgisayarda çalışır. Kurmak istediğin sistemi uygulamada seçer, tek tıkla kurulumu başlatırsın.'
+                  : 'Bu özellik BesideOS masaüstü uygulamasında, bir Windows bilgisayarda çalışır. Buradan sistemi tanıyabilir ve ISO dosyasını indirebilirsin.',
+              style: const TextStyle(color: kMuted, height: 1.5),
             ),
+            if (web) ...[
+              const SizedBox(height: 14),
+              FilledButton.icon(
+                onPressed: () => SiteMode.download(context),
+                icon: const Icon(Icons.download_rounded),
+                label: const Text('İndirmek için tıklayın'),
+              ),
+            ],
           ]),
         ),
       ]),

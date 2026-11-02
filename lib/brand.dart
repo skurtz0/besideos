@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'site_mode.dart';
 import 'theme.dart';
 
 /// The BesideOS mark: one disk (rounded square) holding two systems side by side.
@@ -131,7 +132,26 @@ class SiteBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ],
       ]),
-      actions: [...actions, const SizedBox(width: 12)],
+      actions: [
+        ...actions,
+        if (SiteMode.isWeb(context)) ...[
+          const SizedBox(width: 4),
+          if (MediaQuery.sizeOf(context).width < 520)
+            IconButton.filled(
+              onPressed: () => SiteMode.download(context),
+              tooltip: 'İndir',
+              icon: const Icon(Icons.download_rounded),
+            )
+          else
+            FilledButton.icon(
+              onPressed: () => SiteMode.download(context),
+              icon: const Icon(Icons.download_rounded, size: 20),
+              label: const Text('İndir'),
+              style: FilledButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),
+            ),
+        ],
+        const SizedBox(width: 12),
+      ],
     );
   }
 }

@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import 'brand.dart';
+import 'catalog/catalog_page.dart' show DistroSections;
 import 'catalog/distro.dart';
 import 'catalog/routes.dart';
+import 'site_mode.dart';
 import 'theme.dart';
 
 void main() => runApp(const BesideSite());
@@ -14,8 +17,14 @@ Future<String> _loadCatalogAsset() => rootBundle.loadString('assets/catalog/cata
 
 class BesideSite extends StatefulWidget {
   /// [catalog] is injected by tests; otherwise it is loaded (lazily, only for /distros) via [catalogLoader].
-  const BesideSite({this.catalog, this.catalogLoader, this.initialRoute = '/', super.key});
+  const BesideSite({this.catalog, this.catalogLoader, this.initialRoute = '/', this.web, this.onDownload, super.key});
   final String initialRoute;
+
+  /// Forces website (true) or desktop-app (false) behaviour; null follows the platform.
+  final bool? web;
+
+  /// Replaces the real browser download (tests).
+  final VoidCallback? onDownload;
   final Catalog? catalog;
   final Future<String> Function()? catalogLoader;
 
@@ -31,7 +40,7 @@ class _BesideSiteState extends State<BesideSite> {
   Route<dynamic> _route(RouteSettings s) {
     final seg = (Uri.tryParse(s.name ?? '')?.pathSegments ?? const <String>[]).where((e) => e.isNotEmpty);
     if (seg.isEmpty || seg.first != 'distros') {
-      return MaterialPageRoute(settings: s, builder: (_) => const HomePage());
+      return MaterialPageRoute(settings: s, builder: (_) => HomePage(catalog: _catalog));
     }
     return MaterialPageRoute(
       settings: s,
@@ -66,6 +75,7 @@ class _BesideSiteState extends State<BesideSite> {
     return MaterialApp(
       onGenerateRoute: _route,
       initialRoute: widget.initialRoute,
+      builder: (context, child) => SiteMode(web: widget.web ?? kIsWeb, onDownload: widget.onDownload, child: child!),
       title: 'BesideOS',
       debugShowCheckedModeBanner: false,
       theme: base.copyWith(
@@ -105,7 +115,10 @@ class _CatalogError extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  const HomePage({super.key, this.catalog});
+
+  /// Shown as the list of systems above the status note; null hides that section.
+  final Future<Catalog>? catalog;
 
   @override
   Widget build(BuildContext context) {
@@ -117,15 +130,16 @@ class HomePage extends StatelessWidget {
           label: const Text('Dağıtımlar'),
         ),
       ]),
-      body: const PageScroll(
+      body: PageScroll(
         child: Column(
           children: [
-            _GlowBackground(child: _Section(child: _Hero())),
-            _Section(child: _HowItWorks()),
-            _Section(child: _Platforms()),
-            _Section(child: _Safety()),
-            _Section(child: _Status()),
-            _Footer(),
+            const _GlowBackground(child: _Section(child: _Hero())),
+            const _Section(child: _HowItWorks()),
+            const _Section(child: _Platforms()),
+            const _Section(child: _Safety()),
+            if (catalog != null) _Section(child: _Showcase(catalog: catalog!)),
+            const _Section(child: _Status()),
+            const _Footer(),
           ],
         ),
       ),
@@ -302,9 +316,10 @@ class _Hero extends StatelessWidget {
         SizedBox(
           height: 64,
           child: FilledButton.icon(
-            onPressed: () => Navigator.pushNamed(context, '/distros'),
-            icon: const Icon(Icons.touch_app_rounded, size: 28),
-            label: const Text('Başlamak için tıklayın'),
+            // On the website the button gets the app; inside the app it opens the list of systems.
+            onPressed: () => SiteMode.isWeb(context) ? SiteMode.download(context) : Navigator.pushNamed(context, '/distros'),
+            icon: Icon(SiteMode.isWeb(context) ? Icons.download_rounded : Icons.touch_app_rounded, size: 28),
+            label: Text(SiteMode.isWeb(context) ? 'İndirmek için tıklayın' : 'Başlamak için tıklayın'),
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 32),
               textStyle: const TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
@@ -651,6 +666,32 @@ class _Safety extends StatelessWidget {
         ]),
       ],
     );
+  }
+}
+
+/// The systems BesideOS can set up, right on the home page (above the status note).
+class _Showcase extends StatelessWidget {
+  const _Showcase({required this.catalog});
+  final Future<Catalog> catalog;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      const _Heading('Hangi sistemleri kurabilirsin?'),
+      FutureBuilder<Catalog>(
+        future: catalog,
+        builder: (context, snap) {
+          if (snap.hasData) {
+            return DistroSections(
+              items: snap.data!.distros,
+              onOpen: (d) => Navigator.pushNamed(context, '/distros/${d.id}'),
+            );
+          }
+          if (snap.hasError) return const SizedBox.shrink();
+          return const Padding(padding: EdgeInsets.all(24), child: Center(child: CircularProgressIndicator()));
+        },
+      ),
+    ]);
   }
 }
 
