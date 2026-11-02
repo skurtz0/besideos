@@ -160,6 +160,42 @@ void main() {
     expect(runner.hosts.length, before);
   });
 
+  test('a picked ISO skips the download and goes straight to inspecting', () async {
+    final mine = File('${tmp.path}/mine.iso')..writeAsStringSync('iso');
+    await c.beginWithFile(mine, IsoArch.x86_64);
+    expect(c.phase, InstallPhase.ready);
+    expect(c.isLocalIso, isTrue);
+    expect(c.isoFileName, 'mine.iso');
+    expect(dl.starts, 0);
+    expect(runner.calls.first, startsWith('inspect-iso.ps1'));
+    expect(runner.calls.first, isNot(contains('collect-host-facts')));
+  });
+
+  test('a picked file that is gone or not an ISO fails clearly and runs nothing', () async {
+    await c.beginWithFile(File('${tmp.path}/missing.iso'), IsoArch.x86_64);
+    expect(c.phase, InstallPhase.failed);
+    expect(c.error, contains('ISO'));
+    final txt = File('${tmp.path}/readme.txt')..writeAsStringSync('x');
+    await c.beginWithFile(txt, IsoArch.x86_64);
+    expect(c.phase, InstallPhase.failed);
+    expect(runner.calls, isEmpty);
+  });
+
+  test('retry repeats the way the last attempt started', () async {
+    final mine = File('${tmp.path}/mine.iso')..writeAsStringSync('iso');
+    runner.inspectExit = 1;
+    await c.beginWithFile(mine, IsoArch.x86_64);
+    expect(c.phase, InstallPhase.failed);
+    runner.inspectExit = 0;
+    await c.retry();
+    expect(c.phase, InstallPhase.ready);
+    expect(c.isLocalIso, isTrue);
+    expect(dl.starts, 0);
+    // and an official start retries as an official start (downloads)
+    await c.begin(iso, IsoArch.x86_64);
+    expect(c.isLocalIso, isFalse);
+    expect(dl.starts, 1);
+  });
   test('apply needs explicit confirmation and then runs elevated with -Execute -Reboot', () async {
     await c.begin(iso, IsoArch.x86_64);
     await c.apply(confirmed: false);

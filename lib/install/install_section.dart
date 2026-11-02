@@ -10,13 +10,20 @@ import '../download/host_arch_stub.dart' if (dart.library.io) '../download/host_
 import '../theme.dart';
 import 'engine.dart';
 import 'install_controller.dart';
+import 'iso_picker.dart';
 import 'process_runner.dart';
 
 /// Known reasons the extracted-ISO method may not boot for a distro. Shown before the user starts.
 const oneClickCaveats = {
   'fedora':
       'Fedora Live, kurulum ortamını ISO etiketiyle arar; bölüm "BESIDEOS" etiketli olduğu için açılmayabilir. Bu yöntem Fedora ile doğrulanmadı.',
+  'windows-xp': _oldWindowsCaveat,
+  'windows-7': _oldWindowsCaveat,
+  'windows-8-1': _oldWindowsCaveat,
 };
+
+const _oldWindowsCaveat =
+    'Bu eski Windows sürümü yeni bilgisayarlarda (UEFI) açılmayabilir. Açılmazsa bilgisayarında kalıcı bir şey değişmez; "Değişiklikleri geri al" ile eski haline dönersin.';
 
 /// Size of the download the click starts, e.g. "3,0 GB".
 String isoSizeText(int bytes) => '${(bytes / 1e9).toStringAsFixed(1).replaceAll('.', ',')} GB';
@@ -42,8 +49,16 @@ class InstallSection extends StatefulWidget {
     this.controllerFactory,
     this.hostArch,
     this.supported,
+    this.pickIso,
+    this.findIsos,
   });
   final Distro distro;
+
+  /// Opens the file dialog for the person's own ISO (tests replace it).
+  final Future<File?> Function()? pickIso;
+
+  /// ISO files already on this computer (tests replace it).
+  final List<LocalIso> Function()? findIsos;
 
   /// Returns null when the installer engine is not available.
   final InstallController? Function()? controllerFactory;
@@ -60,9 +75,27 @@ class _InstallSectionState extends State<InstallSection> {
   InstallController? _ctl;
   bool _built = false;
   bool _backup = false;
+  List<LocalIso> _found = const [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (_supported) {
+      try {
+        _found = (widget.findIsos ?? findLocalIsos)();
+      } catch (_) {}
+    }
+  }
 
   bool get _supported => widget.supported ?? installerSupported();
   String get _name => widget.distro.name;
+
+  /// What is being installed: the distro, or the ISO file the person picked (it may be any system).
+  String _sys(InstallController c) {
+    if (!c.isLocalIso) return _name;
+    final n = c.isoFileName ?? 'ISO dosyası';
+    return n.toLowerCase().endsWith('.iso') ? n.substring(0, n.length - 4) : n;
+  }
 
   InstallController? get ctl {
     if (!_built) {
@@ -82,7 +115,7 @@ class _InstallSectionState extends State<InstallSection> {
   @override
   Widget build(BuildContext context) {
     final d = widget.distro;
-    if (!_supported || d.userSuppliedIso || !d.hosts.contains('windows')) return const SizedBox.shrink();
+    if (!_supported) return const SizedBox.shrink();
     final c = ctl;
     return Panel(
       tint: Color(d.accent),
@@ -191,7 +224,7 @@ class _InstallSectionState extends State<InstallSection> {
       case InstallPhase.applied:
         return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           _header(Icons.check_circle_rounded, 'Hazır! Bilgisayar yeniden başlıyor',
-              '$_name kurulum ekranı birazdan açılacak. Ekrandaki yönergeleri izle.', color: kGreen),
+              '${_sys(c)} kurulum ekranı birazdan açılacak. Ekrandaki yönergeleri izle.', color: kGreen),
           const SizedBox(height: 16),
           _small('Açılmazsa: bilgisayarın açılış menüsünden "BesideOS kurulumu"nu seç. Kurulum bitince BESIDEOS adlı geçici bölümü silebilirsin.'),
         ]);
@@ -205,30 +238,45 @@ class _InstallSectionState extends State<InstallSection> {
             _bigButton('Değişiklikleri geri al', Icons.undo_rounded, c.undo),
             const SizedBox(height: 10),
           ],
-          OutlinedButton(onPressed: () => _begin(c), child: const Text('Tekrar dene')),
+          OutlinedButton(onPressed: () => _retry(c), child: const Text('Tekrar dene')),
         ]);
     }
   }
 
+  IsoArch get _arch => widget.hostArch ?? currentIsoArch() ?? IsoArch.x86_64;
+
   void _begin(InstallController c) {
-    final arch = widget.hostArch ?? currentIsoArch();
-    final iso = arch == null ? null : widget.distro.isoFor(arch);
-    if (iso == null || arch == null) return;
+    final iso = widget.distro.isoFor(_arch);
+    if (iso == null) return;
     setState(() => _backup = false);
-    c.begin(iso, arch);
+    c.begin(iso, _arch);
+  }
+
+  void _retry(InstallController c) {
+    setState(() => _backup = false);
+    c.retry();
+  }
+
+  /// "Use my own ISO": the person picks a file (or taps one found on the computer), no path or checksum typing.
+  Future<void> _beginOwn(InstallController c, [File? chosen]) async {
+    final file = chosen ?? await (widget.pickIso ?? () => pickIsoFile(c.runner))();
+    if (file == null || !mounted) return;
+    setState(() => _backup = false);
+    c.beginWithFile(file, _arch);
   }
 
   // ---------------------------------------------------------------- idle
 
   Widget _start(InstallController c) {
-    final arch = widget.hostArch ?? currentIsoArch();
-    final iso = arch == null ? null : widget.distro.isoFor(arch);
-    final caveat = oneClickCaveats[widget.distro.id];
+    final d = widget.distro;
+    final iso = d.userSuppliedIso ? null : d.isoFor(_arch);
+    final official = iso != null;
+    final caveat = oneClickCaveats[d.id];
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       _header(Icons.rocket_launch_rounded, "Windows'un yanına kur",
           "Windows ve dosyaların yerinde kalır. $_name için bilgisayarında yer açılır."),
       const SizedBox(height: 22),
-      _threeSteps(),
+      _threeSteps(official),
       const SizedBox(height: 22),
       if (c.phase == InstallPhase.undone)
         _banner(kGreen, Icons.check_circle_rounded, title: 'Değişiklikler geri alındı'),
@@ -239,21 +287,88 @@ class _InstallSectionState extends State<InstallSection> {
             lines: ['Yenisine başlamadan önce eski değişiklikleri geri almalısın.']),
         _bigButton('Değişiklikleri geri al', Icons.undo_rounded, c.undo),
       ] else ...[
-        _bigButton('Kurmak için tıklayın', Icons.touch_app_rounded, iso == null ? null : () => _begin(c)),
-        _small(iso == null
-            ? 'Bu bilgisayarın işlemcisi için ISO yok.'
-            : '${iso.sizeBytes != null ? 'İndirilecek ISO dosyası: ${isoSizeText(iso.sizeBytes!)}. ' : ''}'
-                'Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.'),
+        if (official) ...[
+          _bigButton('Kurmak için tıklayın', Icons.touch_app_rounded, () => _begin(c)),
+          _small('${iso.sizeBytes != null ? 'İndirilecek ISO dosyası: ${isoSizeText(iso.sizeBytes!)}. ' : ''}'
+              'Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.'),
+          const SizedBox(height: 14),
+          OutlinedButton.icon(
+            onPressed: () => _beginOwn(c),
+            icon: const Icon(Icons.folder_open_rounded),
+            label: const Text('Kendi ISO dosyamı seçip kurmak istiyorum'),
+            style: OutlinedButton.styleFrom(
+              minimumSize: const Size.fromHeight(52),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            ),
+          ),
+        ] else ...[
+          _bigButton('ISO dosyamı seçip kurmak için tıklayın', Icons.folder_open_rounded, () => _beginOwn(c)),
+          _small('Bu sistemin ISO dosyasını sen getirirsin; yol ya da sağlama kodu yazman gerekmez, dosyayı seçmen yeter. '
+              'Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.'),
+          if (d.downloadPage.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            const Text('Dosyan yoksa resmi sayfadan indirebilirsin:',
+                textAlign: TextAlign.center, style: TextStyle(color: kMuted, fontSize: 13)),
+            SelectableText(d.downloadPage,
+                textAlign: TextAlign.center, style: const TextStyle(color: kAccent, fontSize: 13)),
+          ],
+        ],
+        if (_found.isNotEmpty) ...[
+          const SizedBox(height: 22),
+          const Text('Bilgisayarında bulunan ISO dosyaları',
+              style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 4),
+          _detail('Birine basarsan onu kurmaya başlarsın.'),
+          const SizedBox(height: 10),
+          for (final f in _found) _foundTile(c, f),
+        ],
       ],
     ]);
   }
 
-  Widget _threeSteps() {
-    final steps = [
-      ('Tıklarsın', 'Gerisini BesideOS yapar.'),
-      ('Bilgisayar hazırlanır', '$_name indirilir ve Windows\'un yanında yer açılır.'),
-      ('Yeniden başlar', '$_name kurulum ekranı açılır.'),
-    ];
+  Widget _foundTile(InstallController c, LocalIso f) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Material(
+        color: kPanel2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(14),
+          side: const BorderSide(color: Color(0x14FFFFFF)),
+        ),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(14),
+          onTap: c.busy ? null : () => _beginOwn(c, f.file),
+          child: Padding(
+            padding: const EdgeInsets.all(14),
+            child: Row(children: [
+              const Icon(Icons.album_rounded, color: kAccent),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(f.name, maxLines: 1, overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(color: kText, fontWeight: FontWeight.w700, fontSize: 15)),
+                  Text(isoSizeText(f.bytes), style: const TextStyle(color: kMuted, height: 1.4)),
+                ]),
+              ),
+              const Icon(Icons.chevron_right_rounded, color: kMuted),
+            ]),
+          ),
+        ),
+      ),
+    );
+  }
+  Widget _threeSteps(bool official) {
+    final steps = official
+        ? [
+            ('Tıklarsın', 'Gerisini BesideOS yapar.'),
+            ('Bilgisayar hazırlanır', '$_name indirilir ve Windows\'un yanında yer açılır.'),
+            ('Yeniden başlar', '$_name kurulum ekranı açılır.'),
+          ]
+        : [
+            ('ISO dosyanı seçersin', 'Bilgisayarındaki ya da indirdiğin dosyayı gösterirsin.'),
+            ('Bilgisayar hazırlanır', 'Windows\'un yanında yer açılır ve dosyalar oraya konur.'),
+            ('Yeniden başlar', 'Kurulum ekranı açılır.'),
+          ];
     Widget item(int i) => Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Container(
             width: 32,
@@ -293,16 +408,18 @@ class _InstallSectionState extends State<InstallSection> {
       ]);
 
   Widget _progress(InstallController c) {
+    // a picked ISO has nothing to download, so that row is not shown
+    final own = c.isLocalIso;
     final idx = switch (c.phase) {
       InstallPhase.downloading => 0,
-      InstallPhase.inspecting => 1,
-      InstallPhase.probing => 2,
-      _ => 3,
+      InstallPhase.inspecting => own ? 0 : 1,
+      InstallPhase.probing => own ? 1 : 2,
+      _ => own ? 2 : 3,
     };
     final rows = <(String, Widget?)>[
-      ('$_name indiriliyor ve kontrol ediliyor', idx == 0 ? _downloadDetail(c.download) : null),
-      ('İndirilen dosya inceleniyor', null),
-      ('Bilgisayarın kontrol ediliyor', idx == 2 ? _detail('Windows izin isteyecek: «Evet» de.') : null),
+      if (!own) ('$_name indiriliyor ve kontrol ediliyor', idx == 0 ? _downloadDetail(c.download) : null),
+      (own ? 'Seçtiğin ISO dosyası inceleniyor' : 'İndirilen dosya inceleniyor', null),
+      ('Bilgisayarın kontrol ediliyor', idx == (own ? 1 : 2) ? _detail('Windows izin isteyecek: «Evet» de.') : null),
       ('Plan hazırlanıyor', null),
     ];
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
@@ -311,13 +428,12 @@ class _InstallSectionState extends State<InstallSection> {
       const SizedBox(height: 18),
       for (var i = 0; i < rows.length; i++)
         _row(i < idx ? 1 : (i == idx ? 2 : 0), rows[i].$1, rows[i].$2),
-      if (idx == 0) ...[
+      if (!own && idx == 0) ...[
         const SizedBox(height: 6),
         Align(alignment: Alignment.centerLeft, child: OutlinedButton(onPressed: c.download.cancel, child: const Text('Vazgeç'))),
       ],
     ]);
   }
-
   Widget _detail(String t) => Text(t, style: const TextStyle(color: kMuted, height: 1.5));
 
   Widget _downloadDetail(DownloadController dl) {
@@ -455,8 +571,8 @@ class _InstallSectionState extends State<InstallSection> {
           c.target != null && !c.target!.isWindows && c.drives.length > 1
               ? '${c.target!.letter}: sürücüsünde yaklaşık $gb GB boş yer açılır.'
               : "Windows'un yanında yaklaşık $gb GB boş yer açılır."),
-      _bullet(Icons.file_copy_rounded, '$_name kurulum dosyaları bu yere kopyalanır.'),
-      _bullet(Icons.restart_alt_rounded, 'Bilgisayar yeniden başlar ve $_name kurulum ekranı açılır.'),
+      _bullet(Icons.file_copy_rounded, '${_sys(c)} kurulum dosyaları bu yere kopyalanır.'),
+      _bullet(Icons.restart_alt_rounded, 'Bilgisayar yeniden başlar ve ${_sys(c)} kurulum ekranı açılır.'),
       const SizedBox(height: 6),
       if (plan.risks.isNotEmpty)
         _banner(kWarn, Icons.warning_amber_rounded, title: 'Bilmen gerekenler', lines: plan.risks),
@@ -495,7 +611,7 @@ class _InstallSectionState extends State<InstallSection> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Başlayalım mı?'),
-        content: Text('Bilgisayar yeniden başlayacak ve $_name kurulum ekranı açılacak. Açık işlerini şimdi kaydet.'),
+        content: Text('Bilgisayar yeniden başlayacak ve ${_sys(c)} kurulum ekranı açılacak. Açık işlerini şimdi kaydet.'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Vazgeç')),
           FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Evet, başlat')),

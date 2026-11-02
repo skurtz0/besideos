@@ -172,22 +172,56 @@ class InstallController extends ChangeNotifier {
     }
   }
 
-  Future<void> begin(IsoAsset iso, IsoArch arch) async {
+  /// Downloads (and verifies) the official ISO, then inspects, probes and plans.
+  Future<void> begin(IsoAsset iso, IsoArch arch) => _run(arch, asset: iso);
+
+  /// Uses an ISO file the person already has: no download, no checksum to type in.
+  Future<void> beginWithFile(File isoFile, IsoArch arch) => _run(arch, local: isoFile);
+
+  /// Starts again the way the last attempt started (same ISO source), e.g. after an error.
+  Future<void> retry() {
+    final a = _lastArch;
+    if (a == null) return Future.value();
+    final asset = _lastAsset;
+    return asset != null ? begin(asset, a) : (_iso == null ? Future.value() : beginWithFile(_iso!, a));
+  }
+
+  IsoAsset? _lastAsset;
+  IsoArch? _lastArch;
+  bool _localIso = false;
+
+  /// True when the ISO is a file the person picked rather than the catalog's download.
+  bool get isLocalIso => _localIso;
+
+  /// File name of the ISO in use (picked or downloaded), for messages.
+  String? get isoFileName => _iso?.uri.pathSegments.last;
+
+  Future<void> _run(IsoArch arch, {IsoAsset? asset, File? local}) async {
     if (busy) return;
     _error = _refusal = null;
     _plan = null;
+    _lastArch = arch;
+    _lastAsset = asset;
+    _localIso = local != null;
     try {
       await workDir.create(recursive: true);
-      if (_iso == null || _isoName != iso.fileName || !_iso!.existsSync()) {
+      if (local != null) {
+        if (!local.existsSync() || !local.path.toLowerCase().endsWith('.iso')) {
+          _fail('Seçilen dosya bulunamadı ya da bir ISO dosyası değil.');
+          return;
+        }
+        _iso = local;
+        _isoName = null;
+      } else if (_iso == null || _isoName != asset!.fileName || !_iso!.existsSync()) {
         _set(InstallPhase.downloading);
-        await download.start(iso);
+        await download.start(asset!);
         final f = download.file;
         if (download.phase != DownloadPhase.verified || f == null) {
           _fail(download.error ?? 'ISO indirilemedi veya doğrulanamadı.');
           return;
         }
         _iso = f;
-        _isoName = iso.fileName;
+        _isoName = asset.fileName;
       }
 
       _set(InstallPhase.inspecting);

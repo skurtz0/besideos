@@ -311,7 +311,7 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
+        "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
         "windows"
@@ -362,7 +362,7 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
+        "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
         "windows"
@@ -407,7 +407,7 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
+        "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
         "windows"
@@ -579,7 +579,7 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
+        "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
         "windows"
@@ -811,7 +811,7 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
+        "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
         "windows"
@@ -856,7 +856,7 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
+        "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
         "windows"
@@ -955,7 +955,7 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Resmi siteden indirilmiş bir ISO dosyası"
+        "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
         "windows"

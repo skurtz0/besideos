@@ -90,10 +90,18 @@ void main() {
     expect(find.text('Kurmak için BesideOS uygulamasını indir'), findsOneWidget);
   });
 
-  testWidgets('the same distro page in the app keeps manual steps and ISO tools', (t) async {
+  testWidgets('the same distro page in the app has no manual steps either, but keeps licence and the one-click box', (t) async {
     await _pump(t, web: false, route: '/distros/mint');
-    expect(find.text('Elle kurmak istersen: adımlar'), findsOneWidget);
-    expect(find.text('Kurulamayanlar'), findsOneWidget);
+    expect(find.text('Elle kurmak istersen: adımlar'), findsNothing);
+    expect(find.text('Kurulamayanlar'), findsNothing);
     expect(find.textContaining('Lisans:'), findsOneWidget);
+  });
+
+  testWidgets('every distro page on the website offers the app download, own-ISO systems included', (t) async {
+    for (final id in ['mint', 'win']) {
+      await _pump(t, web: true, route: '/distros/$id');
+      expect(find.text('Kurmak için BesideOS uygulamasını indir'), findsOneWidget, reason: id);
+      expect(find.textContaining('kendi ISO dosyanı getirmen'), findsNothing, reason: id);
+    }
   });
 }

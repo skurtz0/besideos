@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:besideos_site/catalog/distro.dart';
 import 'package:besideos_site/install/install_controller.dart';
 import 'package:besideos_site/install/install_section.dart';
+import 'package:besideos_site/install/iso_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -29,8 +30,21 @@ void main() {
   });
   tearDown(() => tmp.deleteSync(recursive: true));
 
-  Widget section({Distro? d, bool supported = true, InstallController? Function()? factory}) => wrap(InstallSection(
-      distro: d ?? dist(), supported: supported, hostArch: IsoArch.x86_64, controllerFactory: factory ?? () => c));
+  Widget section({
+    Distro? d,
+    bool supported = true,
+    InstallController? Function()? factory,
+    Future<File?> Function()? pick,
+    List<LocalIso> Function()? found,
+  }) =>
+      wrap(InstallSection(
+        distro: d ?? dist(),
+        supported: supported,
+        hostArch: IsoArch.x86_64,
+        controllerFactory: factory ?? () => c,
+        pickIso: pick,
+        findIsos: found ?? () => const [],
+      ));
 
   Future<void> toReady(WidgetTester t) async {
     t.view.physicalSize = const Size(900, 2600);
@@ -39,7 +53,7 @@ void main() {
     await t.runAsync(() async {
       await t.pumpWidget(section());
       await t.tap(find.text('Kurmak için tıklayın'));
-      for (var i = 0; i < 50 && c.phase != InstallPhase.ready; i++) {
+      for (var i = 0; i < 250 && c.phase != InstallPhase.ready; i++) {
         await Future<void>.delayed(const Duration(milliseconds: 20));
       }
     });
@@ -51,13 +65,68 @@ void main() {
     expect(find.text('Kurmak için tıklayın'), findsNothing);
   });
 
-  testWidgets('hidden for user-supplied ISO and for distros without a Windows host', (t) async {
+  testWidgets('every system gets the one-click box; one without an official ISO asks for a file, never a path or checksum', (t) async {
     await t.pumpWidget(section(d: dist(win: true)));
+    expect(find.textContaining('ISO dosyamı seçip kurmak için tıklayın'), findsOneWidget);
     expect(find.text('Kurmak için tıklayın'), findsNothing);
+    expect(find.byType(TextField), findsNothing);
+    expect(find.textContaining('SHA'), findsNothing);
+    // a distro that lists no Windows host is still installable from here
     await t.pumpWidget(section(d: dist(hosts: const ['mac-m1m2'])));
-    expect(find.text('Kurmak için tıklayın'), findsNothing);
+    expect(find.text('Kurmak için tıklayın'), findsOneWidget);
   });
 
+  testWidgets('an official distro also offers "my own ISO"; picking a file skips the download', (t) async {
+    t.view.physicalSize = const Size(900, 2600);
+    t.view.devicePixelRatio = 1.0;
+    addTearDown(t.view.reset);
+    final mine = File('${tmp.path}/my-system.iso')..writeAsBytesSync([1, 2, 3]);
+    await t.runAsync(() async {
+      await t.pumpWidget(section(pick: () async => mine));
+      expect(find.text('Kendi ISO dosyamı seçip kurmak istiyorum'), findsOneWidget);
+      await t.tap(find.text('Kendi ISO dosyamı seçip kurmak istiyorum'));
+      for (var i = 0; i < 250 && c.phase != InstallPhase.ready; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+      }
+    });
+    await t.pump();
+    expect(c.phase, InstallPhase.ready);
+    expect(c.isLocalIso, isTrue);
+    expect(runner.calls.first, startsWith('inspect-iso.ps1'));
+    expect(find.text('Her şey hazır!'), findsOneWidget);
+    expect(find.textContaining('my-system kurulum dosyaları'), findsOneWidget);
+  });
+
+  testWidgets('cancelling the file dialog changes nothing', (t) async {
+    await t.runAsync(() async {
+      await t.pumpWidget(section(d: dist(win: true), pick: () async => null));
+      await t.tap(find.textContaining('ISO dosyamı seçip kurmak için tıklayın'));
+      await Future<void>.delayed(const Duration(milliseconds: 60));
+    });
+    await t.pump();
+    expect(c.phase, InstallPhase.idle);
+    expect(runner.calls, isEmpty);
+  });
+
+  testWidgets('ISO files found on the computer are listed and one tap starts with that file', (t) async {
+    t.view.physicalSize = const Size(900, 2600);
+    t.view.devicePixelRatio = 1.0;
+    addTearDown(t.view.reset);
+    final f = File('${tmp.path}/found-one.iso')..writeAsBytesSync([1]);
+    await t.runAsync(() async {
+      await t.pumpWidget(section(d: dist(win: true), found: () => [LocalIso(f, 3033710592, DateTime(2026))]));
+      expect(find.text('Bilgisayarında bulunan ISO dosyaları'), findsOneWidget);
+      expect(find.text('found-one.iso'), findsOneWidget);
+      expect(find.text('3,0 GB'), findsOneWidget);
+      await t.tap(find.text('found-one.iso'));
+      for (var i = 0; i < 250 && c.phase != InstallPhase.ready; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+      }
+    });
+    await t.pump();
+    expect(c.phase, InstallPhase.ready);
+    expect(c.isLocalIso, isTrue);
+  });
   testWidgets('missing engine is reported in plain words', (t) async {
     await t.pumpWidget(section(factory: () => null));
     expect(find.text('Kurulum bileşeni eksik'), findsOneWidget);
@@ -95,7 +164,7 @@ void main() {
     expect(find.textContaining('C: sürücüsü · Windows burada'), findsOneWidget);
     await t.runAsync(() async {
       await t.tap(find.textContaining('D: sürücüsü (Veri)'));
-      for (var i = 0; i < 50 && c.target?.letter != 'D'; i++) {
+      for (var i = 0; i < 250 && c.target?.letter != 'D'; i++) {
         await Future<void>.delayed(const Duration(milliseconds: 20));
       }
       await Future<void>.delayed(const Duration(milliseconds: 50));
@@ -131,7 +200,7 @@ void main() {
     await t.pumpAndSettle();
     await t.runAsync(() async {
       await t.tap(find.text('Evet, başlat'));
-      for (var i = 0; i < 50 && c.phase != InstallPhase.applied; i++) {
+      for (var i = 0; i < 250 && c.phase != InstallPhase.applied; i++) {
         await Future<void>.delayed(const Duration(milliseconds: 20));
       }
     });

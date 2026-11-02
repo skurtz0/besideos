@@ -4,7 +4,6 @@ import 'package:besideos_site/catalog/distro.dart';
 import 'package:besideos_site/catalog/distro_page.dart';
 import 'package:besideos_site/catalog/routes.dart';
 import 'package:besideos_site/catalog/support_matrix.dart';
-import 'package:besideos_site/download/download_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -54,12 +53,9 @@ void main() {
     expect(find.textContaining('Aciklama mint'), findsOneWidget);
     expect(find.textContaining('Gorunum mint'), findsOneWidget);
     expect(find.textContaining('Cinnamon'), findsOneWidget);
-    // The manual guide is folded away; open it.
+    // manual steps are gone for good
+    expect(find.text('Elle kurmak istersen: adımlar'), findsNothing);
     expect(find.text('Adim bir mint'), findsNothing);
-    await t.tap(find.text('Elle kurmak istersen: adımlar'));
-    await t.pumpAndSettle();
-    expect(find.text('Adim bir mint'), findsOneWidget);
-    expect(find.text('Adim iki'), findsOneWidget);
     expect(find.textContaining('Gereksinim A'), findsOneWidget);
     expect(find.textContaining('https://example.org/mint'), findsOneWidget);
   });
@@ -84,19 +80,19 @@ void main() {
     expect(find.textContaining('Asahi Linux ile Linux, macOS yanına kurulabilir'), findsNothing);
   });
 
-  testWidgets('distro page embeds the download section', (t) async {
-    await t.pumpWidget(page(catalog.distros.first));
-    expect(find.byType(DownloadSection), findsOneWidget);
-    expect(find.textContaining('sonraki aşamada'), findsNothing);
+  testWidgets('no page has manual steps, unsupported targets or the ISO path/checksum form', (t) async {
+    t.view.physicalSize = const Size(900, 3200);
+    t.view.devicePixelRatio = 1.0;
+    addTearDown(t.view.reset);
+    for (final x in catalog.distros) {
+      await t.pumpWidget(page(x));
+      expect(find.text('Elle kurmak istersen: adımlar'), findsNothing, reason: x.id);
+      expect(find.text('Kurulamayanlar'), findsNothing, reason: x.id);
+      expect(find.textContaining('SHA'), findsNothing, reason: x.id);
+      expect(find.textContaining('ISO dosyanı doğrula'), findsNothing, reason: x.id);
+      expect(find.textContaining('Sadece ISO dosyasını indir'), findsNothing, reason: x.id);
+    }
   });
-
-  testWidgets('windows distro shows the bring-your-own-ISO note', (t) async {
-    await t.pumpWidget(page(catalog.distros[1]));
-    expect(find.textContaining('BesideOS ISO dosyası sağlamaz'), findsOneWidget);
-    await t.pumpWidget(page(catalog.distros[0]));
-    expect(find.textContaining('BesideOS ISO dosyası sağlamaz'), findsNothing);
-  });
-
   testWidgets('unknown id route shows "Bulunamadı"', (t) async {
     for (final n in ['/distros/nope', '/distros/a/b']) {
       await t.pumpWidget(routed(n));
@@ -187,12 +183,6 @@ void main() {
     t.view.devicePixelRatio = 1;
     addTearDown(t.view.reset);
     await t.pumpWidget(page(catalog.distros.first));
-    await t.scrollUntilVisible(find.text('Kurulamayanlar'), 300, scrollable: find.byType(Scrollable).first);
-    await t.tap(find.text('Kurulamayanlar'));
-    await t.pumpAndSettle();
-    for (final u in unsupportedTargets) {
-      expect(find.textContaining(u.key), findsOneWidget);
-    }
     expect(find.textContaining('Temel aldığı sistem'), findsNothing);
     expect(t.takeException(), isNull);
     final b = Distro(

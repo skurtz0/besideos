@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../download/download_section.dart';
 import '../brand.dart';
 import '../site_mode.dart';
 import '../install/install_controller.dart';
@@ -108,7 +107,6 @@ class _DistroBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final d = distro;
     final accent = Color(d.accent);
-    final canOneClick = !d.userSuppliedIso && d.hosts.contains('windows');
     // The public website only presents the system and sends people to the app; manual steps and ISO tools stay in the app.
     final web = SiteMode.isWeb(context);
     final installable = [
@@ -138,29 +136,13 @@ class _DistroBody extends StatelessWidget {
                 const SizedBox(height: 16),
                 picker!,
               ],
-              if (canOneClick && !web && installerSupported()) ...[
-                const SizedBox(height: 16),
-                InstallSection(key: sectionKey, distro: d, controllerFactory: installFactory),
-              ],
-              if (canOneClick && (web || !installerSupported())) ...[
-                const SizedBox(height: 16),
+              const SizedBox(height: 16),
+              // Every system can be installed with one click in the app (official download or the person's own ISO);
+              // the website sends people to the app instead.
+              if (!web && installerSupported())
+                InstallSection(key: sectionKey, distro: d, controllerFactory: installFactory)
+              else
                 _DesktopOnlyNote(web: web),
-              ],
-              if (d.userSuppliedIso) ...[
-                const SizedBox(height: 16),
-                const Panel(
-                  child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Icon(Icons.folder_open_rounded, color: kAccent),
-                    SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        'Bu sistem için kendi ISO dosyanı getirmen gerekir; BesideOS ISO dosyası sağlamaz.',
-                        style: TextStyle(color: kText, height: 1.5),
-                      ),
-                    ),
-                  ]),
-                ),
-              ],
               const SizedBox(height: 16),
               _card(Icons.lightbulb_outline_rounded, 'Bu sistem nedir?', [
                 Text(d.description, style: const TextStyle(color: kText, height: 1.6)),
@@ -198,62 +180,11 @@ class _DistroBody extends StatelessWidget {
                 ]),
               ),
               if (!web) ...[
-              const SizedBox(height: 16),
-              _fold(Icons.menu_book_rounded, 'Elle kurmak istersen: adımlar', [
-                for (var i = 0; i < d.guide.length; i++)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 12),
-                    child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      SizedBox(width: 28, child: Text('${i + 1}.', style: const TextStyle(color: kAccent, fontWeight: FontWeight.w700))),
-                      Expanded(
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text(d.guide[i].title, style: const TextStyle(color: kText, fontWeight: FontWeight.w600)),
-                          Text(d.guide[i].body, style: const TextStyle(color: kMuted, height: 1.5)),
-                        ]),
-                      ),
-                    ]),
-                  ),
-              ]),
-              const SizedBox(height: 12),
-              _fold(Icons.block_rounded, 'Kurulamayanlar', [
-                for (final u in unsupportedTargets)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text.rich(
-                      TextSpan(children: [
-                        TextSpan(text: u.key, style: const TextStyle(color: kText, fontWeight: FontWeight.w600)),
-                        TextSpan(text: ': ${u.value.reason}'),
-                      ]),
-                      style: const TextStyle(color: kMuted, height: 1.5),
-                    ),
-                  ),
-              ]),
-              const SizedBox(height: 16),
-              _card(
-                d.userSuppliedIso ? Icons.verified_outlined : Icons.download_rounded,
-                d.userSuppliedIso ? 'ISO dosyanı doğrula' : 'Sadece ISO dosyasını indir',
-                [
-                  if (!d.userSuppliedIso)
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: Text('Kurmadan yalnızca dosyayı almak istersen. İndirilen dosya otomatik doğrulanır.',
-                          style: TextStyle(color: kMuted, height: 1.5)),
-                    ),
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      filledButtonTheme: FilledButtonThemeData(
-                        style: FilledButton.styleFrom(backgroundColor: kPanel2, foregroundColor: kText),
-                      ),
-                    ),
-                    child: DownloadSection(key: sectionKey, distro: d),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              Text('Lisans: ${d.license}', style: const TextStyle(color: kMuted, fontSize: 13, height: 1.5)),
-              const SizedBox(height: 4),
-              const Text('Resmi sayfa', style: TextStyle(color: kMuted, fontSize: 13)),
-              SelectableText(d.downloadPage, style: const TextStyle(color: kAccent)),
+                const SizedBox(height: 20),
+                Text('Lisans: ${d.license}', style: const TextStyle(color: kMuted, fontSize: 13, height: 1.5)),
+                const SizedBox(height: 4),
+                const Text('Resmi sayfa', style: TextStyle(color: kMuted, fontSize: 13)),
+                SelectableText(d.downloadPage, style: const TextStyle(color: kAccent)),
               ],
             ]),
       ),
@@ -299,21 +230,6 @@ class _DistroBody extends StatelessWidget {
           SectionTitle(title, icon: icon),
           ...children,
         ]),
-      );
-
-  Widget _fold(IconData icon, String title, List<Widget> children) => Panel(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-        child: Theme(
-          data: ThemeData(brightness: Brightness.dark, dividerColor: Colors.transparent),
-          child: ExpansionTile(
-            tilePadding: EdgeInsets.zero,
-            childrenPadding: const EdgeInsets.only(bottom: 12),
-            expandedCrossAxisAlignment: CrossAxisAlignment.start,
-            leading: Icon(icon, color: kAccent, size: 22),
-            title: Text(title, style: const TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
-            children: children,
-          ),
-        ),
       );
 
   /// Two cards side by side on wide screens, stacked on narrow ones.
