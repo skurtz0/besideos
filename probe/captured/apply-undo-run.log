@@ -1,0 +1,104 @@
+2026-11-02T07:56:23 [INFO] start; UNDO mode=DRY-RUN; PS=5.1.26100.9457; plan=D:\plan.json; Reboot=False
+2026-11-02T07:56:23 [DEBUG] check ok: Must run as Administrator.
+2026-11-02T07:56:24 [INFO] UNDO 1: boot entry {53849274-d669-11f1-aefa-a892380555b2}
+2026-11-02T07:56:24 [INFO] > bcdedit /enum {fwbootmgr} [exit 0]
+2026-11-02T07:56:24 [OUT] 
+Firmware Boot Manager
+---------------------
+identifier              {fwbootmgr}
+displayorder            {bootmgr}
+                        {5384926f-d669-11f1-aefa-a892380555b2}
+                        {53849274-d669-11f1-aefa-a892380555b2}
+                        {5384926e-d669-11f1-aefa-a892380555b2}
+                        {9807f346-d67d-11f1-a0bd-abaf72cb4520}
+                        {5384926b-d669-11f1-aefa-a892380555b2}
+                        {5384926c-d669-11f1-aefa-a892380555b2}
+                        {5384926d-d669-11f1-aefa-a892380555b2}
+timeout                 3
+
+2026-11-02T07:56:24 [INFO] bootsequence already consumed (or does not list our entry), nothing to remove.
+2026-11-02T07:56:24 [INFO] > bcdedit /enum {53849274-d669-11f1-aefa-a892380555b2} [exit 0]
+2026-11-02T07:56:24 [OUT] 
+Windows Boot Manager
+--------------------
+identifier              {53849274-d669-11f1-aefa-a892380555b2}
+device                  partition=F:
+path                    \EFI\BOOT\BOOTAA64.EFI
+description             BesideOS kurulumu
+locale                  en-US
+inherit                 {globalsettings}
+default                 {current}
+resumeobject            {53849270-d669-11f1-aefa-a892380555b2}
+displayorder            {current}
+timeout                 30
+
+2026-11-02T07:56:24 [INFO] DRY-RUN: would run bcdedit /delete {53849274-d669-11f1-aefa-a892380555b2}
+2026-11-02T07:56:24 [INFO] UNDO 2: remove staging partition (state: disk 0, number 5, guid , label BESIDEOS, size 4683988992)
+2026-11-02T07:56:26 [WARN] state has no partition Guid (v1); using label+FAT32+size fallback.
+2026-11-02T07:56:26 [INFO] TARGET to remove: disk=0 number=4 guid={c72a0090-162f-4b1e-9388-7a925c7f1666} letter=F label='BESIDEOS' fs=FAT32 size=4683988992 offset=58845036544
+2026-11-02T07:56:26 [INFO] DRY-RUN: would run Remove-Partition -DiskNumber 0 -PartitionNumber 4 -Confirm:$false
+2026-11-02T07:56:26 [INFO] UNDO 3: grow Windows partition to SizeMax: disk=0 number=3 guid={4da6456b-c48e-437d-9dbd-1a0543387ed7} letter=C label='' fs=NTFS size=58617409536 offset=227540992 (original size 84775272448)
+2026-11-02T07:56:28 [INFO] current=58617409536 SizeMax=58617495552 original=84775272448
+2026-11-02T07:56:28 [INFO] DRY-RUN: would run Resize-Partition -DriveLetter C -Size 58617495552 (SizeMax shown is before the staging partition is removed)
+2026-11-02T07:56:28 [INFO] UNDO ozet / summary: done=[] skipped(already undone)=[1a bootsequence]
+2026-11-02T07:56:28 [INFO] DRY-RUN: UNDO would be complete. Use -Execute to really undo.
+2026-11-02T07:57:11 [INFO] start; UNDO mode=EXECUTE; PS=5.1.26100.9457; plan=D:\plan.json; Reboot=False
+2026-11-02T07:57:11 [DEBUG] check ok: Must run as Administrator.
+2026-11-02T07:57:11 [INFO] UNDO 1: boot entry {53849274-d669-11f1-aefa-a892380555b2}
+2026-11-02T07:57:11 [INFO] > bcdedit /enum {fwbootmgr} [exit 0]
+2026-11-02T07:57:11 [OUT] 
+Firmware Boot Manager
+---------------------
+identifier              {fwbootmgr}
+displayorder            {bootmgr}
+                        {5384926f-d669-11f1-aefa-a892380555b2}
+                        {53849274-d669-11f1-aefa-a892380555b2}
+                        {5384926e-d669-11f1-aefa-a892380555b2}
+                        {9807f346-d67d-11f1-a0bd-abaf72cb4520}
+                        {5384926b-d669-11f1-aefa-a892380555b2}
+                        {5384926c-d669-11f1-aefa-a892380555b2}
+                        {5384926d-d669-11f1-aefa-a892380555b2}
+timeout                 3
+
+2026-11-02T07:57:11 [INFO] bootsequence already consumed (or does not list our entry), nothing to remove.
+2026-11-02T07:57:11 [INFO] > bcdedit /enum {53849274-d669-11f1-aefa-a892380555b2} [exit 0]
+2026-11-02T07:57:11 [OUT] 
+Windows Boot Manager
+--------------------
+identifier              {53849274-d669-11f1-aefa-a892380555b2}
+device                  partition=F:
+path                    \EFI\BOOT\BOOTAA64.EFI
+description             BesideOS kurulumu
+locale                  en-US
+inherit                 {globalsettings}
+default                 {current}
+resumeobject            {53849270-d669-11f1-aefa-a892380555b2}
+displayorder            {current}
+timeout                 30
+
+2026-11-02T07:57:11 [INFO] > bcdedit /delete {53849274-d669-11f1-aefa-a892380555b2} [exit 0]
+2026-11-02T07:57:11 [OUT] The operation completed successfully.
+
+2026-11-02T07:57:11 [INFO] > bcdedit /enum {fwbootmgr} [exit 0]
+2026-11-02T07:57:11 [OUT] 
+Firmware Boot Manager
+---------------------
+identifier              {fwbootmgr}
+displayorder            {bootmgr}
+                        {5384926f-d669-11f1-aefa-a892380555b2}
+                        {5384926e-d669-11f1-aefa-a892380555b2}
+                        {9807f346-d67d-11f1-a0bd-abaf72cb4520}
+                        {5384926b-d669-11f1-aefa-a892380555b2}
+                        {5384926c-d669-11f1-aefa-a892380555b2}
+                        {5384926d-d669-11f1-aefa-a892380555b2}
+timeout                 3
+
+2026-11-02T07:57:11 [INFO] UNDO 2: remove staging partition (state: disk 0, number 5, guid , label BESIDEOS, size 4683988992)
+2026-11-02T07:57:11 [WARN] state has no partition Guid (v1); using label+FAT32+size fallback.
+2026-11-02T07:57:11 [INFO] TARGET to remove: disk=0 number=4 guid={c72a0090-162f-4b1e-9388-7a925c7f1666} letter=F label='BESIDEOS' fs=FAT32 size=4683988992 offset=58845036544
+2026-11-02T07:57:11 [INFO] RUN: Remove-Partition -DiskNumber 0 -PartitionNumber 4 -Confirm:$false
+2026-11-02T07:57:11 [INFO] UNDO 3: grow Windows partition to SizeMax: disk=0 number=3 guid={4da6456b-c48e-437d-9dbd-1a0543387ed7} letter=C label='' fs=NTFS size=58617409536 offset=227540992 (original size 84775272448)
+2026-11-02T07:57:12 [INFO] current=58617409536 SizeMax=84775272448 original=84775272448
+2026-11-02T07:57:12 [INFO] RUN: Resize-Partition -DriveLetter C -Size 84775272448
+2026-11-02T07:57:12 [INFO] UNDO ozet / summary: done=[1b boot entry, 2 staging partition, 3 grow Windows] skipped(already undone)=[1a bootsequence]
+2026-11-02T07:57:12 [INFO] UNDO complete; state moved to D:\apply-state.undone-20261102075712.json
