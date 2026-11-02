@@ -119,19 +119,18 @@ void main() {
     expect(File('${tmp.path}/work/plan.json').readAsStringSync(), planJson);
   });
 
-  test('apply needs the confirmation word and then runs elevated with -Execute -Reboot', () async {
+  test('apply needs explicit confirmation and then runs elevated with -Execute -Reboot', () async {
     await c.begin(iso, IsoArch.x86_64);
-    await c.apply('');
-    await c.apply('evet');
+    await c.apply(confirmed: false);
     expect(c.phase, InstallPhase.ready);
     expect(runner.calls.any((x) => x.startsWith('apply-plan.ps1')), isFalse);
-    await c.apply(' kur ');
+    await c.apply(confirmed: true);
     expect(c.phase, InstallPhase.applied);
     expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -Reboot -OutDir');
   });
 
   test('apply does nothing before a plan is ready', () async {
-    await c.apply('KUR');
+    await c.apply(confirmed: true);
     expect(c.phase, InstallPhase.idle);
     expect(runner.calls, isEmpty);
   });
@@ -182,7 +181,7 @@ void main() {
   test('failed apply keeps the state and offers undo, which clears it', () async {
     runner.applyExit = 1;
     await c.begin(iso, IsoArch.x86_64);
-    await c.apply('KUR');
+    await c.apply(confirmed: true);
     expect(c.phase, InstallPhase.failed);
     expect(c.error, contains('shrink impossible'));
     expect(c.hasPendingState, isTrue);

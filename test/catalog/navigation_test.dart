@@ -15,7 +15,7 @@ void main() {
     addTearDown(t.view.reset);
 
     await t.pumpWidget(BesideSite(catalog: Catalog.parse(_json)));
-    await t.tap(find.text('Dağıtımlara göz at'));
+    await t.tap(find.text('Başlamak için tıklayın'));
     await t.pumpAndSettle();
     expect(find.text('Ad mint'), findsOneWidget);
 
@@ -30,7 +30,7 @@ void main() {
     addTearDown(t.view.reset);
 
     await t.pumpWidget(BesideSite(catalogLoader: () async => '{bad'));
-    await t.tap(find.text('Dağıtımlara göz at'));
+    await t.tap(find.text('Başlamak için tıklayın'));
     await t.pumpAndSettle();
     expect(find.textContaining('Katalog yüklenemedi'), findsOneWidget);
     expect(find.textContaining('invalid JSON'), findsOneWidget);

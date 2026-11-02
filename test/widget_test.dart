@@ -10,7 +10,8 @@ void main() {
 
     await tester.pumpWidget(const BesideSite());
 
-    expect(find.textContaining('Install another operating system'), findsOneWidget);
-    expect(find.text('Status: early development'), findsOneWidget);
+    expect(find.textContaining('Bilgisayarına ikinci bir sistem kur'), findsOneWidget);
+    expect(find.text('Başlamak için tıklayın'), findsOneWidget);
+    expect(find.text('Durum: erken geliştirme'), findsOneWidget);
   });
 }

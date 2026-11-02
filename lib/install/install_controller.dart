@@ -27,9 +27,6 @@ const linuxSpaceChoicesGiB = [20, 30, 50, 80, 120];
 const defaultLinuxSpaceGiB = 30;
 const _gib = 1 << 30;
 
-/// What the user must type before anything on the disk is touched.
-const installConfirmWord = 'KUR';
-
 class InstallPlan {
   const InstallPlan({required this.steps, required this.risks, required this.shrinkBytes});
   final List<String> steps;
@@ -50,7 +47,7 @@ Directory defaultWorkDir() {
 }
 
 /// Download -> inspect ISO -> probe host -> plan -> (user confirms) -> apply.
-/// Nothing on the disk changes before [apply], which needs the confirmation word.
+/// Nothing on the disk changes before [apply], which needs an explicit `confirmed: true`.
 class InstallController extends ChangeNotifier {
   InstallController({
     required this.runner,
@@ -218,9 +215,9 @@ class InstallController extends ChangeNotifier {
     }
   }
 
-  /// Applies the plan and reboots into the installer. Does nothing unless [typed] is the confirmation word.
-  Future<void> apply(String typed) async {
-    if (_phase != InstallPhase.ready || typed.trim().toUpperCase() != installConfirmWord) return;
+  /// Applies the plan and reboots into the installer. Does nothing unless the user [confirmed] (backup box + dialog).
+  Future<void> apply({required bool confirmed}) async {
+    if (_phase != InstallPhase.ready || !confirmed) return;
     _set(InstallPhase.applying);
     try {
       final r = await runner.script(

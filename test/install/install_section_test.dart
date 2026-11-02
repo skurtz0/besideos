@@ -32,48 +32,89 @@ void main() {
   Widget section({Distro? d, bool supported = true, InstallController? Function()? factory}) => wrap(InstallSection(
       distro: d ?? dist(), supported: supported, hostArch: IsoArch.x86_64, controllerFactory: factory ?? () => c));
 
-  testWidgets('hidden when not the Windows desktop app', (t) async {
-    await t.pumpWidget(section(supported: false));
-    expect(find.text('Tek tıkla kur'), findsNothing);
-  });
-
-  testWidgets('hidden for user-supplied ISO and for distros without a Windows host', (t) async {
-    await t.pumpWidget(section(d: dist(win: true)));
-    expect(find.text('Tek tıkla kur'), findsNothing);
-    await t.pumpWidget(section(d: dist(hosts: const ['mac-m1m2'])));
-    expect(find.text('Tek tıkla kur'), findsNothing);
-  });
-
-  testWidgets('missing engine is reported', (t) async {
-    await t.pumpWidget(section(factory: () => null));
-    expect(find.textContaining('Kurulum motoru bulunamadı'), findsOneWidget);
-  });
-
-  testWidgets('one click reaches the plan; apply stays disabled until backup box and KUR', (t) async {
+  Future<void> toReady(WidgetTester t) async {
+    t.view.physicalSize = const Size(900, 2600);
+    t.view.devicePixelRatio = 1.0;
+    addTearDown(t.view.reset);
     await t.runAsync(() async {
       await t.pumpWidget(section());
-      await t.tap(find.widgetWithText(ElevatedButton, 'U kur'));
+      await t.tap(find.text('Kurmak için tıklayın'));
       for (var i = 0; i < 50 && c.phase != InstallPhase.ready; i++) {
         await Future<void>.delayed(const Duration(milliseconds: 20));
       }
     });
     await t.pump();
-    expect(c.phase, InstallPhase.ready);
-    expect(find.textContaining('Plan hazır'), findsOneWidget);
-    expect(find.textContaining('küçültülecek'), findsOneWidget);
+  }
 
-    ElevatedButton go() => t.widget<ElevatedButton>(find.widgetWithText(ElevatedButton, 'Kurulumu başlat ve yeniden başlat'));
+  testWidgets('hidden when not the Windows desktop app', (t) async {
+    await t.pumpWidget(section(supported: false));
+    expect(find.text('Kurmak için tıklayın'), findsNothing);
+  });
+
+  testWidgets('hidden for user-supplied ISO and for distros without a Windows host', (t) async {
+    await t.pumpWidget(section(d: dist(win: true)));
+    expect(find.text('Kurmak için tıklayın'), findsNothing);
+    await t.pumpWidget(section(d: dist(hosts: const ['mac-m1m2'])));
+    expect(find.text('Kurmak için tıklayın'), findsNothing);
+  });
+
+  testWidgets('missing engine is reported in plain words', (t) async {
+    await t.pumpWidget(section(factory: () => null));
+    expect(find.text('Kurulum bileşeni eksik'), findsOneWidget);
+  });
+
+  testWidgets('idle card explains the three steps and offers one big button', (t) async {
+    await t.pumpWidget(section());
+    expect(find.text("Windows'un yanına kur"), findsOneWidget);
+    expect(find.text('Tıklarsın'), findsOneWidget);
+    expect(find.text('Bilgisayar hazırlanır'), findsOneWidget);
+    expect(find.text('Yeniden başlar'), findsOneWidget);
+    expect(find.widgetWithText(FilledButton, 'Kurmak için tıklayın'), findsOneWidget);
+  });
+
+  testWidgets('one click reaches the plan; start stays disabled until the backup box is ticked', (t) async {
+    await toReady(t);
+    expect(c.phase, InstallPhase.ready);
+    expect(find.text('Her şey hazır!'), findsOneWidget);
+    expect(find.textContaining('Bölüm küçültme geri alınamaz'), findsOneWidget);
+
+    FilledButton go() => t.widget<FilledButton>(find.widgetWithText(FilledButton, 'Kurulumu başlat'));
     expect(go().onPressed, isNull);
-    await t.enterText(find.byType(TextField), 'KUR');
-    await t.pump();
-    expect(go().onPressed, isNull, reason: 'backup box not ticked');
     await t.tap(find.byType(Checkbox));
     await t.pump();
     expect(go().onPressed, isNotNull);
-    await t.enterText(find.byType(TextField), 'kurma');
-    await t.pump();
-    expect(go().onPressed, isNull);
     expect(runner.calls.any((x) => x.startsWith('apply-plan.ps1')), isFalse);
+  });
+
+  testWidgets('the final dialog can be declined, nothing is applied', (t) async {
+    await toReady(t);
+    await t.tap(find.byType(Checkbox));
+    await t.pump();
+    await t.tap(find.widgetWithText(FilledButton, 'Kurulumu başlat'));
+    await t.pumpAndSettle();
+    expect(find.text('Başlayalım mı?'), findsOneWidget);
+    await t.tap(find.text('Vazgeç'));
+    await t.pumpAndSettle();
+    expect(c.phase, InstallPhase.ready);
+    expect(runner.calls.any((x) => x.startsWith('apply-plan.ps1')), isFalse);
+  });
+
+  testWidgets('confirming in the dialog applies the plan', (t) async {
+    await toReady(t);
+    await t.tap(find.byType(Checkbox));
+    await t.pump();
+    await t.tap(find.widgetWithText(FilledButton, 'Kurulumu başlat'));
+    await t.pumpAndSettle();
+    await t.runAsync(() async {
+      await t.tap(find.text('Evet, başlat'));
+      for (var i = 0; i < 50 && c.phase != InstallPhase.applied; i++) {
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+      }
+    });
+    await t.pump();
+    expect(c.phase, InstallPhase.applied);
+    expect(runner.calls.last, startsWith('apply-plan.ps1* -PlanFile -Execute -Reboot'));
+    expect(find.textContaining('Bilgisayar yeniden başlıyor'), findsOneWidget);
   });
 
   testWidgets('Fedora shows its boot caveat before starting', (t) async {

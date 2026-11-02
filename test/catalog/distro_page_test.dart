@@ -46,11 +46,18 @@ Widget page(Distro x) => MaterialApp(theme: ThemeData.dark(), home: DistroPage(d
 
 void main() {
   testWidgets('shows name, description, look and every guide step', (t) async {
+    t.view.physicalSize = const Size(900, 3200);
+    t.view.devicePixelRatio = 1.0;
+    addTearDown(t.view.reset);
     await t.pumpWidget(page(catalog.distros.first));
     expect(find.text('Ad mint'), findsWidgets);
     expect(find.textContaining('Aciklama mint'), findsOneWidget);
     expect(find.textContaining('Gorunum mint'), findsOneWidget);
     expect(find.textContaining('Cinnamon'), findsOneWidget);
+    // The manual guide is folded away; open it.
+    expect(find.text('Adim bir mint'), findsNothing);
+    await t.tap(find.text('Elle kurmak istersen: adımlar'));
+    await t.pumpAndSettle();
     expect(find.text('Adim bir mint'), findsOneWidget);
     expect(find.text('Adim iki'), findsOneWidget);
     expect(find.textContaining('Gereksinim A'), findsOneWidget);
@@ -154,6 +161,8 @@ void main() {
     addTearDown(t.view.reset);
     await t.pumpWidget(page(catalog.distros.first));
     await t.scrollUntilVisible(find.text('Kurulamayanlar'), 300, scrollable: find.byType(Scrollable).first);
+    await t.tap(find.text('Kurulamayanlar'));
+    await t.pumpAndSettle();
     for (final u in unsupportedTargets) {
       expect(find.textContaining(u.key), findsOneWidget);
     }

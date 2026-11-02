@@ -263,14 +263,28 @@ class _Hero extends StatelessWidget {
             style: t.titleLarge?.copyWith(color: kAccent, fontWeight: FontWeight.w700)),
         const SizedBox(height: 16),
         Text(
-          'Install another operating system beside this one. No USB stick.',
-          style: t.displaySmall?.copyWith(color: kText, fontWeight: FontWeight.w700, height: 1.15),
+          'Bilgisayarına ikinci bir sistem kur. USB bellek gerekmez.',
+          style: t.displaySmall?.copyWith(color: kText, fontWeight: FontWeight.w800, height: 1.15),
         ),
         const SizedBox(height: 16),
         Text(
-          'BesideOS makes room on your disk, puts the installer there, and restarts into it. '
-          'Your current system stays where it is.',
+          'BesideOS diskinde yer açar, kurulumu hazırlar ve bilgisayarı yeniden başlatır. '
+          "Windows'un olduğu gibi yerinde kalır.",
           style: t.titleMedium?.copyWith(color: kMuted, height: 1.5),
+        ),
+        const SizedBox(height: 28),
+        SizedBox(
+          height: 64,
+          child: FilledButton.icon(
+            onPressed: () => Navigator.pushNamed(context, '/distros'),
+            icon: const Icon(Icons.touch_app_rounded, size: 28),
+            label: const Text('Başlamak için tıklayın'),
+            style: FilledButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              textStyle: const TextStyle(fontSize: 21, fontWeight: FontWeight.w800),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            ),
+          ),
         ),
         const SizedBox(height: 24),
         const Wrap(
@@ -279,14 +293,9 @@ class _Hero extends StatelessWidget {
           children: [
             _Chip('Windows'),
             _Chip('Linux'),
-            _Chip('Mac → Linux (M1/M2, guided)'),
-            _Chip('Open source, MIT'),
+            _Chip('Mac → Linux (M1/M2, rehberli)'),
+            _Chip('Açık kaynak, MIT'),
           ],
-        ),
-        const SizedBox(height: 16),
-        TextButton(
-          onPressed: () => Navigator.pushNamed(context, '/distros'),
-          child: const Text('Dağıtımlara göz at'),
         ),
         const SizedBox(height: 24),
         const _DiskDemo(),
@@ -346,11 +355,11 @@ class _DiskDemoState extends State<_DiskDemo> with SingleTickerProviderStateMixi
   }
 
   static String _caption(double t) {
-    if (t < 0.2) return 'Your disk, as it is.';
-    if (t < 0.4) return 'Make room: one partition shrinks.';
-    if (t < 0.55) return 'The installer is staged on the same disk.';
-    if (t < 0.85) return 'After one restart, the new system installs beside the old one.';
-    return 'Two systems, one disk. No USB stick.';
+    if (t < 0.2) return 'Diskin şimdi böyle.';
+    if (t < 0.4) return 'Yer açılır: bir bölüm küçülür.';
+    if (t < 0.55) return 'Kurulum dosyaları aynı diske konur.';
+    if (t < 0.85) return 'Bir kez yeniden başlayınca yeni sistem eskisinin yanına kurulur.';
+    return 'İki sistem, tek disk. USB bellek yok.';
   }
 
   @override
@@ -391,7 +400,7 @@ class _DiskDemoState extends State<_DiskDemo> with SingleTickerProviderStateMixi
             },
           ),
           const SizedBox(height: 8),
-          const Text('Illustration. Real plans are shown to you in full before anything changes.',
+          const Text('Çizim. Gerçek plan, bir şey değişmeden önce sana tam olarak gösterilir.',
               style: TextStyle(color: kMuted, fontSize: 12)),
         ],
       ),
@@ -440,9 +449,9 @@ class _DiskPainter extends CustomPainter {
       }
     }
 
-    segment(0, windows, const Color(0xFF8FA3C7), 'Current system');
-    segment(1.0 - system - installer, installer, kAccent, 'Installer');
-    segment(1.0 - system, system, kGreen, 'New system');
+    segment(0, windows, const Color(0xFF8FA3C7), 'Şimdiki sistem');
+    segment(1.0 - system - installer, installer, kAccent, 'Kurulum');
+    segment(1.0 - system, system, kGreen, 'Yeni sistem');
     canvas.restore();
   }
 
@@ -552,14 +561,14 @@ class _HowItWorks extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _Heading('How it works'),
+        _Heading('Nasıl çalışır?'),
         _CardGrid(cards: [
-          _CardData('1. Make room',
-              'Shrinks a partition to free space, after you have seen the plan and confirmed that your data is backed up.'),
-          _CardData('2. Stage the installer',
-              'Puts the ISO on a small partition of the same disk and adjusts its boot menu, so no USB stick is needed.'),
-          _CardData('3. Restart once',
-              'Adds a one-time boot entry. The next restart opens the installer; after that the machine boots as usual.'),
+          _CardData('1. Yer açılır',
+              'Planı görüp dosyalarını yedeklediğini onayladıktan sonra diskte boş yer açılır.'),
+          _CardData('2. Kurulum hazırlanır',
+              'Kurulum dosyaları aynı diskteki küçük bir bölüme konur. USB bellek gerekmez.'),
+          _CardData('3. Bir kez yeniden başlar',
+              'Bir sonraki açılışta kurulum ekranı gelir. Sonrasında bilgisayar her zamanki gibi açılır.'),
         ]),
       ],
     );
@@ -574,13 +583,13 @@ class _Platforms extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _Heading('Platforms'),
+        _Heading('Hangi bilgisayarlarda?'),
         _CardGrid(cards: [
-          _CardData('Windows to Linux',
-              'The first target. Needs UEFI. Behaviour follows hop, which this project is based on.'),
-          _CardData('Linux to Windows', 'Planned next. You supply the Windows ISO.'),
+          _CardData("Windows'tan Linux'a",
+              'İlk hedef. UEFI ile açılan bir bilgisayar gerekir. Davranışı, bu projenin temelini oluşturan hop izler.'),
+          _CardData("Linux'tan Windows'a", 'Sırada. Windows ISO dosyasını sen getirirsin.'),
           _CardData('macOS',
-              'Planned last and honest about limits. Apple Silicon has no UEFI or Boot Camp, so BesideOS only guides the official Asahi installer there, on the Macs it supports.'),
+              'En son ve sınırlarını dürüstçe söyleyerek. Apple Silicon\'da UEFI ve Boot Camp yok; bu yüzden BesideOS orada yalnızca resmi Asahi kurulumunu anlatır.'),
         ]),
       ],
     );
@@ -595,13 +604,13 @@ class _Safety extends StatelessWidget {
     return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _Heading('Safety first'),
+        _Heading('Önce güvenlik'),
         _CardGrid(width: 220, cards: [
-          _CardData('Dry run by default', 'You see every step before anything touches the disk.'),
-          _CardData('Backup warning', 'Required before any partition is shrunk.'),
-          _CardData('Confirm each step', 'Every destructive step asks you first.'),
-          _CardData('Rollback',
-              'If a step fails or you decline, applied steps are undone in reverse.'),
+          _CardData('Önce plan', 'Diske dokunmadan önce her adımı görürsün.'),
+          _CardData('Yedek uyarısı', 'Bir bölüm küçülmeden önce yedek aldığını onaylarsın.'),
+          _CardData('Açık onay', 'Başlamadan önce son kez sorulur.'),
+          _CardData('Geri alma',
+              'Bir adım başarısız olursa ya da vazgeçersen, yapılanlar tersine geri alınır.'),
         ]),
       ],
     );
@@ -623,12 +632,12 @@ class _Status extends StatelessWidget {
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Status: early development',
+          Text('Durum: erken geliştirme',
               style: TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700)),
           SizedBox(height: 8),
           Text(
-            'There is no download yet. The current builds do not change any disk. '
-            'This page will link to signed releases when they exist.',
+            'Windows uygulaması dağıtımı indirip kuruluma hazırlayabiliyor, ama henüz geniş çapta denenmedi. '
+            'Kurmadan önce önemli dosyalarını mutlaka yedekle.',
             style: TextStyle(color: kMuted, height: 1.5),
           ),
         ],
@@ -644,9 +653,9 @@ class _Footer extends StatelessWidget {
   Widget build(BuildContext context) {
     return const _Section(
       child: Text(
-        'BesideOS is open source under the MIT license. It is based on hop by Arjun Ingole, '
-        'also MIT. Other operating-system names belong to their owners and are used only to '
-        'say what BesideOS can install.',
+        'BesideOS MIT lisansıyla açık kaynaktır. Arjun Ingole\'nin hop projesini temel alır '
+        '(o da MIT). Diğer işletim sistemi adları sahiplerine aittir ve yalnızca BesideOS\'un '
+        'neyi kurabildiğini söylemek için kullanılır.',
         style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
       ),
     );

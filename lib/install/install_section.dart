@@ -18,6 +18,9 @@ const oneClickCaveats = {
       'Fedora Live, kurulum ortamını ISO etiketiyle arar; bölüm "BESIDEOS" etiketli olduğu için açılmayabilir. Bu yöntem Fedora ile doğrulanmadı.',
 };
 
+/// One-click install only exists in the Windows desktop app.
+bool installerSupported() => !kIsWeb && Platform.isWindows;
+
 InstallController? _defaultController() {
   final engine = locateEngine();
   if (engine == null) return null;
@@ -54,9 +57,9 @@ class _InstallSectionState extends State<InstallSection> {
   InstallController? _ctl;
   bool _built = false;
   bool _backup = false;
-  final _confirm = TextEditingController();
 
-  bool get _supported => widget.supported ?? (!kIsWeb && Platform.isWindows);
+  bool get _supported => widget.supported ?? installerSupported();
+  String get _name => widget.distro.name;
 
   InstallController? get ctl {
     if (!_built) {
@@ -70,7 +73,6 @@ class _InstallSectionState extends State<InstallSection> {
   void dispose() {
     _ctl?.download.dispose();
     _ctl?.dispose();
-    _confirm.dispose();
     super.dispose();
   }
 
@@ -79,28 +81,90 @@ class _InstallSectionState extends State<InstallSection> {
     final d = widget.distro;
     if (!_supported || d.userSuppliedIso || !d.hosts.contains('windows')) return const SizedBox.shrink();
     final c = ctl;
-    return Container(
-      margin: const EdgeInsets.only(bottom: 24),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(color: kPanel, borderRadius: BorderRadius.circular(8)),
+    return Panel(
+      tint: Color(d.accent),
+      padding: const EdgeInsets.all(24),
       child: c == null
-          ? _col([
-              _head(),
-              _note('Kurulum motoru bulunamadı (engine klasörü). Uygulamayı tool\\build_windows.ps1 ile derle.'),
-            ])
+          ? _header(Icons.build_circle_outlined, 'Kurulum bileşeni eksik',
+              'Uygulamayı yeniden kur. Geliştiriciysen tool\\build_windows.ps1 ile derle.', color: kWarn)
           : ListenableBuilder(listenable: Listenable.merge([c, c.download]), builder: (_, __) => _body(c)),
     );
   }
 
-  Widget _head() => const Text('Tek tıkla kur',
-      style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700));
+  // ---------------------------------------------------------------- pieces
 
-  Widget _col(List<Widget> c) => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [for (final w in c) Padding(padding: const EdgeInsets.only(bottom: 8), child: w)],
+  Widget _header(IconData icon, String title, String? subtitle, {Color color = kAccent}) {
+    return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        width: 52,
+        height: 52,
+        decoration: BoxDecoration(color: color.withAlpha(40), borderRadius: BorderRadius.circular(16)),
+        child: Icon(icon, color: color, size: 30),
+      ),
+      const SizedBox(width: 16),
+      Expanded(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(title, style: const TextStyle(color: kText, fontSize: 22, fontWeight: FontWeight.w800, height: 1.25)),
+          if (subtitle != null) ...[
+            const SizedBox(height: 4),
+            Text(subtitle, style: const TextStyle(color: kMuted, fontSize: 15, height: 1.5)),
+          ],
+        ]),
+      ),
+    ]);
+  }
+
+  Widget _banner(Color color, IconData icon, {String? title, List<String> lines = const []}) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: color.withAlpha(28),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: color.withAlpha(110)),
+      ),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Icon(icon, color: color, size: 22),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            if (title != null)
+              Text(title, style: TextStyle(color: color, fontWeight: FontWeight.w700, height: 1.5)),
+            for (final l in lines) Text(l, style: const TextStyle(color: kText, height: 1.5)),
+          ]),
+        ),
+      ]),
+    );
+  }
+
+  Widget _bigButton(String label, IconData icon, VoidCallback? onPressed) {
+    return SizedBox(
+      height: 60,
+      child: FilledButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: 26),
+        label: Text(label),
+        style: FilledButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w800),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
+        ),
+      ),
+    );
+  }
+
+  Widget _small(String t) => Padding(
+        padding: const EdgeInsets.only(top: 10),
+        child: Text(t, textAlign: TextAlign.center, style: const TextStyle(color: kMuted, fontSize: 13, height: 1.5)),
       );
 
-  Widget _note(String t, {Color color = kMuted}) => Text(t, style: TextStyle(color: color, height: 1.5));
+  Widget _bullet(IconData icon, String text) => Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Icon(icon, color: kAccent, size: 22),
+          const SizedBox(width: 12),
+          Expanded(child: Text(text, style: const TextStyle(color: kText, fontSize: 15, height: 1.5))),
+        ]),
+      );
 
   Widget _body(InstallController c) {
     switch (c.phase) {
@@ -108,39 +172,35 @@ class _InstallSectionState extends State<InstallSection> {
       case InstallPhase.undone:
         return _start(c);
       case InstallPhase.downloading:
-        return _col([_head(), ..._downloadStatus(c)]);
       case InstallPhase.inspecting:
-        return _wait('ISO içeriği inceleniyor…');
       case InstallPhase.probing:
-        return _wait('Disk bilgisi okunuyor. Yönetici izni isteyecek.');
       case InstallPhase.planning:
-        return _wait('Plan hazırlanıyor…');
+        return _progress(c);
       case InstallPhase.applying:
-        return _wait('Kurulum hazırlanıyor. Yönetici izni isteyecek; bilgisayar kendiliğinden yeniden başlayabilir. Bu pencereyi kapatma.');
+        return _busy('Kurulum hazırlanıyor…',
+            'Windows izin isteyecek: «Evet» de. Bilgisayar kendiliğinden yeniden başlayabilir. Bu pencereyi kapatma.');
       case InstallPhase.undoing:
-        return _wait('Değişiklikler geri alınıyor. Yönetici izni isteyecek.');
+        return _busy('Değişiklikler geri alınıyor…', 'Windows izin isteyecek: «Evet» de.');
       case InstallPhase.ready:
         return _ready(c);
       case InstallPhase.refused:
-        return _col([
-          _head(),
-          _note(c.refusal ?? 'Bu bilgisayara kurulamaz.', color: Colors.redAccent),
-          _sizePicker(c),
-          _note('Daha küçük bir alan seçebilir ya da kurulamayan nedeni gidermeyi deneyebilirsin. Hiçbir şey değiştirilmedi.'),
-        ]);
+        return _refused(c);
       case InstallPhase.applied:
-        return _col([
-          _head(),
-          _note('Hazır. Bilgisayar yeniden başlatılıyor; açılışta ${widget.distro.name} kurulum ekranı gelecek.', color: kGreen),
-          _note('Gelmezse bilgisayarın açılış menüsünden "BesideOS kurulumu" girdisini seç. Kurulum bitince BESIDEOS adlı geçici bölüm silinebilir.'),
+        return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          _header(Icons.check_circle_rounded, 'Hazır! Bilgisayar yeniden başlıyor',
+              '$_name kurulum ekranı birazdan açılacak. Ekrandaki yönergeleri izle.', color: kGreen),
+          const SizedBox(height: 16),
+          _small('Açılmazsa: bilgisayarın açılış menüsünden "BesideOS kurulumu"nu seç. Kurulum bitince BESIDEOS adlı geçici bölümü silebilirsin.'),
         ]);
       case InstallPhase.failed:
-        return _col([
-          _head(),
-          _note(c.error ?? 'Başarısız.', color: Colors.redAccent),
+        return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          _header(Icons.error_rounded, 'Bir sorun çıktı', c.error ?? 'Başarısız oldu.', color: kDanger),
+          const SizedBox(height: 16),
           if (c.hasPendingState) ...[
-            _note('Disk üzerinde yarım kalmış değişiklikler olabilir. Geri almanı öneririm.', color: Colors.orangeAccent),
-            ElevatedButton(onPressed: c.undo, child: const Text('Değişiklikleri geri al')),
+            _banner(kWarn, Icons.warning_amber_rounded,
+                title: 'Yarım kalmış değişiklikler olabilir', lines: ['Geri almanı öneririz.']),
+            _bigButton('Değişiklikleri geri al', Icons.undo_rounded, c.undo),
+            const SizedBox(height: 10),
           ],
           OutlinedButton(onPressed: () => _begin(c), child: const Text('Tekrar dene')),
         ]);
@@ -151,75 +211,194 @@ class _InstallSectionState extends State<InstallSection> {
     final arch = widget.hostArch ?? currentIsoArch();
     final iso = arch == null ? null : widget.distro.isoFor(arch);
     if (iso == null || arch == null) return;
-    _backup = false;
-    _confirm.clear();
+    setState(() => _backup = false);
     c.begin(iso, arch);
   }
+
+  // ---------------------------------------------------------------- idle
 
   Widget _start(InstallController c) {
     final arch = widget.hostArch ?? currentIsoArch();
     final iso = arch == null ? null : widget.distro.isoFor(arch);
     final caveat = oneClickCaveats[widget.distro.id];
-    return _col([
-      _head(),
-      _note('${widget.distro.name} indirilir, doğrulanır ve Windows\'un yanına kurulum için hazırlanır. '
-          'Diskine dokunmadan önce planı gösterip onayını isterim.'),
-      if (caveat != null) _note(caveat, color: Colors.orangeAccent),
-      if (c.phase == InstallPhase.undone) _note('Değişiklikler geri alındı.', color: kGreen),
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      _header(Icons.rocket_launch_rounded, "Windows'un yanına kur",
+          "Windows ve dosyaların yerinde kalır. $_name için bilgisayarında yer açılır."),
+      const SizedBox(height: 22),
+      _threeSteps(),
+      const SizedBox(height: 22),
+      if (c.phase == InstallPhase.undone)
+        _banner(kGreen, Icons.check_circle_rounded, title: 'Değişiklikler geri alındı'),
+      if (caveat != null) _banner(kWarn, Icons.info_outline_rounded, title: 'Bilmen gerekenler', lines: [caveat]),
       if (c.hasPendingState) ...[
-        _note('Önceki bir kurulumdan kalan değişiklikler var. Yeni kuruluma başlamadan önce geri almalısın.', color: Colors.orangeAccent),
-        ElevatedButton(onPressed: c.undo, child: const Text('Değişiklikleri geri al')),
-      ] else
-        ElevatedButton(
-          onPressed: iso == null ? null : () => _begin(c),
-          child: Text('${widget.distro.name} kur'),
-        ),
-      if (iso == null) _note('Bu mimari için ISO yok.'),
+        _banner(kWarn, Icons.warning_amber_rounded,
+            title: 'Daha önce yarım kalmış bir kurulum var',
+            lines: ['Yenisine başlamadan önce eski değişiklikleri geri almalısın.']),
+        _bigButton('Değişiklikleri geri al', Icons.undo_rounded, c.undo),
+      ] else ...[
+        _bigButton('Kurmak için tıklayın', Icons.touch_app_rounded, iso == null ? null : () => _begin(c)),
+        _small(iso == null
+            ? 'Bu bilgisayarın işlemcisi için ISO yok.'
+            : 'Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.'),
+      ],
     ]);
   }
 
-  Widget _wait(String text) => _col([_head(), const LinearProgressIndicator(), _note(text)]);
+  Widget _threeSteps() {
+    final steps = [
+      ('Tıklarsın', 'Gerisini BesideOS yapar.'),
+      ('Bilgisayar hazırlanır', '$_name indirilir ve Windows\'un yanında yer açılır.'),
+      ('Yeniden başlar', '$_name kurulum ekranı açılır.'),
+    ];
+    Widget item(int i) => Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+            width: 32,
+            height: 32,
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: kAccent),
+            child: Text('${i + 1}', style: const TextStyle(color: kBg, fontWeight: FontWeight.w800, fontSize: 16)),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              Text(steps[i].$1, style: const TextStyle(color: kText, fontWeight: FontWeight.w700, fontSize: 16)),
+              const SizedBox(height: 2),
+              Text(steps[i].$2, style: const TextStyle(color: kMuted, height: 1.4)),
+            ]),
+          ),
+        ]);
+    return LayoutBuilder(builder: (context, box) {
+      if (box.maxWidth < 560) {
+        return Column(children: [for (var i = 0; i < 3; i++) Padding(padding: const EdgeInsets.only(bottom: 14), child: item(i))]);
+      }
+      return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        for (var i = 0; i < 3; i++) ...[
+          if (i > 0) const SizedBox(width: 18),
+          Expanded(child: item(i)),
+        ],
+      ]);
+    });
+  }
 
-  List<Widget> _downloadStatus(InstallController c) {
-    final dl = c.download;
+  // ---------------------------------------------------------------- progress
+
+  Widget _busy(String title, String text) => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        _header(Icons.hourglass_top_rounded, title, text),
+        const SizedBox(height: 18),
+        const LinearProgressIndicator(minHeight: 6, borderRadius: BorderRadius.all(Radius.circular(3))),
+      ]);
+
+  Widget _progress(InstallController c) {
+    final idx = switch (c.phase) {
+      InstallPhase.downloading => 0,
+      InstallPhase.inspecting => 1,
+      InstallPhase.probing => 2,
+      _ => 3,
+    };
+    final rows = <(String, Widget?)>[
+      ('$_name indiriliyor ve kontrol ediliyor', idx == 0 ? _downloadDetail(c.download) : null),
+      ('İndirilen dosya inceleniyor', null),
+      ('Bilgisayarın kontrol ediliyor', idx == 2 ? _detail('Windows izin isteyecek: «Evet» de.') : null),
+      ('Plan hazırlanıyor', null),
+    ];
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      _header(Icons.hourglass_top_rounded, 'Hazırlanıyor, lütfen bekle…',
+          'Bilgisayarında henüz hiçbir şey değişmiyor.'),
+      const SizedBox(height: 18),
+      for (var i = 0; i < rows.length; i++)
+        _row(i < idx ? 1 : (i == idx ? 2 : 0), rows[i].$1, rows[i].$2),
+      if (idx == 0) ...[
+        const SizedBox(height: 6),
+        Align(alignment: Alignment.centerLeft, child: OutlinedButton(onPressed: c.download.cancel, child: const Text('Vazgeç'))),
+      ],
+    ]);
+  }
+
+  Widget _detail(String t) => Text(t, style: const TextStyle(color: kMuted, height: 1.5));
+
+  Widget _downloadDetail(DownloadController dl) {
     switch (dl.phase) {
       case DownloadPhase.fetchingChecksum:
-        return [_note('Sağlama dosyası alınıyor…'), _cancel(dl)];
+        return _detail('Doğrulama bilgisi alınıyor…');
       case DownloadPhase.verifying:
-        return [const LinearProgressIndicator(), _note('Doğrulanıyor…')];
+        return _detail('Dosyanın bozuk olmadığı kontrol ediliyor…');
       default:
         final t = dl.total;
-        final mb = (dl.received / (1024 * 1024)).toStringAsFixed(1);
-        return [
-          LinearProgressIndicator(value: t == null || t == 0 ? null : (dl.received / t).clamp(0.0, 1.0)),
-          _note(t == null || t == 0 ? '$mb MB indirildi' : 'İndiriliyor: %${(dl.received * 100 / t).floor()}'),
-          _cancel(dl),
-        ];
+        final known = t != null && t > 0;
+        return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          LinearProgressIndicator(
+            value: known ? (dl.received / t).clamp(0.0, 1.0) : null,
+            minHeight: 6,
+            borderRadius: const BorderRadius.all(Radius.circular(3)),
+          ),
+          const SizedBox(height: 6),
+          _detail(known
+              ? '%${(dl.received * 100 / t).floor()}'
+              : '${(dl.received / (1024 * 1024)).toStringAsFixed(1)} MB indirildi'),
+        ]);
     }
   }
 
-  Widget _cancel(DownloadController dl) => OutlinedButton(onPressed: dl.cancel, child: const Text('İptal'));
-
-  Widget _sizePicker(InstallController c) => Row(children: [
-        const Text('Linux için ayrılacak alan: ', style: TextStyle(color: kText)),
-        DropdownButton<int>(
-          value: c.linuxGiB,
-          dropdownColor: kPanel,
-          style: const TextStyle(color: kText),
-          items: [for (final g in linuxSpaceChoicesGiB) DropdownMenuItem(value: g, child: Text('$g GiB'))],
-          onChanged: c.busy ? null : (g) => g == null ? null : c.replan(g),
+  /// state: 0 = waiting, 1 = done, 2 = running.
+  Widget _row(int state, String label, Widget? detail) {
+    final lead = switch (state) {
+      1 => const Icon(Icons.check_circle_rounded, color: kGreen, size: 26),
+      2 => const SizedBox(width: 26, height: 26, child: Padding(padding: EdgeInsets.all(2), child: CircularProgressIndicator(strokeWidth: 3))),
+      _ => const Icon(Icons.radio_button_unchecked_rounded, color: kMuted, size: 26),
+    };
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        lead,
+        const SizedBox(width: 14),
+        Expanded(
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text(label,
+                style: TextStyle(
+                    color: state == 0 ? kMuted : kText,
+                    fontWeight: state == 2 ? FontWeight.w700 : FontWeight.w500,
+                    fontSize: 16,
+                    height: 1.5)),
+            if (detail != null) detail,
+          ]),
         ),
+      ]),
+    );
+  }
+
+  // ---------------------------------------------------------------- plan
+
+  Widget _sizeChips(InstallController c) => Wrap(spacing: 8, runSpacing: 8, children: [
+        for (final g in linuxSpaceChoicesGiB)
+          ChoiceChip(
+            label: Text(g == defaultLinuxSpaceGiB ? '$g GB · önerilen' : '$g GB'),
+            selected: c.linuxGiB == g,
+            onSelected: c.busy ? null : (_) => c.replan(g),
+          ),
       ]);
 
   Widget _ready(InstallController c) {
     final plan = c.plan!;
-    final can = _backup && _confirm.text.trim().toUpperCase() == installConfirmWord;
-    return _col([
-      _head(),
-      _note('Plan hazır. Henüz diskine dokunulmadı.', color: kGreen),
-      _sizePicker(c),
-      for (final s in plan.steps) Text('• $s', style: const TextStyle(color: kText, height: 1.5)),
-      for (final r in plan.risks) Text('⚠ $r', style: const TextStyle(color: Colors.orangeAccent, height: 1.5)),
+    final gb = (plan.shrinkBytes / (1 << 30)).round();
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      _header(Icons.check_circle_rounded, 'Her şey hazır!',
+          'Bilgisayarında henüz hiçbir şey değişmedi. Neler olacağına bak, sonra başla.', color: kGreen),
+      const SizedBox(height: 22),
+      const Text('Linux için ne kadar yer ayıralım?',
+          style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
+      const SizedBox(height: 4),
+      _detail('Çoğu kişi için 30 GB yeter. Çok program kuracaksan daha fazlasını seç.'),
+      const SizedBox(height: 10),
+      _sizeChips(c),
+      const SizedBox(height: 22),
+      const Text('Neler olacak?', style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
+      const SizedBox(height: 10),
+      _bullet(Icons.content_cut_rounded, "Windows'un yanında yaklaşık $gb GB boş yer açılır."),
+      _bullet(Icons.file_copy_rounded, '$_name kurulum dosyaları bu yere kopyalanır.'),
+      _bullet(Icons.restart_alt_rounded, 'Bilgisayar yeniden başlar ve $_name kurulum ekranı açılır.'),
+      const SizedBox(height: 6),
+      if (plan.risks.isNotEmpty)
+        _banner(kWarn, Icons.warning_amber_rounded, title: 'Bilmen gerekenler', lines: plan.risks),
       // The panel's DecoratedBox would hide the tile's ink; give it its own Material.
       Material(
         type: MaterialType.transparency,
@@ -228,22 +407,51 @@ class _InstallSectionState extends State<InstallSection> {
           controlAffinity: ListTileControlAffinity.leading,
           value: _backup,
           onChanged: (v) => setState(() => _backup = v ?? false),
-          title: const Text(
-            'Önemli dosyalarımın yedeğini aldım. Bölüm küçültmenin geri alınamayabileceğini ve bilgisayarın yeniden başlayacağını anlıyorum.',
-            style: TextStyle(color: kText, height: 1.4),
-          ),
+          title: const Text('Önemli dosyalarımı yedekledim',
+              style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w600)),
+          subtitle: const Text('Bölüm küçültme nadiren de olsa sorun çıkarabilir.', style: TextStyle(color: kMuted)),
         ),
       ),
-      TextField(
-        controller: _confirm,
-        style: const TextStyle(color: kText),
-        decoration: const InputDecoration(labelText: 'Onaylamak için $installConfirmWord yaz'),
-        onChanged: (_) => setState(() {}),
-      ),
-      ElevatedButton(
-        onPressed: can ? () => c.apply(_confirm.text) : null,
-        child: const Text('Kurulumu başlat ve yeniden başlat'),
+      const SizedBox(height: 8),
+      _bigButton('Kurulumu başlat', Icons.play_arrow_rounded, _backup ? () => _confirmAndApply(c) : null),
+      if (!_backup) _small('Başlamak için yukarıdaki kutuyu işaretle.'),
+      Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.zero,
+          title: const Text('Teknik ayrıntılar', style: TextStyle(color: kMuted, fontSize: 14)),
+          children: [
+            for (final s in plan.steps)
+              Align(alignment: Alignment.centerLeft, child: Text('• $s', style: const TextStyle(color: kMuted, height: 1.6))),
+          ],
+        ),
       ),
     ]);
   }
+
+  Future<void> _confirmAndApply(InstallController c) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Başlayalım mı?'),
+        content: Text('Bilgisayar yeniden başlayacak ve $_name kurulum ekranı açılacak. Açık işlerini şimdi kaydet.'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Vazgeç')),
+          FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Evet, başlat')),
+        ],
+      ),
+    );
+    if (ok == true) await c.apply(confirmed: true);
+  }
+
+  Widget _refused(InstallController c) => Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        _header(Icons.info_rounded, 'Bu bilgisayara şu an kurulamıyor', 'Hiçbir şey değişmedi.', color: kWarn),
+        const SizedBox(height: 16),
+        _banner(kWarn, Icons.report_problem_rounded, lines: [c.refusal ?? 'Kurulum yapılamıyor.']),
+        const SizedBox(height: 4),
+        const Text('Daha küçük bir alan seçmeyi deneyebilirsin:',
+            style: TextStyle(color: kText, fontWeight: FontWeight.w600)),
+        const SizedBox(height: 10),
+        _sizeChips(c),
+      ]);
 }

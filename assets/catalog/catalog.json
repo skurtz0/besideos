@@ -28,7 +28,6 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Kurulum medyası için bir USB bellek",
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
@@ -82,7 +81,6 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Kurulum medyası için bir USB bellek",
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
@@ -181,7 +179,6 @@
       "requirements": [
         "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
-        "Kurulum medyası için bir USB bellek",
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [

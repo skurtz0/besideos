@@ -44,8 +44,14 @@ class _CatalogPageState extends State<CatalogPage> {
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        const Text('Hangi sistemi kurmak istersin?',
+            style: TextStyle(color: kText, fontSize: 28, fontWeight: FontWeight.w800, height: 1.2)),
+        const SizedBox(height: 6),
+        const Text('Birini seç. Nasıl kurulduğunu sana adım adım gösterelim.',
+            style: TextStyle(color: kMuted, fontSize: 16, height: 1.5)),
+        const SizedBox(height: 20),
         Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
-          const Text('Aile:', style: TextStyle(color: kMuted)),
+          const Text('Ne tür?', style: TextStyle(color: kMuted)),
           for (final f in <DistroFamily?>[null, ...DistroFamily.values])
             ChoiceChip(
               label: Text(f == null ? 'Hepsi' : (f == DistroFamily.linux ? 'Linux' : 'Windows')),
@@ -55,7 +61,7 @@ class _CatalogPageState extends State<CatalogPage> {
         ]),
         const SizedBox(height: 8),
         Wrap(spacing: 8, runSpacing: 8, crossAxisAlignment: WrapCrossAlignment.center, children: [
-          const Text('Ana sistem:', style: TextStyle(color: kMuted)),
+          const Text('Hangi bilgisayardasın?', style: TextStyle(color: kMuted)),
           for (final h in Host.values)
             ChoiceChip(
               label: Text(_hostLabels[h]!),
@@ -98,14 +104,16 @@ class _DistroCardState extends State<_DistroCard> {
   @override
   Widget build(BuildContext context) {
     final d = widget.distro;
-    return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 280, minWidth: 0),
+    final accent = Color(d.accent);
+    return SizedBox(
+      width: 272,
+      height: 176,
       child: Material(
         color: kPanel,
         clipBehavior: Clip.antiAlias,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: _active ? kAccent.withAlpha(170) : const Color(0x00000000)),
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(color: _active ? accent : const Color(0x14FFFFFF), width: _active ? 2 : 1),
         ),
         child: InkWell(
           onTap: widget.onTap,
@@ -116,17 +124,33 @@ class _DistroCardState extends State<_DistroCard> {
             button: true,
             label: d.name,
             excludeSemantics: true,
-            child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-              Container(height: 4, color: Color(d.accent)),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(d.name, style: const TextStyle(color: kText, fontSize: 17, fontWeight: FontWeight.w600)),
-                  const SizedBox(height: 6),
-                  Text(d.tagline, style: const TextStyle(color: kMuted, height: 1.5)),
-                ]),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [accent.withAlpha(_active ? 90 : 55), kPanel],
+                ),
               ),
-            ]),
+              padding: const EdgeInsets.all(18),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Row(children: [
+                  LetterBadge(name: d.name, color: accent, size: 44),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(d.name, style: const TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
+                  ),
+                ]),
+                const SizedBox(height: 12),
+                Text(d.tagline, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(color: kMuted, height: 1.5)),
+                const Spacer(),
+                Row(children: [
+                  Text('Kurulumu gör', style: TextStyle(color: _active ? kText : kAccent, fontWeight: FontWeight.w700)),
+                  const SizedBox(width: 4),
+                  Icon(Icons.arrow_forward_rounded, size: 18, color: _active ? kText : kAccent),
+                ]),
+              ]),
+            ),
           ),
         ),
       ),
