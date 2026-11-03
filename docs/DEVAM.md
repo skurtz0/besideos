@@ -64,3 +64,17 @@ Windows'ta bir bölümü küçültür, ISO'yu FAT32 `BESIDEOS` bölümüne açar
 - Eski default/timeout/displaybootmenu `apply-state.json` icindeki `menu` altina kaydedilir (degisiklikten ONCE). `ProgramData\BesideOS\menu-reset.cmd` + `BesideOSMenuReset` zamanlanmis gorevi (SYSTEM, onstart) Windows'un bir sonraki acilisinda eskiyi geri koyar ve girdiyi menuden cikarir (tek seferlik). `-Undo` once bunu geri alir, sonra girdiyi siler.
 - Menu kurulamazsa betik dogrulanmis eski yola (bootsequence ile dogrudan acilis) duser; `-Menu` verilmezse davranis eskisiyle ayni.
 - **Gercek Windows'ta DENENMEDI.** Ozellikle: Linux ISO'su icin ({bootmgr} kopyasi, firmware uygulamasi) Windows menusunden secilince acilip acilmadigi bilinmiyor; Windows ISO'su (ramdisk osloader) icin menu daha guvenli bir yol.
+
+## Windows menusu: gercek Windows'ta test listesi - 3 Kasim 2026
+
+Statik kontrol (Linux'ta PowerShell 7 ile): `probe/windows/*.ps1` sozdizimi hatasiz; `Get-BcdValue` ornek `bcdedit /enum {bootmgr}` ciktisinda `default`, `timeout`, `displaybootmenu` degerlerini dogru okuyor. Gercek bcdedit denenmedi.
+
+Yedegi olan, sistem disi bir diskte ya da VM'de, yonetici PowerShell ile:
+
+1. Kuru calistirma: `apply-plan.ps1 -PlanFile <plan.json> -Menu -MenuTitle Test` (`-Execute` yok, hicbir sey degismez). Gunlukte "then the boot menu: ..." satiri gorunmeli.
+2. Gercek kurulum (`-Execute -Menu -MenuTitle Test`), once `bcdedit /enum {bootmgr}` ciktisini kaydet (default, timeout, displaybootmenu).
+3. Yeniden baslat: menu 5 saniye gorunuyor mu, "BesideOS: 5 saniye icinde kurulacak: Test" secili mi?
+4. Linux ISO'su: giris Windows menusunden secilince yukleyici aciliyor mu? (en buyuk belirsizlik) Windows ISO'su: RAM disk girisi aciliyor mu?
+5. Windows'a donunce: `bcdedit /enum {bootmgr}` eski degerlere donmus mu, `schtasks /query /tn BesideOSMenuReset` "bulunamadi" demeli, `%ProgramData%\BesideOS\menu-reset.cmd` silinmis olmali.
+6. Menuyu gorup Windows'u secersen de ayni sey olmali (gorev bir sonraki Windows acilisinda calisir).
+7. `-Undo -Execute`: menu ayarlari, girdi ve bolum geri gelmeli. Sonucu bu dosyaya yaz.
