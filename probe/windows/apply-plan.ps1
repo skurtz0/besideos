@@ -134,6 +134,74 @@ function Get-BcdValue([string]$text, [string]$name) {
     return $null
 }
 function ConvertTo-MenuFlag($v) { if ([string]$v -match '^(?i)(yes|evet|true)$') { return 'yes' } else { return 'no' } }
+# Other systems that are installed next to Windows (Linux, ...), read from the firmware boot list, so that they can be picked
+# from the Windows boot menu too. Only entries that start a .efi file on a local partition; Windows itself and BesideOS are skipped.
+function Get-OtherSystems {
+    $x = Invoke-Native 'bcdedit' @('/enum', 'firmware')
+    $res = @()
+    if ($x.Code -ne 0) { return $res }
+    foreach ($chunk in ([string]$x.Out -split "(?:\r?\n){2,}")) {
+        $gid = $null; $dev = $null; $path = $null; $desc = $null
+        foreach ($ln in ($chunk -split "\r?\n")) {
+            if ($ln -match '^identifier\s+(\{\S+\})\s*$') { $gid = $Matches[1] }
+            elseif ($ln -match '^device\s+(\S.*?)\s*$') { $dev = $Matches[1] }
+            elseif ($ln -match '^path\s+(\S.*?)\s*$') { $path = $Matches[1] }
+            elseif ($ln -match '^description\s+(\S.*?)\s*$') { $desc = $Matches[1] }
+        }
+        if (-not $gid -or $gid -notmatch "^$GUID_RE`$") { continue }
+        if (-not $dev -or $dev -notmatch '^partition=\\Device\\HarddiskVolume\d+$') { continue }
+        if (-not $path -or $path -notmatch '^\\[A-Za-z0-9_.\- \\]+\.efi$') { continue }
+        if ($path -match '(?i)\\Microsoft\\Boot\\' -or $path -match '(?i)bootmgfw\.efi$') { continue }
+        $name = ((([string]$desc) -replace '[^\x20-\x7E]', '') -replace '["{}%&|<>^]', '').Trim()
+        if ($name.Length -gt 40) { $name = $name.Substring(0, 40).Trim() }
+        if ($name.Length -eq 0) { $name = 'Other system' }
+        if ($name -match '(?i)^BesideOS') { continue }
+        if (@($res | Where-Object { $_.device -eq $dev -and $_.path -ieq $path }).Count -gt 0) { continue }
+        $res += [pscustomobject]@{ name = $name; device = $dev; path = $path }
+        if ($res.Count -ge 6) { break }
+    }
+    return $res
+}
+# Adds one temporary menu entry (a copy of {bootmgr} that starts the other system's .efi file) per other system.
+# Best effort: a failure skips that system, never the menu. Every created GUID is saved to the state before it is configured,
+# so undo and the startup task can always delete it.
+function Add-OtherSystemsToMenu {
+    $added = @()
+    $others = @()
+    try { $others = @(Get-OtherSystems) } catch { Log "could not read the other systems: $($_.Exception.Message)" 'WARN' }
+    foreach ($o in $others) {
+        try {
+            $r = Invoke-Native 'bcdedit' @('/copy', '{bootmgr}', '/d', $o.name)
+            $m = [regex]::Matches($r.Out, $GUID_RE)
+            if ($r.Code -ne 0 -or $m.Count -ne 1) { Log "menu entry for '$($o.name)' not created (exit $($r.Code), matches $($m.Count))" 'WARN'; continue }
+            $g = $m[0].Value
+            $added += $g; $script:State.menu.extra = @($added); Save-State
+            $ok = $true
+            foreach ($a in @(@('/set', $g, 'device', $o.device), @('/set', $g, 'path', $o.path), @('/displayorder', $g, '/addlast'))) {
+                $r = Invoke-Native 'bcdedit' $a
+                if ($r.Code -ne 0) { $ok = $false; break }
+            }
+            if (-not $ok) {
+                Log "menu entry for '$($o.name)' could not be set up; removing it." 'WARN'
+                [void](Invoke-Native 'bcdedit' @('/delete', $g, '/cleanup'))
+                $added = @($added | Where-Object { $_ -ne $g }); $script:State.menu.extra = @($added); Save-State
+            }
+        } catch { Log "menu entry for '$($o.name)' failed: $($_.Exception.Message)" 'WARN' }
+    }
+    return $added
+}
+# The one-time startup task's script: puts the old settings back and deletes everything the menu added.
+function Write-MenuResetCmd([string]$g, $m) {
+    $flag = 'no'; if ($m.displaybootmenu) { $flag = ConvertTo-MenuFlag $m.displaybootmenu }
+    $lines = @('@echo off', "bcdedit /set {bootmgr} default $($m.default)", "bcdedit /timeout $($m.timeout)")
+    if ($m.displaybootmenu) { $lines += "bcdedit /set {bootmgr} displaybootmenu $flag" } else { $lines += 'bcdedit /deletevalue {bootmgr} displaybootmenu' }
+    $lines += "bcdedit /displayorder $g /remove"
+    foreach ($x in @($m.extra)) { if ($x -and ([string]$x) -match "^$GUID_RE`$") { $lines += "bcdedit /delete $x /cleanup" } }
+    $lines += "schtasks /delete /tn $MenuTask /f"
+    $dir = Split-Path -Parent $MenuCmd
+    if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Path $dir -ErrorAction Stop | Out-Null }
+    [System.IO.File]::WriteAllText($MenuCmd, (($lines -join "`r`n") + "`r`n"), [System.Text.Encoding]::ASCII)
+}
 # Restores what Enable-BesideMenu changed. Never throws: undo must go on even if one setting cannot be restored.
 function Disable-BesideMenu($m) {
     if (-not $m) { return }
@@ -148,6 +216,12 @@ function Disable-BesideMenu($m) {
         $r = Invoke-Native 'bcdedit' $a
         if ($r.Code -ne 0) { Log "bcdedit $($a -join ' ') failed (exit $($r.Code)); continuing." 'WARN' }
     }
+    foreach ($x in @($m.extra)) {
+        if (-not $x) { continue }
+        if ([string]$x -notmatch "^$GUID_RE`$") { Log "skipping a bad GUID in the menu state: $x" 'WARN'; continue }
+        $r = Invoke-Native 'bcdedit' @('/delete', [string]$x, '/cleanup')
+        if ($r.Code -ne 0) { Log "bcdedit /delete $x failed (exit $($r.Code)); it may already be gone." 'WARN' }
+    }
     [void](Invoke-Native 'schtasks' @('/delete', '/tn', $MenuTask, '/f'))
     try { if (Test-Path -LiteralPath $MenuCmd) { Remove-Item -LiteralPath $MenuCmd -Force -ErrorAction Stop } } catch { Log "could not delete ${MenuCmd}: $($_.Exception.Message)" 'WARN' }
 }
@@ -160,19 +234,12 @@ function Enable-BesideMenu([string]$g) {
     $dbm = Get-BcdValue $bm.Out 'displaybootmenu'
     if (-not $def -or $def -notmatch '^\{[^{}]+\}$') { throw "cannot read the current default boot entry (got '$def')" }
     if (-not $tmo -or $tmo -notmatch '^\d+$') { throw "cannot read the current boot menu timeout (got '$tmo')" }
-    $script:State.menu = [ordered]@{ default = $def; timeout = $tmo; displaybootmenu = $dbm; task = $MenuTask; cmd = $MenuCmd }
+    $script:State.menu = [ordered]@{ default = $def; timeout = $tmo; displaybootmenu = $dbm; task = $MenuTask; cmd = $MenuCmd; extra = @() }
     Save-State   # saved before anything changes, so that undo can always put the old settings back
 
     # A one-time startup task (SYSTEM) puts the old settings back the next time Windows itself starts, so the menu is
     # one-shot like the direct start was: whatever the person picks, it does not keep coming back.
-    $flag = 'no'; if ($dbm) { $flag = ConvertTo-MenuFlag $dbm }
-    $lines = @('@echo off', "bcdedit /set {bootmgr} default $def", "bcdedit /timeout $tmo")
-    if ($dbm) { $lines += "bcdedit /set {bootmgr} displaybootmenu $flag" } else { $lines += 'bcdedit /deletevalue {bootmgr} displaybootmenu' }
-    $lines += "bcdedit /displayorder $g /remove"
-    $lines += "schtasks /delete /tn $MenuTask /f"
-    $dir = Split-Path -Parent $MenuCmd
-    if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Path $dir -ErrorAction Stop | Out-Null }
-    [System.IO.File]::WriteAllText($MenuCmd, (($lines -join "`r`n") + "`r`n"), [System.Text.Encoding]::ASCII)
+    Write-MenuResetCmd $g $script:State.menu
     $r = Invoke-Native 'schtasks' @('/create', '/tn', $MenuTask, '/sc', 'onstart', '/ru', 'SYSTEM', '/rl', 'highest', '/f', '/tr', $MenuCmd)
     if ($r.Code -ne 0) { throw "schtasks /create failed (exit $($r.Code))" }
 
@@ -184,6 +251,10 @@ function Enable-BesideMenu([string]$g) {
         $r = Invoke-Native 'bcdedit' $a
         if ($r.Code -ne 0) { throw "bcdedit $($a -join ' ') failed (exit $($r.Code))" }
     }
+    # The other installed systems go into the same menu (after the installer entry). Best effort; never fails the menu.
+    $extra = @(Add-OtherSystemsToMenu)
+    if ($extra.Count -gt 0) { Write-MenuResetCmd $g $script:State.menu }
+    Log "boot menu: installer entry first, $($extra.Count) other system(s) added to the menu"
     return $true
 }
 # Partition NUMBERS are not stable (Windows renumbers by disk order after create). Identify by Guid / letter / offset.
@@ -761,13 +832,13 @@ foreach ($ps in @($plan.steps)) {
                     Log "DRY-RUN: Windows media: would run bcdedit /create /d `"$desc`" /device   (RAM disk options object)"
                     Log 'DRY-RUN: then bcdedit /set {options} ramdisksdidevice partition=<staging-letter>: and ramdisksdipath \boot\boot.sdi'
                     Log "DRY-RUN: then bcdedit /create /d `"$desc`" /application osloader   (boots <staging-letter>:\sources\boot.wim with \windows\system32\winload.efi, winpe yes)"
-                    if ($Menu) { Log "DRY-RUN: then the boot menu: entry first and default, timeout 5, displaybootmenu yes, plus a startup task that restores the old settings (entry text: $menuDesc)" }
+                    if ($Menu) { Log "DRY-RUN: then the boot menu: entry first and default, timeout 5, displaybootmenu yes, plus the other installed systems from the firmware list as menu entries, and a startup task that restores the old settings and removes them (entry text: $menuDesc)" }
                     else { Log 'DRY-RUN: then bcdedit /set {bootmgr} bootsequence {guid}   (one-shot)' }
                 } elseif (-not $Execute) {
                     Log "DRY-RUN: would run bcdedit /copy {bootmgr} /d `"$desc`"   (parse new {guid} from output)"
                     Log "DRY-RUN: then bcdedit /set {guid} device partition=<staging-letter>:"
                     Log "DRY-RUN: then bcdedit /set {guid} path $loader"
-                    if ($Menu) { Log "DRY-RUN: then the Windows boot menu: entry first and default, timeout 5, displaybootmenu yes, plus a startup task that restores the old settings (entry text: $menuDesc)" }
+                    if ($Menu) { Log "DRY-RUN: then the Windows boot menu: entry first and default, timeout 5, displaybootmenu yes, plus the other installed systems from the firmware list as menu entries, and a startup task that restores the old settings and removes them (entry text: $menuDesc)" }
                     else { Log "DRY-RUN: then bcdedit /set {fwbootmgr} bootsequence {guid}   (one-shot)" }
                 } elseif ($isWinMedia) {
                     # Windows media cannot be started as a copy of {bootmgr}: its own boot manager looks the entry's GUID up in the

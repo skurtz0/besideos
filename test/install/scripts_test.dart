@@ -40,6 +40,20 @@ void main() {
     expect(text.indexOf(r'Disable-BesideMenu $st.menu'), lessThan(text.indexOf('# 1. boot entry')));
   });
 
+  test('the boot menu also lists the other installed systems and removes them again', () {
+    final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(text, contains('function Get-OtherSystems'));
+    expect(text, contains('function Add-OtherSystemsToMenu'));
+    // Windows itself and BesideOS entries are never added, and only .efi files on a local partition are
+    expect(text, contains('bootmgfw'));
+    expect(text, contains(r'^BesideOS'));
+    expect(text, contains(r'\.efi$'));
+    // every created entry is recorded in the state before it is configured, and deleted by undo and by the startup task
+    expect(text.indexOf(r'$script:State.menu.extra = @($added); Save-State'), lessThan(text.indexOf("@('/set', \$g, 'device', \$o.device)")));
+    expect(text, contains(r'bcdedit /delete $x /cleanup'));
+    expect(text, contains("@('/delete', [string]\$x, '/cleanup')"));
+  });
+
   test('undo decides a boot entry exists from bcdedit output, not its exit code', () {
     final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
     expect(text, contains('function Test-BcdEntry'));

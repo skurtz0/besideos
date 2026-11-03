@@ -78,3 +78,10 @@ Yedegi olan, sistem disi bir diskte ya da VM'de, yonetici PowerShell ile:
 5. Windows'a donunce: `bcdedit /enum {bootmgr}` eski degerlere donmus mu, `schtasks /query /tn BesideOSMenuReset` "bulunamadi" demeli, `%ProgramData%\BesideOS\menu-reset.cmd` silinmis olmali.
 6. Menuyu gorup Windows'u secersen de ayni sey olmali (gorev bir sonraki Windows acilisinda calisir).
 7. `-Undo -Execute`: menu ayarlari, girdi ve bolum geri gelmeli. Sonucu bu dosyaya yaz.
+
+### Windows menusu: kurulu diger sistemler de listede - 3 Kasim 2026
+
+Linux'taki GRUB menusu gibi, Windows menusunde de BesideOS girisinden sonra bilgisayarda kurulu diger sistemler (Linux vb.) secilebilir. `apply-plan.ps1` `bcdedit /enum firmware` listesinden yalnizca yerel bolumdeki `.efi` girislerini alir (Windows'un kendisi, `BesideOS...` girisleri ve `device unknown` olanlar atlanir, en fazla 6), her biri icin `{bootmgr}` kopyasi olusturup `device` ve `path` ayarlar, menuye ekler. GUID'ler `apply-state.json` icindeki `menu.extra` altina once kaydedilir; `menu-reset.cmd` ve `-Undo` hepsini siler. Bir sistem eklenemezse yalnizca o atlanir, menu bozulmaz.
+
+- Linux'ta sahte `bcdedit` ciktisiyla (PowerShell 7) denendi: dogru girisler secildi, olusturma komutlari ve sifirlama betigi beklenen gibi. **Gercek Windows'ta DENENMEDI.**
+- Test listesine ekle: menude "ubuntu" gibi diger sistemler gorunuyor mu, birini secince aciliyor mu (ozellikle `{bootmgr}` kopyasinin baska bir `.efi` baslatmasi), Windows'a donunce `bcdedit /enum all` icinde artik girisler kalmamis olmali.
