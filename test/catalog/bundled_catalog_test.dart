@@ -74,7 +74,7 @@ void bundledIsoTests() {
     }
     expect(catalog.byId('lubuntu'), isNull);
     final deb = catalog.byId('debian')!;
-    expect(deb.variants.map((v) => v.id), containsAll(['netinst', 'live-xfce', 'live-kde']));
+    expect(deb.variants.map((v) => v.id), ['live-xfce', 'live-kde']);
     expect(catalog.byId('linux-mint')!.variants.length, 3);
     expect(catalog.byId('bazzite')!.variants.length, greaterThanOrEqualTo(3));
     for (final d in catalog.distros.where((d) => d.variants.isNotEmpty)) {

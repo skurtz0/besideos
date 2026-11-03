@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 import '../brand.dart';
 import '../install/engine.dart';
+import '../install/install_controller.dart' show defaultWorkDir;
 import '../install/process_runner.dart';
 import '../theme.dart';
 import 'boot_controller.dart';
@@ -13,11 +12,11 @@ BootController? makeBootController() {
   final engine = locateEngine();
   final script = engine?.boot;
   if (script == null || !script.existsSync()) return null;
-  final base = Platform.environment['LOCALAPPDATA'] ?? Directory.systemTemp.path;
   return BootController(
     runner: SystemProcessRunner(),
     script: script,
-    workDir: Directory('$base${Platform.pathSeparator}BesideOS${Platform.pathSeparator}work'),
+    workDir: defaultWorkDir(),
+    linux: engine!.isLinux,
   );
 }
 
@@ -113,7 +112,8 @@ class _BootPageState extends State<BootPage> {
   Widget _body(BootController c) {
     if (c.phase == BootPhase.idle || c.phase == BootPhase.loading) {
       return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        _header(Icons.hourglass_top_rounded, 'Kurulu sistemler okunuyor…', 'Windows izin isteyecek: «Evet» de.'),
+        _header(Icons.hourglass_top_rounded, 'Kurulu sistemler okunuyor…',
+            c.linux ? 'Parolanı soran bir pencere açılacak.' : 'Windows izin isteyecek: «Evet» de.'),
         const SizedBox(height: 18),
         const LinearProgressIndicator(minHeight: 6, borderRadius: BorderRadius.all(Radius.circular(3))),
       ]);

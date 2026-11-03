@@ -26,6 +26,20 @@ void main() {
     });
   }
 
+  test('the boot menu is set up with a fallback and always put back by undo and by a startup task', () {
+    final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(text, contains('function Enable-BesideMenu'));
+    expect(text, contains('function Disable-BesideMenu'));
+    // the old settings are saved before anything is changed
+    expect(text.indexOf(r'$script:State.menu = [ordered]'), lessThan(text.indexOf("@('/displayorder', \$g, '/addfirst')")));
+    // both boot entry kinds fall back to the direct one-shot start when the menu cannot be set up
+    expect('boot menu not set up, using the direct one-shot start'.allMatches(text), hasLength(2));
+    expect(text, contains('bcdedit /set {bootmgr} default'));
+    expect(text, contains('schtasks /delete /tn'));
+    // undo restores before it deletes the entry
+    expect(text.indexOf(r'Disable-BesideMenu $st.menu'), lessThan(text.indexOf('# 1. boot entry')));
+  });
+
   test('undo decides a boot entry exists from bcdedit output, not its exit code', () {
     final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
     expect(text, contains('function Test-BcdEntry'));

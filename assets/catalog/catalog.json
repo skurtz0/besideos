@@ -31,7 +31,8 @@
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://ubuntu.com/download/desktop",
       "userSuppliedIso": false,
@@ -92,7 +93,8 @@
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://xubuntu.org/download/",
       "userSuppliedIso": false,
@@ -146,7 +148,8 @@
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://kubuntu.org/getkubuntu/",
       "userSuppliedIso": false,
@@ -200,7 +203,8 @@
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://linuxmint.com/download.php",
       "userSuppliedIso": false,
@@ -314,7 +318,8 @@
         "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://system76.com/pop/download/",
       "userSuppliedIso": true,
@@ -365,7 +370,8 @@
         "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://zorin.com/os/download/",
       "userSuppliedIso": true,
@@ -410,7 +416,8 @@
         "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://elementary.io/",
       "userSuppliedIso": true,
@@ -454,7 +461,8 @@
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://www.debian.org/distrib/",
       "userSuppliedIso": false,
@@ -462,17 +470,10 @@
       "isos": [
         {
           "arch": "x86_64",
-          "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso",
-          "checksumUrl": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS",
-          "fileName": "debian-13.7.0-amd64-netinst.iso",
-          "sizeBytes": 792723456
-        },
-        {
-          "arch": "arm64",
-          "url": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-13.7.0-arm64-netinst.iso",
-          "checksumUrl": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/SHA256SUMS",
-          "fileName": "debian-13.7.0-arm64-netinst.iso",
-          "sizeBytes": 735358976
+          "url": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-xfce.iso",
+          "checksumUrl": "https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS",
+          "fileName": "debian-live-13.7.0-amd64-xfce.iso",
+          "sizeBytes": 3826974720
         }
       ],
       "screens": [
@@ -484,27 +485,6 @@
         }
       ],
       "variants": [
-        {
-          "id": "netinst",
-          "label": "Normal kurulum (küçük dosya)",
-          "note": "Küçük bir dosya indirirsin, gerisi kurulum sırasında internetten gelir. Önerilen.",
-          "isos": [
-            {
-              "arch": "x86_64",
-              "url": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/debian-13.7.0-amd64-netinst.iso",
-              "checksumUrl": "https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS",
-              "fileName": "debian-13.7.0-amd64-netinst.iso",
-              "sizeBytes": 792723456
-            },
-            {
-              "arch": "arm64",
-              "url": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-13.7.0-arm64-netinst.iso",
-              "checksumUrl": "https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/SHA256SUMS",
-              "fileName": "debian-13.7.0-arm64-netinst.iso",
-              "sizeBytes": 735358976
-            }
-          ]
-        },
         {
           "id": "live-xfce",
           "label": "Canlı: Xfce (önce dene)",
@@ -582,7 +562,8 @@
         "Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)"
       ],
       "hosts": [
-        "windows"
+        "windows",
+        "linux"
       ],
       "downloadPage": "https://mxlinux.org/download-links/",
       "userSuppliedIso": true,
@@ -627,6 +608,7 @@
       ],
       "hosts": [
         "windows",
+        "linux",
         "mac-m1m2"
       ],
       "downloadPage": "https://fedoraproject.org/workstation/download",

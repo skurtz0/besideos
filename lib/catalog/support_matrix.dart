@@ -22,7 +22,7 @@ SupportEntry supportFor(Host host, DistroFamily guest) {
     case Host.linux:
       return guest == DistroFamily.windows
           ? const SupportEntry(true, 'Linux bilgisayarda Windows, ayrı bir bölüme çift önyükleme olarak kurulabilir.')
-          : const SupportEntry(false, 'Linux yanına Linux kurulumu bu rehberin kapsam dışı.');
+          : const SupportEntry(true, 'Linux bilgisayarda başka bir Linux, ISO dosyasından bir GRUB girişiyle açılıp boş alana kurulabilir (bölüm küçültülmez).');
     case Host.macM1M2:
       return guest == DistroFamily.linux
           ? const SupportEntry(true, 'Apple Silicon Mac için Asahi Linux ile Linux, macOS yanına kurulabilir.')

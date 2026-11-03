@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -41,7 +42,10 @@ enum BootPhase { idle, loading, ready, working, failed }
 
 /// Which installed system starts next, or by default. Needs administrator rights for every call (bcdedit).
 class BootController extends ChangeNotifier {
-  BootController({required this.runner, required this.script, required this.workDir});
+  BootController({required this.runner, required this.script, required this.workDir, this.linux = false});
+
+  /// Linux computer: entries come from efibootmgr and restarting uses systemctl.
+  final bool linux;
   final ProcessRunner runner;
   final File script;
   final Directory workDir;
@@ -90,6 +94,7 @@ class BootController extends ChangeNotifier {
   @override
   void dispose() {
     _disposed = true;
+    _restartTimer?.cancel();
     super.dispose();
   }
 
@@ -166,6 +171,11 @@ class BootController extends ChangeNotifier {
     _restarting = true;
     notifyListeners();
     try {
+      if (linux) {
+        _restartTimer = Timer(const Duration(seconds: 15), () => runner.exec('systemctl', ['reboot']));
+        notifyListeners();
+        return;
+      }
       final r = await runner.exec('shutdown', ['/r', '/t', '15', '/c', 'BesideOS: seçtiğin sistem için yeniden başlatılıyor.']);
       if (r.exitCode != 0) {
         _restarting = false;
@@ -178,10 +188,13 @@ class BootController extends ChangeNotifier {
     notifyListeners();
   }
 
+  Timer? _restartTimer;
+
   Future<void> cancelRestart() async {
     if (!_restarting) return;
+    _restartTimer?.cancel();
     try {
-      await runner.exec('shutdown', ['/a']);
+      if (!linux) await runner.exec('shutdown', ['/a']);
     } catch (_) {}
     _restarting = false;
     notifyListeners();

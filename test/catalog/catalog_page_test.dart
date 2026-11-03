@@ -104,8 +104,8 @@ void main() {
   });
 
   testWidgets('host filter hides distro whose host the matrix rejects', (t) async {
-    await pump(t, Catalog([d('lx', DistroFamily.linux, ['linux'])]));
-    await t.tap(find.text('Linux').last);
+    await pump(t, Catalog([d('lx', DistroFamily.windows, ['mac-m1m2'])]));
+    await t.tap(find.text('Mac M1/M2').last);
     await t.pump();
     expect(find.text('Ad lx'), findsNothing);
   });

@@ -54,7 +54,7 @@ void main() {
     expect(find.text('Ad mint'), findsOneWidget);
     expect(find.text('Ad win'), findsOneWidget);
     final cards = t.getTopLeft(find.text('Ad win')).dy;
-    final status = t.getTopLeft(find.text('Durum: erken geliştirme')).dy;
+    final status = t.getTopLeft(find.text('Kurmadan önce yedek al')).dy;
     final safety = t.getTopLeft(find.text('Önce güvenlik')).dy;
     expect(cards, lessThan(status));
     expect(cards, greaterThan(safety));

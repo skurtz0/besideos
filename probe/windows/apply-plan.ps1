@@ -33,6 +33,11 @@
 .PARAMETER Undo      Reverse what apply-state.json records (dry-run unless -Execute).
 .PARAMETER Reboot    With -Execute: restart after the last step. Otherwise "reboot skipped".
 .PARAMETER OutDir    Where apply.log and apply-state.json go. Default: script folder.
+.PARAMETER Menu      With -Execute: show the Windows boot menu for 5 seconds at the next start with the installer entry
+                     selected, instead of starting it directly. The previous default/timeout/menu setting is restored by a
+                     one-time startup task the next time Windows itself starts, and by -Undo. If the menu cannot be set up,
+                     the script falls back to the direct one-shot start.
+.PARAMETER MenuTitle Name of the system shown in the menu ("BesideOS: 5 saniye icinde kurulacak: <name>"). ASCII only.
 
 .NOTES
   Exit codes: 0 ok, 1 error/abort.
@@ -45,7 +50,9 @@ param(
     [switch]$Execute,
     [switch]$Undo,
     [switch]$Reboot,
-    [string]$OutDir
+    [string]$OutDir,
+    [switch]$Menu,
+    [string]$MenuTitle
 )
 
 $ErrorActionPreference = 'Stop'
@@ -115,6 +122,69 @@ function Get-Encrypted([string]$letter) {
 function Save-State {
     if (-not $Execute) { return }
     [System.IO.File]::WriteAllText($statePath, (ConvertTo-Json -InputObject $script:State -Depth 8), $utf8)
+}
+
+# ---- Boot menu (the -Menu option) ------------------------------------------------------------------------------
+$MenuTask = 'BesideOSMenuReset'
+$MenuCmd = Join-Path (Join-Path $env:ProgramData 'BesideOS') 'menu-reset.cmd'
+function Get-BcdValue([string]$text, [string]$name) {
+    foreach ($ln in ($text -split "`r?`n")) {
+        if ($ln -match ('^\s*' + $name + '\s+(\S+)\s*$')) { return $Matches[1] }
+    }
+    return $null
+}
+function ConvertTo-MenuFlag($v) { if ([string]$v -match '^(?i)(yes|evet|true)$') { return 'yes' } else { return 'no' } }
+# Restores what Enable-BesideMenu changed. Never throws: undo must go on even if one setting cannot be restored.
+function Disable-BesideMenu($m) {
+    if (-not $m) { return }
+    Log 'UNDO menu: restore the previous boot menu settings and remove the reset task'
+    if (-not $Execute) { Log 'DRY-RUN: would restore {bootmgr} default/timeout/displaybootmenu and delete the BesideOSMenuReset task'; return }
+    $steps = @()
+    if ($m.default -and ([string]$m.default) -match '^\{[^{}]+\}$') { $steps += , @('/set', '{bootmgr}', 'default', [string]$m.default) }
+    if ($m.timeout -and ([string]$m.timeout) -match '^\d+$') { $steps += , @('/timeout', [string]$m.timeout) }
+    if ($m.displaybootmenu) { $steps += , @('/set', '{bootmgr}', 'displaybootmenu', (ConvertTo-MenuFlag $m.displaybootmenu)) }
+    else { $steps += , @('/deletevalue', '{bootmgr}', 'displaybootmenu') }
+    foreach ($a in $steps) {
+        $r = Invoke-Native 'bcdedit' $a
+        if ($r.Code -ne 0) { Log "bcdedit $($a -join ' ') failed (exit $($r.Code)); continuing." 'WARN' }
+    }
+    [void](Invoke-Native 'schtasks' @('/delete', '/tn', $MenuTask, '/f'))
+    try { if (Test-Path -LiteralPath $MenuCmd) { Remove-Item -LiteralPath $MenuCmd -Force -ErrorAction Stop } } catch { Log "could not delete ${MenuCmd}: $($_.Exception.Message)" 'WARN' }
+}
+# Shows the Windows boot menu once: entry $g first and selected, 5 seconds. Returns $true when everything was set.
+function Enable-BesideMenu([string]$g) {
+    $bm = Invoke-Native 'bcdedit' @('/enum', '{bootmgr}')
+    if ($bm.Code -ne 0) { throw "bcdedit /enum {bootmgr} failed (exit $($bm.Code))" }
+    $def = Get-BcdValue $bm.Out 'default'
+    $tmo = Get-BcdValue $bm.Out 'timeout'
+    $dbm = Get-BcdValue $bm.Out 'displaybootmenu'
+    if (-not $def -or $def -notmatch '^\{[^{}]+\}$') { throw "cannot read the current default boot entry (got '$def')" }
+    if (-not $tmo -or $tmo -notmatch '^\d+$') { throw "cannot read the current boot menu timeout (got '$tmo')" }
+    $script:State.menu = [ordered]@{ default = $def; timeout = $tmo; displaybootmenu = $dbm; task = $MenuTask; cmd = $MenuCmd }
+    Save-State   # saved before anything changes, so that undo can always put the old settings back
+
+    # A one-time startup task (SYSTEM) puts the old settings back the next time Windows itself starts, so the menu is
+    # one-shot like the direct start was: whatever the person picks, it does not keep coming back.
+    $flag = 'no'; if ($dbm) { $flag = ConvertTo-MenuFlag $dbm }
+    $lines = @('@echo off', "bcdedit /set {bootmgr} default $def", "bcdedit /timeout $tmo")
+    if ($dbm) { $lines += "bcdedit /set {bootmgr} displaybootmenu $flag" } else { $lines += 'bcdedit /deletevalue {bootmgr} displaybootmenu' }
+    $lines += "bcdedit /displayorder $g /remove"
+    $lines += "schtasks /delete /tn $MenuTask /f"
+    $dir = Split-Path -Parent $MenuCmd
+    if (-not (Test-Path -LiteralPath $dir)) { New-Item -ItemType Directory -Path $dir -ErrorAction Stop | Out-Null }
+    [System.IO.File]::WriteAllText($MenuCmd, (($lines -join "`r`n") + "`r`n"), [System.Text.Encoding]::ASCII)
+    $r = Invoke-Native 'schtasks' @('/create', '/tn', $MenuTask, '/sc', 'onstart', '/ru', 'SYSTEM', '/rl', 'highest', '/f', '/tr', $MenuCmd)
+    if ($r.Code -ne 0) { throw "schtasks /create failed (exit $($r.Code))" }
+
+    foreach ($a in @(
+            @('/displayorder', $g, '/addfirst'),
+            @('/set', '{bootmgr}', 'default', $g),
+            @('/timeout', '5'),
+            @('/set', '{bootmgr}', 'displaybootmenu', 'yes'))) {
+        $r = Invoke-Native 'bcdedit' $a
+        if ($r.Code -ne 0) { throw "bcdedit $($a -join ' ') failed (exit $($r.Code))" }
+    }
+    return $true
 }
 # Partition NUMBERS are not stable (Windows renumbers by disk order after create). Identify by Guid / letter / offset.
 function NormGuid($g) { return (([string]$g) -replace '[{}]', '').ToLowerInvariant() }
@@ -192,6 +262,8 @@ if ($Undo) {
         }
         return @($found)
     }
+    # 0. boot menu settings (before the entry is deleted, so the default never points at a missing entry)
+    if ($st.menu) { Disable-BesideMenu $st.menu }
     # 1. boot entry (idempotent: consumed bootsequence / already-deleted entry are skips, not errors)
     if ($st.boot_entry -and ($st.boot_entry.guid -or $st.boot_entry.options_guid) -and [string]$st.boot_entry.kind -eq 'ramdisk') {
         # Windows media: an osloader entry plus its RAM disk options object (both created by us, both recorded in state)
@@ -678,17 +750,25 @@ foreach ($ps in @($plan.steps)) {
                 }
             }
             'add_one_shot_boot_entry' {
+                $menuDesc = $desc
+                if ($Menu) {
+                    $mt = (([string]$MenuTitle) -replace '[^\x20-\x7E]', '') -replace '["{}%&|<>^]', ''
+                    $mt = $mt.Trim()
+                    if ($mt.Length -gt 0 -and $mt.Length -le 40) { $menuDesc = "BesideOS: 5 saniye icinde kurulacak: $mt" }
+                }
                 if ($Execute) { $isWinMedia = ((Test-Path -LiteralPath "${stageLetter}:\sources\boot.wim" -PathType Leaf) -and (Test-Path -LiteralPath "${stageLetter}:\boot\boot.sdi" -PathType Leaf)) }
                 if (-not $Execute -and $isWinMedia) {
                     Log "DRY-RUN: Windows media: would run bcdedit /create /d `"$desc`" /device   (RAM disk options object)"
                     Log 'DRY-RUN: then bcdedit /set {options} ramdisksdidevice partition=<staging-letter>: and ramdisksdipath \boot\boot.sdi'
                     Log "DRY-RUN: then bcdedit /create /d `"$desc`" /application osloader   (boots <staging-letter>:\sources\boot.wim with \windows\system32\winload.efi, winpe yes)"
-                    Log 'DRY-RUN: then bcdedit /set {bootmgr} bootsequence {guid}   (one-shot)'
+                    if ($Menu) { Log "DRY-RUN: then the boot menu: entry first and default, timeout 5, displaybootmenu yes, plus a startup task that restores the old settings (entry text: $menuDesc)" }
+                    else { Log 'DRY-RUN: then bcdedit /set {bootmgr} bootsequence {guid}   (one-shot)' }
                 } elseif (-not $Execute) {
                     Log "DRY-RUN: would run bcdedit /copy {bootmgr} /d `"$desc`"   (parse new {guid} from output)"
                     Log "DRY-RUN: then bcdedit /set {guid} device partition=<staging-letter>:"
                     Log "DRY-RUN: then bcdedit /set {guid} path $loader"
-                    Log "DRY-RUN: then bcdedit /set {fwbootmgr} bootsequence {guid}   (one-shot)"
+                    if ($Menu) { Log "DRY-RUN: then the Windows boot menu: entry first and default, timeout 5, displaybootmenu yes, plus a startup task that restores the old settings (entry text: $menuDesc)" }
+                    else { Log "DRY-RUN: then bcdedit /set {fwbootmgr} bootsequence {guid}   (one-shot)" }
                 } elseif ($isWinMedia) {
                     # Windows media cannot be started as a copy of {bootmgr}: its own boot manager looks the entry's GUID up in the
                     # media's BCD and fails (0xc0000034). Instead the installed Windows boot manager starts WinPE from boot.wim as a RAM disk.
@@ -696,8 +776,8 @@ foreach ($ps in @($plan.steps)) {
                     $m = [regex]::Matches($r.Out, $GUID_RE)
                     if ($r.Code -ne 0 -or $m.Count -ne 1) { throw "bcdedit /create /device failed or GUID not found (exit $($r.Code), matches $($m.Count))" }
                     $og = $m[0].Value
-                    $script:State.boot_entry = [ordered]@{ guid = $null; description = $desc; kind = 'ramdisk'; options_guid = $og }; Save-State
-                    $r = Invoke-Native 'bcdedit' @('/create', '/d', $desc, '/application', 'osloader')
+                    $script:State.boot_entry = [ordered]@{ guid = $null; description = $menuDesc; kind = 'ramdisk'; options_guid = $og }; Save-State
+                    $r = Invoke-Native 'bcdedit' @('/create', '/d', $menuDesc, '/application', 'osloader')
                     $m = [regex]::Matches($r.Out, $GUID_RE)
                     if ($r.Code -ne 0 -or $m.Count -ne 1) { throw "bcdedit /create /application osloader failed or GUID not found (exit $($r.Code), matches $($m.Count))" }
                     $g = $m[0].Value
@@ -711,24 +791,49 @@ foreach ($ps in @($plan.steps)) {
                             @('/set', $g, 'path', '\windows\system32\winload.efi'),
                             @('/set', $g, 'systemroot', '\windows'),
                             @('/set', $g, 'winpe', 'yes'),
-                            @('/set', $g, 'detecthal', 'yes'),
-                            @('/set', '{bootmgr}', 'bootsequence', $g))) {
+                            @('/set', $g, 'detecthal', 'yes'))) {
                         $r = Invoke-Native 'bcdedit' $args2
                         if ($r.Code -ne 0) { throw "bcdedit $($args2 -join ' ') failed (exit $($r.Code))" }
                     }
+                    # Menu first; if it cannot be set up, fall back to the direct one-shot start that is known to work.
+                    $menuOk = $false
+                    if ($Menu) {
+                        try { $menuOk = Enable-BesideMenu $g }
+                        catch {
+                            Log "boot menu not set up, using the direct one-shot start instead: $($_.Exception.Message)" 'WARN'
+                            try { Disable-BesideMenu $script:State.menu } catch { Log "menu restore failed: $($_.Exception.Message)" 'WARN' }
+                            $script:State.menu = $null; Save-State
+                        }
+                    }
+                    if (-not $menuOk) {
+                        $r = Invoke-Native 'bcdedit' @('/set', '{bootmgr}', 'bootsequence', $g)
+                        if ($r.Code -ne 0) { throw "bcdedit /set {bootmgr} bootsequence failed (exit $($r.Code))" }
+                    }
                     [void](Invoke-Native 'bcdedit' @('/enum', $g))
                 } else {
-                    $r = Invoke-Native 'bcdedit' @('/copy', '{bootmgr}', '/d', $desc)
+                    $r = Invoke-Native 'bcdedit' @('/copy', '{bootmgr}', '/d', $menuDesc)
                     $m = [regex]::Matches($r.Out, $GUID_RE)
                     if ($r.Code -ne 0 -or $m.Count -ne 1) { throw "bcdedit /copy failed or GUID not found (exit $($r.Code), matches $($m.Count))" }
                     $g = $m[0].Value
-                    $script:State.boot_entry = [ordered]@{ guid = $g; description = $desc }; Save-State
+                    $script:State.boot_entry = [ordered]@{ guid = $g; description = $menuDesc }; Save-State
                     foreach ($args2 in @(
                             @('/set', $g, 'device', "partition=${stageLetter}:"),
-                            @('/set', $g, 'path', $loader),
-                            @('/set', '{fwbootmgr}', 'bootsequence', $g))) {
+                            @('/set', $g, 'path', $loader))) {
                         $r = Invoke-Native 'bcdedit' $args2
                         if ($r.Code -ne 0) { throw "bcdedit $($args2 -join ' ') failed (exit $($r.Code))" }
+                    }
+                    $menuOk = $false
+                    if ($Menu) {
+                        try { $menuOk = Enable-BesideMenu $g }
+                        catch {
+                            Log "boot menu not set up, using the direct one-shot start instead: $($_.Exception.Message)" 'WARN'
+                            try { Disable-BesideMenu $script:State.menu } catch { Log "menu restore failed: $($_.Exception.Message)" 'WARN' }
+                            $script:State.menu = $null; Save-State
+                        }
+                    }
+                    if (-not $menuOk) {
+                        $r = Invoke-Native 'bcdedit' @('/set', '{fwbootmgr}', 'bootsequence', $g)
+                        if ($r.Code -ne 0) { throw "bcdedit /set {fwbootmgr} bootsequence failed (exit $($r.Code))" }
                     }
                     [void](Invoke-Native 'bcdedit' @('/enum', $g))
                 }

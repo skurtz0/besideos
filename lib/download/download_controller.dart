@@ -109,8 +109,21 @@ class DownloadController extends ChangeNotifier {
         return;
       }
 
-      _set(DownloadPhase.downloading);
       final dest = File('${targetDir.path}/${iso.fileName}');
+      // Already downloaded earlier (this run or a previous one): check it against the checksum and reuse it.
+      // A wrong file is deleted by the check and the download below starts fresh.
+      if (dest.existsSync()) {
+        await _verify(dest, expected);
+        if (_phase == DownloadPhase.verified) {
+          await _rm(File('${dest.path}.part')); // leftover of an interrupted second attempt
+          return;
+        }
+        _received = 0;
+        _total = null;
+        expectedHash = actualHash = null;
+      }
+
+      _set(DownloadPhase.downloading);
       await downloader.download(Uri.parse(iso.url), dest, cancel: token,
           onProgress: (r, t) {
         if (_disposed) return;

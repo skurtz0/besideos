@@ -49,3 +49,18 @@ Windows'ta bir bölümü küçültür, ISO'yu FAT32 `BESIDEOS` bölümüne açar
 - `bcdedit /enum <olmayan guid>` çıkış kodu 0 verir; varlığı çıktıdan anla.
 - Sonsuz animasyonlar yüzünden widget testlerinde `pumpAndSettle` yerine sabit `pump` kullan.
 - Kullanıcıya ait GitHub token'ı bir kez sohbete yapıştırıldı; kullanılmadı, iptal edilmesi gerekiyor.
+
+## Linux ana bilgisayar (GRUB loopback) - 3 Kasım 2026
+
+- `probe/linux/besideos-grub.sh` (`check`, `prepare`, `undo`, `status`; `--execute` olmadan kuru çalıştırma). ISO'yu bölüm küçültmeden, mevcut diskteki dosyadan GRUB `custom.cfg` girişiyle açar; geri almak yalnızca işaretli bloğu siler.
+- Tarifler: `loopback.cfg` olan ISO'lar (Ubuntu ailesi, Mint, Debian live) = doğrulanacak; Fedora (`dracut`) ve Arch (`archiso`) = deneysel, `--allow-experimental` ister. Gerçek açılışta hiçbiri henüz denenmedi.
+- Henüz Flutter arayüzüne bağlı değil ve katalogda `hosts` alanına `linux` eklenmedi. Gerçek açılış testi geçince eklenecek.
+- Test: `test/install/grub_script_test.dart` (sahte ISO ve sahte GRUB klasörü, root gerekmez).
+- Linux ana bilgisayarda da yer açılır (Windows'taki gibi): `besideos-grub.sh disks` küçültülebilir bölümleri (ext4, btrfs, NTFS; GPT) listeler, `prepare --shrink-dev DEV --shrink-gb N` bölümü küçültür (dosya sistemi, sonra `parted resizepart`), `undo` bölümü eski boyutuna büyütür. Her dağıtımın kendi GRUB girişi vardır (`--name`). **Gerçek diskte henüz denenmedi**; ilk deneme yedeği olan, sistem dışı bir bölümde yapılmalı.
+
+## Windows acilis menusu (apply-plan.ps1 -Menu) - 3 Kasim 2026
+
+- Uygulama `-Menu -MenuTitle <ad>` verir: kurulum girdisi {bootmgr} displayorder'in basina eklenir, `default` yapilir, `timeout 5`, `displaybootmenu yes`. Girdi adi: "BesideOS: 5 saniye icinde kurulacak: <ad>".
+- Eski default/timeout/displaybootmenu `apply-state.json` icindeki `menu` altina kaydedilir (degisiklikten ONCE). `ProgramData\BesideOS\menu-reset.cmd` + `BesideOSMenuReset` zamanlanmis gorevi (SYSTEM, onstart) Windows'un bir sonraki acilisinda eskiyi geri koyar ve girdiyi menuden cikarir (tek seferlik). `-Undo` once bunu geri alir, sonra girdiyi siler.
+- Menu kurulamazsa betik dogrulanmis eski yola (bootsequence ile dogrudan acilis) duser; `-Menu` verilmezse davranis eskisiyle ayni.
+- **Gercek Windows'ta DENENMEDI.** Ozellikle: Linux ISO'su icin ({bootmgr} kopyasi, firmware uygulamasi) Windows menusunden secilince acilip acilmadigi bilinmiyor; Windows ISO'su (ramdisk osloader) icin menu daha guvenli bir yol.

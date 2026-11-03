@@ -61,12 +61,12 @@ void main() {
   });
 
   testWidgets('shows supported hosts: check only for hosts in distro.hosts', (t) async {
-    // mint hosts: windows, linux. Linux guest on linux is unsupported by matrix; mac M1/M2 not in hosts.
+    // mint hosts: windows, linux (both supported by the matrix); mac M1/M2 not in hosts.
     await t.pumpWidget(page(catalog.distros.first));
     expect(find.textContaining(supportFor(Host.windows, DistroFamily.linux).reason), findsOneWidget);
     expect(find.textContaining(supportFor(Host.macOther, DistroFamily.linux).reason), findsOneWidget);
-    expect(find.text('✓'), findsOneWidget);
-    expect(find.text('✗'), findsNWidgets(3));
+    expect(find.text('✓'), findsNWidgets(2));
+    expect(find.text('✗'), findsNWidgets(2));
   });
 
   testWidgets('hosts [windows] gives no check for Mac M1/M2', (t) async {
@@ -170,8 +170,8 @@ void main() {
 
   testWidgets('summary excludes hosts the matrix rejects', (t) async {
     final x = Distro(
-      id: 'lx', name: 'Ad lx', family: DistroFamily.linux, tagline: '', description: '', bestFor: '',
-      look: '', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['linux'],
+      id: 'lx', name: 'Ad lx', family: DistroFamily.windows, tagline: '', description: '', bestFor: '',
+      look: '', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['mac-m1m2'],
       downloadPage: '', userSuppliedIso: false, license: '',
     );
     await t.pumpWidget(page(x));

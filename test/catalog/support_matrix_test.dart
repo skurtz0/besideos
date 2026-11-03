@@ -22,10 +22,10 @@ void main() {
     expect(hostKey(Host.macOther), isNull);
   });
   test('macOther→windows unsupported', () => expect(supportFor(Host.macOther, DistroFamily.windows).supported, isFalse));
-  test('linux→linux unsupported', () {
+  test('linux→linux supported through a GRUB entry, no shrinking', () {
     final e = supportFor(Host.linux, DistroFamily.linux);
-    expect(e.supported, isFalse);
-    expect(e.reason, contains('kapsam dışı'));
+    expect(e.supported, isTrue);
+    expect(e.reason, contains('GRUB'));
   });
   test('unsupportedTargets lists macOS and Windows-on-Apple-Silicon', () {
     final keys = unsupportedTargets.map((e) => e.key);

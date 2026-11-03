@@ -40,7 +40,7 @@ class _BesideSiteState extends State<BesideSite> {
 
   Route<dynamic> _route(RouteSettings s) {
     final seg = (Uri.tryParse(s.name ?? '')?.pathSegments ?? const <String>[]).where((e) => e.isNotEmpty);
-    if (seg.isEmpty || seg.first != 'distros') {
+    if (seg.isEmpty || (seg.first != 'distros' && seg.first != 'boot')) {
       return MaterialPageRoute(settings: s, builder: (_) => HomePage(catalog: _catalog));
     }
     return MaterialPageRoute(
@@ -570,19 +570,19 @@ class _Status extends StatelessWidget {
           width: 48,
           height: 48,
           decoration: BoxDecoration(color: kWarn.withAlpha(40), borderRadius: BorderRadius.circular(14)),
-          child: const Icon(Icons.construction_rounded, color: kWarn, size: 26),
+          child: const Icon(Icons.backup_rounded, color: kWarn, size: 26),
         ),
         const SizedBox(width: 16),
         const Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Durum: erken geliştirme',
+              Text('Kurmadan önce yedek al',
                   style: TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
               SizedBox(height: 8),
               Text(
-                'Windows uygulaması dağıtımı indirip kuruluma hazırlayabiliyor, ama henüz geniş çapta denenmedi. '
-                'Kurmadan önce önemli dosyalarını mutlaka yedekle.',
+                'BesideOS, yeni sistem için diskinde yer açar. Dosyaların silinmez, ama disk işlemlerinde nadiren de olsa sorun çıkabilir; '
+                'önemli dosyalarını yedeklemeni öneririz. Vazgeçersen "Değişiklikleri geri al" ile eski haline dönebilirsin.',
                 style: TextStyle(color: kMuted, fontSize: 16, height: 1.6),
               ),
             ],

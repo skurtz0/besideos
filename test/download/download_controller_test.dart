@@ -53,6 +53,23 @@ void main() {
     await dir.delete(recursive: true);
   });
 
+  test('an ISO that is already on disk and matches its checksum is reused, not downloaded again', () async {
+    File('${dir.path}/a.iso').writeAsBytesSync(data);
+    final c = ctl();
+    await c.start(iso());
+    expect(c.phase, DownloadPhase.verified);
+    expect(c.file!.path, '${dir.path}/a.iso');
+    expect(hits, 1, reason: 'only the checksum file was fetched');
+  });
+
+  test('a wrong ISO already on disk is replaced by a fresh download', () async {
+    File('${dir.path}/a.iso').writeAsBytesSync([1, 2, 3]);
+    final c = ctl();
+    await c.start(iso());
+    expect(c.phase, DownloadPhase.verified);
+    expect(hits, 2);
+  });
+
   test('happy path ends verified with matching checksum file', () async {
     final c = ctl();
     await c.start(iso());

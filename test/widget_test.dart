@@ -12,6 +12,6 @@ void main() {
 
     expect(find.textContaining('Bilgisayarına USB bellek gerekmeden ikinci bir sistem kur.'), findsOneWidget);
     expect(find.text('Başlamak için tıklayın'), findsOneWidget);
-    expect(find.text('Durum: erken geliştirme'), findsOneWidget);
+    expect(find.text('Kurmadan önce yedek al'), findsOneWidget);
   });
 }

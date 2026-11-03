@@ -28,7 +28,13 @@ class SystemProcessRunner implements ProcessRunner {
   }
 
   @override
-  Future<RunResult> script(File script, List<String> args, {bool elevated = false}) {
+  Future<RunResult> script(File script, List<String> args, {bool elevated = false}) async {
+    if (script.path.endsWith('.sh')) {
+      if (!elevated) return exec('bash', [script.path, ...args]);
+      // pkexec shows the system password dialog; 126 = dismissed, 127 = not authorized.
+      final r = await exec('pkexec', ['bash', script.path, ...args]);
+      return r.exitCode == 126 || r.exitCode == 127 ? RunResult(kElevationDeclined, r.stdout, r.stderr) : r;
+    }
     const base = ['-NoProfile', '-ExecutionPolicy', 'Bypass'];
     if (!elevated) return exec('powershell.exe', [...base, '-File', script.path, ...args]);
     return exec('powershell.exe', [...base, '-EncodedCommand', encodePowerShell(elevatedCommand(script.path, args))]);

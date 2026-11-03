@@ -18,6 +18,7 @@ bool _isIso(String path) => path.toLowerCase().endsWith('.iso');
 /// Shows the Windows "open file" dialog for ISO files. Returns null when the person cancels.
 /// The path comes back base64-encoded so Turkish letters in folder names survive the console code page.
 Future<File?> pickIsoFile(ProcessRunner runner) async {
+  if (Platform.isLinux) return _pickIsoFileLinux(runner);
   const cmd = r'''
 $ProgressPreference = 'SilentlyContinue'
 Add-Type -AssemblyName System.Windows.Forms
@@ -45,6 +46,28 @@ if ($ok -eq [System.Windows.Forms.DialogResult]::OK) { [Convert]::ToBase64String
   }
 }
 
+/// Linux: the desktop's own file dialog (KDE's kdialog, else GNOME's zenity), opened in Downloads.
+Future<File?> _pickIsoFileLinux(ProcessRunner runner) async {
+  final home = Platform.environment['HOME'];
+  final start = home == null ? '.' : '$home/Downloads/';
+  final dialogs = <(String, List<String>)>[
+    ('kdialog', ['--title', 'Kurmak istediğin ISO dosyasını seç', '--getopenfilename', start, 'ISO dosyaları (*.iso)']),
+    ('zenity', ['--file-selection', '--title=Kurmak istediğin ISO dosyasını seç', '--filename=$start', '--file-filter=*.iso']),
+  ];
+  for (final (exe, args) in dialogs) {
+    try {
+      final r = await runner.exec(exe, args);
+      final path = r.stdout.trim();
+      if (r.exitCode != 0 || path.isEmpty) return null; // the person cancelled
+      final f = File(path);
+      return _isIso(path) && f.existsSync() ? f : null;
+    } catch (_) {
+      // this dialog program is not installed: try the next one
+    }
+  }
+  return null;
+}
+
 /// ISO files directly inside Downloads, Desktop and Documents, newest first (at most [limit]).
 List<LocalIso> findLocalIsos({Map<String, String>? env, int limit = 6, List<Directory>? dirs}) {
   final e = env ?? Platform.environment;
@@ -53,6 +76,8 @@ List<LocalIso> findLocalIsos({Map<String, String>? env, int limit = 6, List<Dire
       [
         if (home != null) ...[
           Directory('$home${Platform.pathSeparator}Downloads'),
+          // where BesideOS puts the ISOs it downloads
+          Directory('$home${Platform.pathSeparator}Downloads${Platform.pathSeparator}BesideOS'),
           Directory('$home${Platform.pathSeparator}Desktop'),
           Directory('$home${Platform.pathSeparator}Documents'),
         ],

@@ -242,7 +242,7 @@ void main() {
     });
     await t.pump();
     expect(c.phase, InstallPhase.applied);
-    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -OutDir');
+    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -OutDir -Menu');
     // the computer is NOT restarted by itself: the person gets a button and a confirmation
     expect(runner.calls.any((x) => x.startsWith('shutdown')), isFalse);
     expect(find.text('Hazır! Şimdi yeniden başlatabilirsin'), findsOneWidget);
@@ -270,6 +270,6 @@ void main() {
 
   testWidgets('Fedora shows its boot caveat before starting', (t) async {
     await t.pumpWidget(section(d: dist(id: 'fedora')));
-    expect(find.textContaining('doğrulanmadı'), findsOneWidget);
+    expect(find.textContaining('bazı bilgisayarlarda açılmayabilir'), findsOneWidget);
   });
 }
