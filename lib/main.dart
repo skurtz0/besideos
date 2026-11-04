@@ -109,7 +109,8 @@ class _BesideSiteState extends State<BesideSite> {
                   onDownload: widget.onDownload,
                   child: child!),
               title: 'BesideOS',
-              onGenerateTitle: (_) => tr('BesideOS: başka bir işletim sistemini bunun yanına kur'),
+              onGenerateTitle: (_) =>
+                  tr('BesideOS: başka bir işletim sistemini bunun yanına kur'),
               debugShowCheckedModeBanner: false,
               theme: base.copyWith(
                 textTheme: tt.copyWith(
@@ -661,11 +662,23 @@ class _Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const _Section(
-      child: Text(
-        'BesideOS MIT lisansıyla açık kaynaktır. Arjun Ingole\'nin hop projesini temel alır '
-        '(o da MIT). Diğer işletim sistemi adları sahiplerine aittir ve yalnızca BesideOS\'un '
-        'neyi kurabildiğini söylemek için kullanılır.',
-        style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'BesideOS MIT lisansıyla açık kaynaktır. Arjun Ingole\'nin hop projesini temel alır '
+            '(o da MIT). Diğer işletim sistemi adları sahiplerine aittir ve yalnızca BesideOS\'un '
+            'neyi kurabildiğini söylemek için kullanılır.',
+            style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
+          ),
+          SizedBox(height: 10),
+          // Kept in English on purpose: it is the wording the SignPath Foundation asks for.
+          Text(
+            'Free code signing provided by SignPath.io, certificate by SignPath Foundation. '
+            'Code signing policy and privacy policy: github.com/skurtz0/besideos#code-signing-policy',
+            style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
+          ),
+        ],
       ),
     );
   }
