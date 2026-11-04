@@ -52,3 +52,9 @@ Türkçe yerel ayar (tr-TR) notu: PowerShell'de büyük/küçük harf duyarsız 
 ## Çekirdek (Rust)
 
 `core/` altında, Windows yanına Linux kurulumunun planını üreten saf bir Rust kütüphanesi ve `besideos-plan` aracı bulunur. Diske dokunmaz, yalnız plan (JSON) ya da gerekçeli ret üretir; gerçek host bilgisi toplama (3b) ve planı uygulama (3c) sonraki aşamalardır. Ayrıntı: `core/README.md`.
+
+## Lisans
+
+Kaynak kod [MIT lisansı](LICENSE) ile yayımlanır. Katalogdaki dağıtım adları, logoları ve ekran görüntüleri ilgili projelerin mülkiyetindedir ve kendi lisanslarına tabidir; MIT lisansı yalnızca BesideOS'un kendi kodunu kapsar.
+
+Windows paketleri ücretsiz kod imzalama için [SignPath Foundation](https://signpath.org) ile imzalanacaktır; imza politikası bu bölüme eklenecektir.

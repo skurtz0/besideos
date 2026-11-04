@@ -48,7 +48,6 @@ Windows'ta bir bölümü küçültür, ISO'yu FAT32 `BESIDEOS` bölümüne açar
 - PowerShell değişken adları büyük/küçük harfe duyarsız (`$id` ile `$Id` aynı).
 - `bcdedit /enum <olmayan guid>` çıkış kodu 0 verir; varlığı çıktıdan anla.
 - Sonsuz animasyonlar yüzünden widget testlerinde `pumpAndSettle` yerine sabit `pump` kullan.
-- Kullanıcıya ait GitHub token'ı bir kez sohbete yapıştırıldı; kullanılmadı, iptal edilmesi gerekiyor.
 
 ## Linux ana bilgisayar (GRUB loopback) - 3 Kasım 2026
 
