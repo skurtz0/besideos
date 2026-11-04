@@ -1,0 +1,151 @@
+Il Linux più diffuso per chi inizia.
+Ubuntu è una distribuzione Linux molto diffusa, con una grande comunità di utenti e tanta documentazione. Per impostazione predefinita include il desktop GNOME.
+Per chi passa a Linux per la prima volta e vuole trovare molto aiuto quando qualcosa non va.
+Una barra delle applicazioni fissa (dock) a sinistra, una sottile barra di stato in alto e un desktop semplice nei toni arancione e viola.
+Un computer con processore a 64 bit
+Spazio libero su disco sufficiente per l'installazione
+Connessione a Internet (per il download)
+Software libero (varie licenze open source, tra cui la GPL)
+Desktop di Ubuntu 24.04 LTS
+Un Ubuntu leggero e semplice.
+Xubuntu è l'edizione di Ubuntu con il desktop Xfce. Prende il software dal repository di Ubuntu ma usa meno risorse.
+Chi vuole la compatibilità con Ubuntu ma un sistema più leggero.
+Un sottile pannello in alto, una barra delle applicazioni a comparsa in basso e un desktop semplice nei toni del blu.
+Desktop di Xubuntu 24.04 LTS
+KDE Plasma molto personalizzabile, basato su Ubuntu.
+Kubuntu è l'edizione di Ubuntu con il desktop KDE Plasma. Puoi cambiarne l'aspetto e il comportamento in quasi ogni modo.
+Chi vuole una disposizione simile a Windows e ama regolare ogni cosa.
+Una barra delle applicazioni simile a quella di Windows in basso, toni blu e finestre moderne con effetti di trasparenza.
+Desktop di Kubuntu 24.04 LTS
+Un desktop tranquillo che sembra familiare a chi viene da Windows.
+L'edizione principale di Linux Mint usa il desktop Cinnamon. Con la barra in basso, il menu Start e l'area di notifica offre una struttura simile alla disposizione di Windows.
+Chi lascia Windows e vuole un'interfaccia familiare e semplice.
+Barra delle applicazioni in basso, menu Start a sinistra e area di notifica a destra; un desktop dalla disposizione classica con accenti verdi.
+Desktop di Linux Mint Cinnamon 22.3
+Cinnamon (consigliato)
+Un desktop tranquillo ed elegante che sembra familiare agli utenti di Windows. La scelta migliore per la maggior parte delle persone.
+Xfce (leggero)
+Più leggero e veloce per i computer vecchi o lenti.
+Desktop di Linux Mint Xfce (immagine di una versione precedente)
+MATE (classico)
+Un desktop di vecchio stile, semplice e molto regolabile.
+Desktop di Linux Mint MATE (immagine della versione 20)
+Un sistema pratico per sviluppatori e giocatori.
+Pop!_OS è un sistema basato su Ubuntu di System76. Si distingue per la disposizione automatica delle finestre e il supporto delle schede grafiche per i giochi.
+Chi sviluppa software e gioca.
+Una sottile barra in alto, un desktop semplice con tema scuro e accenti turchesi.
+Il file ISO del sistema (se è sul tuo computer, lo scegli tu)
+Desktop di Pop!_OS 24.04 LTS
+Schermata di installazione di Pop!_OS (immagine della versione 20.04)
+Un Linux familiare per chi viene da Windows.
+Zorin OS rende più facile il passaggio a Linux con disposizioni familiari. È basato su Ubuntu.
+Chi viene da Windows e non vuole sentirsi spaesato.
+Una barra delle applicazioni e un menu Start come in Windows; un desktop elegante nei toni del blu.
+Desktop di Zorin OS 17.3
+Un Linux elegante e semplice.
+elementary OS è noto per il design semplice e le applicazioni proprie. È basato su Ubuntu e usa il desktop Pantheon.
+Chi vuole un'interfaccia elegante e semplice.
+Una sottile barra in alto, un dock centrato in basso e finestre con gli angoli arrotondati.
+Desktop di elementary OS 8.0
+Un sistema operativo universale gestito dalla comunità, noto per la stabilità.
+Debian è un sistema operativo sviluppato da una comunità di volontari e noto per la stabilità. Costituisce la base di molte altre distribuzioni.
+Chi vuole un sistema stabile e semplice e conosce un po' Linux.
+Varia a seconda dell'ambiente desktop scelto; l'aspetto predefinito è semplice e sobrio.
+Desktop di Debian 13 (Trixie) GNOME
+Live: Xfce (prova prima)
+Puoi provare il sistema prima di installarlo. Desktop Xfce leggero.
+Desktop di Debian 13 Xfce
+Live: KDE Plasma (prova prima)
+Puoi provare il sistema prima di installarlo. Desktop KDE ricco e personalizzabile.
+Desktop di Debian 13 KDE Plasma
+Stabile, leggero e pieno di strumenti.
+MX Linux è basato su Debian e include una propria piccola raccolta di strumenti. Funziona in modo fluido sui computer di fascia media e più vecchi.
+Chi vuole un sistema leggero e stabile.
+Un pannello sul bordo, uno sfondo blu-verde e un desktop che mostra informazioni come l'orologio.
+Desktop predefinito di MX Linux 18.3 (immagine di una versione precedente)
+Una distribuzione sostenuta dalla comunità con software aggiornato.
+Fedora Workstation è una distribuzione Linux che include il desktop GNOME ed è sviluppata dal Progetto Fedora.
+Chi vuole vedere software aggiornato e strumenti per sviluppatori.
+Una sottile barra in alto, applicazioni a schermo intero con vista delle attività e un semplice desktop GNOME nei toni del blu.
+Desktop di Fedora 42 Workstation
+Schermata di installazione di Fedora (Anaconda, Fedora 42)
+Un Linux pronto per i giochi.
+Bazzite è un sistema basato su Fedora pensato per giocare. Steam e i driver delle schede grafiche sono già pronti; poiché i file di sistema sono protetti, è difficile da rovinare.
+Chi vuole giocare sul computer e cerca un'esperienza simile alla Steam Deck.
+Una barra delle applicazioni simile a quella di Windows con KDE; in modalità console l'interfaccia di Steam si apre a schermo intero.
+Spazio libero su disco sufficiente per l'installazione (l'ISO è circa 8 GB)
+Desktop di Bazzite 42 KDE
+Desktop, KDE (scheda grafica AMD / Intel)
+La scelta giusta per la maggior parte dei computer. Scegli questa se la tua scheda grafica non è Nvidia.
+Desktop, KDE (scheda grafica Nvidia)
+Scegli questa se la tua scheda grafica è Nvidia; i driver sono già pronti.
+Desktop, GNOME (scheda grafica AMD / Intel)
+Per chi preferisce il semplice desktop GNOME a KDE.
+Desktop di Bazzite 42 GNOME
+Modalità console in stile Steam Deck
+L'interfaccia di Steam si apre appena accendi il computer. Per i computer collegati al televisore e le console portatili.
+Un Arch Linux facile da installare.
+Manjaro è un sistema basato su Arch Linux con software aggiornato. È facile da installare e si aggiorna di continuo.
+Chi vuole il software più recente e ha un po' di esperienza.
+Varia a seconda del desktop scelto; un aspetto moderno con accenti verdi.
+Desktop di Manjaro 24.0 KDE Plasma
+Un sistema veloce e ottimizzato basato su Arch.
+CachyOS è un sistema veloce basato su Arch Linux, con pacchetti ottimizzati per il processore e un kernel regolato. Il desktop lo scegli tu durante l'installazione.
+Utenti che cercano prestazioni e hanno un po' di esperienza.
+Varia a seconda del desktop scelto; per impostazione predefinita un KDE Plasma moderno con tema scuro.
+Desktop di CachyOS KDE Plasma (2025.08)
+Un elegante desktop per sviluppatori già pronto, usato con la tastiera.
+Omarchy è un sistema costruito su Arch Linux, con il gestore di finestre Hyprland e strumenti di sviluppo già pronti. Include molti temi.
+Chi lavora soprattutto con la tastiera, sviluppa software e ama smanettare con il proprio sistema.
+Finestre piatte e senza bordi si dispongono affiancate; temi scuri ed eleganti, una sottile barra in alto.
+Software libero (MIT)
+Desktop predefinito di Omarchy
+Un sistema solido con potenti strumenti di gestione.
+openSUSE è una distribuzione di lunga tradizione, di origine tedesca. La gestione del sistema è semplice con YaST; l'edizione Tumbleweed si aggiorna di continuo.
+Chi vuole una base solida e potenti strumenti di gestione.
+Un desktop moderno e pulito con accenti verdi.
+Desktop di openSUSE Tumbleweed, KDE Plasma 6
+Il leggendario Windows con la collina verde e la barra blu.
+Windows XP è un sistema operativo commerciale molto vecchio di Microsoft e da tempo non riceve aggiornamenti di sicurezza. Molto probabilmente non funzionerà sui computer nuovi. BesideOS non distribuisce il file ISO.
+Chi vuole usare programmi e hardware molto vecchi, o è solo curioso. Ti consigliamo di non collegarlo a Internet.
+Una barra delle applicazioni blu, un pulsante «Start» verde e la famosa immagine del desktop con la collina verde.
+Un computer vecchio (avvio BIOS)
+Una licenza Windows valida
+Non funziona sui computer nuovi (UEFI); provarlo in una macchina virtuale è più sicuro
+Commerciale (licenza Microsoft)
+Desktop di Windows XP: menu Start e finestra Risorse del computer
+Il Windows classico con finestre trasparenti.
+Windows 7 è il sistema operativo commerciale di Microsoft e non riceve più aggiornamenti di sicurezza. Potrebbe non funzionare sui computer nuovi (UEFI). BesideOS non distribuisce il file ISO.
+Chi vuole eseguire programmi vecchi e hardware vecchio.
+Finestre con effetto vetro trasparente, una grande barra delle applicazioni in basso e un menu Start classico.
+Un processore a 32 o 64 bit
+Si consiglia l'avvio legacy (BIOS/CSM); potrebbe non installarsi sui computer UEFI nuovi
+Desktop di Windows 7 e menu Start
+Il vecchio Windows con una schermata Start a riquadri.
+Windows 8.1 è il sistema operativo commerciale di Microsoft e non riceve più aggiornamenti di sicurezza. BesideOS non distribuisce il file ISO; porti tu la tua ISO.
+Chi ha bisogno di Windows 8.1 per un vecchio programma o hardware.
+Una schermata Start fatta di riquadri colorati a schermo intero e un desktop classico.
+Un processore a 64 bit o a 32 bit
+Per sicurezza, ti consigliamo di non collegarlo a Internet
+Schermata Start di Windows 8.1
+La versione precedente di Microsoft, molto diffusa.
+Windows 10 è il sistema operativo commerciale di Microsoft. BesideOS non distribuisce il file ISO; scegli la tua ISO oppure la scarichi dalla pagina ufficiale di Microsoft.
+Chi vuole usare Windows su computer che non soddisfano i requisiti di Windows 11.
+Un menu Start a sinistra con riquadri animati, una barra delle applicazioni in basso.
+Un processore a 64 bit
+Desktop di Windows 10: menu Start e pannello delle notifiche
+La versione attuale di Windows di Microsoft.
+Windows 11 è il sistema operativo commerciale di Microsoft. BesideOS non distribuisce il file ISO; scegli la tua ISO oppure la scarichi dalla pagina ufficiale di Microsoft.
+Chi vuole eseguire applicazioni e giochi che richiedono Windows.
+Una barra delle applicazioni e un menu Start centrati, finestre con gli angoli arrotondati.
+Un computer con supporto UEFI e in grado di usare Secure Boot
+TPM 2.0 (requisito ufficiale)
+Desktop di Windows 11 e menu Start
+Windows per prove di server e di laboratorio.
+Windows Server 2025 è il sistema operativo server di Microsoft. La versione di prova si scarica dalla pagina ufficiale di Microsoft; BesideOS non distribuisce il file ISO.
+Chi vuole imparare i ruoli del server e gli strumenti di gestione.
+Una barra delle applicazioni e un menu Start simili a quelli di Windows 11; include gli strumenti di gestione del server.
+Un computer a 64 bit con supporto UEFI
+Una versione di prova o una licenza server valida
+Desktop di Windows Server 2025 (interfaccia in tedesco)
+Immagine: {text}

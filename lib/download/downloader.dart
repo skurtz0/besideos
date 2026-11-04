@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import '../l10n/l10n.dart';
 
 class DownloadCancelled implements Exception {
   @override
@@ -143,7 +144,7 @@ class Downloader {
       if (resp.contentLength >= 0) total = resp.contentLength;
     } else {
       await resp.drain<void>().timeout(idleTimeout);
-      throw DownloadException('Sunucu hata kodu: $code');
+      throw DownloadException(tr('Sunucu hata kodu: {code}', {'code': code}));
     }
     if (maxBytes != null && (total ?? resp.contentLength) > maxBytes) {
       await resp.drain<void>().catchError((_) {});

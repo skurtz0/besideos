@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    // The pages.dev address is only the origin of the site: visitors always end up on besideos.com.
+    if (/(^|\.)pages\.dev$/.test(location.hostname)) {
+      location.replace("https://besideos.com" + location.pathname + location.search + location.hash);
+    }
+  </script>
   <base href="$FLUTTER_BASE_HREF">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">

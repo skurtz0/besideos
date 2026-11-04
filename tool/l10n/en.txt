@@ -1,0 +1,260 @@
+Step by step
+Home
+If you have unsaved work, save it. If you change your mind, press the button below.
+Open source, MIT
+Learn your boot menu key (usually F12, F10, F9 or Esc). If the installer does not appear on its own, pick "<system name> installer" from that menu (e.g. "Debian installer").
+Network error
+It failed.
+Check your computer before you start
+Click to start
+Tick the box above to begin.
+Shall we start?
+Unexpected error.
+Unexpected error: {e}
+BesideOS is open source under the MIT license. It is based on the hop project by Arjun Ingole (also MIT). Other operating system names belong to their owners and are used only to say what BesideOS can install.
+BesideOS makes room on your disk and prepares the installation; when it is ready, you restart. Windows stays exactly as it is.
+BesideOS makes room on your disk for the new system. Your files are not deleted, but disk operations can rarely go wrong, so we recommend backing up your important files. If you change your mind, "Undo the changes" brings everything back.
+The computer is restarting in 15 seconds
+The computer will restart in 15 seconds. The boot menu appears for 5 seconds at startup, with the {sys} installer selected; you can pick an installed system instead. Save your open work now.
+The computer seems to have started in BIOS (legacy) mode; UEFI is recommended.
+The computer is prepared
+Your computer must start in UEFI mode (turn "Legacy/CSM" off in the BIOS settings).
+Your computer must start in UEFI mode (turn "Legacy/CSM" off in the BIOS settings). This method does not work in legacy BIOS mode.
+Checking your computer
+Install a second system on your computer without a USB stick.
+ISO files on your computer
+Nothing has changed on your computer yet. See what will happen, then start.
+Nothing is changing on your computer yet.
+What should your computer have?
+You pick the file that is on your computer or that you downloaded.
+Good to know
+One partition will be shrunk and one entry will be added to the GRUB menu. The computer does NOT restart by itself; you will choose that later.
+It restarts once
+After one restart, the new system is installed next to the old one.
+For the next startup, this entry is chosen once.
+At the next startup the installer appears. After that, the computer starts as usual.
+Something went wrong
+You press one and start installing it.
+Pick one. If you are not sure, you can pick the first.
+Pick one. We will show you step by step how it is installed.
+Pick one; see how it looks and what it needs.
+Formatting (format) should happen only in the newly created empty space. Do not touch the Windows partitions or the BESIDEOS partition.
+Free space was made on the disk that holds drive {letter}:; pick that disk in the installer.
+This ISO cannot be started on this computer.
+This ISO file cannot be started directly with GRUB (it lacks the information needed to boot from an ISO). It is probably a small installer such as "netinst"; try the "Live" version of the same system.
+The way to start this kind of ISO has not been tested yet.
+Cannot install on this computer right now
+GRUB was not found on this computer (there may be another boot manager such as systemd-boot).
+This computer's GRUB menu does not read custom entries; BesideOS cannot work here.
+This distribution is not in this guide.
+This file is not a readable ISO image.
+This old Windows version may not start on newer computers (UEFI). If it does not, "Undo the changes" restores everything.
+What is this system?
+You bring this system's ISO file yourself; you do not need to type a path or a checksum, just pick the file. We will first show you what will be done. Nothing changes on your computer until you approve.
+This system's installer may not start on some computers. If it does not, "Undo the changes" restores everything.
+This feature works in the BesideOS desktop app, on a Windows computer. Here you can get to know the system and download the ISO file.
+Not found
+Shrinking a partition counts as an operation that cannot be undone: "Undo" tries to grow the partition back to its old size, but cannot if the new system was installed in that space.
+Shrinking a partition can rarely cause problems.
+There is no such page.
+You can try choosing a smaller amount of space:
+If you want to start later, restart the computer yourself; the installer appears at the first startup. If it does not, pick the "{sys} installer" entry in the GRUB menu (Shift or Esc). When the installation is done, you can remove the entry with "undo".
+If you want to start later, restart the computer yourself; the installer appears at the first startup. If it does not, pick "{sys} installer" from the boot menu. When the installation is done, you can delete the temporary partition named BESIDEOS.
+An earlier installation was left unfinished
+Distributions
+Back to distributions
+The changes were undone
+Undoing the changes…
+Undo the changes
+Disk information could not be collected.
+On the disk screen, pick "Unallocated space" and click "Next". Windows creates its own partitions there.
+Disk error
+Disk error: the file could not be written.
+When the installer asks about the disk, do NOT choose "Erase the entire disk". Choose "Install alongside" or "Something else" (manual partitioning) and use only the "free space".
+Disk {n}
+This is how the disk looks now.
+The disks could not be read. {reason}
+Space is made on your disks and an entry that starts your ISO is added to the GRUB menu.
+The file could not be read or its checksum is invalid.
+File too large
+If you do not have the file, you can download it from the official page:
+Checking that the file is not corrupted…
+Verification failed (disk error).
+Getting the verification information…
+If you are not sure, leave the installation at that screen, restart the computer and choose "undo" in BesideOS.
+If you are not sure, leave the installation at that screen; you can shut the computer down and go back to Windows, then just choose "undo" in BesideOS.
+Yes, start
+Yes, restart
+No matching distribution
+An entry named "{sys} installer" is added to the GRUB boot menu; the ISO file stays where it is.
+An entry "{sys} installer" is added to the GRUB boot menu.
+If the GRUB menu does not appear on its own, hold Shift or press Esc at startup and pick the "BesideOS" entry.
+Undoing failed.
+We recommend undoing.
+BesideOS does the rest.
+Invalid address.
+Invalid file name.
+Unsafe address rejected
+Which computer are you on?
+Which computers can it be installed on?
+Which system do you want to install?
+Which systems can you install?
+Which one do you want?
+When you are ready, you restart. At startup the menu appears for 5 seconds with the {sys} installer selected; your installed systems are in the same list.
+Ready! You can restart now
+Preparing, please wait…
+All
+Everything is ready!
+Nothing has changed.
+ISO files (*.iso)
+Click to pick my own ISO file and install
+You pick your ISO file
+ISO file
+The ISO file is on a file system GRUB cannot read. Copy the file to an ext4, btrfs, xfs or FAT32 disk.
+The ISO file was not found.
+The ISO file stays where it is: {path}
+The ISO file is on an encrypted disk; GRUB cannot read it. Copy it to an unencrypted disk.
+The ISO file must be outside the partition you will install to (e.g. on a separate disk). The installer cannot delete the partition that holds its own ISO.
+The ISO file is on a disk you could install to. The installer cannot delete the partition that holds its own ISO; install the new system into the free space BesideOS made.
+Do not touch the partition that holds the ISO file or your current system; formatting (format) should happen only in the newly created space.
+The ISO could not be downloaded or verified.
+The ISO contents could not be examined. {detail}
+The ISO could not be checked. {detail}
+The "xorriso" program is needed to look inside the ISO. Install it and try again.
+Close
+Catalog
+The catalog is empty
+The catalog could not be loaded: {msg}
+I want to pick my own ISO file and install
+Who it is for: {text}
+Back up before installing
+Pick the ISO file you want to install
+Download the BesideOS app to install
+Click to install
+Systems it can be installed beside
+Installation
+The installer component is missing
+The installation files are placed on the same disk.
+The installation files are placed in a small partition on the same disk. No USB stick is needed.
+When the installer opens, do NOT choose "Erase the entire disk" at the disk question. Choose "Something else" (manual partitioning) and use only the free (unallocated) space BesideOS made.
+The installer appears.
+The installation will be prepared: free space will be made and files will be copied. The computer does NOT restart by itself; you will choose that later.
+The installation is prepared
+Preparing the installation…
+Preparing the installation failed.
+Installation is not possible.
+Start the installation
+See the installation
+Linux
+On a Linux computer, Windows can be installed in a separate partition as a dual boot.
+On a Linux computer, another Linux can be started from its ISO file with a GRUB entry and installed in free space (no partition is shrunk).
+Linux systems
+Install beside Linux
+License: {text}
+Desktop: {text}
+Your current system and files stay as they are. A partition is shrunk to make free space; {name} starts from its ISO file with a GRUB entry.
+How it looks
+How it works
+What kind?
+What will happen?
+A window asking for your password will open.
+A window asking for your password will open. Do not close this window. The computer does not restart by itself.
+Preparing the plan
+The plan could not be made (code {code}). {detail}
+After you see the plan and confirm that you backed up your files, free space is made on the disk.
+Official page
+This file name is not in the checksum file; it could not be verified. The catalog may be out of date; download from the official page.
+The checksum did not match. The file was not deleted; check the SHA-256 value.
+The checksum did not match; the file was deleted.
+Secure Boot is on. ISOs with unsigned kernels may not start; if the installer menu does not appear, turn Secure Boot off in the BIOS.
+With Secure Boot on, some ISOs may not start. If the installer does not appear, turn Secure Boot off in the BIOS settings.
+With Secure Boot on, some systems may not start. If the installer does not appear, turn Secure Boot off in the BIOS settings; you can turn it back on after the installation.
+The chosen file was not found or is not an ISO file.
+The ISO file you chose is being examined
+Server error code: {code}
+The server is not responding
+The server's reply is invalid
+Open the app for one-click install
+Technical details
+Try again
+Based on: {text}
+You click
+The app runs on a Windows computer. You pick the system you want in the app and start the installation with one click.
+The app files seem to be missing. Download BesideOS again and open it.
+Cancel
+Cancel, undo the changes
+Windows
+Windows Setup starts this way, from a RAM disk. It is normal to see errors or warnings during setup; most of the time you can ignore them and continue. If setup makes no progress at all, "Undo the changes" restores everything.
+On a Windows computer, Linux can be installed beside Windows as a dual boot.
+On a Windows computer, a second Windows can be installed in a separate partition as a dual boot.
+Windows will ask for permission: say "Yes".
+Windows will ask for permission: say "Yes". Do not close this window. The computer does not restart by itself.
+Windows needs at least 64 GB; 80 GB is comfortable. Choose more if you will install many programs.
+If you see an error during Windows setup
+Windows systems
+Windows and your files stay as they are. Space is made on your computer for {name}.
+In Windows, Fast Startup and BitLocker must be off. If BitLocker is on, BesideOS refuses to install.
+Install beside Windows
+About {gb} GB of free space is made beside Windows.
+Space is made beside Windows and the files are placed there.
+Only GPT-partitioned disks are supported.
+There may be unfinished changes
+New system
+How much space should we set aside for the new system?
+No partition was found where space could be made for a new system. You need a partition that can be shrunk (ext4, btrfs or NTFS) and has at least {gb} GB free.
+It restarts
+Cancel the restart
+The computer could not be restarted. Restart it yourself.
+After the restart, the boot menu appears for 5 seconds with the "{sys} installer" selected. You can pick one of the installed systems in the list if you like. Restart once you have saved your open work.
+Before starting a new one, you must undo the earlier changes.
+The partition to make space from must be ext4, btrfs or NTFS and have enough free space. The disk must be GPT.
+Space is made
+Space is made: one partition shrinks.
+Which partition should the space come from?
+Which drive should the space come from?
+The space is taken from the free area of the partition you choose. Your files are not deleted. Partitions that are not in the list are on a file system that cannot be shrunk or do not have enough free space.
+The space is taken from the free area of the drive you choose. Your files are not deleted.
+None
+Administrator permission was not given; the disk information could not be read. Nothing was changed.
+Administrator permission was not given; the disks could not be read. Nothing was changed.
+Administrator permission was not given; nothing was undone.
+Administrator permission was not given; nothing was changed.
+There is no redirect address
+{credit}  ·  Click the picture to enlarge
+Partition {device} is shrunk and about {gb} GB of free (unallocated) space is made.
+Partition {device} is shrunk by {gb} GB; the freed space stays empty (unallocated).
+{device} can free at most {gb} GB. Choose a smaller amount or use another partition.
+{disk} · total {total} · {free} free
+{disk} · {fstype} · total {total} · at most {max} can be freed
+{g} GB · recommended
+{host}: {reason}
+Drive {letter}:
+Drive {letter}: ({label})
+About {gb} GB of free space is made on drive {letter}:.
+{mb} MB downloaded
+{name} is downloaded and space is made beside Windows.
+{name} is downloaded, space is made on your disks and an entry is added to the GRUB menu.
+Downloading and checking {name}
+The {name} installer appears.
+{name} · Windows is here
+The {sys} installation files are copied here.
+Choose the disk carefully when installing {sys}
+Drawing. The real plan is shown to you in full before anything changes.
+Too many redirects
+30 GB is enough for most people. Choose more if you will install many programs.
+I backed up my important files
+Back up your important files: shrinking a partition can rarely cause problems.
+Three steps. Nothing changes on your computer until you approve.
+Two systems, one disk. No USB stick.
+Download
+The downloaded file is being examined
+Download failed: {message}
+Click to download
+Not now
+Restart now
+Shall we restart now?
+Current system
+the partition of the system that is running now
+{name} installer
+Windows (cancel installation)
+BesideOS: install another operating system beside this one

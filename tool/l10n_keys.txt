@@ -1,0 +1,260 @@
+Adım adım
+Ana sayfa
+Açık işin varsa kaydet. Vazgeçersen aşağıdaki düğmeye bas.
+Açık kaynak, MIT
+Açılış menüsü tuşunu öğren (genelde F12, F10, F9 ya da Esc). Kurulum ekranı kendiliğinden gelmezse bu menüden "<dağıtım adı> kurulumu" girişini seç (ör. "Debian kurulumu").
+Ağ hatası
+Başarısız oldu.
+Başlamadan önce bilgisayarında kontrol et
+Başlamak için tıklayın
+Başlamak için yukarıdaki kutuyu işaretle.
+Başlayalım mı?
+Beklenmeyen hata.
+Beklenmeyen hata: {e}
+BesideOS MIT lisansıyla açık kaynaktır. Arjun Ingole'nin hop projesini temel alır (o da MIT). Diğer işletim sistemi adları sahiplerine aittir ve yalnızca BesideOS'un neyi kurabildiğini söylemek için kullanılır.
+BesideOS diskinde yer açar ve kurulumu hazırlar; hazır olunca sen yeniden başlatırsın. Windows'un olduğu gibi yerinde kalır.
+BesideOS, yeni sistem için diskinde yer açar. Dosyaların silinmez, ama disk işlemlerinde nadiren de olsa sorun çıkabilir; önemli dosyalarını yedeklemeni öneririz. Vazgeçersen "Değişiklikleri geri al" ile eski haline dönebilirsin.
+Bilgisayar 15 saniye içinde yeniden başlıyor
+Bilgisayar 15 saniye sonra yeniden başlayacak. Açılışta menü 5 saniye görünür: {sys} kurulumu seçili gelir, istersen kurulu bir sistemi seçebilirsin. Açık işlerini şimdi kaydet.
+Bilgisayar BIOS (eski) modunda açılmış görünüyor; UEFI önerilir.
+Bilgisayar hazırlanır
+Bilgisayarın UEFI modunda açılmalı (BIOS ayarlarında "Legacy/CSM" kapalı olsun).
+Bilgisayarın UEFI modunda açılmalı (BIOS ayarlarında "Legacy/CSM" kapalı olsun). Eski BIOS modunda bu yöntem çalışmaz.
+Bilgisayarın kontrol ediliyor
+Bilgisayarına USB bellek gerekmeden ikinci bir sistem kur.
+Bilgisayarında bulunan ISO dosyaları
+Bilgisayarında henüz hiçbir şey değişmedi. Neler olacağına bak, sonra başla.
+Bilgisayarında henüz hiçbir şey değişmiyor.
+Bilgisayarında neler olmalı?
+Bilgisayarındaki ya da indirdiğin dosyayı gösterirsin.
+Bilmen gerekenler
+Bir bölüm küçültülecek ve GRUB menüsüne bir giriş eklenecek. Bilgisayar kendiliğinden yeniden BAŞLAMAZ; bunu sonra sen seçeceksin.
+Bir kez yeniden başlar
+Bir kez yeniden başlayınca yeni sistem eskisinin yanına kurulur.
+Bir sonraki açılış için bir kereliğine bu giriş seçilir.
+Bir sonraki açılışta kurulum ekranı gelir. Sonrasında bilgisayar her zamanki gibi açılır.
+Bir sorun çıktı
+Birine basarsan onu kurmaya başlarsın.
+Birini seç. Emin değilsen ilkini seçebilirsin.
+Birini seç. Nasıl kurulduğunu sana adım adım gösterelim.
+Birini seç; nasıl göründüğünü ve nelerin gerektiğini gör.
+Biçimlendirme (format) yalnızca yeni açılan boş alanda olsun. Windows bölümlerine ve BESIDEOS bölümüne dokunma.
+Boş yer {letter}: sürücüsünün bulunduğu diskte açıldı; kurulum ekranında o diski seç.
+Bu ISO bu bilgisayarda açılamıyor.
+Bu ISO dosyası GRUB ile doğrudan açılamıyor (içinde ISO'dan açılış için gereken bilgi yok). Büyük olasılıkla küçük "netinst" gibi bir kurulum dosyası; aynı sistemin "Canlı" sürümünü seçmeyi dene.
+Bu ISO türü için açılış yöntemi henüz denenmedi.
+Bu bilgisayara şu an kurulamıyor
+Bu bilgisayarda GRUB bulunamadı (systemd-boot gibi başka bir açılış yöneticisi olabilir).
+Bu bilgisayarın GRUB menüsü özel girişleri okumuyor; BesideOS burada çalışamaz.
+Bu dağıtım için bu rehberde yok.
+Bu dosya okunabilir bir ISO görüntüsü değil.
+Bu eski Windows sürümü yeni bilgisayarlarda (UEFI) açılmayabilir. Açılmazsa "Değişiklikleri geri al" ile eski haline dönersin.
+Bu sistem nedir?
+Bu sistemin ISO dosyasını sen getirirsin; yol ya da sağlama kodu yazman gerekmez, dosyayı seçmen yeter. Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.
+Bu sistemin kurulum ekranı bazı bilgisayarlarda açılmayabilir. Açılmazsa "Değişiklikleri geri al" ile eski haline dönersin.
+Bu özellik BesideOS masaüstü uygulamasında, bir Windows bilgisayarda çalışır. Buradan sistemi tanıyabilir ve ISO dosyasını indirebilirsin.
+Bulunamadı
+Bölüm küçültme geri alınamayan bir işlem sayılır: "Geri al" bölümü eski boyutuna büyütmeyi dener, ama yeni sistem o alana kurulduysa büyütemez.
+Bölüm küçültme nadiren de olsa sorun çıkarabilir.
+Böyle bir sayfa yok.
+Daha küçük bir alan seçmeyi deneyebilirsin:
+Daha sonra başlatmak istersen bilgisayarı kendin yeniden başlat; kurulum ekranı ilk açılışta gelir. Açılmazsa GRUB menüsünden (Shift ya da Esc) "{sys} kurulumu" girişini seç. Kurulum bitince girişi "geri al" ile kaldırabilirsin.
+Daha sonra başlatmak istersen bilgisayarı kendin yeniden başlat; kurulum ekranı ilk açılışta gelir. Açılmazsa açılış menüsünden "{sys} kurulumu"nu seç. Kurulum bitince BESIDEOS adlı geçici bölümü silebilirsin.
+Daha önce yarım kalmış bir kurulum var
+Dağıtımlar
+Dağıtımlara dön
+Değişiklikler geri alındı
+Değişiklikler geri alınıyor…
+Değişiklikleri geri al
+Disk bilgisi toplanamadı.
+Disk ekranında "Ayrılmamış alan"ı seç ve "İleri" de. Windows kendi bölümlerini oraya açar.
+Disk hatası
+Disk hatası: dosya yazılamadı.
+Disk sorusunda "Diskin tamamını sil" seçeneğini SEÇME. "Yanına kur" ya da "Başka bir şey" (elle bölümleme) seç ve yalnızca "boş alan"ı kullan.
+Disk {n}
+Diskin şimdi böyle.
+Diskler okunamadı. {reason}
+Disklerinde yer açılır ve GRUB menüsüne ISO'nu açan bir giriş eklenir.
+Dosya okunamadı veya sağlama değeri geçersiz.
+Dosya çok büyük
+Dosyan yoksa resmi sayfadan indirebilirsin:
+Dosyanın bozuk olmadığı kontrol ediliyor…
+Doğrulama başarısız (disk hatası).
+Doğrulama bilgisi alınıyor…
+Emin olamazsan kurulumu o ekranda bırak, bilgisayarı yeniden başlat ve BesideOS'tan "geri al" de.
+Emin olamazsan kurulumu o ekranda bırak; bilgisayarını kapatıp Windows'a dönebilirsin, BesideOS'tan "geri al" demen yeter.
+Evet, başlat
+Evet, yeniden başlat
+Eşleşen dağıtım yok
+GRUB açılış menüsüne "{sys} kurulumu" adlı bir giriş eklenir; ISO dosyası olduğu yerde kalır.
+GRUB açılış menüsüne "{sys} kurulumu" girişi eklenir.
+GRUB menüsü kendiliğinden açılmazsa başlangıçta Shift ya da Esc'e basılı tut ve "BesideOS" girişini seç.
+Geri alma başarısız oldu.
+Geri almanı öneririz.
+Gerisini BesideOS yapar.
+Geçersiz adres.
+Geçersiz dosya adı.
+Güvenli olmayan adres reddedildi
+Hangi bilgisayardasın?
+Hangi bilgisayarlara kurulur?
+Hangi sistemi kurmak istersin?
+Hangi sistemleri kurabilirsin?
+Hangisini istersin?
+Hazır olunca sen yeniden başlatırsın. Açılışta menü 5 saniye görünür, {sys} kurulumu seçili gelir; kurulu sistemlerin de aynı listede.
+Hazır! Şimdi yeniden başlatabilirsin
+Hazırlanıyor, lütfen bekle…
+Hepsi
+Her şey hazır!
+Hiçbir şey değişmedi.
+ISO dosyaları (*.iso)
+ISO dosyamı seçip kurmak için tıklayın
+ISO dosyanı seçersin
+ISO dosyası
+ISO dosyası GRUB'un okuyamadığı bir dosya sisteminde. Dosyayı ext4, btrfs, xfs ya da FAT32 bir diske kopyala.
+ISO dosyası bulunamadı.
+ISO dosyası olduğu yerde kalır: {path}
+ISO dosyası şifreli bir diskte; GRUB okuyamaz. Şifresiz bir diske kopyala.
+ISO dosyası, kuracağın disk bölümünün dışında durmalı (ör. ayrı bir disk). Kurulum ekranı kendi ISO'sunu tuttuğu bölümü silemez.
+ISO dosyası, kurulum yapabileceğin bir diskte duruyor. Kurulumcu kendi ISO'sunun bulunduğu bölümü silemez; yeni sistemi, BesideOS'un açtığı boş alana kur.
+ISO dosyasının bulunduğu bölüme ve mevcut sistemine dokunma, biçimlendirme (format) yalnızca yeni açılan alanda olsun.
+ISO indirilemedi veya doğrulanamadı.
+ISO içeriği incelenemedi. {detail}
+ISO kontrol edilemedi. {detail}
+ISO'nun içine bakmak için "xorriso" programı gerekir. Kur ve tekrar dene.
+Kapat
+Katalog
+Katalog boş
+Katalog yüklenemedi: {msg}
+Kendi ISO dosyamı seçip kurmak istiyorum
+Kimler için: {text}
+Kurmadan önce yedek al
+Kurmak istediğin ISO dosyasını seç
+Kurmak için BesideOS uygulamasını indir
+Kurmak için tıklayın
+Kurulabilir ana sistemler
+Kurulum
+Kurulum bileşeni eksik
+Kurulum dosyaları aynı diske konur.
+Kurulum dosyaları aynı diskteki küçük bir bölüme konur. USB bellek gerekmez.
+Kurulum ekranı açılınca disk sorusunda "Diskin tamamını sil" seçeneğini SEÇME. "Başka bir şey" (elle bölümleme) seç ve yalnızca BesideOS'un açtığı boş (ayrılmamış) alanı kullan.
+Kurulum ekranı açılır.
+Kurulum hazırlanacak: boş yer açılacak ve dosyalar kopyalanacak. Bilgisayar kendiliğinden yeniden BAŞLAMAZ; bunu sonra sen seçeceksin.
+Kurulum hazırlanır
+Kurulum hazırlanıyor…
+Kurulum hazırlığı başarısız oldu.
+Kurulum yapılamıyor.
+Kurulumu başlat
+Kurulumu gör
+Linux
+Linux bilgisayarda Windows, ayrı bir bölüme çift önyükleme olarak kurulabilir.
+Linux bilgisayarda başka bir Linux, ISO dosyasından bir GRUB girişiyle açılıp boş alana kurulabilir (bölüm küçültülmez).
+Linux sistemleri
+Linux'un yanına kur
+Lisans: {text}
+Masaüstü: {text}
+Mevcut sistemin ve dosyaların yerinde kalır. Bir bölüm küçülterek boş yer açılır; {name} ISO dosyasından, bir GRUB girişiyle açılır.
+Nasıl görünür?
+Nasıl çalışır?
+Ne tür?
+Neler olacak?
+Parolanı soran bir pencere açılacak.
+Parolanı soran bir pencere açılacak. Bu pencereyi kapatma. Bilgisayar kendiliğinden yeniden başlamaz.
+Plan hazırlanıyor
+Plan üretilemedi (kod {code}). {detail}
+Planı görüp dosyalarını yedeklediğini onayladıktan sonra diskte boş yer açılır.
+Resmi sayfa
+Sağlama dosyasında bu dosya adı yok; doğrulanamadı. Katalog eskimiş olabilir; resmi sayfadan indir.
+Sağlama toplamı eşleşmedi. Dosya silinmedi; SHA-256 değerini kontrol et.
+Sağlama toplamı eşleşmedi; dosya silindi.
+Secure Boot açık. İmzasız çekirdekli ISO'lar açılmayabilir; kurulum menüsü gelmezse BIOS'tan Secure Boot'u kapat.
+Secure Boot açıkken bazı ISO'lar açılmayabilir. Kurulum ekranı gelmezse BIOS ayarlarından Secure Boot'u kapat.
+Secure Boot açıkken bazı sistemler açılmayabilir. Kurulum ekranı gelmezse BIOS ayarlarından Secure Boot'u kapat, kurulum bitince geri açabilirsin.
+Seçilen dosya bulunamadı ya da bir ISO dosyası değil.
+Seçtiğin ISO dosyası inceleniyor
+Sunucu hata kodu: {code}
+Sunucu yanıt vermiyor
+Sunucu yanıtı geçersiz
+Tek tıkla kurulum için uygulamayı aç
+Teknik ayrıntılar
+Tekrar dene
+Temel aldığı sistem: {text}
+Tıklarsın
+Uygulama bir Windows bilgisayarda çalışır. Kurmak istediğin sistemi uygulamada seçer, tek tıkla kurulumu başlatırsın.
+Uygulama dosyaları eksik görünüyor. BesideOS'u yeniden indirip aç.
+Vazgeç
+Vazgeç, değişiklikleri geri al
+Windows
+Windows Kurulum bu yöntemle, RAM diskten açılır. Kurulum sırasında hata ya da uyarı görmen normaldir; çoğu zaman yok sayıp devam edebilirsin. Kurulum hiç ilerlemezse "Değişiklikleri geri al" ile eski haline dönersin.
+Windows bilgisayarda Linux, Windows yanına çift önyükleme olarak kurulabilir.
+Windows bilgisayarda ikinci bir Windows, ayrı bir bölüme çift önyükleme olarak kurulabilir.
+Windows izin isteyecek: «Evet» de.
+Windows izin isteyecek: «Evet» de. Bu pencereyi kapatma. Bilgisayar kendiliğinden yeniden başlamaz.
+Windows için en az 64 GB gerekir; 80 GB rahat eder. Çok program kuracaksan daha fazlasını seç.
+Windows kurulumunda hata görürsen
+Windows sistemleri
+Windows ve dosyaların yerinde kalır. {name} için bilgisayarında yer açılır.
+Windows'ta Hızlı Başlatma (Fast Startup) ve BitLocker kapalı olmalı. BitLocker açıksa BesideOS kurulumu reddeder.
+Windows'un yanına kur
+Windows'un yanında yaklaşık {gb} GB boş yer açılır.
+Windows'un yanında yer açılır ve dosyalar oraya konur.
+Yalnızca GPT bölümlü diskler destekleniyor.
+Yarım kalmış değişiklikler olabilir
+Yeni sistem
+Yeni sistem için ne kadar yer ayıralım?
+Yeni sistem için yer açılabilecek bir bölüm bulunamadı. Küçültülebilen (ext4, btrfs ya da NTFS) ve en az {gb} GB boş yeri olan bir bölüm gerekir.
+Yeniden başlar
+Yeniden başlatmaktan vazgeç
+Yeniden başlatılamadı. Bilgisayarı kendin yeniden başlat.
+Yeniden başlayınca açılış menüsü 5 saniye görünür; "{sys} kurulumu" seçili gelir. İstersen listedeki kurulu sistemlerden birini seçebilirsin. Açık işlerini kaydedince yeniden başlat.
+Yenisine başlamadan önce eski değişiklikleri geri almalısın.
+Yer açılacak bölüm ext4, btrfs ya da NTFS olmalı ve içinde yeterli boş yer bulunmalı. Disk GPT olmalı.
+Yer açılır
+Yer açılır: bir bölüm küçülür.
+Yer hangi bölümden açılsın?
+Yer hangi sürücüden açılsın?
+Yer, seçtiğin bölümün boş alanından ayrılır. Dosyaların silinmez. Listede olmayan bölümler küçültülemeyen bir dosya sistemindedir ya da yeterli boş yeri yoktur.
+Yer, seçtiğin sürücünün boş alanından ayrılır. Dosyaların silinmez.
+Yok
+Yönetici izni verilmedi; disk bilgisi okunamadı. Hiçbir şey değiştirilmedi.
+Yönetici izni verilmedi; diskler okunamadı. Hiçbir şey değiştirilmedi.
+Yönetici izni verilmedi; geri alınmadı.
+Yönetici izni verilmedi; hiçbir şey değiştirilmedi.
+Yönlendirme adresi yok
+{credit}  ·  Büyütmek için resme tıkla
+{device} bölümü küçültülür ve yaklaşık {gb} GB boş (ayrılmamış) yer açılır.
+{device} bölümü {gb} GB küçültülür; açılan yer boş (ayrılmamış) kalır.
+{device} en fazla {gb} GB yer açabilir. Daha küçük bir alan seç ya da başka bir bölüm kullan.
+{disk} · toplam {total} · {free} boş
+{disk} · {fstype} · toplam {total} · en fazla {max} yer açılabilir
+{g} GB · önerilen
+{host}: {reason}
+{letter}: sürücüsü
+{letter}: sürücüsü ({label})
+{letter}: sürücüsünde yaklaşık {gb} GB boş yer açılır.
+{mb} MB indirildi
+{name} indirilir ve Windows'un yanında yer açılır.
+{name} indirilir, disklerinde yer açılır ve GRUB menüsüne bir giriş eklenir.
+{name} indiriliyor ve kontrol ediliyor
+{name} kurulum ekranı açılır.
+{name} · Windows burada
+{sys} kurulum dosyaları bu yere kopyalanır.
+{sys} kurulurken diski doğru seç
+Çizim. Gerçek plan, bir şey değişmeden önce sana tam olarak gösterilir.
+Çok fazla yönlendirme
+Çoğu kişi için 30 GB yeter. Çok program kuracaksan daha fazlasını seç.
+Önemli dosyalarımı yedekledim
+Önemli dosyalarını yedekle: bölüm küçültme nadiren de olsa sorun çıkarabilir.
+Üç adım. Sen onaylamadan bilgisayarında hiçbir şey değişmez.
+İki sistem, tek disk. USB bellek yok.
+İndir
+İndirilen dosya inceleniyor
+İndirme başarısız: {message}
+İndirmek için tıklayın
+Şimdi değil
+Şimdi yeniden başlat
+Şimdi yeniden başlatalım mı?
+Şimdiki sistem
+şu an çalışan sistemin bölümü
+{name} kurulumu
+Windows (kurulumdan vazgeç)
+BesideOS: başka bir işletim sistemini bunun yanına kur

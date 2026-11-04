@@ -1,24 +1,38 @@
+import 'l10n/text.dart';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'brand.dart';
 import 'catalog/catalog_page.dart' show DistroSections;
 import 'catalog/distro.dart';
 import 'catalog/routes.dart';
 import 'home_sections.dart';
+import 'l10n/l10n.dart';
 import 'site_mode.dart';
 import 'theme.dart';
 
-void main() => runApp(const BesideSite());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await L10n.instance.init();
+  runApp(const BesideSite());
+}
 
-Future<String> _loadCatalogAsset() => rootBundle.loadString('assets/catalog/catalog.json');
+Future<String> _loadCatalogAsset() =>
+    rootBundle.loadString('assets/catalog/catalog.json');
 
 class BesideSite extends StatefulWidget {
   /// [catalog] is injected by tests; otherwise it is loaded (lazily, only for /distros) via [catalogLoader].
-  const BesideSite({this.catalog, this.catalogLoader, this.initialRoute = '/', this.web, this.onDownload, super.key});
+  const BesideSite(
+      {this.catalog,
+      this.catalogLoader,
+      this.initialRoute = '/',
+      this.web,
+      this.onDownload,
+      super.key});
   final String initialRoute;
 
   /// Forces website (true) or desktop-app (false) behaviour; null follows the platform.
@@ -39,9 +53,11 @@ class _BesideSiteState extends State<BesideSite> {
       : (widget.catalogLoader ?? _loadCatalogAsset)().then(Catalog.parse);
 
   Route<dynamic> _route(RouteSettings s) {
-    final seg = (Uri.tryParse(s.name ?? '')?.pathSegments ?? const <String>[]).where((e) => e.isNotEmpty);
+    final seg = (Uri.tryParse(s.name ?? '')?.pathSegments ?? const <String>[])
+        .where((e) => e.isNotEmpty);
     if (seg.isEmpty || (seg.first != 'distros' && seg.first != 'boot')) {
-      return MaterialPageRoute(settings: s, builder: (_) => HomePage(catalog: _catalog));
+      return MaterialPageRoute(
+          settings: s, builder: (_) => HomePage(catalog: _catalog));
     }
     return MaterialPageRoute(
       settings: s,
@@ -50,10 +66,13 @@ class _BesideSiteState extends State<BesideSite> {
         builder: (context, snap) {
           if (snap.hasData) {
             // catalogRoute always returns a MaterialPageRoute; reuse its page.
-            return (catalogRoute(s, snap.data!) as MaterialPageRoute).builder(context);
+            return (catalogRoute(s, snap.data!) as MaterialPageRoute)
+                .builder(context);
           }
           if (snap.hasError) return _CatalogError(snap.error);
-          return const Scaffold(backgroundColor: kBg, body: Center(child: CircularProgressIndicator()));
+          return const Scaffold(
+              backgroundColor: kBg,
+              body: Center(child: CircularProgressIndicator()));
         },
       ),
     );
@@ -73,25 +92,45 @@ class _BesideSiteState extends State<BesideSite> {
     );
     // Larger, airier body text: this is what everything without an explicit size inherits.
     final tt = base.textTheme;
-    return MaterialApp(
-      onGenerateRoute: _route,
-      initialRoute: widget.initialRoute,
-      builder: (context, child) => SiteMode(web: widget.web ?? kIsWeb, onDownload: widget.onDownload, child: child!),
-      title: 'BesideOS',
-      debugShowCheckedModeBanner: false,
-      theme: base.copyWith(
-        textTheme: tt.copyWith(
-          // semi-bold by default so text stays crisp on dark backgrounds
-          bodyLarge: tt.bodyLarge?.copyWith(fontSize: 17, height: 1.55, fontWeight: FontWeight.w600),
-          bodyMedium: tt.bodyMedium?.copyWith(fontSize: 16, height: 1.55, fontWeight: FontWeight.w600),
-          bodySmall: tt.bodySmall?.copyWith(fontSize: 14, height: 1.5, fontWeight: FontWeight.w600),
-          labelLarge: tt.labelLarge?.copyWith(fontSize: 15, fontWeight: FontWeight.w700),
-          labelMedium: tt.labelMedium?.copyWith(fontWeight: FontWeight.w700),
-          titleSmall: tt.titleSmall?.copyWith(fontWeight: FontWeight.w700),
-          titleMedium: tt.titleMedium?.copyWith(fontSize: 18, height: 1.5, fontWeight: FontWeight.w700),
-        ),
-      ),
-    );
+    return ListenableBuilder(
+        listenable: L10n.instance,
+        builder: (context, _) => MaterialApp(
+              locale: L10n.instance.locale,
+              supportedLocales: [for (final l in kLangs) l.locale],
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              onGenerateRoute: _route,
+              initialRoute: widget.initialRoute,
+              builder: (context, child) => SiteMode(
+                  web: widget.web ?? kIsWeb,
+                  onDownload: widget.onDownload,
+                  child: child!),
+              title: 'BesideOS',
+              onGenerateTitle: (_) => tr('BesideOS: başka bir işletim sistemini bunun yanına kur'),
+              debugShowCheckedModeBanner: false,
+              theme: base.copyWith(
+                textTheme: tt.copyWith(
+                  // semi-bold by default so text stays crisp on dark backgrounds
+                  bodyLarge: tt.bodyLarge?.copyWith(
+                      fontSize: 17, height: 1.55, fontWeight: FontWeight.w600),
+                  bodyMedium: tt.bodyMedium?.copyWith(
+                      fontSize: 16, height: 1.55, fontWeight: FontWeight.w600),
+                  bodySmall: tt.bodySmall?.copyWith(
+                      fontSize: 14, height: 1.5, fontWeight: FontWeight.w600),
+                  labelLarge: tt.labelLarge
+                      ?.copyWith(fontSize: 15, fontWeight: FontWeight.w700),
+                  labelMedium:
+                      tt.labelMedium?.copyWith(fontWeight: FontWeight.w700),
+                  titleSmall:
+                      tt.titleSmall?.copyWith(fontWeight: FontWeight.w700),
+                  titleMedium: tt.titleMedium?.copyWith(
+                      fontSize: 18, height: 1.5, fontWeight: FontWeight.w700),
+                ),
+              ),
+            ));
   }
 }
 
@@ -101,14 +140,17 @@ class _CatalogError extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final msg = error is CatalogException ? (error as CatalogException).message : '$error';
+    final msg = error is CatalogException
+        ? (error as CatalogException).message
+        : '$error';
     return Scaffold(
       backgroundColor: kBg,
       appBar: const SiteBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(24),
-          child: Text('Katalog yüklenemedi: $msg', style: const TextStyle(color: kText, fontSize: 18)),
+          child: Text(tr('Katalog yüklenemedi: {msg}', {'msg': msg}),
+              style: const TextStyle(color: kText, fontSize: 18)),
         ),
       ),
     );
@@ -130,8 +172,6 @@ class HomePage extends StatelessWidget {
           children: [
             const _GlowBackground(child: _Section(child: _Hero())),
             const _Section(child: HowItWorks()),
-            const _Section(child: Platforms()),
-            const _Section(child: Safety()),
             if (catalog != null) _Section(child: _Showcase(catalog: catalog!)),
             const _Section(child: _Status()),
             const _Footer(),
@@ -174,12 +214,13 @@ class _Reveal extends StatefulWidget {
 }
 
 class _RevealState extends State<_Reveal> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller =
-      AnimationController(vsync: this, duration: const Duration(milliseconds: 650));
+  late final AnimationController _controller = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 650));
   late final Animation<double> _curve =
       CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic);
   late final Animation<Offset> _slide =
-      Tween<Offset>(begin: const Offset(0, 0.06), end: Offset.zero).animate(_curve);
+      Tween<Offset>(begin: const Offset(0, 0.06), end: Offset.zero)
+          .animate(_curve);
   ScrollPosition? _position;
   bool _started = false;
 
@@ -269,7 +310,8 @@ class _GlowBackgroundState extends State<_GlowBackground>
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: RadialGradient(
-              center: Alignment.lerp(const Alignment(-0.8, -0.7), const Alignment(0.8, 0.2), v)!,
+              center: Alignment.lerp(
+                  const Alignment(-0.8, -0.7), const Alignment(0.8, 0.2), v)!,
               radius: 1.1,
               colors: [kAccent.withAlpha(48), kBg.withAlpha(0)],
             ),
@@ -309,7 +351,8 @@ class _Hero extends StatelessWidget {
           Text(
             'BesideOS diskinde yer açar ve kurulumu hazırlar; hazır olunca sen yeniden başlatırsın. '
             "Windows'un olduğu gibi yerinde kalır.",
-            style: TextStyle(color: kMuted, fontSize: narrow ? 17 : 19, height: 1.6),
+            style: TextStyle(
+                color: kMuted, fontSize: narrow ? 17 : 19, height: 1.6),
           ),
           const SizedBox(height: 30),
           SizedBox(
@@ -317,16 +360,22 @@ class _Hero extends StatelessWidget {
             width: narrow ? double.infinity : null,
             child: FilledButton.icon(
               // On the website the button gets the app; inside the app it opens the list of systems.
-              onPressed: () => web ? SiteMode.download(context) : Navigator.pushNamed(context, '/distros'),
-              icon: Icon(web ? Icons.download_rounded : Icons.touch_app_rounded, size: narrow ? 24 : 28),
+              onPressed: () => web
+                  ? SiteMode.download(context)
+                  : Navigator.pushNamed(context, '/distros'),
+              icon: Icon(web ? Icons.download_rounded : Icons.touch_app_rounded,
+                  size: narrow ? 24 : 28),
               label: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(web ? 'İndirmek için tıklayın' : 'Başlamak için tıklayın'),
+                child: Text(
+                    web ? 'İndirmek için tıklayın' : 'Başlamak için tıklayın'),
               ),
               style: FilledButton.styleFrom(
                 padding: EdgeInsets.symmetric(horizontal: narrow ? 18 : 32),
-                textStyle: TextStyle(fontSize: narrow ? 18 : 21, fontWeight: FontWeight.w800),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                textStyle: TextStyle(
+                    fontSize: narrow ? 18 : 21, fontWeight: FontWeight.w800),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
               ),
             ),
           ),
@@ -337,7 +386,6 @@ class _Hero extends StatelessWidget {
             children: [
               _Chip('Windows'),
               _Chip('Linux'),
-              _Chip('Mac → Linux (M1/M2, rehberli)'),
               _Chip('Açık kaynak, MIT'),
             ],
           ),
@@ -364,6 +412,7 @@ class _Hero extends StatelessWidget {
     });
   }
 }
+
 class _Chip extends StatelessWidget {
   const _Chip(this.label);
   final String label;
@@ -390,7 +439,8 @@ class _DiskDemo extends StatefulWidget {
   State<_DiskDemo> createState() => _DiskDemoState();
 }
 
-class _DiskDemoState extends State<_DiskDemo> with SingleTickerProviderStateMixin {
+class _DiskDemoState extends State<_DiskDemo>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller =
       AnimationController(vsync: this, duration: const Duration(seconds: 12));
   bool _running = false;
@@ -418,7 +468,9 @@ class _DiskDemoState extends State<_DiskDemo> with SingleTickerProviderStateMixi
     if (t < 0.2) return 'Diskin şimdi böyle.';
     if (t < 0.4) return 'Yer açılır: bir bölüm küçülür.';
     if (t < 0.55) return 'Kurulum dosyaları aynı diske konur.';
-    if (t < 0.85) return 'Bir kez yeniden başlayınca yeni sistem eskisinin yanına kurulur.';
+    if (t < 0.85) {
+      return 'Bir kez yeniden başlayınca yeni sistem eskisinin yanına kurulur.';
+    }
     return 'İki sistem, tek disk. USB bellek yok.';
   }
 
@@ -460,7 +512,8 @@ class _DiskDemoState extends State<_DiskDemo> with SingleTickerProviderStateMixi
             },
           ),
           const SizedBox(height: 8),
-          const Text('Çizim. Gerçek plan, bir şey değişmeden önce sana tam olarak gösterilir.',
+          const Text(
+              'Çizim. Gerçek plan, bir şey değişmeden önce sana tam olarak gösterilir.',
               style: TextStyle(color: kMuted, fontSize: 12)),
         ],
       ),
@@ -473,12 +526,14 @@ class _DiskPainter extends CustomPainter {
   final double t;
 
   static double _phase(double t, double from, double to) =>
-      Curves.easeInOutCubic.transform(((t - from) / (to - from)).clamp(0.0, 1.0));
+      Curves.easeInOutCubic
+          .transform(((t - from) / (to - from)).clamp(0.0, 1.0));
 
   @override
   void paint(Canvas canvas, Size size) {
     final bar = RRect.fromRectAndRadius(
-        Rect.fromLTWH(0, 0, size.width, size.height), const Radius.circular(12));
+        Rect.fromLTWH(0, 0, size.width, size.height),
+        const Radius.circular(12));
     canvas.drawRRect(bar, Paint()..color = const Color(0xFF2A3042));
     canvas.save();
     canvas.clipRRect(bar);
@@ -500,7 +555,9 @@ class _DiskPainter extends CustomPainter {
           text: TextSpan(
               text: label,
               style: const TextStyle(
-                  color: Color(0xFF10131B), fontSize: 14, fontWeight: FontWeight.w700)),
+                  color: Color(0xFF10131B),
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700)),
           textDirection: TextDirection.ltr,
           maxLines: 1,
           ellipsis: '…',
@@ -509,9 +566,9 @@ class _DiskPainter extends CustomPainter {
       }
     }
 
-    segment(0, windows, const Color(0xFF8FA3C7), 'Şimdiki sistem');
-    segment(1.0 - system - installer, installer, kAccent, 'Kurulum');
-    segment(1.0 - system, system, kGreen, 'Yeni sistem');
+    segment(0, windows, const Color(0xFF8FA3C7), tr('Şimdiki sistem'));
+    segment(1.0 - system - installer, installer, kAccent, tr('Kurulum'));
+    segment(1.0 - system, system, kGreen, tr('Yeni sistem'));
     canvas.restore();
   }
 
@@ -542,7 +599,9 @@ class _Showcase extends StatelessWidget {
             );
           }
           if (snap.hasError) return const SizedBox.shrink();
-          return const Padding(padding: EdgeInsets.all(24), child: Center(child: CircularProgressIndicator()));
+          return const Padding(
+              padding: EdgeInsets.all(24),
+              child: Center(child: CircularProgressIndicator()));
         },
       ),
     ]);
@@ -569,7 +628,9 @@ class _Status extends StatelessWidget {
         Container(
           width: 48,
           height: 48,
-          decoration: BoxDecoration(color: kWarn.withAlpha(40), borderRadius: BorderRadius.circular(14)),
+          decoration: BoxDecoration(
+              color: kWarn.withAlpha(40),
+              borderRadius: BorderRadius.circular(14)),
           child: const Icon(Icons.backup_rounded, color: kWarn, size: 26),
         ),
         const SizedBox(width: 16),
@@ -578,7 +639,8 @@ class _Status extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Kurmadan önce yedek al',
-                  style: TextStyle(color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
+                  style: TextStyle(
+                      color: kText, fontSize: 20, fontWeight: FontWeight.w800)),
               SizedBox(height: 8),
               Text(
                 'BesideOS, yeni sistem için diskinde yer açar. Dosyaların silinmez, ama disk işlemlerinde nadiren de olsa sorun çıkabilir; '
@@ -592,6 +654,7 @@ class _Status extends StatelessWidget {
     );
   }
 }
+
 class _Footer extends StatelessWidget {
   const _Footer();
 

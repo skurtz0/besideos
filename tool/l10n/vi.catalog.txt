@@ -1,0 +1,151 @@
+Linux phổ biến nhất cho người mới bắt đầu.
+Ubuntu là bản phân phối Linux rất phổ biến, có cộng đồng người dùng lớn và nhiều tài liệu. Mặc định đi kèm màn hình nền GNOME.
+Dành cho người lần đầu chuyển sang Linux và muốn có nhiều nguồn trợ giúp khi gặp sự cố.
+Thanh ứng dụng cố định (dock) ở bên trái, thanh trạng thái mỏng ở trên cùng và màn hình nền đơn giản tông cam tím.
+Một máy tính có bộ xử lý 64 bit
+Đủ dung lượng đĩa trống để cài đặt
+Kết nối Internet (để tải về)
+Phần mềm tự do (nhiều giấy phép nguồn mở, gồm cả GPL)
+Màn hình nền Ubuntu 24.04 LTS
+Một Ubuntu nhẹ và đơn giản.
+Xubuntu là phiên bản Ubuntu với màn hình nền Xfce. Nó lấy phần mềm từ kho của Ubuntu nhưng dùng ít tài nguyên hơn.
+Người muốn tương thích với Ubuntu nhưng cần hệ thống nhẹ hơn.
+Một bảng mỏng ở trên, thanh ứng dụng bật lên ở dưới và màn hình nền đơn giản tông xanh dương.
+Màn hình nền Xubuntu 24.04 LTS
+KDE Plasma dựa trên Ubuntu, tùy biến rất cao.
+Kubuntu là phiên bản Ubuntu với màn hình nền KDE Plasma. Bạn có thể thay đổi giao diện và cách hoạt động của nó gần như ở mọi khía cạnh.
+Người muốn bố cục giống Windows và thích tinh chỉnh mọi thứ.
+Thanh tác vụ giống Windows ở dưới, tông màu xanh dương và cửa sổ hiện đại với hiệu ứng trong suốt.
+Màn hình nền Kubuntu 24.04 LTS
+Một màn hình nền êm dịu, quen thuộc với người từ Windows chuyển sang.
+Phiên bản chính của Linux Mint dùng màn hình nền Cinnamon. Với thanh dưới, menu Start và khay hệ thống, nó có cấu trúc tương tự bố cục Windows.
+Người chuyển từ Windows sang và muốn giao diện quen thuộc, đơn giản.
+Thanh tác vụ ở dưới, menu Start bên trái, khay hệ thống bên phải; màn hình nền bố cục cổ điển với điểm nhấn màu xanh lá.
+Màn hình nền Linux Mint Cinnamon 22.3
+Cinnamon (khuyên dùng)
+Màn hình nền êm dịu và thanh lịch, quen thuộc với người dùng Windows. Lựa chọn tốt nhất cho đa số mọi người.
+Xfce (nhẹ)
+Nhẹ và nhanh hơn cho máy tính cũ hoặc chậm.
+Màn hình nền Linux Mint Xfce (hình từ phiên bản cũ hơn)
+MATE (cổ điển)
+Màn hình nền kiểu cũ, đơn giản và rất dễ điều chỉnh.
+Màn hình nền Linux Mint MATE (hình từ phiên bản 20)
+Một hệ thống thực dụng cho lập trình viên và game thủ.
+Pop!_OS là hệ thống dựa trên Ubuntu của System76. Nổi bật nhờ tự động sắp xếp cửa sổ và hỗ trợ card đồ họa chơi game.
+Người viết phần mềm và chơi game.
+Một thanh mỏng ở trên, màn hình nền đơn giản với chủ đề tối và điểm nhấn màu xanh ngọc.
+Tệp ISO của hệ thống (nếu có trên máy tính của bạn thì bạn tự chọn)
+Màn hình nền Pop!_OS 24.04 LTS
+Màn hình cài đặt Pop!_OS (hình từ phiên bản 20.04)
+Một bản Linux quen thuộc cho người từ Windows chuyển sang.
+Zorin OS giúp việc chuyển sang Linux dễ hơn nhờ bố cục quen thuộc. Nó dựa trên Ubuntu.
+Người từ Windows chuyển sang và không muốn thấy bỡ ngỡ.
+Thanh tác vụ và menu Start giống Windows; màn hình nền thanh lịch tông xanh dương.
+Màn hình nền Zorin OS 17.3
+Một bản Linux thanh lịch và đơn giản.
+elementary OS nổi tiếng với thiết kế đơn giản và các ứng dụng riêng. Nó dựa trên Ubuntu và dùng màn hình nền Pantheon.
+Người muốn giao diện thanh lịch và đơn giản.
+Một thanh mỏng ở trên, dock căn giữa ở dưới và cửa sổ bo tròn góc.
+Màn hình nền elementary OS 8.0
+Hệ điều hành đa dụng do cộng đồng vận hành, nổi tiếng về độ ổn định.
+Debian là hệ điều hành do một cộng đồng tình nguyện phát triển và nổi tiếng về độ ổn định. Nó là nền tảng của nhiều bản phân phối khác.
+Người muốn hệ thống ổn định, đơn giản và biết chút ít về Linux.
+Thay đổi theo môi trường màn hình nền bạn chọn; giao diện mặc định giản dị, không cầu kỳ.
+Màn hình nền Debian 13 (Trixie) GNOME
+Live: Xfce (dùng thử trước)
+Bạn có thể dùng thử hệ thống trước khi cài. Màn hình nền Xfce nhẹ.
+Màn hình nền Debian 13 Xfce
+Live: KDE Plasma (dùng thử trước)
+Bạn có thể dùng thử hệ thống trước khi cài. Màn hình nền KDE phong phú và tùy biến được.
+Màn hình nền Debian 13 KDE Plasma
+Ổn định, nhẹ và nhiều công cụ.
+MX Linux dựa trên Debian và đi kèm bộ công cụ nhỏ riêng. Chạy mượt trên máy tính tầm trung và cũ.
+Người muốn hệ thống nhẹ và ổn định.
+Một bảng ở cạnh, hình nền xanh lam xanh lục và màn hình nền hiển thị thông tin như đồng hồ.
+Màn hình nền mặc định MX Linux 18.3 (hình từ phiên bản cũ hơn)
+Một bản phân phối do cộng đồng hỗ trợ với phần mềm cập nhật.
+Fedora Workstation là bản phân phối Linux đi kèm màn hình nền GNOME và do dự án Fedora phát triển.
+Người muốn thấy phần mềm mới và công cụ cho lập trình viên.
+Một thanh mỏng ở trên, ứng dụng toàn màn hình với chế độ xem hoạt động và màn hình nền GNOME đơn giản tông xanh dương.
+Màn hình nền Fedora 42 Workstation
+Màn hình cài đặt Fedora (Anaconda, Fedora 42)
+Linux sẵn sàng để chơi game.
+Bazzite là hệ thống dựa trên Fedora dành cho chơi game. Steam và trình điều khiển card đồ họa có sẵn; vì tệp hệ thống được bảo vệ nên khó bị hỏng.
+Người muốn chơi game trên máy tính và tìm trải nghiệm giống Steam Deck.
+Thanh tác vụ giống Windows với KDE; ở chế độ console, giao diện Steam mở toàn màn hình.
+Đủ dung lượng đĩa trống để cài đặt (ISO khoảng 8 GB)
+Màn hình nền Bazzite 42 KDE
+Màn hình nền, KDE (card đồ họa AMD / Intel)
+Lựa chọn đúng cho đa số máy tính. Chọn mục này nếu card đồ họa của bạn không phải Nvidia.
+Màn hình nền, KDE (card đồ họa Nvidia)
+Chọn mục này nếu card đồ họa của bạn là Nvidia; trình điều khiển có sẵn.
+Màn hình nền, GNOME (card đồ họa AMD / Intel)
+Dành cho người thích màn hình nền GNOME đơn giản hơn KDE.
+Màn hình nền Bazzite 42 GNOME
+Chế độ console kiểu Steam Deck
+Giao diện Steam mở ngay khi bạn bật máy tính. Dành cho máy tính nối với TV và máy chơi game cầm tay.
+Một Arch Linux dễ cài.
+Manjaro là hệ thống dựa trên Arch Linux với phần mềm cập nhật. Cài dễ dàng và được cập nhật liên tục.
+Người muốn phần mềm mới nhất và có chút kinh nghiệm.
+Thay đổi theo màn hình nền bạn chọn; giao diện hiện đại với điểm nhấn màu xanh lá.
+Màn hình nền Manjaro 24.0 KDE Plasma
+Một hệ thống dựa trên Arch nhanh và được tinh chỉnh.
+CachyOS là hệ thống nhanh dựa trên Arch Linux, đi kèm các gói tối ưu cho bộ xử lý và nhân được tinh chỉnh. Bạn tự chọn màn hình nền khi cài đặt.
+Người dùng muốn hiệu năng và có chút kinh nghiệm.
+Thay đổi theo màn hình nền bạn chọn; mặc định là KDE Plasma hiện đại với chủ đề tối.
+Màn hình nền CachyOS KDE Plasma (2025.08)
+Một màn hình nền thanh lịch dành cho lập trình viên, dùng sẵn và điều khiển bằng bàn phím.
+Omarchy là hệ thống xây dựng trên Arch Linux, đi kèm trình quản lý cửa sổ Hyprland và công cụ lập trình sẵn sàng sử dụng. Có rất nhiều chủ đề.
+Người làm việc chủ yếu bằng bàn phím, viết phần mềm và thích mày mò hệ thống.
+Cửa sổ phẳng, không viền xếp cạnh nhau; chủ đề tối và thanh lịch, một thanh mỏng ở trên.
+Phần mềm tự do (MIT)
+Màn hình nền mặc định Omarchy
+Một hệ thống vững chắc với công cụ quản trị mạnh.
+openSUSE là bản phân phối lâu đời có nguồn gốc từ Đức. Quản trị hệ thống dễ dàng với YaST; phiên bản Tumbleweed được cập nhật liên tục.
+Người muốn nền tảng vững chắc và công cụ quản trị mạnh.
+Màn hình nền hiện đại, gọn gàng với điểm nhấn màu xanh lá.
+Màn hình nền openSUSE Tumbleweed, KDE Plasma 6
+Windows huyền thoại với ngọn đồi xanh và thanh tác vụ xanh dương.
+Windows XP là hệ điều hành thương mại rất cũ của Microsoft và đã lâu không nhận được bản cập nhật bảo mật. Nhiều khả năng nó sẽ không chạy trên máy tính mới. BesideOS không phân phối tệp ISO.
+Người muốn dùng chương trình và phần cứng rất cũ, hoặc chỉ tò mò. Chúng tôi khuyên không kết nối Internet.
+Thanh tác vụ xanh dương, nút "Start" xanh lá và hình nền nổi tiếng với ngọn đồi xanh.
+Một máy tính cũ (khởi động BIOS)
+Giấy phép Windows hợp lệ
+Không chạy trên máy tính mới (UEFI); thử trong máy ảo an toàn hơn
+Thương mại (giấy phép Microsoft)
+Màn hình nền Windows XP: menu Start và cửa sổ My Computer
+Windows cổ điển với cửa sổ trong suốt.
+Windows 7 là hệ điều hành thương mại của Microsoft và không còn nhận bản cập nhật bảo mật. Có thể không chạy trên máy tính mới (UEFI). BesideOS không phân phối tệp ISO.
+Người muốn chạy chương trình cũ và phần cứng cũ.
+Cửa sổ có hiệu ứng kính trong suốt, thanh tác vụ lớn ở dưới và menu Start cổ điển.
+Bộ xử lý 32 bit hoặc 64 bit
+Nên khởi động kiểu cũ (BIOS/CSM); có thể không cài được trên máy tính UEFI mới
+Màn hình nền Windows 7 và menu Start
+Windows cũ với màn hình Start đầy ô vuông.
+Windows 8.1 là hệ điều hành thương mại của Microsoft và không còn nhận bản cập nhật bảo mật. BesideOS không phân phối tệp ISO; bạn tự mang ISO của mình.
+Người cần Windows 8.1 cho chương trình hoặc phần cứng cũ.
+Màn hình Start gồm các ô màu toàn màn hình và màn hình nền cổ điển.
+Bộ xử lý 64 bit hoặc 32 bit
+Vì an toàn, chúng tôi khuyên không kết nối Internet
+Màn hình Start của Windows 8.1
+Phiên bản trước được dùng rộng rãi của Microsoft.
+Windows 10 là hệ điều hành thương mại của Microsoft. BesideOS không phân phối tệp ISO; bạn chọn ISO của riêng mình hoặc tải từ trang chính thức của Microsoft.
+Người muốn dùng Windows trên máy tính không đáp ứng yêu cầu của Windows 11.
+Menu Start bên trái với ô động, thanh tác vụ ở dưới.
+Bộ xử lý 64 bit
+Màn hình nền Windows 10: menu Start và bảng thông báo
+Phiên bản Windows hiện tại của Microsoft.
+Windows 11 là hệ điều hành thương mại của Microsoft. BesideOS không phân phối tệp ISO; bạn chọn ISO của riêng mình hoặc tải từ trang chính thức của Microsoft.
+Người muốn chạy ứng dụng và trò chơi cần Windows.
+Thanh tác vụ và menu Start căn giữa, cửa sổ bo tròn góc.
+Máy tính hỗ trợ UEFI và có thể dùng Secure Boot
+TPM 2.0 (yêu cầu chính thức)
+Màn hình nền Windows 11 và menu Start
+Windows cho thử nghiệm máy chủ và phòng thí nghiệm.
+Windows Server 2025 là hệ điều hành máy chủ của Microsoft. Bản dùng thử được tải từ trang chính thức của Microsoft; BesideOS không phân phối tệp ISO.
+Người muốn tìm hiểu vai trò máy chủ và công cụ quản trị.
+Thanh tác vụ và menu Start giống Windows 11; đi kèm công cụ quản trị máy chủ.
+Máy tính 64 bit hỗ trợ UEFI
+Bản dùng thử hoặc giấy phép máy chủ hợp lệ
+Màn hình nền Windows Server 2025 (giao diện tiếng Đức)
+Hình: {text}

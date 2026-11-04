@@ -217,7 +217,7 @@ void main() {
     expect(runner.calls.any((x) => x.startsWith('apply-plan.ps1')), isFalse);
     await c.apply(confirmed: true);
     expect(c.phase, InstallPhase.applied);
-    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -OutDir -Menu');
+    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -OutDir');
     expect(runner.calls.any((x) => x.contains('-Reboot') || x.startsWith('shutdown')), isFalse);
     expect(c.restarting, isFalse);
   });

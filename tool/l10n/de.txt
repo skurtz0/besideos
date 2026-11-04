@@ -1,0 +1,260 @@
+Schritt für Schritt
+Startseite
+Speichere offene Arbeit. Wenn du es dir anders überlegst, klicke auf die Schaltfläche unten.
+Open Source, MIT
+Finde die Taste für das Startmenü heraus (meist F12, F10, F9 oder Esc). Wenn das Installationsprogramm nicht von selbst erscheint, wähle dort den Eintrag „<Systemname> Installation“ (z. B. „Debian Installation“).
+Netzwerkfehler
+Fehlgeschlagen.
+Prüfe deinen Computer, bevor du anfängst
+Zum Starten klicken
+Setze zum Starten oben das Häkchen.
+Sollen wir anfangen?
+Unerwarteter Fehler.
+Unerwarteter Fehler: {e}
+BesideOS ist Open Source unter der MIT-Lizenz. Es basiert auf dem Projekt hop von Arjun Ingole (ebenfalls MIT). Namen anderer Betriebssysteme gehören ihren Inhabern und werden nur verwendet, um zu sagen, was BesideOS installieren kann.
+BesideOS schafft Platz auf deiner Festplatte und bereitet die Installation vor; wenn alles bereit ist, startest du neu. Windows bleibt unverändert, wie es ist.
+BesideOS schafft auf deiner Festplatte Platz für das neue System. Deine Dateien werden nicht gelöscht, aber bei Festplattenvorgängen kann in seltenen Fällen etwas schiefgehen; wir empfehlen, wichtige Dateien zu sichern. Wenn du es dir anders überlegst, stellt „Änderungen rückgängig machen“ alles wieder her.
+Der Computer startet in 15 Sekunden neu
+Der Computer startet in 15 Sekunden neu. Beim Start erscheint 5 Sekunden lang das Startmenü, die Installation von {sys} ist ausgewählt; du kannst stattdessen ein installiertes System wählen. Speichere jetzt deine offene Arbeit.
+Der Computer scheint im BIOS-Modus (Legacy) gestartet zu sein; UEFI wird empfohlen.
+Der Computer wird vorbereitet
+Dein Computer muss im UEFI-Modus starten („Legacy/CSM“ in den BIOS-Einstellungen ausschalten).
+Dein Computer muss im UEFI-Modus starten („Legacy/CSM“ in den BIOS-Einstellungen ausschalten). Im alten BIOS-Modus funktioniert diese Methode nicht.
+Dein Computer wird geprüft
+Installiere ein zweites System auf deinem Computer, ganz ohne USB-Stick.
+ISO-Dateien auf deinem Computer
+Auf deinem Computer hat sich noch nichts geändert. Sieh dir an, was passieren wird, und starte dann.
+Auf deinem Computer ändert sich noch nichts.
+Was sollte dein Computer haben?
+Du wählst die Datei aus, die auf deinem Computer liegt oder die du heruntergeladen hast.
+Gut zu wissen
+Eine Partition wird verkleinert und ein Eintrag wird dem GRUB-Menü hinzugefügt. Der Computer startet NICHT von selbst neu; das entscheidest du später.
+Ein einziger Neustart
+Nach einem Neustart wird das neue System neben dem alten installiert.
+Für den nächsten Start wird dieser Eintrag einmalig ausgewählt.
+Beim nächsten Start erscheint das Installationsprogramm. Danach startet der Computer wie gewohnt.
+Es ist ein Problem aufgetreten
+Du klickst auf eines und beginnst mit der Installation.
+Wähle eines. Wenn du unsicher bist, nimm das erste.
+Wähle eines. Wir zeigen dir Schritt für Schritt, wie es installiert wird.
+Wähle eines; sieh dir an, wie es aussieht und was es braucht.
+Formatiere nur den neu entstandenen freien Bereich. Rühre die Windows-Partitionen und die BESIDEOS-Partition nicht an.
+Der freie Platz wurde auf der Festplatte von Laufwerk {letter}: geschaffen; wähle diese Festplatte im Installationsprogramm.
+Diese ISO kann auf diesem Computer nicht gestartet werden.
+Diese ISO-Datei kann nicht direkt mit GRUB gestartet werden (ihr fehlen die Angaben für den Start von ISO). Wahrscheinlich ist es ein kleines Installationsabbild wie „netinst“; versuche die „Live“-Version desselben Systems.
+Die Startmethode für diese Art von ISO wurde noch nicht getestet.
+Auf diesem Computer ist die Installation derzeit nicht möglich
+GRUB wurde auf diesem Computer nicht gefunden (vielleicht gibt es einen anderen Bootmanager wie systemd-boot).
+Das GRUB-Menü dieses Computers liest keine benutzerdefinierten Einträge; BesideOS kann hier nicht arbeiten.
+Diese Distribution ist in dieser Anleitung nicht enthalten.
+Diese Datei ist kein lesbares ISO-Abbild.
+Diese alte Windows-Version startet auf neueren Computern (UEFI) möglicherweise nicht. Falls nicht, stellt „Änderungen rückgängig machen“ alles wieder her.
+Was ist dieses System?
+Die ISO-Datei dieses Systems bringst du selbst mit; du musst keinen Pfad und keine Prüfsumme eingeben, es genügt, die Datei auszuwählen. Zuerst zeigen wir dir, was getan wird. Ohne deine Zustimmung ändert sich auf deinem Computer nichts.
+Das Installationsprogramm dieses Systems startet auf manchen Computern möglicherweise nicht. Falls nicht, stellt „Änderungen rückgängig machen“ alles wieder her.
+Diese Funktion läuft in der BesideOS-Desktop-App auf einem Windows-Computer. Hier kannst du das System kennenlernen und die ISO-Datei herunterladen.
+Nicht gefunden
+Das Verkleinern einer Partition gilt als nicht umkehrbarer Vorgang: „Rückgängig“ versucht, die Partition auf die alte Größe zu vergrößern, schafft das aber nicht, wenn das neue System in diesem Bereich installiert wurde.
+Das Verkleinern einer Partition kann in seltenen Fällen Probleme verursachen.
+Diese Seite gibt es nicht.
+Du kannst versuchen, einen kleineren Bereich zu wählen:
+Wenn du später starten möchtest, starte den Computer selbst neu; das Installationsprogramm erscheint beim ersten Start. Falls nicht, wähle im GRUB-Menü (Shift oder Esc) den Eintrag „{sys} Installation“. Nach der Installation kannst du den Eintrag mit „Rückgängig“ entfernen.
+Wenn du später starten möchtest, starte den Computer selbst neu; das Installationsprogramm erscheint beim ersten Start. Falls nicht, wähle im Startmenü „{sys} Installation“. Nach der Installation kannst du die temporäre Partition BESIDEOS löschen.
+Es gibt eine unvollständige frühere Installation
+Distributionen
+Zurück zu den Distributionen
+Die Änderungen wurden rückgängig gemacht
+Änderungen werden rückgängig gemacht…
+Änderungen rückgängig machen
+Die Festplatteninformationen konnten nicht gesammelt werden.
+Wähle auf dem Festplattenbildschirm „Nicht zugeordneter Speicherplatz“ und klicke auf „Weiter“. Windows legt dort seine eigenen Partitionen an.
+Festplattenfehler
+Festplattenfehler: Die Datei konnte nicht geschrieben werden.
+Wähle bei der Frage nach der Festplatte NICHT „Gesamte Festplatte löschen“. Wähle „Neben … installieren“ oder „Etwas anderes“ (manuelle Partitionierung) und nutze nur den „freien Platz“.
+Festplatte {n}
+So sieht die Festplatte jetzt aus.
+Die Festplatten konnten nicht gelesen werden. {reason}
+Auf deinen Festplatten wird Platz geschaffen und dem GRUB-Menü wird ein Eintrag hinzugefügt, der deine ISO startet.
+Die Datei konnte nicht gelesen werden oder ihre Prüfsumme ist ungültig.
+Datei zu groß
+Wenn du die Datei nicht hast, kannst du sie von der offiziellen Seite herunterladen:
+Es wird geprüft, ob die Datei unbeschädigt ist…
+Überprüfung fehlgeschlagen (Festplattenfehler).
+Prüfinformationen werden abgerufen…
+Wenn du unsicher bist, lass die Installation auf diesem Bildschirm, starte den Computer neu und wähle in BesideOS „Rückgängig“.
+Wenn du unsicher bist, lass die Installation auf diesem Bildschirm; du kannst den Computer ausschalten und zu Windows zurückkehren, wähle dann einfach in BesideOS „Rückgängig“.
+Ja, starten
+Ja, neu starten
+Keine passende Distribution
+Dem GRUB-Startmenü wird ein Eintrag „{sys} Installation“ hinzugefügt; die ISO-Datei bleibt, wo sie ist.
+Dem GRUB-Startmenü wird ein Eintrag „{sys} Installation“ hinzugefügt.
+Wenn das GRUB-Menü nicht von selbst erscheint, halte beim Start Shift gedrückt oder drücke Esc und wähle den Eintrag „BesideOS“.
+Das Rückgängigmachen ist fehlgeschlagen.
+Wir empfehlen, es rückgängig zu machen.
+Den Rest erledigt BesideOS.
+Ungültige Adresse.
+Ungültiger Dateiname.
+Unsichere Adresse abgelehnt
+Auf welchem Computer bist du?
+Auf welchen Computern lässt es sich installieren?
+Welches System möchtest du installieren?
+Welche Systeme kannst du installieren?
+Welches möchtest du?
+Wenn alles bereit ist, startest du neu. Beim Start erscheint 5 Sekunden lang das Menü, die Installation von {sys} ist ausgewählt; deine installierten Systeme stehen in derselben Liste.
+Fertig! Du kannst jetzt neu starten
+Wird vorbereitet, bitte warten…
+Alle
+Alles ist bereit!
+Es hat sich nichts geändert.
+ISO-Dateien (*.iso)
+Klicken, um meine eigene ISO-Datei auszuwählen und zu installieren
+Du wählst deine ISO-Datei
+ISO-Datei
+Die ISO-Datei liegt auf einem Dateisystem, das GRUB nicht lesen kann. Kopiere die Datei auf eine Festplatte mit ext4, btrfs, xfs oder FAT32.
+Die ISO-Datei wurde nicht gefunden.
+Die ISO-Datei bleibt, wo sie ist: {path}
+Die ISO-Datei liegt auf einer verschlüsselten Festplatte; GRUB kann sie nicht lesen. Kopiere sie auf eine unverschlüsselte Festplatte.
+Die ISO-Datei muss außerhalb der Partition liegen, auf die du installierst (z. B. auf einer separaten Festplatte). Das Installationsprogramm kann die Partition, auf der seine eigene ISO liegt, nicht löschen.
+Die ISO-Datei liegt auf einer Festplatte, auf die du installieren könntest. Das Installationsprogramm kann die Partition mit seiner eigenen ISO nicht löschen; installiere das neue System in den freien Platz, den BesideOS geschaffen hat.
+Rühre die Partition mit der ISO-Datei und dein aktuelles System nicht an; formatiere nur den neu geschaffenen Bereich.
+Die ISO konnte nicht heruntergeladen oder geprüft werden.
+Der Inhalt der ISO konnte nicht untersucht werden. {detail}
+Die ISO konnte nicht geprüft werden. {detail}
+Um in die ISO zu schauen, wird das Programm „xorriso“ benötigt. Installiere es und versuche es erneut.
+Schließen
+Katalog
+Der Katalog ist leer
+Der Katalog konnte nicht geladen werden: {msg}
+Ich möchte meine eigene ISO-Datei auswählen und installieren
+Für wen: {text}
+Vor der Installation sichern
+Wähle die ISO-Datei, die du installieren möchtest
+Lade die BesideOS-App herunter, um zu installieren
+Zum Installieren klicken
+Systeme, neben denen installiert werden kann
+Installation
+Die Installationskomponente fehlt
+Die Installationsdateien werden auf derselben Festplatte abgelegt.
+Die Installationsdateien werden in einer kleinen Partition auf derselben Festplatte abgelegt. Ein USB-Stick ist nicht nötig.
+Wähle, wenn das Installationsprogramm erscheint, bei der Frage nach der Festplatte NICHT „Gesamte Festplatte löschen“. Wähle „Etwas anderes“ (manuelle Partitionierung) und nutze nur den freien (nicht zugeordneten) Platz, den BesideOS geschaffen hat.
+Das Installationsprogramm erscheint.
+Die Installation wird vorbereitet: Es wird freier Platz geschaffen und Dateien werden kopiert. Der Computer startet NICHT von selbst neu; das entscheidest du später.
+Die Installation wird vorbereitet
+Die Installation wird vorbereitet…
+Die Vorbereitung der Installation ist fehlgeschlagen.
+Die Installation ist nicht möglich.
+Installation starten
+Installation ansehen
+Linux
+Auf einem Linux-Computer kann Windows als Dual-Boot in einer separaten Partition installiert werden.
+Auf einem Linux-Computer kann ein anderes Linux über einen GRUB-Eintrag aus seiner ISO-Datei gestartet und im freien Platz installiert werden (keine Partition wird verkleinert).
+Linux-Systeme
+Neben Linux installieren
+Lizenz: {text}
+Desktop: {text}
+Dein aktuelles System und deine Dateien bleiben unverändert. Eine Partition wird verkleinert, um Platz zu schaffen; {name} startet über einen GRUB-Eintrag aus seiner ISO-Datei.
+Wie es aussieht
+Wie es funktioniert
+Welche Art?
+Was wird passieren?
+Es öffnet sich ein Fenster, das nach deinem Passwort fragt.
+Es öffnet sich ein Fenster, das nach deinem Passwort fragt. Schließe dieses Fenster nicht. Der Computer startet nicht von selbst neu.
+Der Plan wird erstellt
+Der Plan konnte nicht erstellt werden (Code {code}). {detail}
+Nachdem du den Plan gesehen und bestätigt hast, dass du deine Dateien gesichert hast, wird auf der Festplatte freier Platz geschaffen.
+Offizielle Seite
+Dieser Dateiname steht nicht in der Prüfsummendatei; er konnte nicht überprüft werden. Der Katalog ist möglicherweise veraltet; lade von der offiziellen Seite herunter.
+Die Prüfsumme stimmt nicht überein. Die Datei wurde nicht gelöscht; prüfe den SHA-256-Wert.
+Die Prüfsumme stimmt nicht überein; die Datei wurde gelöscht.
+Secure Boot ist aktiv. ISOs mit unsignierten Kernen starten möglicherweise nicht; wenn das Installationsmenü nicht erscheint, schalte Secure Boot im BIOS aus.
+Bei aktivem Secure Boot starten manche ISOs möglicherweise nicht. Wenn das Installationsprogramm nicht erscheint, schalte Secure Boot in den BIOS-Einstellungen aus.
+Bei aktivem Secure Boot starten manche Systeme möglicherweise nicht. Wenn das Installationsprogramm nicht erscheint, schalte Secure Boot in den BIOS-Einstellungen aus; nach der Installation kannst du es wieder einschalten.
+Die gewählte Datei wurde nicht gefunden oder ist keine ISO-Datei.
+Die von dir gewählte ISO-Datei wird untersucht
+Server-Fehlercode: {code}
+Der Server antwortet nicht
+Die Antwort des Servers ist ungültig
+Öffne die App für die Installation mit einem Klick
+Technische Details
+Erneut versuchen
+Basiert auf: {text}
+Du klickst
+Die App läuft auf einem Windows-Computer. Du wählst in der App das gewünschte System und startest die Installation mit einem Klick.
+Die App-Dateien scheinen zu fehlen. Lade BesideOS erneut herunter und öffne es.
+Abbrechen
+Abbrechen, Änderungen rückgängig machen
+Windows
+Die Windows-Installation startet auf diese Weise von einer RAM-Disk. Fehler oder Warnungen während der Installation sind normal; meist kannst du sie ignorieren und fortfahren. Wenn die Installation gar nicht vorankommt, stellt „Änderungen rückgängig machen“ alles wieder her.
+Auf einem Windows-Computer kann Linux als Dual-Boot neben Windows installiert werden.
+Auf einem Windows-Computer kann ein zweites Windows als Dual-Boot in einer separaten Partition installiert werden.
+Windows fragt nach der Erlaubnis: Sage „Ja“.
+Windows fragt nach der Erlaubnis: Sage „Ja“. Schließe dieses Fenster nicht. Der Computer startet nicht von selbst neu.
+Windows braucht mindestens 64 GB; 80 GB sind komfortabel. Wähle mehr, wenn du viele Programme installieren willst.
+Wenn du bei der Windows-Installation einen Fehler siehst
+Windows-Systeme
+Windows und deine Dateien bleiben unverändert. Auf deinem Computer wird Platz für {name} geschaffen.
+In Windows müssen Schnellstart (Fast Startup) und BitLocker ausgeschaltet sein. Ist BitLocker aktiv, lehnt BesideOS die Installation ab.
+Neben Windows installieren
+Neben Windows werden etwa {gb} GB freier Platz geschaffen.
+Neben Windows wird Platz geschaffen und die Dateien werden dort abgelegt.
+Es werden nur Festplatten mit GPT-Partitionierung unterstützt.
+Es kann unvollständige Änderungen geben
+Neues System
+Wie viel Platz sollen wir für das neue System reservieren?
+Es wurde keine Partition gefunden, auf der Platz für ein neues System geschaffen werden könnte. Du brauchst eine verkleinerbare Partition (ext4, btrfs oder NTFS) mit mindestens {gb} GB freiem Platz.
+Neustart
+Neustart abbrechen
+Der Computer konnte nicht neu gestartet werden. Starte ihn selbst neu.
+Nach dem Neustart erscheint 5 Sekunden lang das Startmenü, der Eintrag „{sys} Installation“ ist ausgewählt. Wenn du möchtest, kannst du in der Liste eines der installierten Systeme wählen. Starte neu, sobald du deine offene Arbeit gespeichert hast.
+Bevor du eine neue Installation beginnst, musst du die früheren Änderungen rückgängig machen.
+Die Partition, aus der Platz geschaffen wird, muss ext4, btrfs oder NTFS sein und genug freien Platz haben. Die Festplatte muss GPT sein.
+Platz wird geschaffen
+Platz wird geschaffen: Eine Partition wird verkleinert.
+Aus welcher Partition soll der Platz kommen?
+Aus welchem Laufwerk soll der Platz kommen?
+Der Platz wird dem freien Bereich der gewählten Partition entnommen. Deine Dateien werden nicht gelöscht. Partitionen, die nicht in der Liste stehen, haben ein nicht verkleinerbares Dateisystem oder zu wenig freien Platz.
+Der Platz wird dem freien Bereich des gewählten Laufwerks entnommen. Deine Dateien werden nicht gelöscht.
+Keine
+Administratorrechte wurden nicht erteilt; die Festplatteninformationen konnten nicht gelesen werden. Es wurde nichts geändert.
+Administratorrechte wurden nicht erteilt; die Festplatten konnten nicht gelesen werden. Es wurde nichts geändert.
+Administratorrechte wurden nicht erteilt; nichts wurde rückgängig gemacht.
+Administratorrechte wurden nicht erteilt; es wurde nichts geändert.
+Es gibt keine Weiterleitungsadresse
+{credit}  ·  Zum Vergrößern auf das Bild klicken
+Die Partition {device} wird verkleinert und etwa {gb} GB freier (nicht zugeordneter) Platz wird geschaffen.
+Die Partition {device} wird um {gb} GB verkleinert; der freigewordene Platz bleibt leer (nicht zugeordnet).
+{device} kann höchstens {gb} GB freigeben. Wähle einen kleineren Bereich oder eine andere Partition.
+{disk} · insgesamt {total} · {free} frei
+{disk} · {fstype} · insgesamt {total} · höchstens {max} können freigegeben werden
+{g} GB · empfohlen
+{host}: {reason}
+Laufwerk {letter}:
+Laufwerk {letter}: ({label})
+Auf Laufwerk {letter}: werden etwa {gb} GB freier Platz geschaffen.
+{mb} MB heruntergeladen
+{name} wird heruntergeladen und neben Windows wird Platz geschaffen.
+{name} wird heruntergeladen, auf deinen Festplatten wird Platz geschaffen und dem GRUB-Menü wird ein Eintrag hinzugefügt.
+{name} wird heruntergeladen und geprüft
+Das Installationsprogramm von {name} erscheint.
+{name} · Windows ist hier
+Die Installationsdateien von {sys} werden hierher kopiert.
+Wähle die Festplatte sorgfältig bei der Installation von {sys}
+Zeichnung. Der echte Plan wird dir vollständig gezeigt, bevor sich etwas ändert.
+Zu viele Weiterleitungen
+Für die meisten reichen 30 GB. Wähle mehr, wenn du viele Programme installieren willst.
+Ich habe meine wichtigen Dateien gesichert
+Sichere deine wichtigen Dateien: Das Verkleinern einer Partition kann in seltenen Fällen Probleme verursachen.
+Drei Schritte. Ohne deine Zustimmung ändert sich auf deinem Computer nichts.
+Zwei Systeme, eine Festplatte. Kein USB-Stick.
+Herunterladen
+Die heruntergeladene Datei wird untersucht
+Download fehlgeschlagen: {message}
+Zum Herunterladen klicken
+Jetzt nicht
+Jetzt neu starten
+Sollen wir jetzt neu starten?
+Aktuelles System
+die Partition des gerade laufenden Systems
+{name} Installation
+Windows (Installation abbrechen)
+BesideOS: ein zweites Betriebssystem neben diesem installieren

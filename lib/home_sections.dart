@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'l10n/l10n.dart';
+import 'l10n/text.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import 'theme.dart';
 
@@ -21,7 +23,7 @@ class SectionHeader extends StatelessWidget {
         Row(mainAxisSize: MainAxisSize.min, children: [
           Container(width: 22, height: 4, decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(2))),
           const SizedBox(width: 10),
-          Text(eyebrow.toUpperCase(),
+          Text(tr(eyebrow).toUpperCase(),
               style: TextStyle(color: color, fontSize: 13, fontWeight: FontWeight.w800, letterSpacing: 1.4)),
         ]),
         const SizedBox(height: 12),
@@ -199,91 +201,6 @@ class HowItWorks extends StatelessWidget {
           color: kGreen,
           title: 'Bir kez yeniden başlar',
           body: 'Bir sonraki açılışta kurulum ekranı gelir. Sonrasında bilgisayar her zamanki gibi açılır.',
-        ),
-      ]),
-    ]);
-  }
-}
-
-class Platforms extends StatelessWidget {
-  const Platforms({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SectionHeader(
-        eyebrow: 'Uyumluluk',
-        title: 'Hangi bilgisayarlarda?',
-        subtitle: 'Ne çalıştığını ve ne çalışmadığını açıkça söyleriz.',
-        color: _purple,
-      ),
-      ResponsiveCards(minWidth: 270, maxColumns: 3, children: [
-        FeatureCard(
-          icon: Icons.desktop_windows_rounded,
-          color: kAccent,
-          title: "Windows'tan Linux'a",
-          body: 'İlk hedef. UEFI ile açılan bir bilgisayar gerekir. Davranışı, bu projenin temelini oluşturan hop izler.',
-          chip: 'Hazır',
-          chipColor: kGreen,
-        ),
-        FeatureCard(
-          icon: Icons.swap_horiz_rounded,
-          color: _purple,
-          title: "Linux'tan Windows'a",
-          body: 'Sırada. Windows ISO dosyasını sen getirirsin.',
-          chip: 'Sırada',
-          chipColor: kWarn,
-        ),
-        FeatureCard(
-          icon: Icons.laptop_mac_rounded,
-          color: kWarn,
-          title: 'macOS',
-          body:
-              "En son ve sınırlarını dürüstçe söyleyerek. Apple Silicon'da UEFI ve Boot Camp yok; bu yüzden BesideOS orada yalnızca resmi Asahi kurulumunu anlatır.",
-          chip: 'Rehberli',
-          chipColor: kMuted,
-        ),
-      ]),
-    ]);
-  }
-}
-
-class Safety extends StatelessWidget {
-  const Safety({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SectionHeader(
-        eyebrow: 'Güven',
-        title: 'Önce güvenlik',
-        subtitle: 'Diskine dokunan bir araç için en önemli şey: ne yapacağını önceden söylemesi ve geri alabilmen.',
-        color: kGreen,
-      ),
-      ResponsiveCards(minWidth: 240, maxColumns: 4, children: [
-        FeatureCard(
-          icon: Icons.fact_check_rounded,
-          color: kAccent,
-          title: 'Önce plan',
-          body: 'Diske dokunmadan önce her adımı görürsün.',
-        ),
-        FeatureCard(
-          icon: Icons.backup_rounded,
-          color: kWarn,
-          title: 'Yedek uyarısı',
-          body: 'Bir bölüm küçülmeden önce yedek aldığını onaylarsın.',
-        ),
-        FeatureCard(
-          icon: Icons.verified_user_rounded,
-          color: kGreen,
-          title: 'Açık onay',
-          body: 'Başlamadan önce son kez sorulur.',
-        ),
-        FeatureCard(
-          icon: Icons.undo_rounded,
-          color: _purple,
-          title: 'Geri alma',
-          body: 'Bir adım başarısız olursa ya da vazgeçersen, yapılanlar tersine geri alınır.',
         ),
       ]),
     ]);

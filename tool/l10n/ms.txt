@@ -1,0 +1,260 @@
+Langkah demi langkah
+Laman utama
+Jika anda ada kerja yang belum disimpan, simpankan. Jika anda berubah fikiran, tekan butang di bawah.
+Sumber terbuka, MIT
+Ketahui kekunci menu but (biasanya F12, F10, F9 atau Esc). Jika pemasang tidak muncul sendiri, pilih entri "Pemasangan <nama sistem>" daripada menu itu (contohnya "Pemasangan Debian").
+Ralat rangkaian
+Gagal.
+Semak komputer anda sebelum bermula
+Klik untuk bermula
+Tandakan kotak di atas untuk bermula.
+Mulakan?
+Ralat tidak dijangka.
+Ralat tidak dijangka: {e}
+BesideOS ialah perisian sumber terbuka di bawah lesen MIT. Ia berasaskan projek hop oleh Arjun Ingole (juga MIT). Nama sistem pengendalian lain dimiliki oleh pemiliknya dan hanya digunakan untuk menyatakan apa yang boleh dipasang oleh BesideOS.
+BesideOS membuka ruang pada cakera anda dan menyediakan pemasangan; apabila siap, anda memulakan semula. Windows kekal seperti sedia ada.
+BesideOS membuka ruang pada cakera anda untuk sistem baharu. Fail anda tidak dipadam, tetapi operasi cakera jarang-jarang boleh menghadapi masalah, jadi kami mengesyorkan anda membuat sandaran fail penting. Jika anda berubah fikiran, "Buat asal perubahan" memulihkan segalanya.
+Komputer dimulakan semula dalam 15 saat
+Komputer akan dimulakan semula dalam 15 saat. Semasa permulaan, menu muncul selama 5 saat dengan pemasangan {sys} dipilih; anda boleh memilih sistem yang sudah dipasang. Simpan kerja yang terbuka sekarang.
+Komputer kelihatan bermula dalam mod BIOS (warisan); UEFI disyorkan.
+Komputer sedang disediakan
+Komputer anda mesti bermula dalam mod UEFI (matikan "Legacy/CSM" dalam tetapan BIOS).
+Komputer anda mesti bermula dalam mod UEFI (matikan "Legacy/CSM" dalam tetapan BIOS). Dalam mod BIOS warisan, kaedah ini tidak berfungsi.
+Memeriksa komputer anda
+Pasang sistem kedua pada komputer anda tanpa pemacu USB.
+Fail ISO pada komputer anda
+Belum ada apa-apa yang berubah pada komputer anda. Lihat apa yang akan berlaku, kemudian mulakan.
+Belum ada apa-apa yang berubah pada komputer anda.
+Apakah yang perlu ada pada komputer anda?
+Anda menunjukkan fail yang ada pada komputer atau yang anda muat turun.
+Perlu diketahui
+Satu partition akan dikecilkan dan satu entri akan ditambah ke menu GRUB. Komputer TIDAK dimulakan semula sendiri; anda akan memutuskannya kemudian.
+Dimulakan semula sekali
+Selepas satu kali mula semula, sistem baharu dipasang di sebelah sistem lama.
+Untuk permulaan seterusnya, entri ini dipilih sekali sahaja.
+Pada permulaan seterusnya pemasang akan muncul. Selepas itu komputer bermula seperti biasa.
+Terdapat masalah
+Anda tekan salah satu dan mula memasangnya.
+Pilih satu. Jika anda tidak pasti, anda boleh memilih yang pertama.
+Pilih satu. Kami akan tunjukkan langkah demi langkah cara memasangnya.
+Pilih satu; lihat rupanya dan apa yang diperlukan.
+Format hanya ruang kosong yang baru dibuat. Jangan sentuh partition Windows dan partition BESIDEOS.
+Ruang kosong dibuka pada cakera yang mengandungi pemacu {letter}:; pilih cakera itu dalam pemasang.
+ISO ini tidak boleh dimulakan pada komputer ini.
+Fail ISO ini tidak boleh dimulakan terus dengan GRUB (ia tiada maklumat untuk but daripada ISO). Mungkin ia pemasang kecil seperti "netinst"; cuba versi "Live" bagi sistem yang sama.
+Cara memulakan jenis ISO ini belum diuji.
+Tidak boleh memasang pada komputer ini sekarang
+GRUB tidak ditemui pada komputer ini (mungkin ada pengurus but lain seperti systemd-boot).
+Menu GRUB komputer ini tidak membaca entri tersuai; BesideOS tidak boleh berfungsi di sini.
+Pengedaran ini tiada dalam panduan ini.
+Fail ini bukan imej ISO yang boleh dibaca.
+Versi Windows lama ini mungkin tidak bermula pada komputer baharu (UEFI). Jika tidak bermula, "Buat asal perubahan" memulihkan segalanya.
+Apakah sistem ini?
+Anda sendiri membawa fail ISO sistem ini; anda tidak perlu menaip laluan atau jumlah semak, cukup pilih fail. Kami akan tunjukkan dahulu apa yang akan dilakukan. Tiada apa-apa berubah pada komputer anda sehingga anda meluluskan.
+Pemasang sistem ini mungkin tidak bermula pada sesetengah komputer. Jika tidak bermula, "Buat asal perubahan" memulihkan segalanya.
+Ciri ini berfungsi dalam aplikasi desktop BesideOS, pada komputer Windows. Di sini anda boleh mengenali sistem dan memuat turun fail ISO.
+Tidak ditemui
+Mengecilkan partition dianggap operasi yang tidak boleh dipulihkan: "Buat asal" cuba membesarkan semula partition ke saiz asal, tetapi tidak boleh jika sistem baharu telah dipasang di ruang itu.
+Mengecilkan partition jarang-jarang boleh menyebabkan masalah.
+Tiada halaman seperti itu.
+Anda boleh cuba memilih ruang yang lebih kecil:
+Jika anda mahu bermula kemudian, mulakan semula komputer sendiri; pemasang muncul pada permulaan pertama. Jika tidak muncul, pilih entri "Pemasangan {sys}" dalam menu GRUB (Shift atau Esc). Apabila pemasangan selesai, anda boleh membuang entri itu dengan "buat asal".
+Jika anda mahu bermula kemudian, mulakan semula komputer sendiri; pemasang muncul pada permulaan pertama. Jika tidak muncul, pilih "Pemasangan {sys}" daripada menu but. Apabila pemasangan selesai, anda boleh memadam partition sementara bernama BESIDEOS.
+Terdapat pemasangan terdahulu yang tidak selesai
+Pengedaran
+Kembali ke pengedaran
+Perubahan telah dibuat asal
+Membuat asal perubahan…
+Buat asal perubahan
+Maklumat cakera tidak dapat dikumpulkan.
+Pada skrin cakera, pilih "Ruang tidak diperuntukkan" dan klik "Seterusnya". Windows mencipta partition sendiri di situ.
+Ralat cakera
+Ralat cakera: fail tidak dapat ditulis.
+Apabila pemasang bertanya tentang cakera, JANGAN pilih "Padam keseluruhan cakera". Pilih "Pasang bersebelahan" atau "Sesuatu yang lain" (pembahagian manual) dan gunakan "ruang kosong" sahaja.
+Cakera {n}
+Beginilah rupa cakera sekarang.
+Cakera tidak dapat dibaca. {reason}
+Ruang dibuka pada cakera anda dan satu entri yang memulakan ISO anda ditambah ke menu GRUB.
+Fail tidak dapat dibaca atau jumlah semaknya tidak sah.
+Fail terlalu besar
+Jika anda tiada fail itu, anda boleh memuat turunnya dari halaman rasmi:
+Memeriksa sama ada fail tidak rosak…
+Pengesahan gagal (ralat cakera).
+Mendapatkan maklumat pengesahan…
+Jika tidak pasti, biarkan pemasangan pada skrin itu, mulakan semula komputer dan pilih "buat asal" dalam BesideOS.
+Jika tidak pasti, biarkan pemasangan pada skrin itu; anda boleh mematikan komputer dan kembali ke Windows, kemudian cukup pilih "buat asal" dalam BesideOS.
+Ya, mulakan
+Ya, mulakan semula
+Tiada pengedaran yang sepadan
+Satu entri "Pemasangan {sys}" ditambah ke menu but GRUB; fail ISO kekal di tempatnya.
+Satu entri "Pemasangan {sys}" ditambah ke menu but GRUB.
+Jika menu GRUB tidak muncul sendiri, tahan Shift atau tekan Esc semasa permulaan dan pilih entri "BesideOS".
+Buat asal gagal.
+Kami syorkan buat asal.
+BesideOS melakukan selebihnya.
+Alamat tidak sah.
+Nama fail tidak sah.
+Alamat tidak selamat ditolak
+Anda menggunakan komputer yang mana?
+Pada komputer yang mana ia boleh dipasang?
+Sistem mana yang anda mahu pasang?
+Sistem mana yang boleh anda pasang?
+Yang mana satu anda mahu?
+Apabila siap, anda memulakan semula. Semasa permulaan, menu muncul selama 5 saat dengan pemasangan {sys} dipilih; sistem anda yang sudah dipasang berada dalam senarai yang sama.
+Siap! Anda boleh memulakan semula sekarang
+Sedang menyediakan, sila tunggu…
+Semua
+Semuanya sudah siap!
+Tiada apa-apa yang berubah.
+Fail ISO (*.iso)
+Klik untuk memilih fail ISO saya sendiri dan memasang
+Anda memilih fail ISO anda
+Fail ISO
+Fail ISO berada pada sistem fail yang tidak dapat dibaca oleh GRUB. Salin fail ke cakera ext4, btrfs, xfs atau FAT32.
+Fail ISO tidak ditemui.
+Fail ISO kekal di tempatnya: {path}
+Fail ISO berada pada cakera yang disulitkan; GRUB tidak dapat membacanya. Salin ke cakera yang tidak disulitkan.
+Fail ISO mesti berada di luar partition tempat anda memasang (cth. pada cakera berasingan). Pemasang tidak boleh memadam partition yang mengandungi ISOnya sendiri.
+Fail ISO berada pada cakera yang boleh anda pasang. Pemasang tidak boleh memadam partition yang mengandungi ISOnya sendiri; pasang sistem baharu pada ruang kosong yang dibuka oleh BesideOS.
+Jangan sentuh partition yang mengandungi fail ISO atau sistem semasa anda; format hanya ruang yang baru dibuat.
+ISO tidak dapat dimuat turun atau disahkan.
+Kandungan ISO tidak dapat diperiksa. {detail}
+ISO tidak dapat diperiksa. {detail}
+Untuk melihat ke dalam ISO, program "xorriso" diperlukan. Pasangnya dan cuba lagi.
+Tutup
+Katalog
+Katalog kosong
+Katalog tidak dapat dimuatkan: {msg}
+Saya mahu memilih fail ISO saya sendiri dan memasang
+Untuk siapa: {text}
+Buat sandaran sebelum memasang
+Pilih fail ISO yang anda mahu pasang
+Muat turun aplikasi BesideOS untuk memasang
+Klik untuk memasang
+Sistem yang boleh dipasang bersebelahan
+Pemasangan
+Komponen pemasangan tiada
+Fail pemasangan diletakkan pada cakera yang sama.
+Fail pemasangan diletakkan dalam partition kecil pada cakera yang sama. Pemacu USB tidak diperlukan.
+Apabila pemasang terbuka, pada soalan tentang cakera JANGAN pilih "Padam keseluruhan cakera". Pilih "Sesuatu yang lain" (pembahagian manual) dan gunakan hanya ruang kosong (tidak diperuntukkan) yang dibuka oleh BesideOS.
+Pemasang muncul.
+Pemasangan akan disediakan: ruang kosong akan dibuka dan fail akan disalin. Komputer TIDAK dimulakan semula sendiri; anda akan memutuskannya kemudian.
+Pemasangan telah disediakan
+Menyediakan pemasangan…
+Penyediaan pemasangan gagal.
+Pemasangan tidak dapat dilakukan.
+Mulakan pemasangan
+Lihat pemasangan
+Linux
+Pada komputer Linux, Windows boleh dipasang pada partition berasingan sebagai dwi-but.
+Pada komputer Linux, Linux lain boleh dimulakan daripada fail ISOnya dengan entri GRUB dan dipasang pada ruang kosong (tiada partition dikecilkan).
+Sistem Linux
+Pasang bersebelahan Linux
+Lesen: {text}
+Desktop: {text}
+Sistem semasa dan fail anda kekal seperti sedia ada. Satu partition dikecilkan untuk membuka ruang kosong; {name} dimulakan daripada fail ISOnya dengan entri GRUB.
+Rupanya
+Cara ia berfungsi
+Jenis apa?
+Apa yang akan berlaku?
+Satu tetingkap yang meminta kata laluan anda akan dibuka.
+Satu tetingkap yang meminta kata laluan anda akan dibuka. Jangan tutup tetingkap ini. Komputer tidak dimulakan semula sendiri.
+Menyediakan pelan
+Pelan tidak dapat dibuat (kod {code}). {detail}
+Selepas anda melihat pelan dan mengesahkan bahawa anda telah membuat sandaran fail, ruang kosong dibuka pada cakera.
+Halaman rasmi
+Nama fail ini tiada dalam fail jumlah semak; tidak dapat disahkan. Katalog mungkin sudah lapuk; muat turun dari halaman rasmi.
+Jumlah semak tidak sepadan. Fail tidak dipadam; semak nilai SHA-256.
+Jumlah semak tidak sepadan; fail telah dipadam.
+Secure Boot dihidupkan. ISO dengan kernel tidak bertandatangan mungkin tidak bermula; jika menu pemasangan tidak muncul, matikan Secure Boot dalam BIOS.
+Dengan Secure Boot dihidupkan, sesetengah ISO mungkin tidak bermula. Jika pemasang tidak muncul, matikan Secure Boot dalam tetapan BIOS.
+Dengan Secure Boot dihidupkan, sesetengah sistem mungkin tidak bermula. Jika pemasang tidak muncul, matikan Secure Boot dalam tetapan BIOS; anda boleh menghidupkannya semula selepas pemasangan.
+Fail yang dipilih tidak ditemui atau bukan fail ISO.
+Fail ISO yang anda pilih sedang diperiksa
+Kod ralat pelayan: {code}
+Pelayan tidak memberi respons
+Respons pelayan tidak sah
+Buka aplikasi untuk pemasangan sekali klik
+Butiran teknikal
+Cuba lagi
+Berdasarkan: {text}
+Anda klik
+Aplikasi berfungsi pada komputer Windows. Anda memilih sistem yang dikehendaki dalam aplikasi dan memulakan pemasangan dengan satu klik.
+Fail aplikasi seolah-olah tiada. Muat turun BesideOS semula dan buka.
+Batal
+Batal, buat asal perubahan
+Windows
+Persediaan Windows bermula dengan cara ini, daripada cakera RAM. Adalah biasa melihat ralat atau amaran semasa persediaan; selalunya anda boleh mengabaikannya dan meneruskan. Jika persediaan langsung tidak maju, "Buat asal perubahan" memulihkan segalanya.
+Pada komputer Windows, Linux boleh dipasang bersebelahan Windows sebagai dwi-but.
+Pada komputer Windows, Windows kedua boleh dipasang pada partition berasingan sebagai dwi-but.
+Windows akan meminta kebenaran: pilih "Ya".
+Windows akan meminta kebenaran: pilih "Ya". Jangan tutup tetingkap ini. Komputer tidak dimulakan semula sendiri.
+Windows memerlukan sekurang-kurangnya 64 GB; 80 GB selesa. Pilih lebih banyak jika anda akan memasang banyak program.
+Jika anda melihat ralat semasa persediaan Windows
+Sistem Windows
+Windows dan fail anda kekal seperti sedia ada. Ruang dibuka pada komputer anda untuk {name}.
+Dalam Windows, Fast Startup dan BitLocker mesti dimatikan. Jika BitLocker dihidupkan, BesideOS menolak pemasangan.
+Pasang bersebelahan Windows
+Kira-kira {gb} GB ruang kosong dibuka bersebelahan Windows.
+Ruang dibuka bersebelahan Windows dan fail diletakkan di situ.
+Hanya cakera yang dibahagikan dengan GPT disokong.
+Mungkin ada perubahan yang tidak selesai
+Sistem baharu
+Berapa banyak ruang yang kita peruntukkan untuk sistem baharu?
+Tiada partition ditemui yang boleh dibuka ruangnya untuk sistem baharu. Anda memerlukan partition yang boleh dikecilkan (ext4, btrfs atau NTFS) dengan sekurang-kurangnya {gb} GB kosong.
+Dimulakan semula
+Batalkan mula semula
+Komputer tidak dapat dimulakan semula. Mulakan semula sendiri.
+Selepas mula semula, menu muncul selama 5 saat dengan entri "Pemasangan {sys}" dipilih. Anda boleh memilih salah satu sistem yang dipasang dalam senarai jika mahu. Mulakan semula selepas anda menyimpan kerja yang terbuka.
+Sebelum memulakan yang baharu, anda mesti membuat asal perubahan terdahulu.
+Partition yang dibuka ruangnya mesti ext4, btrfs atau NTFS dan mempunyai ruang kosong yang mencukupi. Cakera mesti GPT.
+Ruang dibuka
+Ruang dibuka: satu partition mengecil.
+Daripada partition mana ruang itu diambil?
+Daripada pemacu mana ruang itu diambil?
+Ruang diambil daripada kawasan kosong partition yang anda pilih. Fail anda tidak dipadam. Partition yang tiada dalam senarai menggunakan sistem fail yang tidak boleh dikecilkan atau tidak mempunyai ruang kosong yang mencukupi.
+Ruang diambil daripada kawasan kosong pemacu yang anda pilih. Fail anda tidak dipadam.
+Tiada
+Kebenaran pentadbir tidak diberikan; maklumat cakera tidak dapat dibaca. Tiada apa-apa diubah.
+Kebenaran pentadbir tidak diberikan; cakera tidak dapat dibaca. Tiada apa-apa diubah.
+Kebenaran pentadbir tidak diberikan; tiada apa-apa dibuat asal.
+Kebenaran pentadbir tidak diberikan; tiada apa-apa diubah.
+Tiada alamat ubah hala
+{credit}  ·  Klik gambar untuk membesarkan
+Partition {device} dikecilkan dan kira-kira {gb} GB ruang kosong (tidak diperuntukkan) dibuka.
+Partition {device} dikecilkan sebanyak {gb} GB; ruang yang dibebaskan kekal kosong (tidak diperuntukkan).
+{device} boleh membebaskan paling banyak {gb} GB. Pilih ruang yang lebih kecil atau gunakan partition lain.
+{disk} · jumlah {total} · {free} kosong
+{disk} · {fstype} · jumlah {total} · paling banyak {max} boleh dibebaskan
+{g} GB · disyorkan
+{host}: {reason}
+Pemacu {letter}:
+Pemacu {letter}: ({label})
+Kira-kira {gb} GB ruang kosong dibuka pada pemacu {letter}:.
+{mb} MB dimuat turun
+{name} dimuat turun dan ruang dibuka bersebelahan Windows.
+{name} dimuat turun, ruang dibuka pada cakera anda dan satu entri ditambah ke menu GRUB.
+Memuat turun dan memeriksa {name}
+Pemasang {name} muncul.
+{name} · Windows ada di sini
+Fail pemasangan {sys} disalin ke sini.
+Pilih cakera dengan teliti semasa memasang {sys}
+Lukisan. Pelan sebenar ditunjukkan kepada anda sepenuhnya sebelum apa-apa berubah.
+Terlalu banyak ubah hala
+30 GB mencukupi untuk kebanyakan orang. Pilih lebih banyak jika anda akan memasang banyak program.
+Saya telah membuat sandaran fail penting saya
+Buat sandaran fail penting anda: mengecilkan partition jarang-jarang boleh menyebabkan masalah.
+Tiga langkah. Tiada apa-apa berubah pada komputer anda sehingga anda meluluskan.
+Dua sistem, satu cakera. Tanpa pemacu USB.
+Muat turun
+Fail yang dimuat turun sedang diperiksa
+Muat turun gagal: {message}
+Klik untuk memuat turun
+Bukan sekarang
+Mulakan semula sekarang
+Mulakan semula sekarang?
+Sistem semasa
+partition sistem yang sedang berjalan sekarang
+Pemasangan {name}
+Windows (batalkan pemasangan)
+BesideOS: pasang sistem pengendalian lain di sebelah yang ini

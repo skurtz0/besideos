@@ -10,7 +10,7 @@ bundle=build/linux/x64/release/bundle
 [ -x "$bundle/besideos" ] || { echo "besideos missing in $bundle" >&2; exit 1; }
 rm -rf build/BesideOS && mkdir -p build/BesideOS/engine
 cp -a "$bundle"/. build/BesideOS/
-cp probe/linux/besideos-grub.sh probe/linux/boot-entries.sh build/BesideOS/engine/
+cp probe/linux/besideos-grub.sh build/BesideOS/engine/
 chmod +x build/BesideOS/engine/*.sh
 tar -C build -czf build/BesideOS-linux.tar.gz BesideOS
 echo "OK: build/BesideOS-linux.tar.gz ($(du -h build/BesideOS-linux.tar.gz | cut -f1))"

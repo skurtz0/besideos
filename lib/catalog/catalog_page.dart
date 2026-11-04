@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import '../l10n/text.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../brand.dart';
 import '../theme.dart';
@@ -8,8 +9,6 @@ import 'support_matrix.dart';
 const _hostLabels = {
   Host.windows: 'Windows',
   Host.linux: 'Linux',
-  Host.macM1M2: 'Mac M1/M2',
-  Host.macOther: 'Diğer Mac',
 };
 
 class CatalogPage extends StatefulWidget {
@@ -29,19 +28,15 @@ class _CatalogPageState extends State<CatalogPage> {
         if (_family != null && d.family != _family) return false;
         if (_host == null) return true;
         final key = hostKey(_host!);
-        // macOther: eşleşme yok; matris reddettiği ana sistem de gösterilmez
         return key != null && supportFor(_host!, d.family).supported && d.hosts.contains(key);
       }).toList();
 
   @override
   Widget build(BuildContext context) {
     final items = _visible;
-    final String? note = _host == Host.macOther
-        ? supportFor(Host.macOther, _family ?? DistroFamily.linux).reason
-        : null;
     final empty = widget.catalog.distros.isEmpty
         ? 'Katalog boş'
-        : (note ?? 'Eşleşen dağıtım yok');
+        : 'Eşleşen dağıtım yok';
     return PageScroll(
       maxWidth: 1180,
       padding: const EdgeInsets.all(24),

@@ -1,0 +1,260 @@
+Vaihe vaiheelta
+Etusivu
+Jos sinulla on tallentamatonta työtä, tallenna se. Jos muutat mielesi, paina alla olevaa painiketta.
+Avoin lähdekoodi, MIT
+Selvitä käynnistysvalikon näppäin (yleensä F12, F10, F9 tai Esc). Jos asennusohjelma ei tule itsestään näkyviin, valitse valikosta kohta ”<järjestelmän nimi> -asennus” (esim. ”Debian-asennus”).
+Verkkovirhe
+Epäonnistui.
+Tarkista tietokoneesi ennen aloittamista
+Aloita napsauttamalla
+Aloita merkitsemällä yllä oleva ruutu.
+Aloitetaanko?
+Odottamaton virhe.
+Odottamaton virhe: {e}
+BesideOS on avointa lähdekoodia MIT-lisenssillä. Se perustuu Arjun Ingolen hop-projektiin (sekin MIT). Muiden käyttöjärjestelmien nimet kuuluvat omistajilleen, ja niitä käytetään vain kertomaan, mitä BesideOS osaa asentaa.
+BesideOS vapauttaa levyltäsi tilaa ja valmistelee asennuksen; kun se on valmis, käynnistät tietokoneen uudelleen. Windows pysyy ennallaan.
+BesideOS vapauttaa levyltäsi tilaa uudelle järjestelmälle. Tiedostojasi ei poisteta, mutta levytoiminnot voivat harvoin mennä pieleen, joten suosittelemme varmuuskopioimaan tärkeät tiedostot. Jos muutat mielesi, ”Kumoa muutokset” palauttaa kaiken ennalleen.
+Tietokone käynnistyy uudelleen 15 sekunnin kuluttua
+Tietokone käynnistyy uudelleen 15 sekunnin kuluttua. Käynnistyksessä valikko näkyy 5 sekuntia ja {sys}-asennus on valittuna; voit valita sen sijaan jo asennetun järjestelmän. Tallenna avoin työsi nyt.
+Tietokone näyttää käynnistyneen BIOS-tilassa (vanha); UEFI on suositeltava.
+Tietokonetta valmistellaan
+Tietokoneen täytyy käynnistyä UEFI-tilassa (poista ”Legacy/CSM” käytöstä BIOS-asetuksissa).
+Tietokoneen täytyy käynnistyä UEFI-tilassa (poista ”Legacy/CSM” käytöstä BIOS-asetuksissa). Vanhassa BIOS-tilassa tämä tapa ei toimi.
+Tarkistetaan tietokonettasi
+Asenna toinen järjestelmä tietokoneelle ilman USB-tikkua.
+Tietokoneesi ISO-tiedostot
+Tietokoneellasi ei ole vielä muuttunut mikään. Katso, mitä tapahtuu, ja aloita sitten.
+Tietokoneellasi ei muutu vielä mikään.
+Mitä tietokoneen pitäisi olla?
+Osoitat tiedoston, joka on tietokoneella tai jonka latasit.
+Hyvä tietää
+Yksi osio pienennetään ja GRUB-valikkoon lisätään yksi kohta. Tietokone EI käynnisty itsestään uudelleen; päätät siitä myöhemmin.
+Yksi uudelleenkäynnistys
+Yhden uudelleenkäynnistyksen jälkeen uusi järjestelmä asennetaan vanhan viereen.
+Seuraavassa käynnistyksessä tämä kohta valitaan kerran.
+Seuraavassa käynnistyksessä asennusohjelma tulee näkyviin. Sen jälkeen tietokone käynnistyy kuten tavallisesti.
+Tapahtui ongelma
+Painat yhtä ja aloitat sen asennuksen.
+Valitse yksi. Jos et ole varma, voit valita ensimmäisen.
+Valitse yksi. Näytämme vaihe vaiheelta, miten se asennetaan.
+Valitse yksi; katso, miltä se näyttää ja mitä se vaatii.
+Alusta vain vasta luotu vapaa tila. Älä koske Windows-osioihin äläkä BESIDEOS-osioon.
+Vapaata tilaa luotiin levylle, jolla asema {letter}: on; valitse se levy asennusohjelmassa.
+Tätä ISO-tiedostoa ei voi käynnistää tällä tietokoneella.
+Tätä ISO-tiedostoa ei voi käynnistää suoraan GRUBilla (siitä puuttuvat ISO:sta käynnistämiseen tarvittavat tiedot). Se on luultavasti pieni asennustiedosto, kuten ”netinst”; kokeile saman järjestelmän ”Live”-versiota.
+Tämän tyyppisen ISO:n käynnistystapaa ei ole vielä kokeiltu.
+Tälle tietokoneelle ei voi asentaa juuri nyt
+GRUBia ei löytynyt tältä tietokoneelta (siellä voi olla toinen käynnistyksenhallinta, kuten systemd-boot).
+Tämän tietokoneen GRUB-valikko ei lue mukautettuja kohtia; BesideOS ei voi toimia täällä.
+Tätä jakelua ei ole tässä oppaassa.
+Tämä tiedosto ei ole luettavissa oleva ISO-levykuva.
+Tämä vanha Windows-versio ei välttämättä käynnisty uusilla tietokoneilla (UEFI). Jos se ei käynnisty, ”Kumoa muutokset” palauttaa kaiken ennalleen.
+Mikä tämä järjestelmä on?
+Tämän järjestelmän ISO-tiedoston tuot itse; sinun ei tarvitse kirjoittaa polkua tai tarkistussummaa, riittää että valitset tiedoston. Näytämme ensin, mitä tehdään. Tietokoneellasi ei muutu mikään, ennen kuin hyväksyt.
+Tämän järjestelmän asennusohjelma ei välttämättä käynnisty joillakin tietokoneilla. Jos se ei käynnisty, ”Kumoa muutokset” palauttaa kaiken ennalleen.
+Tämä ominaisuus toimii BesideOS-työpöytäsovelluksessa Windows-tietokoneella. Täällä voit tutustua järjestelmään ja ladata ISO-tiedoston.
+Ei löytynyt
+Osion pienentämistä pidetään peruuttamattomana toimenpiteenä: ”Kumoa” yrittää kasvattaa osion takaisin vanhaan kokoonsa, mutta ei onnistu, jos uusi järjestelmä on asennettu siihen tilaan.
+Osion pienentäminen voi harvoin aiheuttaa ongelmia.
+Sellaista sivua ei ole.
+Voit kokeilla valita pienemmän tilan:
+Jos haluat aloittaa myöhemmin, käynnistä tietokone uudelleen itse; asennusohjelma tulee näkyviin ensimmäisessä käynnistyksessä. Jos se ei tule näkyviin, valitse GRUB-valikosta (Shift tai Esc) kohta ”{sys}-asennus”. Kun asennus on valmis, voit poistaa kohdan ”kumoa”-toiminnolla.
+Jos haluat aloittaa myöhemmin, käynnistä tietokone uudelleen itse; asennusohjelma tulee näkyviin ensimmäisessä käynnistyksessä. Jos se ei tule näkyviin, valitse käynnistysvalikosta ”{sys}-asennus”. Kun asennus on valmis, voit poistaa tilapäisen BESIDEOS-nimisen osion.
+Aiempi asennus on jäänyt kesken
+Jakelut
+Takaisin jakeluihin
+Muutokset kumottiin
+Kumotaan muutoksia…
+Kumoa muutokset
+Levytietoja ei voitu kerätä.
+Valitse levynäkymässä ”Varaamaton tila” ja napsauta ”Seuraava”. Windows luo siihen omat osionsa.
+Levyvirhe
+Levyvirhe: tiedostoa ei voitu kirjoittaa.
+Kun asennusohjelma kysyy levystä, ÄLÄ valitse ”Tyhjennä koko levy”. Valitse ”Asenna rinnalle” tai ”Jokin muu” (käsin osiointi) ja käytä vain ”vapaata tilaa”.
+Levy {n}
+Näin levy näyttää nyt.
+Levyjä ei voitu lukea. {reason}
+Levyillesi vapautetaan tilaa ja GRUB-valikkoon lisätään kohta, joka käynnistää ISO:si.
+Tiedostoa ei voitu lukea tai sen tarkistussumma on virheellinen.
+Tiedosto on liian suuri
+Jos sinulla ei ole tiedostoa, voit ladata sen viralliselta sivulta:
+Tarkistetaan, ettei tiedosto ole vioittunut…
+Vahvistus epäonnistui (levyvirhe).
+Haetaan vahvistustietoja…
+Jos et ole varma, jätä asennus siihen näkymään, käynnistä tietokone uudelleen ja valitse BesideOS:ssa ”kumoa”.
+Jos et ole varma, jätä asennus siihen näkymään; voit sammuttaa tietokoneen ja palata Windowsiin, ja sitten riittää, että valitset BesideOS:ssa ”kumoa”.
+Kyllä, aloita
+Kyllä, käynnistä uudelleen
+Ei vastaavaa jakelua
+GRUB-käynnistysvalikkoon lisätään kohta ”{sys}-asennus”; ISO-tiedosto pysyy paikallaan.
+GRUB-käynnistysvalikkoon lisätään kohta ”{sys}-asennus”.
+Jos GRUB-valikko ei tule itsestään näkyviin, pidä Shift painettuna tai paina Esc käynnistyksessä ja valitse kohta ”BesideOS”.
+Kumoaminen epäonnistui.
+Suosittelemme kumoamaan.
+BesideOS hoitaa lopun.
+Virheellinen osoite.
+Virheellinen tiedostonimi.
+Vaarallinen osoite hylättiin
+Millä tietokoneella olet?
+Millä tietokoneilla sen voi asentaa?
+Minkä järjestelmän haluat asentaa?
+Mitkä järjestelmät voit asentaa?
+Minkä haluat?
+Kun kaikki on valmista, käynnistät uudelleen. Käynnistyksessä valikko näkyy 5 sekuntia ja {sys}-asennus on valittuna; asennetut järjestelmäsi ovat samassa luettelossa.
+Valmis! Voit nyt käynnistää uudelleen
+Valmistellaan, odota…
+Kaikki
+Kaikki on valmista!
+Mikään ei muuttunut.
+ISO-tiedostot (*.iso)
+Napsauta valitaksesi oma ISO-tiedostosi ja asentaaksesi
+Valitset oman ISO-tiedostosi
+ISO-tiedosto
+ISO-tiedosto on tiedostojärjestelmässä, jota GRUB ei osaa lukea. Kopioi tiedosto ext4-, btrfs-, xfs- tai FAT32-levylle.
+ISO-tiedostoa ei löytynyt.
+ISO-tiedosto pysyy paikallaan: {path}
+ISO-tiedosto on salatulla levyllä; GRUB ei voi lukea sitä. Kopioi se salaamattomalle levylle.
+ISO-tiedoston täytyy olla sen osion ulkopuolella, jolle asennat (esim. erillisellä levyllä). Asennusohjelma ei voi poistaa osiota, jolla sen oma ISO on.
+ISO-tiedosto on levyllä, jolle voisit asentaa. Asennusohjelma ei voi poistaa osiota, jolla sen oma ISO on; asenna uusi järjestelmä BesideOS:n luomaan vapaaseen tilaan.
+Älä koske osioon, jolla ISO-tiedosto on, äläkä nykyiseen järjestelmääsi; alusta vain vasta luotu tila.
+ISO:ta ei voitu ladata tai vahvistaa.
+ISO:n sisältöä ei voitu tutkia. {detail}
+ISO:ta ei voitu tarkistaa. {detail}
+ISO:n sisään katsomiseen tarvitaan ”xorriso”-ohjelma. Asenna se ja yritä uudelleen.
+Sulje
+Luettelo
+Luettelo on tyhjä
+Luetteloa ei voitu ladata: {msg}
+Haluan valita oman ISO-tiedostoni ja asentaa
+Kenelle: {text}
+Tee varmuuskopio ennen asennusta
+Valitse ISO-tiedosto, jonka haluat asentaa
+Lataa BesideOS-sovellus asentaaksesi
+Napsauta asentaaksesi
+Järjestelmät, joiden rinnalle voi asentaa
+Asennus
+Asennuskomponentti puuttuu
+Asennustiedostot sijoitetaan samalle levylle.
+Asennustiedostot sijoitetaan pieneen osioon samalla levyllä. USB-tikkua ei tarvita.
+Kun asennusohjelma avautuu, ÄLÄ valitse levykysymyksessä ”Tyhjennä koko levy”. Valitse ”Jokin muu” (käsin osiointi) ja käytä vain BesideOS:n luomaa vapaata (varaamatonta) tilaa.
+Asennusohjelma tulee näkyviin.
+Asennus valmistellaan: vapaata tilaa luodaan ja tiedostot kopioidaan. Tietokone EI käynnisty itsestään uudelleen; päätät siitä myöhemmin.
+Asennus on valmisteltu
+Valmistellaan asennusta…
+Asennuksen valmistelu epäonnistui.
+Asennus ei ole mahdollinen.
+Aloita asennus
+Katso asennus
+Linux
+Linux-tietokoneella Windowsin voi asentaa erilliselle osiolle kaksoiskäynnistyksenä.
+Linux-tietokoneella toisen Linuxin voi käynnistää ISO-tiedostostaan GRUB-kohdalla ja asentaa vapaaseen tilaan (osioita ei pienennetä).
+Linux-järjestelmät
+Asenna Linuxin rinnalle
+Lisenssi: {text}
+Työpöytä: {text}
+Nykyinen järjestelmäsi ja tiedostosi pysyvät ennallaan. Yksi osio pienennetään vapaan tilan luomiseksi; {name} käynnistyy ISO-tiedostostaan GRUB-kohdalla.
+Miltä se näyttää
+Miten se toimii
+Minkä tyyppinen?
+Mitä tapahtuu?
+Avautuu ikkuna, joka kysyy salasanaasi.
+Avautuu ikkuna, joka kysyy salasanaasi. Älä sulje tätä ikkunaa. Tietokone ei käynnisty itsestään uudelleen.
+Suunnitelmaa valmistellaan
+Suunnitelmaa ei voitu tehdä (koodi {code}). {detail}
+Kun olet nähnyt suunnitelman ja vahvistanut varmuuskopioineesi tiedostosi, levylle luodaan vapaata tilaa.
+Virallinen sivu
+Tätä tiedostonimeä ei ole tarkistussummatiedostossa; sitä ei voitu vahvistaa. Luettelo voi olla vanhentunut; lataa virallisalta sivulta.
+Tarkistussumma ei täsmännyt. Tiedostoa ei poistettu; tarkista SHA-256-arvo.
+Tarkistussumma ei täsmännyt; tiedosto poistettiin.
+Secure Boot on päällä. ISO:t, joiden ytimet ovat allekirjoittamattomia, eivät välttämättä käynnisty; jos asennusvalikko ei tule näkyviin, poista Secure Boot käytöstä BIOSissa.
+Kun Secure Boot on päällä, jotkin ISO:t eivät ehkä käynnisty. Jos asennusohjelma ei tule näkyviin, poista Secure Boot käytöstä BIOS-asetuksissa.
+Kun Secure Boot on päällä, jotkin järjestelmät eivät ehkä käynnisty. Jos asennusohjelma ei tule näkyviin, poista Secure Boot käytöstä BIOS-asetuksissa; voit ottaa sen takaisin käyttöön asennuksen jälkeen.
+Valittua tiedostoa ei löytynyt tai se ei ole ISO-tiedosto.
+Valitsemaasi ISO-tiedostoa tutkitaan
+Palvelimen virhekoodi: {code}
+Palvelin ei vastaa
+Palvelimen vastaus on virheellinen
+Avaa sovellus asentaaksesi yhdellä napsautuksella
+Tekniset tiedot
+Yritä uudelleen
+Perustuu: {text}
+Napsautat
+Sovellus toimii Windows-tietokoneella. Valitset sovelluksessa haluamasi järjestelmän ja aloitat asennuksen yhdellä napsautuksella.
+Sovelluksen tiedostoja näyttää puuttuvan. Lataa BesideOS uudelleen ja avaa se.
+Peruuta
+Peruuta, kumoa muutokset
+Windows
+Windowsin asennus käynnistyy tällä tavalla RAM-levyltä. On normaalia nähdä virheitä tai varoituksia asennuksen aikana; useimmiten voit ohittaa ne ja jatkaa. Jos asennus ei etene lainkaan, ”Kumoa muutokset” palauttaa kaiken ennalleen.
+Windows-tietokoneella Linuxin voi asentaa Windowsin rinnalle kaksoiskäynnistyksenä.
+Windows-tietokoneella toisen Windowsin voi asentaa erilliselle osiolle kaksoiskäynnistyksenä.
+Windows pyytää lupaa: sano ”Kyllä”.
+Windows pyytää lupaa: sano ”Kyllä”. Älä sulje tätä ikkunaa. Tietokone ei käynnisty itsestään uudelleen.
+Windows tarvitsee vähintään 64 Gt; 80 Gt on mukava. Valitse enemmän, jos asennat paljon ohjelmia.
+Jos näet virheen Windowsin asennuksessa
+Windows-järjestelmät
+Windows ja tiedostosi pysyvät ennallaan. Tietokoneellesi luodaan tilaa kohteelle {name}.
+Windowsissa pikakäynnistyksen (Fast Startup) ja BitLockerin täytyy olla pois päältä. Jos BitLocker on päällä, BesideOS kieltäytyy asentamasta.
+Asenna Windowsin rinnalle
+Windowsin viereen luodaan noin {gb} Gt vapaata tilaa.
+Windowsin viereen luodaan tilaa ja tiedostot sijoitetaan sinne.
+Vain GPT-osioidut levyt ovat tuettuja.
+Keskeneräisiä muutoksia voi olla
+Uusi järjestelmä
+Kuinka paljon tilaa varaamme uudelle järjestelmälle?
+Osiota, josta voisi vapauttaa tilaa uudelle järjestelmälle, ei löytynyt. Tarvitset pienennettävän osion (ext4, btrfs tai NTFS), jossa on vähintään {gb} Gt vapaata.
+Käynnistyy uudelleen
+Peruuta uudelleenkäynnistys
+Tietokonetta ei voitu käynnistää uudelleen. Käynnistä se itse uudelleen.
+Uudelleenkäynnistyksen jälkeen valikko näkyy 5 sekuntia ja kohta ”{sys}-asennus” on valittuna. Halutessasi voit valita luettelosta jonkin asennetuista järjestelmistä. Käynnistä uudelleen, kun olet tallentanut avoimen työsi.
+Ennen kuin aloitat uuden, sinun täytyy kumota aiemmat muutokset.
+Osion, josta tilaa vapautetaan, täytyy olla ext4, btrfs tai NTFS ja siinä täytyy olla riittävästi vapaata tilaa. Levyn täytyy olla GPT.
+Tilaa vapautetaan
+Tilaa vapautetaan: yksi osio pienenee.
+Miltä osiolta tila vapautetaan?
+Miltä asemalta tila vapautetaan?
+Tila otetaan valitsemasi osion vapaasta osasta. Tiedostojasi ei poisteta. Osiot, joita ei ole luettelossa, ovat tiedostojärjestelmässä, jota ei voi pienentää, tai niissä ei ole tarpeeksi vapaata tilaa.
+Tila otetaan valitsemasi aseman vapaasta osasta. Tiedostojasi ei poisteta.
+Ei mitään
+Järjestelmänvalvojan lupaa ei annettu; levytietoja ei voitu lukea. Mitään ei muutettu.
+Järjestelmänvalvojan lupaa ei annettu; levyjä ei voitu lukea. Mitään ei muutettu.
+Järjestelmänvalvojan lupaa ei annettu; mitään ei kumottu.
+Järjestelmänvalvojan lupaa ei annettu; mitään ei muutettu.
+Uudelleenohjausosoitetta ei ole
+{credit}  ·  Suurenna napsauttamalla kuvaa
+Osio {device} pienennetään ja noin {gb} Gt vapaata (varaamatonta) tilaa luodaan.
+Osio {device} pienennetään {gb} Gt; vapautunut tila jää tyhjäksi (varaamattomaksi).
+Kohteesta {device} voi vapauttaa enintään {gb} Gt. Valitse pienempi tila tai käytä toista osiota.
+{disk} · yhteensä {total} · vapaana {free}
+{disk} · {fstype} · yhteensä {total} · enintään {max} voidaan vapauttaa
+{g} Gt · suositus
+{host}: {reason}
+Asema {letter}:
+Asema {letter}: ({label})
+Asemalle {letter}: luodaan noin {gb} Gt vapaata tilaa.
+{mb} Mt ladattu
+{name} ladataan ja Windowsin viereen luodaan tilaa.
+{name} ladataan, levyillesi luodaan tilaa ja GRUB-valikkoon lisätään kohta.
+Ladataan ja tarkistetaan {name}
+{name}-asennusohjelma tulee näkyviin.
+{name} · Windows on täällä
+{sys}-asennustiedostot kopioidaan tähän.
+Valitse levy huolellisesti asentaessasi {sys}
+Piirros. Todellinen suunnitelma näytetään sinulle kokonaan, ennen kuin mikään muuttuu.
+Liikaa uudelleenohjauksia
+Useimmille riittää 30 Gt. Valitse enemmän, jos asennat paljon ohjelmia.
+Varmuuskopioin tärkeät tiedostoni
+Varmuuskopioi tärkeät tiedostosi: osion pienentäminen voi harvoin aiheuttaa ongelmia.
+Kolme vaihetta. Tietokoneellasi ei muutu mikään, ennen kuin hyväksyt.
+Kaksi järjestelmää, yksi levy. Ei USB-tikkua.
+Lataa
+Ladattua tiedostoa tutkitaan
+Lataus epäonnistui: {message}
+Napsauta ladataksesi
+Ei nyt
+Käynnistä uudelleen nyt
+Käynnistetäänkö uudelleen nyt?
+Nykyinen järjestelmä
+parhaillaan käynnissä olevan järjestelmän osio
+{name}-asennus
+Windows (peruuta asennus)
+BesideOS: asenna toinen käyttöjärjestelmä tämän rinnalle

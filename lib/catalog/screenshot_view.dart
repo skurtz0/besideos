@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import '../l10n/l10n.dart';
+import '../l10n/text.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../theme.dart';
 import 'distro.dart';
@@ -57,10 +59,13 @@ class ScreenShotView extends StatelessWidget {
       const SizedBox(height: 8),
       Text(shot.caption, style: const TextStyle(color: kText, fontWeight: FontWeight.w600, height: 1.4)),
       const SizedBox(height: 2),
-      Text('${shot.credit}  ·  Büyütmek için resme tıkla',
+      Text(tr('{credit}  ·  Büyütmek için resme tıkla', {'credit': _credit(shot.credit)}),
           style: const TextStyle(color: kMuted, fontSize: 12, height: 1.4)),
       if (shot.source != null)
         SelectableText(shot.source!, style: const TextStyle(color: kMuted, fontSize: 12, height: 1.4)),
     ]);
   }
 }
+
+/// "Görsel: author · license" credits keep the author and license as written; only the lead word is translated.
+String _credit(String c) => c.startsWith('Görsel: ') ? tr('Görsel: {text}', {'text': c.substring('Görsel: '.length)}) : c;

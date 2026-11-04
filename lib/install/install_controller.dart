@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 
 import '../catalog/distro.dart';
 import '../download/download_controller.dart';
+import '../l10n/l10n.dart';
 import 'engine.dart';
 import 'process_runner.dart';
 
@@ -162,7 +163,7 @@ class InstallController extends ChangeNotifier {
   /// Which distro page this controller belongs to (Linux host: the GRUB entry exists once, for one distro).
   final String? ownerId;
 
-  /// Name shown in the GRUB menu ("BesideOS: 5 saniye içinde kurulacak: Ubuntu").
+  /// Name shown in the GRUB menu ("Ubuntu kurulumu").
   final String? ownerName;
   final ProcessRunner runner;
   final Engine engine;
@@ -352,7 +353,7 @@ class InstallController extends ChangeNotifier {
         '-OutFile', isoJson.path,
       ]);
       if (r.exitCode != 0 || !isoJson.existsSync()) {
-        _fail('ISO içeriği incelenemedi. ${r.stderr.trim()}'.trim());
+        _fail(tr('ISO içeriği incelenemedi. {detail}', {'detail': r.stderr.trim()}).trim());
         return;
       }
 
@@ -364,13 +365,13 @@ class InstallController extends ChangeNotifier {
         return;
       }
       if (r.exitCode != 0 || !_f('facts.json').existsSync()) {
-        _fail('Disk bilgisi toplanamadı.${_logTail('probe.log')}');
+        _fail('${tr('Disk bilgisi toplanamadı.')}${_logTail('probe.log')}');
         return;
       }
       _loadDrives();
       await _makePlan();
     } catch (e) {
-      _fail('Beklenmeyen hata: $e');
+      _fail(tr('Beklenmeyen hata: {e}', {'e': e}));
     }
   }
 
@@ -390,7 +391,7 @@ class InstallController extends ChangeNotifier {
       return;
     }
     if (r.exitCode != 0) {
-      _fail('ISO kontrol edilemedi. ${last('ERROR') ?? r.stderr.trim()}'.trim());
+      _fail(tr('ISO kontrol edilemedi. {detail}', {'detail': last('ERROR') ?? r.stderr.trim()}).trim());
       return;
     }
     _isoWarnings = [
@@ -407,15 +408,15 @@ class InstallController extends ChangeNotifier {
       return;
     }
     if (d.exitCode != 0 || !out.existsSync()) {
-      _fail('Diskler okunamadı. ${_scriptReason(d)}'.trim());
+      _fail(tr('Diskler okunamadı. {reason}', {'reason': _scriptReason(d)}).trim());
       return;
     }
     _loadDrives();
     // The script's minimum is 8 GiB; the smallest choice offered is 20 GiB, so a partition below that is no use.
     _drives = [for (final x in _drives) if (x.freeBytes >= linuxSpaceChoicesGiB.first * _gib) x];
     if (_drives.isEmpty) {
-      _refusal = 'Yeni sistem için yer açılabilecek bir bölüm bulunamadı. Küçültülebilen (ext4, btrfs ya da NTFS) ve '
-          'en az ${linuxSpaceChoicesGiB.first} GB boş yeri olan bir bölüm gerekir.';
+      _refusal = tr('Yeni sistem için yer açılabilecek bir bölüm bulunamadı. Küçültülebilen (ext4, btrfs ya da NTFS) ve en az {gb} GB boş yeri olan bir bölüm gerekir.',
+          {'gb': linuxSpaceChoicesGiB.first});
       _set(InstallPhase.refused);
       return;
     }
@@ -432,16 +433,17 @@ class InstallController extends ChangeNotifier {
     final t = _target!;
     if (_linuxGiB * _gib > t.freeBytes) {
       _plan = null;
-      _refusal = '${t.device} en fazla ${(t.freeBytes / _gib).floor()} GB yer açabilir. Daha küçük bir alan seç ya da başka bir bölüm kullan.';
+      _refusal = tr('{device} en fazla {gb} GB yer açabilir. Daha küçük bir alan seç ya da başka bir bölüm kullan.',
+          {'device': t.device, 'gb': (t.freeBytes / _gib).floor()});
       _set(InstallPhase.refused);
       return;
     }
     _refusal = null;
     _plan = InstallPlan(
       steps: [
-        '${t.device} bölümü $_linuxGiB GB küçültülür; açılan yer boş (ayrılmamış) kalır.',
-        'ISO dosyası olduğu yerde kalır: ${_iso!.path}',
-        'GRUB açılış menüsüne "BesideOS" girişi eklenir.',
+        tr('{device} bölümü {gb} GB küçültülür; açılan yer boş (ayrılmamış) kalır.', {'device': t.device, 'gb': _linuxGiB}),
+        tr('ISO dosyası olduğu yerde kalır: {path}', {'path': _iso!.path}),
+        tr('GRUB açılış menüsüne "{sys} kurulumu" girişi eklenir.', {'sys': ownerName ?? 'BesideOS'}),
         'Bir sonraki açılış için bir kereliğine bu giriş seçilir.',
       ],
       risks: [
@@ -494,7 +496,7 @@ class InstallController extends ChangeNotifier {
     try {
       await _makePlan();
     } catch (e) {
-      _fail('Beklenmeyen hata: $e');
+      _fail(tr('Beklenmeyen hata: {e}', {'e': e}));
     }
   }
 
@@ -532,7 +534,7 @@ class InstallController extends ChangeNotifier {
       _refusal = '${j['message']}';
       _set(InstallPhase.refused);
     } else {
-      _fail('Plan üretilemedi (kod ${r.exitCode}). ${r.stderr.trim()}'.trim());
+      _fail(tr('Plan üretilemedi (kod {code}). {detail}', {'code': r.exitCode, 'detail': r.stderr.trim()}).trim());
     }
   }
 
@@ -591,26 +593,29 @@ class InstallController extends ChangeNotifier {
         linuxHost
             ? [
                 'prepare', '--iso', _iso!.path, '--name', _entryName, '--execute', '--allow-experimental',
-                if (ownerName != null) ...['--title', ownerName!],
+                if (ownerName != null) ...['--title', ownerName!, '--label', bootEntryTitle(ownerName!, ascii: false)],
                 '--shrink-dev', _target!.device!, '--shrink-gb', '$_linuxGiB',
               ]
             : [
                 '-PlanFile', _f('plan.json').path, '-Execute', '-OutDir', workDir.path,
-                // 5 second boot menu with the installer selected (falls back to the direct start if it cannot be set up)
-                '-Menu',
-                if (ownerName != null) ...['-MenuTitle', ownerName!],
+                if (ownerName != null) ...[
+                  '-EntryTitle', bootEntryTitle(ownerName!, ascii: true),
+                  '-BackLabel', backToWindowsLabel(ascii: false),
+                ],
+                // No -Menu: the menu entry (a {bootmgr} copy) failed with 0xc000007b on a real Windows 10 machine;
+                // the direct one-shot start (fwbootmgr bootsequence) is the verified path.
               ],
         elevated: true,
       );
       if (r.exitCode == kElevationDeclined) {
         _fail('Yönetici izni verilmedi; hiçbir şey değiştirilmedi.');
       } else if (r.exitCode != 0) {
-        _fail('Kurulum hazırlığı başarısız oldu.${linuxHost ? _scriptReason(r) : _logTail('apply.log')}');
+        _fail('${tr('Kurulum hazırlığı başarısız oldu.')}${linuxHost ? _scriptReason(r) : _logTail('apply.log')}');
       } else {
         _set(InstallPhase.applied);
       }
     } catch (e) {
-      _fail('Beklenmeyen hata: $e');
+      _fail(tr('Beklenmeyen hata: {e}', {'e': e}));
     }
   }
 
@@ -627,13 +632,13 @@ class InstallController extends ChangeNotifier {
       if (r.exitCode == kElevationDeclined) {
         _fail('Yönetici izni verilmedi; geri alınmadı.');
       } else if (r.exitCode != 0) {
-        _fail('Geri alma başarısız oldu.${linuxHost ? _scriptReason(r) : _logTail('apply.log')}');
+        _fail('${tr('Geri alma başarısız oldu.')}${linuxHost ? _scriptReason(r) : _logTail('apply.log')}');
       } else {
         await _rm(_ownerFile);
         _set(InstallPhase.undone);
       }
     } catch (e) {
-      _fail('Beklenmeyen hata: $e');
+      _fail(tr('Beklenmeyen hata: {e}', {'e': e}));
     }
   }
 }

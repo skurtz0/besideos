@@ -1,0 +1,151 @@
+Le Linux le plus répandu pour débuter.
+Ubuntu est une distribution Linux très répandue, avec une grande communauté d'utilisateurs et beaucoup de documentation. Elle est fournie par défaut avec le bureau GNOME.
+Pour ceux qui passent à Linux pour la première fois et veulent trouver beaucoup d'aide en cas de problème.
+Une barre d'applications fixe (dock) à gauche, une fine barre d'état en haut et un bureau sobre dans des tons orange et violet.
+Un ordinateur avec un processeur 64 bits
+Assez d'espace disque libre pour l'installation
+Connexion Internet (pour le téléchargement)
+Logiciel libre (diverses licences open source, dont la GPL)
+Bureau Ubuntu 24.04 LTS
+Un Ubuntu léger et sobre.
+Xubuntu est la version d'Ubuntu avec le bureau Xfce. Elle utilise les logiciels du dépôt Ubuntu mais consomme moins de ressources.
+Ceux qui veulent la compatibilité d'Ubuntu avec un système plus léger.
+Un fin panneau en haut, une barre d'applications repliable en bas et un bureau sobre dans des tons bleus.
+Bureau Xubuntu 24.04 LTS
+KDE Plasma très personnalisable, basé sur Ubuntu.
+Kubuntu est la version d'Ubuntu avec le bureau KDE Plasma. On peut en modifier l'aspect et le comportement presque à tous les niveaux.
+Ceux qui veulent une disposition proche de Windows et aiment tout régler.
+Une barre des tâches proche de celle de Windows en bas, des tons bleus et des fenêtres modernes avec effets de transparence.
+Bureau Kubuntu 24.04 LTS
+Un bureau calme, familier pour ceux qui viennent de Windows.
+L'édition principale de Linux Mint utilise le bureau Cinnamon. Avec sa barre du bas, son menu démarrer et sa zone de notification, elle offre une structure proche de la disposition de Windows.
+Ceux qui quittent Windows et veulent une interface familière et sobre.
+Barre des tâches en bas, menu démarrer à gauche, zone de notification à droite ; un bureau à disposition classique avec des touches de vert.
+Bureau Linux Mint Cinnamon 22.3
+Cinnamon (recommandé)
+Un bureau calme et élégant, familier pour les utilisateurs de Windows. Le meilleur choix pour la plupart des gens.
+Xfce (léger)
+Plus léger et plus rapide pour les ordinateurs anciens ou lents.
+Bureau Linux Mint Xfce (image d'une version plus ancienne)
+MATE (classique)
+Un bureau à l'ancienne, sobre et très configurable.
+Bureau Linux Mint MATE (image de la version 20)
+Un système pratique pour les développeurs et les joueurs.
+Pop!_OS est un système basé sur Ubuntu, créé par System76. Il se distingue par la disposition automatique des fenêtres et la prise en charge des cartes graphiques pour le jeu.
+Ceux qui développent des logiciels et jouent.
+Une fine barre en haut, un bureau sobre à thème sombre avec des touches de turquoise.
+Le fichier ISO du système (s'il est sur votre ordinateur, vous le choisissez)
+Bureau Pop!_OS 24.04 LTS
+Écran d'installation de Pop!_OS (image de la version 20.04)
+Un Linux familier pour ceux qui viennent de Windows.
+Zorin OS facilite le passage à Linux grâce à ses dispositions familières. Il est basé sur Ubuntu.
+Ceux qui viennent de Windows et ne veulent pas être dépaysés.
+Une barre des tâches et un menu démarrer comme sous Windows ; un bureau élégant dans des tons bleus.
+Bureau Zorin OS 17.3
+Un Linux élégant et sobre.
+elementary OS est connu pour son design sobre et ses propres applications. Il est basé sur Ubuntu et utilise le bureau Pantheon.
+Ceux qui veulent une interface élégante et sobre.
+Une fine barre en haut, un dock centré en bas et des fenêtres aux coins arrondis.
+Bureau elementary OS 8.0
+Un système d'exploitation universel géré par la communauté, connu pour sa stabilité.
+Debian est un système d'exploitation développé par une communauté de bénévoles et connu pour sa stabilité. Il sert de base à de nombreuses autres distributions.
+Ceux qui veulent un système stable et sobre et ont quelques connaissances de Linux.
+Varie selon l'environnement de bureau choisi ; l'apparence par défaut est sobre et discrète.
+Bureau Debian 13 (Trixie) GNOME
+Live : Xfce (à essayer d'abord)
+Vous pouvez essayer le système avant de l'installer. Bureau Xfce léger.
+Bureau Debian 13 Xfce
+Live : KDE Plasma (à essayer d'abord)
+Vous pouvez essayer le système avant de l'installer. Bureau KDE riche et personnalisable.
+Bureau Debian 13 KDE Plasma
+Stable, léger et plein d'outils.
+MX Linux est basé sur Debian et vient avec sa propre petite collection d'outils. Il est fluide sur les ordinateurs moyens et anciens.
+Ceux qui veulent un système léger et stable.
+Un panneau sur le côté, un fond d'écran bleu-vert et un bureau qui affiche des informations comme l'heure.
+Bureau par défaut de MX Linux 18.3 (image d'une version plus ancienne)
+Une distribution soutenue par la communauté, avec des logiciels à jour.
+Fedora Workstation est une distribution Linux fournie avec le bureau GNOME et développée par le projet Fedora.
+Ceux qui veulent voir des logiciels à jour et des outils de développement.
+Une fine barre en haut, des applications plein écran avec vue des activités, et un bureau GNOME sobre dans des tons bleus.
+Bureau Fedora 42 Workstation
+Écran d'installation de Fedora (Anaconda, Fedora 42)
+Un Linux prêt pour le jeu.
+Bazzite est un système basé sur Fedora, conçu pour jouer. Steam et les pilotes de cartes graphiques sont déjà là ; comme les fichiers système sont protégés, il est difficile à casser.
+Ceux qui veulent jouer sur leur ordinateur et cherchent une expérience proche de la Steam Deck.
+Une barre des tâches proche de celle de Windows avec KDE ; en mode console, l'interface Steam s'ouvre en plein écran.
+Assez d'espace disque libre pour l'installation (l'ISO fait environ 8 Go)
+Bureau Bazzite 42 KDE
+Bureau, KDE (carte graphique AMD / Intel)
+Le bon choix pour la plupart des ordinateurs. Choisissez-le si votre carte graphique n'est pas Nvidia.
+Bureau, KDE (carte graphique Nvidia)
+Choisissez-le si votre carte graphique est Nvidia ; les pilotes sont déjà là.
+Bureau, GNOME (carte graphique AMD / Intel)
+Pour ceux qui préfèrent le bureau GNOME sobre à KDE.
+Bureau Bazzite 42 GNOME
+Mode console façon Steam Deck
+L'interface Steam s'ouvre dès l'allumage de l'ordinateur. Pour les ordinateurs reliés à un téléviseur et les consoles portables.
+Un Arch Linux facile à installer.
+Manjaro est un système basé sur Arch Linux avec des logiciels à jour. Il s'installe facilement et se met à jour en continu.
+Ceux qui veulent les logiciels les plus récents et ont un peu d'expérience.
+Varie selon le bureau choisi ; un aspect moderne avec des touches de vert.
+Bureau Manjaro 24.0 KDE Plasma
+Un système rapide et réglé, basé sur Arch.
+CachyOS est un système rapide basé sur Arch Linux, avec des paquets optimisés pour le processeur et un noyau réglé. Vous choisissez vous-même le bureau lors de l'installation.
+Utilisateurs qui cherchent la performance et ont un peu d'expérience.
+Varie selon le bureau choisi ; par défaut, un KDE Plasma moderne à thème sombre.
+Bureau CachyOS KDE Plasma (2025.08)
+Un élégant bureau de développeur prêt à l'emploi, piloté au clavier.
+Omarchy est un système construit sur Arch Linux, avec le gestionnaire de fenêtres Hyprland et des outils de développement prêts à l'emploi. Il vient avec de nombreux thèmes.
+Ceux qui travaillent surtout au clavier, développent des logiciels et aiment bricoler leur système.
+Des fenêtres plates et sans bordure se rangent côte à côte ; des thèmes sombres et élégants, une fine barre en haut.
+Logiciel libre (MIT)
+Bureau par défaut d'Omarchy
+Un système solide avec de puissants outils d'administration.
+openSUSE est une distribution établie de longue date, originaire d'Allemagne. L'administration du système est facile avec YaST ; l'édition Tumbleweed est mise à jour en continu.
+Ceux qui veulent une base solide et de puissants outils d'administration.
+Un bureau moderne et net avec des touches de vert.
+Bureau openSUSE Tumbleweed, KDE Plasma 6
+Le Windows légendaire à la colline verte et à la barre des tâches bleue.
+Windows XP est un très ancien système d'exploitation commercial de Microsoft et ne reçoit plus de mises à jour de sécurité depuis longtemps. Il ne fonctionnera très probablement pas sur les ordinateurs récents. BesideOS ne distribue pas le fichier ISO.
+Ceux qui veulent utiliser de très vieux programmes et matériels, ou qui sont simplement curieux. Nous vous déconseillons de le connecter à Internet.
+Une barre des tâches bleue, un bouton « Démarrer » vert et le célèbre fond d'écran à la colline verte.
+Un ordinateur ancien (démarrage BIOS)
+Une licence Windows valide
+Ne fonctionne pas sur les ordinateurs récents (UEFI) ; l'essayer dans une machine virtuelle est plus sûr
+Commercial (licence Microsoft)
+Bureau Windows XP : menu Démarrer et fenêtre Poste de travail
+Le Windows classique aux fenêtres transparentes.
+Windows 7 est le système d'exploitation commercial de Microsoft et ne reçoit plus de mises à jour de sécurité. Il peut ne pas fonctionner sur les ordinateurs récents (UEFI). BesideOS ne distribue pas le fichier ISO.
+Ceux qui veulent faire tourner de vieux programmes et du vieux matériel.
+Des fenêtres à effet de verre transparent, une grande barre des tâches en bas et un menu démarrer classique.
+Un processeur 32 ou 64 bits
+Un démarrage hérité (BIOS/CSM) est recommandé ; l'installation peut échouer sur les ordinateurs UEFI récents
+Bureau Windows 7 et menu Démarrer
+L'ancien Windows avec un écran d'accueil à vignettes.
+Windows 8.1 est le système d'exploitation commercial de Microsoft et ne reçoit plus de mises à jour de sécurité. BesideOS ne distribue pas le fichier ISO ; vous apportez votre propre ISO.
+Ceux qui ont besoin de Windows 8.1 pour un vieux programme ou un vieux matériel.
+Un écran d'accueil fait de vignettes colorées plein écran et un bureau classique.
+Un processeur 64 bits ou 32 bits
+Par sécurité, nous vous déconseillons de le connecter à Internet
+Écran d'accueil de Windows 8.1
+La version précédente de Microsoft, très répandue.
+Windows 10 est le système d'exploitation commercial de Microsoft. BesideOS ne distribue pas le fichier ISO ; vous choisissez votre propre ISO ou le téléchargez depuis la page officielle de Microsoft.
+Ceux qui veulent utiliser Windows sur des ordinateurs qui ne remplissent pas les conditions de Windows 11.
+Un menu démarrer à gauche avec des vignettes dynamiques, une barre des tâches en bas.
+Un processeur 64 bits
+Bureau Windows 10 : menu Démarrer et panneau de notifications
+La version actuelle de Windows de Microsoft.
+Windows 11 est le système d'exploitation commercial de Microsoft. BesideOS ne distribue pas le fichier ISO ; vous choisissez votre propre ISO ou le téléchargez depuis la page officielle de Microsoft.
+Ceux qui veulent exécuter des applications et des jeux qui nécessitent Windows.
+Une barre des tâches et un menu démarrer centrés, des fenêtres aux coins arrondis.
+Un ordinateur avec prise en charge d'UEFI et capable de Secure Boot
+TPM 2.0 (exigence officielle)
+Bureau Windows 11 et menu Démarrer
+Windows pour les essais de serveur et de laboratoire.
+Windows Server 2025 est le système d'exploitation serveur de Microsoft. La version d'essai se télécharge depuis la page officielle de Microsoft ; BesideOS ne distribue pas le fichier ISO.
+Ceux qui veulent apprendre les rôles de serveur et les outils d'administration.
+Une barre des tâches et un menu démarrer proches de ceux de Windows 11 ; il vient avec les outils d'administration de serveur.
+Un ordinateur 64 bits avec prise en charge d'UEFI
+Une version d'essai ou une licence serveur valide
+Bureau Windows Server 2025 (interface en allemand)
+Image : {text}

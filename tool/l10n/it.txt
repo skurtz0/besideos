@@ -1,0 +1,260 @@
+Passo dopo passo
+Home
+Se hai lavoro non salvato, salvalo. Se cambi idea, premi il pulsante qui sotto.
+Open source, MIT
+Scopri il tasto del menu di avvio (di solito F12, F10, F9 o Esc). Se il programma di installazione non compare da solo, scegli da quel menu la voce «Installazione di <nome del sistema>» (ad es. «Installazione di Debian»).
+Errore di rete
+Operazione non riuscita.
+Controlla il tuo computer prima di iniziare
+Clicca per iniziare
+Spunta la casella qui sopra per iniziare.
+Iniziamo?
+Errore imprevisto.
+Errore imprevisto: {e}
+BesideOS è open source con licenza MIT. Si basa sul progetto hop di Arjun Ingole (anch'esso MIT). I nomi degli altri sistemi operativi appartengono ai rispettivi proprietari e servono solo a dire cosa BesideOS può installare.
+BesideOS crea spazio sul tuo disco e prepara l'installazione; quando è pronta, riavvii tu. Windows resta com'è.
+BesideOS crea spazio sul tuo disco per il nuovo sistema. I tuoi file non vengono eliminati, ma le operazioni sul disco possono raramente andare storte; ti consigliamo di fare una copia di sicurezza dei file importanti. Se cambi idea, «Annulla le modifiche» riporta tutto com'era.
+Il computer si riavvia tra 15 secondi
+Il computer si riavvierà tra 15 secondi. All'avvio il menu compare per 5 secondi con l'installazione di {sys} selezionata; puoi scegliere un sistema già installato. Salva subito il lavoro aperto.
+Il computer sembra avviato in modalità BIOS (legacy); si consiglia UEFI.
+Il computer viene preparato
+Il tuo computer deve avviarsi in modalità UEFI (disattiva «Legacy/CSM» nelle impostazioni del BIOS).
+Il tuo computer deve avviarsi in modalità UEFI (disattiva «Legacy/CSM» nelle impostazioni del BIOS). Con il BIOS legacy questo metodo non funziona.
+Controllo del tuo computer
+Installa un secondo sistema sul tuo computer senza chiavetta USB.
+File ISO presenti sul tuo computer
+Sul tuo computer non è ancora cambiato nulla. Guarda cosa succederà, poi inizia.
+Sul tuo computer non cambia ancora nulla.
+Di cosa ha bisogno il tuo computer?
+Indichi tu il file che hai sul computer o che hai scaricato.
+Da sapere
+Una partizione verrà ridotta e una voce verrà aggiunta al menu GRUB. Il computer NON si riavvia da solo; lo deciderai tu più tardi.
+Si riavvia una volta
+Dopo un riavvio, il nuovo sistema si installa accanto al vecchio.
+Per il prossimo avvio, questa voce viene scelta una sola volta.
+Al prossimo avvio compare il programma di installazione. Dopo, il computer si avvia come sempre.
+Si è verificato un problema
+Ne premi uno e inizi a installarlo.
+Scegline uno. Se non sei sicuro, puoi scegliere il primo.
+Scegline uno. Ti mostreremo passo dopo passo come si installa.
+Scegline uno; guarda com'è e cosa richiede.
+Formatta solo lo spazio libero appena creato. Non toccare le partizioni di Windows né la partizione BESIDEOS.
+Lo spazio libero è stato creato sul disco dell'unità {letter}:; scegli quel disco nel programma di installazione.
+Questa ISO non può essere avviata su questo computer.
+Questo file ISO non può essere avviato direttamente con GRUB (mancano le informazioni per avviarsi da ISO). Probabilmente è un piccolo programma di installazione tipo «netinst»; prova la versione «Live» dello stesso sistema.
+Il metodo di avvio per questo tipo di ISO non è ancora stato provato.
+Al momento non è possibile installare su questo computer
+GRUB non è stato trovato su questo computer (potrebbe esserci un altro gestore di avvio come systemd-boot).
+Il menu GRUB di questo computer non legge le voci personalizzate; BesideOS non può funzionare qui.
+Questa distribuzione non è presente in questa guida.
+Questo file non è un'immagine ISO leggibile.
+Questa vecchia versione di Windows potrebbe non avviarsi sui computer recenti (UEFI). Se non si avvia, «Annulla le modifiche» riporta tutto com'era.
+Cos'è questo sistema?
+Il file ISO di questo sistema lo porti tu; non devi scrivere un percorso né un checksum, basta scegliere il file. Prima ti mostreremo cosa verrà fatto. Senza la tua approvazione sul computer non cambia nulla.
+Il programma di installazione di questo sistema potrebbe non avviarsi su alcuni computer. Se non si avvia, «Annulla le modifiche» riporta tutto com'era.
+Questa funzione è disponibile nell'app desktop di BesideOS, su un computer Windows. Qui puoi conoscere il sistema e scaricare il file ISO.
+Non trovato
+La riduzione di una partizione è considerata un'operazione irreversibile: «Annulla» prova a riportarla alla dimensione originale, ma non ci riesce se il nuovo sistema è stato installato in quello spazio.
+La riduzione di una partizione può raramente causare problemi.
+Questa pagina non esiste.
+Puoi provare a scegliere uno spazio più piccolo:
+Se vuoi iniziare più tardi, riavvia tu il computer; il programma di installazione compare al primo avvio. Altrimenti scegli la voce «Installazione di {sys}» nel menu GRUB (Maiusc o Esc). Finita l'installazione, puoi rimuovere la voce con «annulla».
+Se vuoi iniziare più tardi, riavvia tu il computer; il programma di installazione compare al primo avvio. Altrimenti scegli «Installazione di {sys}» dal menu di avvio. Finita l'installazione, puoi eliminare la partizione temporanea chiamata BESIDEOS.
+C'è un'installazione precedente rimasta a metà
+Distribuzioni
+Torna alle distribuzioni
+Le modifiche sono state annullate
+Annullamento delle modifiche…
+Annulla le modifiche
+Non è stato possibile raccogliere le informazioni sul disco.
+Nella schermata dei dischi scegli «Spazio non allocato» e fai clic su «Avanti». Windows crea lì le proprie partizioni.
+Errore del disco
+Errore del disco: impossibile scrivere il file.
+Alla domanda sul disco NON scegliere «Cancella l'intero disco». Scegli «Installa accanto a» o «Altro» (partizionamento manuale) e usa solo lo «spazio libero».
+Disco {n}
+Così appare ora il disco.
+Impossibile leggere i dischi. {reason}
+Viene creato spazio sui tuoi dischi e al menu GRUB viene aggiunta una voce che avvia la tua ISO.
+Impossibile leggere il file o il checksum non è valido.
+File troppo grande
+Se non hai il file, puoi scaricarlo dalla pagina ufficiale:
+Verifica che il file non sia danneggiato…
+Verifica non riuscita (errore del disco).
+Recupero delle informazioni di verifica…
+Se non sei sicuro, lascia l'installazione a quella schermata, riavvia il computer e scegli «annulla» in BesideOS.
+Se non sei sicuro, lascia l'installazione a quella schermata; puoi spegnere il computer e tornare a Windows, poi ti basta scegliere «annulla» in BesideOS.
+Sì, inizia
+Sì, riavvia
+Nessuna distribuzione corrispondente
+Al menu di avvio GRUB viene aggiunta una voce «Installazione di {sys}»; il file ISO resta dov'è.
+Al menu di avvio GRUB viene aggiunta una voce «Installazione di {sys}».
+Se il menu GRUB non compare da solo, tieni premuto Maiusc o premi Esc all'avvio e scegli la voce «BesideOS».
+L'annullamento non è riuscito.
+Ti consigliamo di annullare.
+Il resto lo fa BesideOS.
+Indirizzo non valido.
+Nome file non valido.
+Indirizzo non sicuro rifiutato
+Su quale computer sei?
+Su quali computer si può installare?
+Quale sistema vuoi installare?
+Quali sistemi puoi installare?
+Quale vuoi?
+Quando è pronto, riavvii tu. All'avvio il menu compare per 5 secondi con l'installazione di {sys} selezionata; i tuoi sistemi installati sono nella stessa lista.
+Pronto! Ora puoi riavviare
+Preparazione in corso, attendi…
+Tutte
+È tutto pronto!
+Non è cambiato nulla.
+File ISO (*.iso)
+Clicca per scegliere il mio file ISO e installare
+Scegli il tuo file ISO
+File ISO
+Il file ISO si trova in un file system che GRUB non sa leggere. Copia il file su un disco ext4, btrfs, xfs o FAT32.
+File ISO non trovato.
+Il file ISO resta dov'è: {path}
+Il file ISO si trova su un disco cifrato; GRUB non può leggerlo. Copialo su un disco non cifrato.
+Il file ISO deve trovarsi fuori dalla partizione su cui installerai (ad es. su un disco separato). Il programma di installazione non può eliminare la partizione che contiene la propria ISO.
+Il file ISO si trova su un disco su cui potresti installare. Il programma di installazione non può eliminare la partizione che contiene la propria ISO; installa il nuovo sistema nello spazio libero creato da BesideOS.
+Non toccare la partizione che contiene il file ISO né il sistema attuale; formatta solo lo spazio appena creato.
+Impossibile scaricare o verificare l'ISO.
+Impossibile esaminare il contenuto dell'ISO. {detail}
+Impossibile controllare l'ISO. {detail}
+Per guardare dentro l'ISO serve il programma «xorriso». Installalo e riprova.
+Chiudi
+Catalogo
+Il catalogo è vuoto
+Impossibile caricare il catalogo: {msg}
+Voglio scegliere il mio file ISO e installare
+Per chi: {text}
+Fai una copia di sicurezza prima di installare
+Scegli il file ISO che vuoi installare
+Scarica l'app BesideOS per installare
+Clicca per installare
+Sistemi accanto ai quali si può installare
+Installazione
+Manca il componente di installazione
+I file di installazione vengono messi sullo stesso disco.
+I file di installazione vengono messi in una piccola partizione dello stesso disco. Non serve una chiavetta USB.
+Quando si apre il programma di installazione, alla domanda sul disco NON scegliere «Cancella l'intero disco». Scegli «Altro» (partizionamento manuale) e usa solo lo spazio libero (non allocato) creato da BesideOS.
+Compare il programma di installazione.
+L'installazione sta per essere preparata: verrà creato spazio libero e i file verranno copiati. Il computer NON si riavvia da solo; lo deciderai tu più tardi.
+L'installazione è pronta
+Preparazione dell'installazione…
+La preparazione dell'installazione non è riuscita.
+L'installazione non è possibile.
+Avvia l'installazione
+Vedi l'installazione
+Linux
+Su un computer Linux, Windows può essere installato in una partizione separata come doppio avvio.
+Su un computer Linux, un altro Linux può essere avviato dal suo file ISO con una voce GRUB e installato nello spazio libero (nessuna partizione viene ridotta).
+Sistemi Linux
+Installa accanto a Linux
+Licenza: {text}
+Desktop: {text}
+Il tuo sistema attuale e i tuoi file restano com'erano. Una partizione viene ridotta per creare spazio libero; {name} si avvia dal suo file ISO con una voce GRUB.
+Che aspetto ha
+Come funziona
+Di che tipo?
+Cosa succederà?
+Si aprirà una finestra che chiede la tua password.
+Si aprirà una finestra che chiede la tua password. Non chiudere questa finestra. Il computer non si riavvia da solo.
+Preparazione del piano
+Impossibile creare il piano (codice {code}). {detail}
+Dopo che hai visto il piano e confermato di aver salvato i tuoi file, sul disco viene creato spazio libero.
+Pagina ufficiale
+Questo nome file non è nel file dei checksum; impossibile verificarlo. Il catalogo potrebbe essere obsoleto; scarica dalla pagina ufficiale.
+Il checksum non corrisponde. Il file non è stato eliminato; controlla il valore SHA-256.
+Il checksum non corrisponde; il file è stato eliminato.
+Secure Boot è attivo. Le ISO con kernel non firmati potrebbero non avviarsi; se il menu di installazione non compare, disattiva Secure Boot nel BIOS.
+Con Secure Boot attivo alcune ISO potrebbero non avviarsi. Se il programma di installazione non compare, disattiva Secure Boot nelle impostazioni del BIOS.
+Con Secure Boot attivo alcuni sistemi potrebbero non avviarsi. Se il programma di installazione non compare, disattiva Secure Boot nelle impostazioni del BIOS; puoi riattivarlo dopo l'installazione.
+Il file scelto non è stato trovato o non è un file ISO.
+Il file ISO che hai scelto è in esame
+Codice di errore del server: {code}
+Il server non risponde
+La risposta del server non è valida
+Apri l'app per installare con un clic
+Dettagli tecnici
+Riprova
+Basato su: {text}
+Clicchi
+L'app funziona su un computer Windows. Scegli nell'app il sistema che vuoi e avvii l'installazione con un clic.
+Sembra che i file dell'app manchino. Scarica di nuovo BesideOS e aprilo.
+Annulla
+Annulla, ripristina le modifiche
+Windows
+L'installazione di Windows parte così, da un disco RAM. È normale vedere errori o avvisi durante l'installazione; per lo più puoi ignorarli e continuare. Se l'installazione non avanza affatto, «Annulla le modifiche» riporta tutto com'era.
+Su un computer Windows, Linux può essere installato accanto a Windows come doppio avvio.
+Su un computer Windows, un secondo Windows può essere installato in una partizione separata come doppio avvio.
+Windows chiederà il permesso: rispondi «Sì».
+Windows chiederà il permesso: rispondi «Sì». Non chiudere questa finestra. Il computer non si riavvia da solo.
+Windows richiede almeno 64 GB; 80 GB sono comodi. Scegline di più se installerai molti programmi.
+Se vedi un errore durante l'installazione di Windows
+Sistemi Windows
+Windows e i tuoi file restano com'erano. Sul tuo computer viene creato spazio per {name}.
+In Windows, l'Avvio rapido (Fast Startup) e BitLocker devono essere disattivati. Se BitLocker è attivo, BesideOS rifiuta l'installazione.
+Installa accanto a Windows
+Accanto a Windows vengono creati circa {gb} GB di spazio libero.
+Accanto a Windows viene creato spazio e i file vengono messi lì.
+Sono supportati solo dischi partizionati in GPT.
+Potrebbero esserci modifiche non completate
+Nuovo sistema
+Quanto spazio riserviamo al nuovo sistema?
+Non è stata trovata nessuna partizione da cui creare spazio per un nuovo sistema. Serve una partizione riducibile (ext4, btrfs o NTFS) con almeno {gb} GB liberi.
+Si riavvia
+Annulla il riavvio
+Impossibile riavviare il computer. Riavvialo tu.
+Dopo il riavvio il menu compare per 5 secondi con la voce «Installazione di {sys}» selezionata. Se vuoi, puoi scegliere nell'elenco uno dei sistemi installati. Riavvia dopo aver salvato il lavoro aperto.
+Prima di iniziarne una nuova, devi annullare le modifiche precedenti.
+La partizione da cui creare spazio deve essere ext4, btrfs o NTFS e avere abbastanza spazio libero. Il disco deve essere GPT.
+Viene creato spazio
+Viene creato spazio: una partizione si riduce.
+Da quale partizione deve venire lo spazio?
+Da quale unità deve venire lo spazio?
+Lo spazio viene preso dall'area libera della partizione che scegli. I tuoi file non vengono eliminati. Le partizioni non presenti nell'elenco hanno un file system non riducibile o non hanno abbastanza spazio libero.
+Lo spazio viene preso dall'area libera dell'unità che scegli. I tuoi file non vengono eliminati.
+Nessuno
+Il permesso di amministratore non è stato concesso; impossibile leggere le informazioni sul disco. Non è stato modificato nulla.
+Il permesso di amministratore non è stato concesso; impossibile leggere i dischi. Non è stato modificato nulla.
+Il permesso di amministratore non è stato concesso; nulla è stato annullato.
+Il permesso di amministratore non è stato concesso; non è stato modificato nulla.
+Nessun indirizzo di reindirizzamento
+{credit}  ·  Clicca sull'immagine per ingrandirla
+La partizione {device} viene ridotta e vengono creati circa {gb} GB di spazio libero (non allocato).
+La partizione {device} viene ridotta di {gb} GB; lo spazio liberato resta vuoto (non allocato).
+{device} può liberare al massimo {gb} GB. Scegli uno spazio più piccolo o usa un'altra partizione.
+{disk} · totale {total} · {free} liberi
+{disk} · {fstype} · totale {total} · al massimo {max} liberabili
+{g} GB · consigliato
+{host}: {reason}
+Unità {letter}:
+Unità {letter}: ({label})
+Sull'unità {letter}: vengono creati circa {gb} GB di spazio libero.
+{mb} MB scaricati
+{name} viene scaricato e viene creato spazio accanto a Windows.
+{name} viene scaricato, viene creato spazio sui tuoi dischi e al menu GRUB viene aggiunta una voce.
+Download e verifica di {name}
+Compare il programma di installazione di {name}.
+{name} · Windows è qui
+I file di installazione di {sys} vengono copiati qui.
+Scegli con cura il disco durante l'installazione di {sys}
+Illustrazione. Il piano reale ti viene mostrato per intero prima che cambi qualcosa.
+Troppi reindirizzamenti
+Per la maggior parte delle persone bastano 30 GB. Scegline di più se installerai molti programmi.
+Ho fatto una copia di sicurezza dei miei file importanti
+Fai una copia di sicurezza dei file importanti: la riduzione di una partizione può raramente causare problemi.
+Tre passi. Senza la tua approvazione sul computer non cambia nulla.
+Due sistemi, un disco. Niente chiavetta USB.
+Scarica
+Il file scaricato è in esame
+Download non riuscito: {message}
+Clicca per scaricare
+Non ora
+Riavvia ora
+Riavviamo ora?
+Sistema attuale
+la partizione del sistema attualmente in esecuzione
+Installazione di {name}
+Windows (annulla l'installazione)
+BesideOS: installa un altro sistema operativo accanto a questo

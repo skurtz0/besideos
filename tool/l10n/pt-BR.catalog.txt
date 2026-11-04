@@ -1,0 +1,151 @@
+O Linux mais comum para quem está começando.
+O Ubuntu é uma distribuição Linux muito difundida, com uma grande comunidade de usuários e muita documentação. Por padrão vem com a área de trabalho GNOME.
+Para quem está migrando para o Linux pela primeira vez e quer encontrar muita ajuda quando algo der errado.
+Uma barra de aplicativos fixa (dock) à esquerda, uma barra de status fina no topo e uma área de trabalho simples em tons de laranja e roxo.
+Um computador com processador de 64 bits
+Espaço livre em disco suficiente para a instalação
+Conexão com a internet (para o download)
+Software livre (várias licenças de código aberto, incluindo a GPL)
+Área de trabalho do Ubuntu 24.04 LTS
+Um Ubuntu leve e simples.
+O Xubuntu é a edição do Ubuntu com a área de trabalho Xfce. Ele obtém software do repositório do Ubuntu, mas usa menos recursos.
+Quem quer a compatibilidade do Ubuntu, mas um sistema mais leve.
+Um painel fino no topo, uma barra de aplicativos retrátil embaixo e uma área de trabalho simples em tons de azul.
+Área de trabalho do Xubuntu 24.04 LTS
+KDE Plasma muito personalizável, baseado no Ubuntu.
+O Kubuntu é a edição do Ubuntu com a área de trabalho KDE Plasma. Você pode mudar a aparência e o comportamento em quase tudo.
+Quem quer um layout parecido com o do Windows e gosta de ajustar tudo.
+Uma barra de tarefas parecida com a do Windows embaixo, tons de azul e janelas modernas com efeitos de transparência.
+Área de trabalho do Kubuntu 24.04 LTS
+Uma área de trabalho tranquila que parece familiar a quem vem do Windows.
+A edição principal do Linux Mint usa a área de trabalho Cinnamon. Com a barra inferior, o menu Iniciar e a bandeja do sistema, oferece uma estrutura parecida com a do Windows.
+Quem vem do Windows e quer uma interface familiar e simples.
+Barra de tarefas embaixo, menu Iniciar à esquerda e bandeja do sistema à direita; uma área de trabalho de layout clássico com detalhes em verde.
+Área de trabalho do Linux Mint Cinnamon 22.3
+Cinnamon (recomendado)
+Uma área de trabalho tranquila e elegante que parece familiar a quem usa Windows. A melhor escolha para a maioria das pessoas.
+Xfce (leve)
+Mais leve e rápido para computadores antigos ou lentos.
+Área de trabalho do Linux Mint Xfce (imagem de uma versão mais antiga)
+MATE (clássico)
+Uma área de trabalho de estilo antigo, simples e muito ajustável.
+Área de trabalho do Linux Mint MATE (imagem da versão 20)
+Um sistema prático para desenvolvedores e jogadores.
+O Pop!_OS é um sistema baseado no Ubuntu, da System76. Destaca-se pela organização automática de janelas e pelo suporte a placas de vídeo para jogos.
+Quem desenvolve software e joga.
+Uma barra fina no topo, uma área de trabalho simples com tema escuro e detalhes em turquesa.
+O arquivo ISO do sistema (se estiver no seu computador, você o escolhe)
+Área de trabalho do Pop!_OS 24.04 LTS
+Tela de instalação do Pop!_OS (imagem da versão 20.04)
+Um Linux familiar para quem vem do Windows.
+O Zorin OS facilita a migração para o Linux com layouts familiares. É baseado no Ubuntu.
+Quem vem do Windows e não quer se sentir perdido.
+Uma barra de tarefas e um menu Iniciar como os do Windows; uma área de trabalho elegante em tons de azul.
+Área de trabalho do Zorin OS 17.3
+Um Linux elegante e simples.
+O elementary OS é conhecido pelo design simples e pelos aplicativos próprios. É baseado no Ubuntu e usa a área de trabalho Pantheon.
+Quem quer uma interface elegante e simples.
+Uma barra fina no topo, um dock centralizado embaixo e janelas com cantos arredondados.
+Área de trabalho do elementary OS 8.0
+Um sistema operacional universal mantido pela comunidade, conhecido pela estabilidade.
+O Debian é um sistema operacional desenvolvido por uma comunidade de voluntários e conhecido pela estabilidade. É a base de muitas outras distribuições.
+Quem quer um sistema estável e simples e conhece um pouco de Linux.
+Varia conforme o ambiente de área de trabalho escolhido; a aparência padrão é simples e discreta.
+Área de trabalho do Debian 13 (Trixie) GNOME
+Live: Xfce (experimente primeiro)
+Você pode experimentar o sistema antes de instalar. Área de trabalho Xfce leve.
+Área de trabalho do Debian 13 Xfce
+Live: KDE Plasma (experimente primeiro)
+Você pode experimentar o sistema antes de instalar. Área de trabalho KDE rica e personalizável.
+Área de trabalho do Debian 13 KDE Plasma
+Estável, leve e cheio de ferramentas.
+O MX Linux é baseado no Debian e vem com sua própria pequena coleção de ferramentas. Roda com fluidez em computadores intermediários e antigos.
+Quem quer um sistema leve e estável.
+Um painel na borda, um papel de parede azul-esverdeado e uma área de trabalho que mostra informações como o relógio.
+Área de trabalho padrão do MX Linux 18.3 (imagem de uma versão mais antiga)
+Uma distribuição apoiada pela comunidade, com software atualizado.
+O Fedora Workstation é uma distribuição Linux que vem com a área de trabalho GNOME e é desenvolvida pelo Projeto Fedora.
+Quem quer ver software atualizado e ferramentas de desenvolvimento.
+Uma barra fina no topo, aplicativos em tela cheia com visão de atividades e uma área de trabalho GNOME simples em tons de azul.
+Área de trabalho do Fedora 42 Workstation
+Tela de instalação do Fedora (Anaconda, Fedora 42)
+Um Linux pronto para jogos.
+O Bazzite é um sistema baseado no Fedora feito para jogar. Steam e drivers de placa de vídeo já vêm prontos; como os arquivos do sistema são protegidos, é difícil estragá-lo.
+Quem quer jogar no computador e procura uma experiência parecida com a do Steam Deck.
+Uma barra de tarefas parecida com a do Windows com KDE; no modo console, a interface do Steam abre em tela cheia.
+Espaço livre em disco suficiente para a instalação (a ISO tem cerca de 8 GB)
+Área de trabalho do Bazzite 42 KDE
+Área de trabalho, KDE (placa de vídeo AMD / Intel)
+A escolha certa para a maioria dos computadores. Escolha esta se sua placa de vídeo não for Nvidia.
+Área de trabalho, KDE (placa de vídeo Nvidia)
+Escolha esta se sua placa de vídeo for Nvidia; os drivers já vêm prontos.
+Área de trabalho, GNOME (placa de vídeo AMD / Intel)
+Para quem prefere a área de trabalho GNOME simples ao KDE.
+Área de trabalho do Bazzite 42 GNOME
+Modo console no estilo Steam Deck
+A interface do Steam abre assim que você liga o computador. Para computadores ligados à TV e consoles portáteis.
+Um Arch Linux fácil de instalar.
+O Manjaro é um sistema baseado no Arch Linux com software atualizado. É fácil de instalar e atualiza continuamente.
+Quem quer o software mais novo e tem alguma experiência.
+Varia conforme a área de trabalho escolhida; uma aparência moderna com detalhes em verde.
+Área de trabalho do Manjaro 24.0 KDE Plasma
+Um sistema rápido e ajustado baseado no Arch.
+O CachyOS é um sistema rápido baseado no Arch Linux, com pacotes otimizados para o processador e um kernel ajustado. Você mesmo escolhe a área de trabalho durante a instalação.
+Usuários que buscam desempenho e têm alguma experiência.
+Varia conforme a área de trabalho escolhida; por padrão, um KDE Plasma moderno com tema escuro.
+Área de trabalho do CachyOS KDE Plasma (2025.08)
+Uma área de trabalho elegante para desenvolvedores, pronta para usar e controlada pelo teclado.
+O Omarchy é um sistema construído sobre o Arch Linux, com o gerenciador de janelas Hyprland e ferramentas de desenvolvimento prontas para uso. Vem com muitos temas.
+Quem trabalha principalmente com o teclado, desenvolve software e gosta de mexer no sistema.
+Janelas planas e sem bordas se organizam lado a lado; temas escuros e elegantes, uma barra fina no topo.
+Software livre (MIT)
+Área de trabalho padrão do Omarchy
+Um sistema sólido com poderosas ferramentas de administração.
+O openSUSE é uma distribuição tradicional, de origem alemã. A administração do sistema é fácil com o YaST; a edição Tumbleweed atualiza continuamente.
+Quem quer uma base sólida e poderosas ferramentas de administração.
+Uma área de trabalho moderna e limpa com detalhes em verde.
+Área de trabalho do openSUSE Tumbleweed, KDE Plasma 6
+O lendário Windows com a colina verde e a barra de tarefas azul.
+O Windows XP é um sistema operacional comercial muito antigo da Microsoft e há muito tempo não recebe atualizações de segurança. Muito provavelmente não vai rodar em computadores novos. O BesideOS não distribui o arquivo ISO.
+Quem quer usar programas e hardware muito antigos, ou só está curioso. Recomendamos não conectá-lo à internet.
+Uma barra de tarefas azul, um botão "Iniciar" verde e a famosa imagem de área de trabalho com a colina verde.
+Um computador antigo (inicialização BIOS)
+Uma licença válida do Windows
+Não roda em computadores novos (UEFI); testar em uma máquina virtual é mais seguro
+Comercial (licença da Microsoft)
+Área de trabalho do Windows XP: menu Iniciar e janela Meu Computador
+O Windows clássico com janelas transparentes.
+O Windows 7 é o sistema operacional comercial da Microsoft e não recebe mais atualizações de segurança. Pode não rodar em computadores novos (UEFI). O BesideOS não distribui o arquivo ISO.
+Quem quer executar programas antigos e hardware antigo.
+Janelas com efeito de vidro transparente, uma barra de tarefas grande embaixo e um menu Iniciar clássico.
+Um processador de 32 ou 64 bits
+Recomenda-se a inicialização legada (BIOS/CSM); pode não instalar em computadores UEFI novos
+Área de trabalho do Windows 7 e menu Iniciar
+O Windows antigo com uma tela Iniciar de blocos.
+O Windows 8.1 é o sistema operacional comercial da Microsoft e não recebe mais atualizações de segurança. O BesideOS não distribui o arquivo ISO; você traz a sua própria ISO.
+Quem precisa do Windows 8.1 para um programa ou hardware antigo.
+Uma tela Iniciar feita de blocos coloridos em tela cheia e uma área de trabalho clássica.
+Um processador de 64 bits ou de 32 bits
+Por segurança, recomendamos não conectá-lo à internet
+Tela Iniciar do Windows 8.1
+A versão anterior da Microsoft, muito difundida.
+O Windows 10 é o sistema operacional comercial da Microsoft. O BesideOS não distribui o arquivo ISO; você escolhe a sua própria ISO ou baixa da página oficial da Microsoft.
+Quem quer usar o Windows em computadores que não atendem aos requisitos do Windows 11.
+Um menu Iniciar à esquerda com blocos dinâmicos, uma barra de tarefas embaixo.
+Um processador de 64 bits
+Área de trabalho do Windows 10: menu Iniciar e painel de notificações
+A versão atual do Windows da Microsoft.
+O Windows 11 é o sistema operacional comercial da Microsoft. O BesideOS não distribui o arquivo ISO; você escolhe a sua própria ISO ou baixa da página oficial da Microsoft.
+Quem quer executar aplicativos e jogos que precisam do Windows.
+Uma barra de tarefas e um menu Iniciar centralizados, janelas com cantos arredondados.
+Um computador com suporte a UEFI e capaz de usar Secure Boot
+TPM 2.0 (requisito oficial)
+Área de trabalho do Windows 11 e menu Iniciar
+Windows para testes de servidor e de laboratório.
+O Windows Server 2025 é o sistema operacional de servidor da Microsoft. A versão de avaliação é baixada da página oficial da Microsoft; o BesideOS não distribui o arquivo ISO.
+Quem quer aprender as funções de servidor e as ferramentas de administração.
+Uma barra de tarefas e um menu Iniciar parecidos com os do Windows 11; vem com ferramentas de administração de servidor.
+Um computador de 64 bits com suporte a UEFI
+Uma versão de avaliação ou uma licença de servidor válida
+Área de trabalho do Windows Server 2025 (interface em alemão)
+Imagem: {text}

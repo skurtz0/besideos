@@ -43,12 +43,20 @@ void main() {
     expect(File('${work.path}/grub/custom.cfg').readAsStringSync(), 'set x=1\n');
   }, skip: skip);
 
+  test('--label is the whole menu title, in any language, with the risky characters removed', () async {
+    final p = await run(['prepare', '--iso', iso.path, '--execute', '--label', 'Установка Debian "x" \$y']);
+    expect(p.exitCode, 0, reason: '${p.stdout}${p.stderr}');
+    final cfg = File('${work.path}/grub/custom.cfg').readAsStringSync();
+    expect(cfg, contains('menuentry "Установка Debian x y" --id besideos-default'));
+    expect(cfg, isNot(contains('kurulumu')));
+  }, skip: skip);
+
   test('prepare adds one marked block and undo restores custom.cfg exactly', () async {
     final p = await run(['prepare', '--iso', iso.path, '--execute']);
     expect(p.exitCode, 0, reason: '${p.stdout}${p.stderr}');
     final cfg = File('${work.path}/grub/custom.cfg').readAsStringSync();
     expect(cfg, startsWith('set x=1\n'));
-    expect(cfg, contains('menuentry "BesideOS: 5 saniye içinde kurulacak: test" --id besideos-default'));
+    expect(cfg, contains('menuentry "test kurulumu" --id besideos-default'));
     expect(cfg, contains('configfile /boot/grub/loopback.cfg'));
     // the next start shows the menu for 5 seconds with this entry selected
     expect(cfg, contains('set default="besideos-default"'));

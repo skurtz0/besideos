@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import '../l10n/l10n.dart';
 import 'process_runner.dart';
 
 /// An ISO file found lying around on this computer.
@@ -19,21 +20,9 @@ bool _isIso(String path) => path.toLowerCase().endsWith('.iso');
 /// The path comes back base64-encoded so Turkish letters in folder names survive the console code page.
 Future<File?> pickIsoFile(ProcessRunner runner) async {
   if (Platform.isLinux) return _pickIsoFileLinux(runner);
-  const cmd = r'''
-$ProgressPreference = 'SilentlyContinue'
-Add-Type -AssemblyName System.Windows.Forms
-$f = New-Object System.Windows.Forms.Form
-$f.TopMost = $true; $f.ShowInTaskbar = $false; $f.Opacity = 0; $f.StartPosition = 'CenterScreen'
-$f.Show()
-$d = New-Object System.Windows.Forms.OpenFileDialog
-$d.Filter = 'ISO (*.iso)|*.iso'
-$d.Title = 'Kurmak istedigin ISO dosyasini sec'
-$dl = Join-Path ([Environment]::GetFolderPath('UserProfile')) 'Downloads'
-if (Test-Path $dl) { $d.InitialDirectory = $dl }
-$ok = $d.ShowDialog($f)
-$f.Close()
-if ($ok -eq [System.Windows.Forms.DialogResult]::OK) { [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($d.FileName)) }
-''';
+  final cmd = _winDialogScript
+      .replaceAll('@@FILTER@@', _psQuote('${tr('ISO dosyaları (*.iso)')}|*.iso'))
+      .replaceAll('@@TITLE@@', _psQuote(tr('Kurmak istediğin ISO dosyasını seç')));
   final r = await runner.exec('powershell.exe', ['-NoProfile', '-STA', '-NonInteractive', '-EncodedCommand', encodePowerShell(cmd)]);
   final out = r.stdout.trim();
   if (r.exitCode != 0 || out.isEmpty) return null;
@@ -46,13 +35,32 @@ if ($ok -eq [System.Windows.Forms.DialogResult]::OK) { [Convert]::ToBase64String
   }
 }
 
+/// A PowerShell single-quoted string literal (the dialog texts are in the person's language and may contain quotes).
+String _psQuote(String s) => "'${s.replaceAll("'", "''")}'";
+
+const _winDialogScript = r'''
+$ProgressPreference = 'SilentlyContinue'
+Add-Type -AssemblyName System.Windows.Forms
+$f = New-Object System.Windows.Forms.Form
+$f.TopMost = $true; $f.ShowInTaskbar = $false; $f.Opacity = 0; $f.StartPosition = 'CenterScreen'
+$f.Show()
+$d = New-Object System.Windows.Forms.OpenFileDialog
+$d.Filter = @@FILTER@@
+$d.Title = @@TITLE@@
+$dl = Join-Path ([Environment]::GetFolderPath('UserProfile')) 'Downloads'
+if (Test-Path $dl) { $d.InitialDirectory = $dl }
+$ok = $d.ShowDialog($f)
+$f.Close()
+if ($ok -eq [System.Windows.Forms.DialogResult]::OK) { [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($d.FileName)) }
+''';
+
 /// Linux: the desktop's own file dialog (KDE's kdialog, else GNOME's zenity), opened in Downloads.
 Future<File?> _pickIsoFileLinux(ProcessRunner runner) async {
   final home = Platform.environment['HOME'];
   final start = home == null ? '.' : '$home/Downloads/';
   final dialogs = <(String, List<String>)>[
-    ('kdialog', ['--title', 'Kurmak istediğin ISO dosyasını seç', '--getopenfilename', start, 'ISO dosyaları (*.iso)']),
-    ('zenity', ['--file-selection', '--title=Kurmak istediğin ISO dosyasını seç', '--filename=$start', '--file-filter=*.iso']),
+    ('kdialog', ['--title', tr('Kurmak istediğin ISO dosyasını seç'), '--getopenfilename', start, tr('ISO dosyaları (*.iso)')]),
+    ('zenity', ['--file-selection', '--title=${tr('Kurmak istediğin ISO dosyasını seç')}', '--filename=$start', '--file-filter=*.iso']),
   ];
   for (final (exe, args) in dialogs) {
     try {

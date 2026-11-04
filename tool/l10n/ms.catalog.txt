@@ -1,0 +1,151 @@
+Linux paling biasa untuk pemula.
+Ubuntu ialah pengedaran Linux yang sangat meluas, dengan komuniti pengguna yang besar dan banyak dokumentasi. Secara lalai ia disertakan dengan desktop GNOME.
+Untuk mereka yang beralih ke Linux buat kali pertama dan mahu banyak bantuan apabila ada masalah.
+Bar aplikasi tetap (dock) di sebelah kiri, bar status nipis di atas dan desktop ringkas dalam warna jingga-ungu.
+Komputer dengan pemproses 64 bit
+Ruang cakera kosong yang mencukupi untuk pemasangan
+Sambungan Internet (untuk muat turun)
+Perisian bebas (pelbagai lesen sumber terbuka, termasuk GPL)
+Desktop Ubuntu 24.04 LTS
+Ubuntu yang ringan dan ringkas.
+Xubuntu ialah edisi Ubuntu dengan desktop Xfce. Ia mengambil perisian daripada repositori Ubuntu tetapi menggunakan sumber yang lebih sedikit.
+Mereka yang mahu keserasian Ubuntu tetapi sistem yang lebih ringan.
+Panel nipis di atas, bar aplikasi timbul di bawah dan desktop ringkas dalam warna biru.
+Desktop Xubuntu 24.04 LTS
+KDE Plasma berasaskan Ubuntu yang sangat boleh disesuaikan.
+Kubuntu ialah edisi Ubuntu dengan desktop KDE Plasma. Anda boleh mengubah rupa dan tingkah lakunya hampir dalam semua perkara.
+Mereka yang mahu susun atur seperti Windows dan suka melaras segala-galanya.
+Bar tugas seperti Windows di bawah, warna biru dan tetingkap moden dengan kesan lut sinar.
+Desktop Kubuntu 24.04 LTS
+Desktop yang tenang dan terasa biasa bagi mereka yang datang dari Windows.
+Edisi utama Linux Mint menggunakan desktop Cinnamon. Dengan bar bawah, menu Start dan dulang sistem, ia menawarkan struktur yang serupa dengan susun atur Windows.
+Mereka yang beralih daripada Windows dan mahu antara muka yang biasa dan ringkas.
+Bar tugas di bawah, menu Start di kiri dan dulang sistem di kanan; desktop susun atur klasik dengan aksen hijau.
+Desktop Linux Mint Cinnamon 22.3
+Cinnamon (disyorkan)
+Desktop yang tenang dan elegan yang terasa biasa bagi pengguna Windows. Pilihan terbaik untuk kebanyakan orang.
+Xfce (ringan)
+Lebih ringan dan pantas untuk komputer lama atau perlahan.
+Desktop Linux Mint Xfce (imej daripada versi lebih lama)
+MATE (klasik)
+Desktop gaya lama yang ringkas dan sangat boleh dilaras.
+Desktop Linux Mint MATE (imej daripada versi 20)
+Sistem praktikal untuk pembangun dan pemain.
+Pop!_OS ialah sistem berasaskan Ubuntu daripada System76. Ia menonjol dengan penyusunan tetingkap automatik dan sokongan kad grafik untuk permainan.
+Mereka yang menulis perisian dan bermain permainan.
+Bar nipis di atas, desktop ringkas dengan tema gelap dan aksen turkuois.
+Fail ISO sistem (jika ada pada komputer anda, anda memilihnya)
+Desktop Pop!_OS 24.04 LTS
+Skrin pemasangan Pop!_OS (imej daripada versi 20.04)
+Linux yang biasa bagi mereka yang datang dari Windows.
+Zorin OS memudahkan peralihan ke Linux dengan susun atur yang biasa. Ia berasaskan Ubuntu.
+Mereka yang datang dari Windows dan tidak mahu berasa asing.
+Bar tugas dan menu Start seperti Windows; desktop elegan dalam warna biru.
+Desktop Zorin OS 17.3
+Linux yang elegan dan ringkas.
+elementary OS terkenal dengan reka bentuk ringkas dan aplikasi sendiri. Ia berasaskan Ubuntu dan menggunakan desktop Pantheon.
+Mereka yang mahu antara muka yang elegan dan ringkas.
+Bar nipis di atas, dock di tengah di bawah dan tetingkap bersudut bulat.
+Desktop elementary OS 8.0
+Sistem pengendalian universal yang dikendalikan komuniti dan terkenal dengan kestabilannya.
+Debian ialah sistem pengendalian yang dibangunkan oleh komuniti sukarelawan dan terkenal dengan kestabilannya. Ia menjadi asas banyak pengedaran lain.
+Mereka yang mahu sistem yang stabil dan ringkas serta tahu sedikit tentang Linux.
+Berbeza mengikut persekitaran desktop yang dipilih; rupa lalai ialah ringkas dan sederhana.
+Desktop Debian 13 (Trixie) GNOME
+Langsung: Xfce (cuba dahulu)
+Anda boleh mencuba sistem sebelum memasang. Desktop Xfce yang ringan.
+Desktop Debian 13 Xfce
+Langsung: KDE Plasma (cuba dahulu)
+Anda boleh mencuba sistem sebelum memasang. Desktop KDE yang kaya dan boleh disesuaikan.
+Desktop Debian 13 KDE Plasma
+Stabil, ringan dan penuh alat.
+MX Linux berasaskan Debian dan disertakan dengan koleksi kecil alatnya sendiri. Ia berjalan lancar pada komputer sederhana dan lama.
+Mereka yang mahu sistem yang ringan dan stabil.
+Panel di tepi, kertas dinding biru-hijau dan desktop yang menunjukkan maklumat seperti jam.
+Desktop lalai MX Linux 18.3 (imej daripada versi lebih lama)
+Pengedaran yang disokong komuniti dengan perisian terkini.
+Fedora Workstation ialah pengedaran Linux yang disertakan dengan desktop GNOME dan dibangunkan oleh Projek Fedora.
+Mereka yang mahu melihat perisian terkini dan alat pembangun.
+Bar nipis di atas, aplikasi skrin penuh dengan paparan aktiviti dan desktop GNOME ringkas dalam warna biru.
+Desktop Fedora 42 Workstation
+Skrin pemasangan Fedora (Anaconda, Fedora 42)
+Linux yang bersedia untuk permainan.
+Bazzite ialah sistem berasaskan Fedora yang dibuat untuk bermain. Steam dan pemacu kad grafik sudah sedia; kerana fail sistem dilindungi, ia sukar rosak.
+Mereka yang mahu bermain permainan pada komputer dan mencari pengalaman seperti Steam Deck.
+Bar tugas seperti Windows dengan KDE; dalam mod konsol, antara muka Steam dibuka dalam skrin penuh.
+Ruang cakera kosong yang mencukupi untuk pemasangan (ISO kira-kira 8 GB)
+Desktop Bazzite 42 KDE
+Desktop, KDE (kad grafik AMD / Intel)
+Pilihan yang tepat untuk kebanyakan komputer. Pilih ini jika kad grafik anda bukan Nvidia.
+Desktop, KDE (kad grafik Nvidia)
+Pilih ini jika kad grafik anda ialah Nvidia; pemacu sudah sedia.
+Desktop, GNOME (kad grafik AMD / Intel)
+Untuk mereka yang lebih suka desktop GNOME yang ringkas berbanding KDE.
+Desktop Bazzite 42 GNOME
+Mod konsol gaya Steam Deck
+Antara muka Steam terbuka sebaik sahaja anda menghidupkan komputer. Untuk komputer yang disambung ke TV dan konsol pegang tangan.
+Arch Linux yang mudah dipasang.
+Manjaro ialah sistem berasaskan Arch Linux dengan perisian terkini. Ia mudah dipasang dan dikemas kini secara berterusan.
+Mereka yang mahu perisian terbaharu dan ada sedikit pengalaman.
+Berbeza mengikut desktop yang dipilih; rupa moden dengan aksen hijau.
+Desktop Manjaro 24.0 KDE Plasma
+Sistem berasaskan Arch yang pantas dan dilaras.
+CachyOS ialah sistem pantas berasaskan Arch Linux, disertakan dengan pakej yang dioptimumkan untuk pemproses dan kernel yang dilaras. Anda memilih desktop sendiri semasa pemasangan.
+Pengguna yang mencari prestasi dan ada sedikit pengalaman.
+Berbeza mengikut desktop yang dipilih; secara lalai KDE Plasma moden dengan tema gelap.
+Desktop CachyOS KDE Plasma (2025.08)
+Desktop pembangun yang elegan dan sedia digunakan, dikendalikan dengan papan kekunci.
+Omarchy ialah sistem yang dibina di atas Arch Linux, dengan pengurus tetingkap Hyprland dan alat pembangunan yang sedia digunakan. Ia disertakan dengan banyak tema.
+Mereka yang bekerja kebanyakannya dengan papan kekunci, membangunkan perisian dan suka mengutak-atik sistem.
+Tetingkap rata tanpa sempadan tersusun bersebelahan; tema gelap dan elegan, bar nipis di atas.
+Perisian bebas (MIT)
+Desktop lalai Omarchy
+Sistem yang kukuh dengan alat pentadbiran yang berkuasa.
+openSUSE ialah pengedaran lama yang berasal dari Jerman. Pentadbiran sistem mudah dengan YaST; edisi Tumbleweed dikemas kini secara berterusan.
+Mereka yang mahu asas yang kukuh dan alat pentadbiran yang berkuasa.
+Desktop moden dan kemas dengan aksen hijau.
+Desktop openSUSE Tumbleweed, KDE Plasma 6
+Windows legenda dengan bukit hijau dan bar tugas biru.
+Windows XP ialah sistem pengendalian komersial Microsoft yang sangat lama dan sudah lama tidak menerima kemas kini keselamatan. Kemungkinan besar ia tidak akan berjalan pada komputer baharu. BesideOS tidak mengedarkan fail ISO.
+Mereka yang mahu menggunakan program dan perkakasan yang sangat lama, atau sekadar ingin tahu. Kami cadangkan jangan sambungkannya ke Internet.
+Bar tugas biru, butang "Start" hijau dan gambar desktop terkenal dengan bukit hijau.
+Komputer lama (but BIOS)
+Lesen Windows yang sah
+Tidak berjalan pada komputer baharu (UEFI); mencubanya dalam mesin maya lebih selamat
+Komersial (lesen Microsoft)
+Desktop Windows XP: menu Start dan tetingkap My Computer
+Windows klasik dengan tetingkap lut sinar.
+Windows 7 ialah sistem pengendalian komersial Microsoft dan tidak lagi menerima kemas kini keselamatan. Ia mungkin tidak berjalan pada komputer baharu (UEFI). BesideOS tidak mengedarkan fail ISO.
+Mereka yang mahu menjalankan program lama dan perkakasan lama.
+Tetingkap dengan kesan kaca lut sinar, bar tugas besar di bawah dan menu Start klasik.
+Pemproses 32 bit atau 64 bit
+But warisan (BIOS/CSM) disyorkan; mungkin tidak dapat dipasang pada komputer UEFI baharu
+Desktop Windows 7 dan menu Start
+Windows lama dengan skrin Start berjubin.
+Windows 8.1 ialah sistem pengendalian komersial Microsoft dan tidak lagi menerima kemas kini keselamatan. BesideOS tidak mengedarkan fail ISO; anda membawa ISO anda sendiri.
+Mereka yang memerlukan Windows 8.1 untuk program atau perkakasan lama.
+Skrin Start yang terdiri daripada jubin berwarna skrin penuh dan desktop klasik.
+Pemproses 64 bit atau 32 bit
+Demi keselamatan, kami cadangkan jangan sambungkannya ke Internet
+Skrin Start Windows 8.1
+Versi terdahulu Microsoft yang digunakan secara meluas.
+Windows 10 ialah sistem pengendalian komersial Microsoft. BesideOS tidak mengedarkan fail ISO; anda memilih ISO anda sendiri atau memuat turunnya dari halaman rasmi Microsoft.
+Mereka yang mahu menggunakan Windows pada komputer yang tidak memenuhi keperluan Windows 11.
+Menu Start di kiri dengan jubin hidup, bar tugas di bawah.
+Pemproses 64 bit
+Desktop Windows 10: menu Start dan panel pemberitahuan
+Versi Windows semasa Microsoft.
+Windows 11 ialah sistem pengendalian komersial Microsoft. BesideOS tidak mengedarkan fail ISO; anda memilih ISO anda sendiri atau memuat turunnya dari halaman rasmi Microsoft.
+Mereka yang mahu menjalankan aplikasi dan permainan yang memerlukan Windows.
+Bar tugas dan menu Start di tengah, tetingkap bersudut bulat.
+Komputer dengan sokongan UEFI dan mampu menggunakan Secure Boot
+TPM 2.0 (keperluan rasmi)
+Desktop Windows 11 dan menu Start
+Windows untuk percubaan pelayan dan makmal.
+Windows Server 2025 ialah sistem pengendalian pelayan Microsoft. Versi percubaan dimuat turun dari halaman rasmi Microsoft; BesideOS tidak mengedarkan fail ISO.
+Mereka yang mahu mempelajari peranan pelayan dan alat pengurusan.
+Bar tugas dan menu Start seperti Windows 11; disertakan dengan alat pengurusan pelayan.
+Komputer 64 bit dengan sokongan UEFI
+Versi percubaan atau lesen pelayan yang sah
+Desktop Windows Server 2025 (antara muka bahasa Jerman)
+Imej: {text}

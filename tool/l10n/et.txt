@@ -1,0 +1,260 @@
+Samm-sammult
+Avaleht
+Kui sul on salvestamata tööd, salvesta see. Kui muudad meelt, vajuta allolevat nuppu.
+Avatud lähtekood, MIT
+Uuri välja alglaadimismenüü klahv (tavaliselt F12, F10, F9 või Esc). Kui paigaldaja ei ilmu ise nähtavale, vali sellest menüüst kirje „<süsteemi nimi> paigaldus” (nt „Debiani paigaldus”).
+Võrgutõrge
+Ebaõnnestus.
+Kontrolli enne alustamist oma arvutit
+Alustamiseks klõpsa
+Alustamiseks märgi ülal olev ruut.
+Kas alustame?
+Ootamatu tõrge.
+Ootamatu tõrge: {e}
+BesideOS on avatud lähtekoodiga MIT-litsentsi all. See põhineb Arjun Ingole projektil hop (samuti MIT). Teiste operatsioonisüsteemide nimed kuuluvad nende omanikele ja neid kasutatakse ainult selleks, et öelda, mida BesideOS paigaldada oskab.
+BesideOS teeb su kettal ruumi ja valmistab paigalduse ette; kui see on valmis, taaskäivitad arvuti ise. Windows jääb samaks.
+BesideOS teeb su kettal uuele süsteemile ruumi. Su faile ei kustutata, kuid kettatoimingud võivad harva untsu minna, seetõttu soovitame olulistest failidest varukoopia teha. Kui muudad meelt, taastab „Võta muudatused tagasi” kõik endiseks.
+Arvuti taaskäivitub 15 sekundi pärast
+Arvuti taaskäivitub 15 sekundi pärast. Käivitumisel on menüü 5 sekundit nähtaval ja {sys} paigaldus on valitud; saad selle asemel valida juba paigaldatud süsteemi. Salvesta avatud töö kohe.
+Paistab, et arvuti käivitus BIOS-i (vana) režiimis; soovitatav on UEFI.
+Arvutit valmistatakse ette
+Su arvuti peab käivituma UEFI režiimis (lülita BIOS-i seadetes „Legacy/CSM” välja).
+Su arvuti peab käivituma UEFI režiimis (lülita BIOS-i seadetes „Legacy/CSM” välja). Vanas BIOS-i režiimis see meetod ei tööta.
+Arvutit kontrollitakse
+Paigalda arvutisse teine süsteem ilma USB-pulgata.
+Sinu arvuti ISO-failid
+Su arvutis pole veel midagi muutunud. Vaata, mis juhtub, ja alusta siis.
+Su arvutis ei muutu veel midagi.
+Mida peaks su arvutil olema?
+Sa näitad faili, mis on arvutis või mille alla laadisid.
+Hea teada
+Üht partitsiooni vähendatakse ja GRUB-i menüüsse lisatakse üks kirje. Arvuti EI taaskäivitu ise; otsustad selle hiljem.
+Üks taaskäivitus
+Pärast ühte taaskäivitust paigaldatakse uus süsteem vana kõrvale.
+Järgmisel käivitumisel valitakse see kirje üks kord.
+Järgmisel käivitumisel ilmub paigaldaja. Pärast seda käivitub arvuti nagu tavaliselt.
+Tekkis probleem
+Vajutad ühele ja alustad selle paigaldamist.
+Vali üks. Kui pole kindel, võid valida esimese.
+Vali üks. Näitame samm-sammult, kuidas see paigaldatakse.
+Vali üks; vaata, milline see välja näeb ja mida vajab.
+Vorminda ainult äsja loodud vaba ruum. Ära puuduta Windowsi partitsioone ega BESIDEOS-i partitsiooni.
+Vaba ruum tehti kettale, kus asub draiv {letter}:; vali paigaldajas see ketas.
+Seda ISO-d ei saa selles arvutis käivitada.
+Seda ISO-faili ei saa GRUB-iga otse käivitada (sellel puudub ISO-st käivitamiseks vajalik teave). Tõenäoliselt on see väike paigaldusfail nagu „netinst”; proovi sama süsteemi „Live”-versiooni.
+Seda tüüpi ISO käivitamise viisi pole veel katsetatud.
+Sellesse arvutisse ei saa praegu paigaldada
+GRUB-i ei leitud sellest arvutist (seal võib olla mõni muu alglaadur, näiteks systemd-boot).
+Selle arvuti GRUB-i menüü ei loe kohandatud kirjeid; BesideOS ei saa siin töötada.
+Seda distributsiooni selles juhendis ei ole.
+See fail ei ole loetav ISO-kujutis.
+See vana Windowsi versioon ei pruugi uutes arvutites (UEFI) käivituda. Kui ei käivitu, taastab „Võta muudatused tagasi” kõik endiseks.
+Mis süsteem see on?
+Selle süsteemi ISO-faili tood ise; teed või kontrollsummat pole vaja kirjutada, piisab faili valimisest. Näitame kõigepealt, mida tehakse. Kuni sa ei kinnita, ei muutu su arvutis midagi.
+Selle süsteemi paigaldaja ei pruugi mõnes arvutis käivituda. Kui ei käivitu, taastab „Võta muudatused tagasi” kõik endiseks.
+See funktsioon töötab BesideOS-i töölauarakenduses Windowsi arvutis. Siin saad süsteemiga tutvuda ja ISO-faili alla laadida.
+Ei leitud
+Partitsiooni vähendamist peetakse tagasipööramatuks toiminguks: „Võta tagasi” püüab partitsiooni endisele suurusele tagasi suurendada, kuid ei saa, kui uus süsteem on sellesse ruumi paigaldatud.
+Partitsiooni vähendamine võib harva probleeme tekitada.
+Sellist lehte ei ole.
+Võid proovida valida väiksema ruumi:
+Kui soovid alustada hiljem, taaskäivita arvuti ise; paigaldaja ilmub esimesel käivitamisel. Kui ei ilmu, vali GRUB-i menüüst (Shift või Esc) kirje „{sys} paigaldus”. Kui paigaldus on valmis, saad kirje „võta tagasi” abil eemaldada.
+Kui soovid alustada hiljem, taaskäivita arvuti ise; paigaldaja ilmub esimesel käivitamisel. Kui ei ilmu, vali alglaadimismenüüst „{sys} paigaldus”. Kui paigaldus on valmis, saad kustutada ajutise partitsiooni nimega BESIDEOS.
+Eelmine paigaldus on pooleli jäänud
+Distributsioonid
+Tagasi distributsioonide juurde
+Muudatused võeti tagasi
+Muudatusi võetakse tagasi…
+Võta muudatused tagasi
+Kettateavet ei õnnestunud koguda.
+Vali kettaekraanil „Jaotamata ruum” ja klõpsa „Edasi”. Windows loob sinna oma partitsioonid.
+Kettatõrge
+Kettatõrge: faili ei õnnestunud kirjutada.
+Kui paigaldaja küsib ketta kohta, ÄRA vali „Kustuta kogu ketas”. Vali „Paigalda kõrvale” või „Midagi muud” (käsitsi partitsioneerimine) ja kasuta ainult „vaba ruumi”.
+Ketas {n}
+Nii näeb ketas praegu välja.
+Kettaid ei õnnestunud lugeda. {reason}
+Sinu kettal tehakse ruumi ja GRUB-i menüüsse lisatakse kirje, mis käivitab sinu ISO.
+Faili ei õnnestunud lugeda või kontrollsumma on vigane.
+Fail on liiga suur
+Kui sul faili ei ole, saad selle alla laadida ametlikult lehelt:
+Kontrollitakse, et fail poleks riknenud…
+Kinnitamine ebaõnnestus (kettatõrge).
+Hangitakse kinnitusteavet…
+Kui pole kindel, jäta paigaldus sellele ekraanile, taaskäivita arvuti ja vali BesideOS-is „võta tagasi”.
+Kui pole kindel, jäta paigaldus sellele ekraanile; võid arvuti välja lülitada ja Windowsi naasta, seejärel vali BesideOS-is lihtsalt „võta tagasi”.
+Jah, alusta
+Jah, taaskäivita
+Sobivat distributsiooni pole
+GRUB-i alglaadimismenüüsse lisatakse kirje „{sys} paigaldus”; ISO-fail jääb oma kohale.
+GRUB-i alglaadimismenüüsse lisatakse kirje „{sys} paigaldus”.
+Kui GRUB-i menüü ei ilmu ise, hoia käivitamisel Shifti all või vajuta Esc ja vali kirje „BesideOS”.
+Tagasivõtmine ebaõnnestus.
+Soovitame tagasi võtta.
+Ülejäänu teeb BesideOS.
+Vigane aadress.
+Vigane failinimi.
+Ohtlik aadress lükati tagasi
+Millise arvutiga sa oled?
+Milliste arvutite kõrvale saab paigaldada?
+Millise süsteemi soovid paigaldada?
+Milliseid süsteeme saad paigaldada?
+Millise soovid?
+Kui kõik on valmis, taaskäivitad sina. Käivitumisel on menüü 5 sekundit nähtaval ja {sys} paigaldus on valitud; sinu paigaldatud süsteemid on samas loendis.
+Valmis! Nüüd võid taaskäivitada
+Valmistan ette, palun oota…
+Kõik
+Kõik on valmis!
+Midagi ei muutunud.
+ISO-failid (*.iso)
+Klõpsa, et valida oma ISO-fail ja paigaldada
+Sa valid oma ISO-faili
+ISO-fail
+ISO-fail on failisüsteemis, mida GRUB ei oska lugeda. Kopeeri fail ext4, btrfs, xfs või FAT32 kettale.
+ISO-faili ei leitud.
+ISO-fail jääb oma kohale: {path}
+ISO-fail on krüpteeritud kettal; GRUB ei saa seda lugeda. Kopeeri see krüpteerimata kettale.
+ISO-fail peab olema väljaspool partitsiooni, kuhu paigaldad (nt eraldi kettal). Paigaldaja ei saa kustutada partitsiooni, kus on tema enda ISO.
+ISO-fail on kettal, kuhu võiksid paigaldada. Paigaldaja ei saa kustutada partitsiooni, kus on tema enda ISO; paigalda uus süsteem BesideOS-i tehtud vabasse ruumi.
+Ära puuduta ISO-failiga partitsiooni ega oma praegust süsteemi; vorminda ainult äsja loodud ruum.
+ISO-d ei õnnestunud alla laadida ega kinnitada.
+ISO sisu ei õnnestunud uurida. {detail}
+ISO-d ei õnnestunud kontrollida. {detail}
+ISO sisse vaatamiseks on vaja programmi „xorriso”. Paigalda see ja proovi uuesti.
+Sulge
+Kataloog
+Kataloog on tühi
+Kataloogi ei õnnestunud laadida: {msg}
+Soovin valida oma ISO-faili ja paigaldada
+Kellele: {text}
+Tee enne paigaldamist varukoopia
+Vali ISO-fail, mille soovid paigaldada
+Paigaldamiseks laadi alla BesideOS-i rakendus
+Paigaldamiseks klõpsa
+Süsteemid, mille kõrvale saab paigaldada
+Paigaldus
+Paigalduskomponent puudub
+Paigaldusfailid pannakse samale kettale.
+Paigaldusfailid pannakse samal kettal olevasse väikesesse partitsiooni. USB-pulka pole vaja.
+Kui paigaldaja avaneb, ÄRA vali ketta küsimuse juures „Kustuta kogu ketas”. Vali „Midagi muud” (käsitsi partitsioneerimine) ja kasuta ainult BesideOS-i tehtud vaba (jaotamata) ruumi.
+Paigaldaja ilmub.
+Paigaldus valmistatakse ette: tehakse vaba ruumi ja kopeeritakse faile. Arvuti EI taaskäivitu ise; otsustad selle hiljem.
+Paigaldus on ette valmistatud
+Paigaldust valmistatakse ette…
+Paigalduse ettevalmistamine ebaõnnestus.
+Paigaldamine ei ole võimalik.
+Alusta paigaldust
+Vaata paigaldust
+Linux
+Linuxi arvutis saab Windowsi paigaldada eraldi partitsiooni kahe süsteemiga käivitamiseks.
+Linuxi arvutis saab teise Linuxi käivitada selle ISO-failist GRUB-i kirjega ja paigaldada vabasse ruumi (ühtegi partitsiooni ei vähendata).
+Linuxi süsteemid
+Paigalda Linuxi kõrvale
+Litsents: {text}
+Töölaud: {text}
+Sinu praegune süsteem ja failid jäävad samaks. Vaba ruumi tegemiseks vähendatakse üht partitsiooni; {name} käivitub oma ISO-failist GRUB-i kirjega.
+Milline see välja näeb
+Kuidas see töötab
+Mis tüüpi?
+Mis juhtub?
+Avaneb aken, mis küsib sinu parooli.
+Avaneb aken, mis küsib sinu parooli. Ära sulge seda akent. Arvuti ei taaskäivitu ise.
+Plaani koostatakse
+Plaani ei õnnestunud koostada (kood {code}). {detail}
+Kui oled plaani näinud ja kinnitanud, et tegid failidest varukoopia, tehakse kettal vaba ruumi.
+Ametlik leht
+Seda failinime kontrollsummade failis ei ole; kinnitada ei õnnestunud. Kataloog võib olla aegunud; laadi alla ametlikult lehelt.
+Kontrollsumma ei klappinud. Faili ei kustutatud; kontrolli SHA-256 väärtust.
+Kontrollsumma ei klappinud; fail kustutati.
+Secure Boot on sees. Allkirjastamata tuumaga ISO-d ei pruugi käivituda; kui paigaldusmenüü ei ilmu, lülita BIOS-is Secure Boot välja.
+Kui Secure Boot on sees, ei pruugi mõned ISO-d käivituda. Kui paigaldaja ei ilmu, lülita BIOS-i seadetes Secure Boot välja.
+Kui Secure Boot on sees, ei pruugi mõned süsteemid käivituda. Kui paigaldaja ei ilmu, lülita BIOS-i seadetes Secure Boot välja; pärast paigaldust võid selle uuesti sisse lülitada.
+Valitud faili ei leitud või see ei ole ISO-fail.
+Sinu valitud ISO-faili uuritakse
+Serveri veakood: {code}
+Server ei vasta
+Serveri vastus on vigane
+Ava rakendus, et paigaldada ühe klõpsuga
+Tehnilised üksikasjad
+Proovi uuesti
+Põhineb: {text}
+Sa klõpsad
+Rakendus töötab Windowsi arvutis. Valid rakenduses soovitud süsteemi ja alustad paigaldust ühe klõpsuga.
+Rakenduse faile näib puuduvat. Laadi BesideOS uuesti alla ja ava.
+Tühista
+Tühista, võta muudatused tagasi
+Windows
+Windowsi häälestus käivitub nii RAM-kettalt. Häälestuse ajal vigade või hoiatuste nägemine on normaalne; enamasti võid need ignoreerida ja jätkata. Kui häälestus üldse ei edene, taastab „Võta muudatused tagasi” kõik endiseks.
+Windowsi arvutis saab Linuxi paigaldada Windowsi kõrvale kahe süsteemiga käivitamiseks.
+Windowsi arvutis saab teise Windowsi paigaldada eraldi partitsiooni kahe süsteemiga käivitamiseks.
+Windows küsib luba: vali „Jah”.
+Windows küsib luba: vali „Jah”. Ära sulge seda akent. Arvuti ei taaskäivitu ise.
+Windows vajab vähemalt 64 GB; 80 GB on mugav. Vali rohkem, kui paigaldad palju programme.
+Kui näed Windowsi paigaldamisel tõrget
+Windowsi süsteemid
+Windows ja su failid jäävad samaks. Su arvutis tehakse ruumi süsteemile {name}.
+Windowsis peavad kiirkäivitus (Fast Startup) ja BitLocker olema välja lülitatud. Kui BitLocker on sees, keeldub BesideOS paigaldamast.
+Paigalda Windowsi kõrvale
+Windowsi kõrvale tehakse umbes {gb} GB vaba ruumi.
+Windowsi kõrvale tehakse ruumi ja failid pannakse sinna.
+Toetatud on ainult GPT-partitsioonidega kettad.
+Võib olla pooleli jäänud muudatusi
+Uus süsteem
+Kui palju ruumi uuele süsteemile reserveerime?
+Partitsiooni, millest saaks uuele süsteemile ruumi teha, ei leitud. Vaja on vähendatavat partitsiooni (ext4, btrfs või NTFS), kus on vähemalt {gb} GB vaba ruumi.
+Taaskäivitub
+Tühista taaskäivitus
+Arvutit ei õnnestunud taaskäivitada. Taaskäivita see ise.
+Pärast taaskäivitust on menüü 5 sekundit nähtaval ja kirje „{sys} paigaldus” on valitud. Soovi korral saad loendist valida ühe paigaldatud süsteemidest. Taaskäivita pärast avatud töö salvestamist.
+Enne uue alustamist pead eelmised muudatused tagasi võtma.
+Partitsioon, millest ruumi tehakse, peab olema ext4, btrfs või NTFS ja selles peab olema piisavalt vaba ruumi. Ketas peab olema GPT.
+Tehakse ruumi
+Tehakse ruumi: üks partitsioon väheneb.
+Millisest partitsioonist ruumi teha?
+Millisest draivist ruumi teha?
+Ruum võetakse valitud partitsiooni vabast osast. Su faile ei kustutata. Loendis mitteolevate partitsioonide failisüsteemi ei saa vähendada või neis pole piisavalt vaba ruumi.
+Ruum võetakse valitud draivi vabast osast. Su faile ei kustutata.
+Puudub
+Administraatori luba ei antud; kettateavet ei õnnestunud lugeda. Midagi ei muudetud.
+Administraatori luba ei antud; kettaid ei õnnestunud lugeda. Midagi ei muudetud.
+Administraatori luba ei antud; midagi ei võetud tagasi.
+Administraatori luba ei antud; midagi ei muudetud.
+Ümbersuunamise aadressi pole
+{credit}  ·  Suurendamiseks klõpsa pildil
+Partitsiooni {device} vähendatakse ja tehakse umbes {gb} GB vaba (jaotamata) ruumi.
+Partitsiooni {device} vähendatakse {gb} GB võrra; vabanenud ruum jääb tühjaks (jaotamata).
+Partitsioonist {device} saab vabastada kuni {gb} GB. Vali väiksem ruum või kasuta teist partitsiooni.
+{disk} · kokku {total} · vaba {free}
+{disk} · {fstype} · kokku {total} · vabastada saab kuni {max}
+{g} GB · soovitatav
+{host}: {reason}
+Draiv {letter}:
+Draiv {letter}: ({label})
+Draivile {letter}: tehakse umbes {gb} GB vaba ruumi.
+{mb} MB alla laaditud
+{name} laaditakse alla ja Windowsi kõrvale tehakse ruumi.
+{name} laaditakse alla, su kettale tehakse ruumi ja GRUB-i menüüsse lisatakse kirje.
+Laaditakse alla ja kontrollitakse {name}
+{name} paigaldaja ilmub.
+{name} · Windows on siin
+{sys} paigaldusfailid kopeeritakse siia.
+Vali ketas hoolikalt, kui paigaldad {sys}
+Joonis. Tegelik plaan näidatakse sulle täielikult enne, kui miski muutub.
+Liiga palju ümbersuunamisi
+Enamikule piisab 30 GB-st. Vali rohkem, kui paigaldad palju programme.
+Tegin olulistest failidest varukoopia
+Tee oluliste failide varukoopia: partitsiooni vähendamine võib harva probleeme tekitada.
+Kolm sammu. Kuni sa ei kinnita, ei muutu su arvutis midagi.
+Kaks süsteemi, üks ketas. USB-pulka pole vaja.
+Laadi alla
+Allalaaditud faili uuritakse
+Allalaadimine ebaõnnestus: {message}
+Allalaadimiseks klõpsa
+Mitte praegu
+Taaskäivita kohe
+Kas taaskäivitame nüüd?
+Praegune süsteem
+praegu töötava süsteemi partitsioon
+{name} paigaldus
+Windows (tühista paigaldus)
+BesideOS: paigalda teine operatsioonisüsteem selle kõrvale

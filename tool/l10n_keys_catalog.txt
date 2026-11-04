@@ -1,0 +1,151 @@
+Yeni başlayanlar için en yaygın Linux.
+Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.
+Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.
+Solda sabit bir uygulama çubuğu (dock), üstte ince bir durum çubuğu ve turuncu-mor tonlarda sade bir masaüstü.
+64 bit işlemcili bir bilgisayar
+Kurulum için yeterli boş disk alanı
+İnternet bağlantısı (indirme için)
+Özgür yazılım (GPL dahil çeşitli açık kaynak lisanslar)
+Ubuntu 24.04 LTS masaüstü
+Ubuntu'nun hafif ve sade hâli.
+Xubuntu, Ubuntu'nun Xfce masaüstlü sürümüdür. Ubuntu deposundan yazılım alır ama daha az kaynak kullanır.
+Ubuntu uyumluluğunu isteyip daha hafif bir sistem arayanlar.
+Üstte ince bir panel, altta açılır bir uygulama çubuğu ve mavi tonlarda sade bir masaüstü.
+Xubuntu 24.04 LTS masaüstü
+Ubuntu tabanlı, çok özelleştirilebilir KDE Plasma.
+Kubuntu, Ubuntu'nun KDE Plasma masaüstlü sürümüdür. Görünümü ve davranışı neredeyse her yönüyle değiştirebilirsin.
+Windows'a benzer bir düzen isteyip her şeyi ayarlamayı sevenler.
+Altta Windows'a benzer görev çubuğu, mavi tonlar ve şeffaf efektli modern pencereler.
+Kubuntu 24.04 LTS masaüstü
+Windows'tan gelenlere tanıdık gelen, sakin bir masaüstü.
+Linux Mint'in ana sürümü Cinnamon masaüstünü kullanır. Alt çubuk, başlat menüsü ve sistem tepsisiyle Windows düzenine benzer bir yapı sunar.
+Windows'tan geçenler ve tanıdık, sade bir arayüz isteyenler.
+Altta görev çubuğu, solda başlat menüsü, sağda sistem tepsisi; yeşil vurgulu, klasik düzenli bir masaüstü.
+Linux Mint Cinnamon 22.3 masaüstü
+Cinnamon (önerilen)
+Windows'a tanıdık gelen, sakin ve şık masaüstü. Çoğu kişi için en iyisi.
+Xfce (hafif)
+Eski ya da yavaş bilgisayarlar için daha hafif ve hızlı.
+Linux Mint Xfce masaüstü (eski bir sürümden görüntü)
+MATE (klasik)
+Eski tarz, sade ve çok ayarlanabilir bir masaüstü.
+Linux Mint MATE masaüstü (20. sürümden görüntü)
+Geliştiriciler ve oyuncular için pratik sistem.
+Pop!_OS, System76 firmasının Ubuntu tabanlı sistemidir. Pencereleri otomatik dizme ve oyun ekran kartı desteğiyle öne çıkar.
+Yazılım geliştirenler ve oyun oynayanlar.
+Üstte ince bir çubuk, koyu temalı ve turkuaz vurgulu sade bir masaüstü.
+Sistemin ISO dosyası (bilgisayarında varsa onu seçersin)
+Pop!_OS 24.04 LTS masaüstü
+Pop!_OS kurulum ekranı (20.04 sürümünden görüntü)
+Windows'tan geçenler için tanıdık Linux.
+Zorin OS, tanıdık düzenleriyle Linux'a geçişi kolaylaştırır. Ubuntu tabanlıdır.
+Windows'tan geçip yadırgamak istemeyenler.
+Windows'a benzeyen görev çubuğu ve başlat menüsü; mavi tonlu şık bir masaüstü.
+Zorin OS 17.3 masaüstü
+Şık ve sade Linux.
+elementary OS, sade tasarımı ve kendi uygulamalarıyla bilinir. Ubuntu tabanlıdır ve Pantheon masaüstünü kullanır.
+Şık ve sade bir arayüz isteyenler.
+Üstte ince bir çubuk, altta ortalanmış bir dock ve yuvarlak köşeli pencereler.
+elementary OS 8.0 masaüstü
+Kararlılığıyla bilinen, topluluk işletmeli evrensel işletim sistemi.
+Debian, gönüllü bir topluluk tarafından geliştirilen ve kararlılığıyla tanınan bir işletim sistemidir. Pek çok başka dağıtımın temelini oluşturur.
+Kararlı ve sade bir sistem isteyen, biraz Linux bilgisi olanlar.
+Seçtiğin masaüstü ortamına göre değişir; varsayılan görünüm sade ve gösterişsizdir.
+Debian 13 (Trixie) GNOME masaüstü
+Canlı: Xfce (önce dene)
+Kurmadan önce sistemi deneyebilirsin. Hafif Xfce masaüstü.
+Debian 13 Xfce masaüstü
+Canlı: KDE Plasma (önce dene)
+Kurmadan önce sistemi deneyebilirsin. Zengin ve özelleştirilebilir KDE masaüstü.
+Debian 13 KDE Plasma masaüstü
+Kararlı, hafif ve araç dolu.
+MX Linux, Debian tabanlıdır ve kendi küçük araçlar topluluğuyla gelir. Orta ve eski bilgisayarlarda akıcıdır.
+Hafif ve kararlı bir sistem isteyenler.
+Kenarda bir panel, mavi-yeşil bir duvar kâğıdı ve saat gibi bilgi gösteren masaüstü.
+MX Linux 18.3 varsayılan masaüstü (eski bir sürümden görüntü)
+Güncel yazılımlar sunan, topluluk destekli bir dağıtım.
+Fedora Workstation, GNOME masaüstüyle gelen ve Fedora Projesi tarafından geliştirilen bir Linux dağıtımıdır.
+Güncel yazılımları ve geliştirici araçlarını görmek isteyenler.
+Üstte ince bir çubuk, tam ekran uygulama ve etkinlik görünümü olan, mavi tonlu sade bir GNOME masaüstü.
+Fedora 42 Workstation masaüstü
+Fedora kurulum ekranı (Anaconda, Fedora 42)
+Oyun için hazır Linux.
+Bazzite, oyun oynamak için hazırlanmış, Fedora tabanlı bir sistemdir. Steam ve ekran kartı sürücüleri hazır gelir; sistem dosyaları korunduğu için bozulması zordur.
+Bilgisayarda oyun oynamak isteyenler ve Steam Deck benzeri bir deneyim arayanlar.
+KDE ile Windows'a benzer bir görev çubuğu; konsol modunda Steam arayüzü tam ekran açılır.
+Kurulum için yeterli boş disk alanı (ISO yaklaşık 8 GB)
+Bazzite 42 KDE masaüstü
+Masaüstü, KDE (AMD / Intel ekran kartı)
+Çoğu bilgisayar için doğru seçim. Ekran kartın Nvidia değilse bunu seç.
+Masaüstü, KDE (Nvidia ekran kartı)
+Ekran kartın Nvidia ise bunu seç; sürücüler hazır gelir.
+Masaüstü, GNOME (AMD / Intel ekran kartı)
+KDE yerine sade GNOME masaüstünü sevenler için.
+Bazzite 42 GNOME masaüstü
+Steam Deck tarzı konsol modu
+Bilgisayarı açınca doğrudan Steam arayüzü açılır. TV'ye bağlı bilgisayarlar ve el konsolları için.
+Arch Linux'un kolay kurulan hâli.
+Manjaro, Arch Linux tabanlı, güncel yazılımlı bir sistemdir. Kurulumu kolaydır ve sürekli güncellenir.
+En yeni yazılımları isteyen ve biraz deneyimi olanlar.
+Seçtiğin masaüstüne göre değişir; yeşil vurgulu, modern bir görünüm.
+Manjaro 24.0 KDE Plasma masaüstü
+Hızlı ve ayarlı Arch tabanlı sistem.
+CachyOS, Arch Linux tabanlı, işlemciye göre optimize edilmiş paketler ve ayarlı çekirdekle gelen hızlı bir sistemdir. Kurulumda masaüstünü kendin seçersin.
+Performans arayan ve biraz deneyimi olan kullanıcılar.
+Seçtiğin masaüstüne göre değişir; varsayılanda koyu temalı, modern bir KDE Plasma.
+CachyOS KDE Plasma masaüstü (2025.08)
+Klavyeyle kullanılan, hazır kurulu şık bir geliştirici masaüstü.
+Omarchy, Arch Linux üzerine kurulu, Hyprland pencere yöneticisiyle gelen ve geliştirici araçları hazır sunan bir sistemdir. Çok sayıda temayla gelir.
+Klavye ağırlıklı çalışan, yazılım geliştiren ve sistemini kurcalamayı sevenler.
+Düz, kenarlıksız pencereler yan yana dizilir; koyu ve zarif temalar, üstte ince bir çubuk.
+Özgür yazılım (MIT)
+Omarchy varsayılan masaüstü
+Güçlü yönetim araçlarıyla sağlam bir sistem.
+openSUSE, Almanya kökenli köklü bir dağıtımdır. YaST ile sistem yönetimi kolaydır; Tumbleweed sürümü sürekli güncellenir.
+Sağlam altyapı ve güçlü yönetim araçları isteyenler.
+Yeşil vurgulu, modern ve temiz bir masaüstü.
+openSUSE Tumbleweed, KDE Plasma 6 masaüstü
+Yeşil tepeli, mavi görev çubuklu efsane Windows.
+Windows XP, Microsoft'un çok eski ticari işletim sistemidir ve uzun süredir güvenlik güncellemesi almıyor. Yeni bilgisayarlarda büyük olasılıkla çalışmaz. BesideOS ISO dosyasını dağıtmaz.
+Çok eski programları ve donanımı kullanmak ya da merak edenler. İnternete bağlamamanı öneririz.
+Mavi görev çubuğu, yeşil «Başlat» düğmesi ve yeşil tepeli ünlü masaüstü resmi.
+Eski bir bilgisayar (BIOS önyükleme)
+Geçerli bir Windows lisansı
+Yeni (UEFI) bilgisayarlarda çalışmaz; sanal makinede denemek daha güvenlidir
+Ticari (Microsoft lisansı)
+Windows XP masaüstü: Başlat menüsü ve Bilgisayarım penceresi
+Şeffaf pencereli klasik Windows.
+Windows 7, Microsoft'un ticari işletim sistemidir ve artık güvenlik güncellemesi almıyor. Yeni bilgisayarlarda (UEFI) çalışmayabilir. BesideOS ISO dosyasını dağıtmaz.
+Eski programları ve eski donanımı çalıştırmak isteyenler.
+Şeffaf cam efektli pencereler, altta büyük görev çubuğu ve klasik başlat menüsü.
+32 ya da 64 bit işlemci
+Eski tip (BIOS/CSM) önyükleme önerilir; yeni UEFI bilgisayarlarda kurulmayabilir
+Windows 7 masaüstü ve Başlat menüsü
+Başlat ekranı kutucuklu eski Windows.
+Windows 8.1, Microsoft'un ticari işletim sistemidir ve artık güvenlik güncellemesi almıyor. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu getirirsin.
+Eski bir program ya da donanım için Windows 8.1 gerekenler.
+Tam ekran renkli kutucuklardan oluşan Başlangıç ekranı ve klasik masaüstü.
+64 bit ya da 32 bit işlemci
+Güvenlik için internete bağlamamanı öneririz
+Windows 8.1 Başlangıç ekranı
+Microsoft'un yaygın kullanılan önceki sürümü.
+Windows 10, Microsoft'un ticari işletim sistemidir. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu seçersin ya da Microsoft'un resmi sayfasından indirirsin.
+Windows 11 gereksinimlerini karşılamayan bilgisayarlarda Windows kullanmak isteyenler.
+Solda başlat menüsü, canlı kutucuklar, altta görev çubuğu.
+64 bit işlemci
+Windows 10 masaüstü: Başlat menüsü ve bildirim paneli
+Microsoft'un güncel Windows sürümü.
+Windows 11, Microsoft'un ticari işletim sistemidir. BesideOS ISO dosyasını dağıtmaz; kendi ISO'nu seçersin veya Microsoft'un resmi sayfasından indirirsin.
+Windows'a ihtiyaç duyan uygulama ve oyunları çalıştırmak isteyenler.
+Ortalanmış görev çubuğu ve başlat menüsü, yuvarlatılmış köşeli pencereler.
+UEFI desteği ve Secure Boot yapabilen bir bilgisayar
+TPM 2.0 (resmi gereksinim)
+Windows 11 masaüstü ve Başlat menüsü
+Sunucu ve laboratuvar denemeleri için Windows.
+Windows Server 2025, Microsoft'un sunucu işletim sistemidir. Deneme sürümü Microsoft'un resmi sayfasından indirilir; BesideOS ISO dosyasını dağıtmaz.
+Sunucu rollerini ve yönetim araçlarını öğrenmek isteyenler.
+Windows 11'e benzeyen görev çubuğu ve başlat menüsü; sunucu yönetim araçlarıyla gelir.
+UEFI desteği olan 64 bit bilgisayar
+Deneme veya geçerli bir sunucu lisansı
+Windows Server 2025 masaüstü (Almanca arayüz)
+Görsel: {text}

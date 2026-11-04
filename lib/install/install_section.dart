@@ -1,7 +1,9 @@
+import '../l10n/l10n.dart';
+import '../l10n/text.dart';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../catalog/distro.dart';
 import '../download/download_controller.dart';
@@ -38,7 +40,7 @@ const beforeYouStart = [
   'Bilgisayarın UEFI modunda açılmalı (BIOS ayarlarında "Legacy/CSM" kapalı olsun). Eski BIOS modunda bu yöntem çalışmaz.',
   'Secure Boot açıkken bazı sistemler açılmayabilir. Kurulum ekranı gelmezse BIOS ayarlarından Secure Boot\'u kapat, kurulum bitince geri açabilirsin.',
   'Windows\'ta Hızlı Başlatma (Fast Startup) ve BitLocker kapalı olmalı. BitLocker açıksa BesideOS kurulumu reddeder.',
-  'Açılış menüsü tuşunu öğren (genelde F12, F10, F9 ya da Esc). Kurulum ekranı kendiliğinden gelmezse bu menüden "BesideOS kurulumu"nu seç.',
+  'Açılış menüsü tuşunu öğren (genelde F12, F10, F9 ya da Esc). Kurulum ekranı kendiliğinden gelmezse bu menüden "<dağıtım adı> kurulumu" girişini seç (ör. "Debian kurulumu").',
 ];
 
 /// Same idea for a Linux computer: nothing is shrunk, so the firmware list is shorter.
@@ -155,15 +157,39 @@ class _InstallSectionState extends State<InstallSection> {
     final d = widget.distro;
     if (!_supported) return const SizedBox.shrink();
     final c = ctl;
-    return Panel(
-      tint: Color(d.accent),
-      padding: const EdgeInsets.all(24),
-      child: c == null
-          ? _header(Icons.build_circle_outlined, 'Kurulum bileşeni eksik',
-              'Uygulama dosyaları eksik görünüyor. BesideOS\'u yeniden indirip aç.', color: kWarn)
-          : ListenableBuilder(
-              listenable: Listenable.merge([c, c.download, InstallSessions.instance]), builder: (_, __) => _body(c)),
+    return KeyedSubtree(
+      key: _cardKey,
+      child: Panel(
+        tint: Color(d.accent),
+        padding: const EdgeInsets.all(24),
+        child: c == null
+            ? _header(Icons.build_circle_outlined, 'Kurulum bileşeni eksik',
+                'Uygulama dosyaları eksik görünüyor. BesideOS\'u yeniden indirip aç.', color: kWarn)
+            : ListenableBuilder(
+                listenable: Listenable.merge([c, c.download, InstallSessions.instance]),
+                builder: (_, __) {
+                  _keepCardInView(c.phase);
+                  return _body(c);
+                }),
+      ),
     );
+  }
+
+  final _cardKey = GlobalKey();
+  InstallPhase? _shownPhase;
+
+  /// Each step has a different height, so the page would otherwise be left at the bottom (or somewhere else) when the
+  /// card changes. On every step change the card is brought to the top of the window and stays put until the next one.
+  void _keepCardInView(InstallPhase phase) {
+    if (_shownPhase == phase) return;
+    final first = _shownPhase == null;
+    _shownPhase = phase;
+    if (first) return;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final ctx = _cardKey.currentContext;
+      if (!mounted || ctx == null) return;
+      Scrollable.ensureVisible(ctx, alignment: 0.05, duration: const Duration(milliseconds: 250), curve: Curves.easeOutCubic);
+    });
   }
 
   // ---------------------------------------------------------------- pieces
@@ -195,18 +221,18 @@ class _InstallSectionState extends State<InstallSection> {
     final other = c.target != null && !c.target!.isWindows && c.drives.length > 1;
     final isWin = widget.distro.family == DistroFamily.windows;
     if (c.linuxHost) {
-      return _banner(kWarn, Icons.disc_full_rounded, title: '${_sys(c)} kurulurken diski doğru seç', lines: const [
+      return _banner(kWarn, Icons.disc_full_rounded, title: tr('{sys} kurulurken diski doğru seç', {'sys': _sys(c)}), lines: const [
         'Kurulum ekranı açılınca disk sorusunda "Diskin tamamını sil" seçeneğini SEÇME. "Başka bir şey" (elle bölümleme) seç ve yalnızca BesideOS\'un açtığı boş (ayrılmamış) alanı kullan.',
         'ISO dosyasının bulunduğu bölüme ve mevcut sistemine dokunma, biçimlendirme (format) yalnızca yeni açılan alanda olsun.',
         'Emin olamazsan kurulumu o ekranda bırak, bilgisayarı yeniden başlat ve BesideOS\'tan "geri al" de.',
       ]);
     }
-    return _banner(kWarn, Icons.disc_full_rounded, title: '${_sys(c)} kurulurken diski doğru seç', lines: [
+    return _banner(kWarn, Icons.disc_full_rounded, title: tr('{sys} kurulurken diski doğru seç', {'sys': _sys(c)}), lines: [
       if (isWin)
         'Disk ekranında "Ayrılmamış alan"ı seç ve "İleri" de. Windows kendi bölümlerini oraya açar.'
       else
         'Disk sorusunda "Diskin tamamını sil" seçeneğini SEÇME. "Yanına kur" ya da "Başka bir şey" (elle bölümleme) seç ve yalnızca "boş alan"ı kullan.',
-      if (other) 'Boş yer ${c.target!.letter}: sürücüsünün bulunduğu diskte açıldı; kurulum ekranında o diski seç.',
+      if (other) tr('Boş yer {letter}: sürücüsünün bulunduğu diskte açıldı; kurulum ekranında o diski seç.', {'letter': c.target!.letter}),
       'Biçimlendirme (format) yalnızca yeni açılan boş alanda olsun. Windows bölümlerine ve BESIDEOS bölümüne dokunma.',
       'Emin olamazsan kurulumu o ekranda bırak; bilgisayarını kapatıp Windows\'a dönebilirsin, BesideOS\'tan "geri al" demen yeter.',
     ]);
@@ -291,8 +317,7 @@ class _InstallSectionState extends State<InstallSection> {
           _header(Icons.check_circle_rounded, c.restarting ? 'Bilgisayar 15 saniye içinde yeniden başlıyor' : 'Hazır! Şimdi yeniden başlatabilirsin',
               c.restarting
                   ? 'Açık işin varsa kaydet. Vazgeçersen aşağıdaki düğmeye bas.'
-                  : 'Yeniden başlayınca açılış menüsü 5 saniye görünür; "BesideOS: 5 saniye içinde kurulacak: ${_sys(c)}" seçili gelir. '
-                      'İstersen listedeki kurulu sistemlerden birini seçebilirsin. Açık işlerini kaydedince yeniden başlat.',
+                  : tr('Yeniden başlayınca açılış menüsü 5 saniye görünür; "{sys} kurulumu" seçili gelir. İstersen listedeki kurulu sistemlerden birini seçebilirsin. Açık işlerini kaydedince yeniden başlat.', {'sys': _sys(c)}),
               color: kGreen),
           const SizedBox(height: 16),
           if (c.restartError != null) _banner(kWarn, Icons.warning_amber_rounded, lines: [c.restartError!]),
@@ -305,8 +330,8 @@ class _InstallSectionState extends State<InstallSection> {
             OutlinedButton(onPressed: c.undo, child: const Text('Vazgeç, değişiklikleri geri al')),
             const SizedBox(height: 12),
             _small(c.linuxHost
-                ? 'Daha sonra başlatmak istersen bilgisayarı kendin yeniden başlat; kurulum ekranı ilk açılışta gelir. Açılmazsa GRUB menüsünden (Shift ya da Esc) "BesideOS" girişini seç. Kurulum bitince girişi "geri al" ile kaldırabilirsin.'
-                : 'Daha sonra başlatmak istersen bilgisayarı kendin yeniden başlat; kurulum ekranı ilk açılışta gelir. Açılmazsa açılış menüsünden "BesideOS kurulumu"nu seç. Kurulum bitince BESIDEOS adlı geçici bölümü silebilirsin.'),
+                ? tr('Daha sonra başlatmak istersen bilgisayarı kendin yeniden başlat; kurulum ekranı ilk açılışta gelir. Açılmazsa GRUB menüsünden (Shift ya da Esc) "{sys} kurulumu" girişini seç. Kurulum bitince girişi "geri al" ile kaldırabilirsin.', {'sys': _sys(c)})
+                : tr('Daha sonra başlatmak istersen bilgisayarı kendin yeniden başlat; kurulum ekranı ilk açılışta gelir. Açılmazsa açılış menüsünden "{sys} kurulumu"nu seç. Kurulum bitince BESIDEOS adlı geçici bölümü silebilirsin.', {'sys': _sys(c)})),
           ],
         ]);
       case InstallPhase.failed:
@@ -358,9 +383,9 @@ class _InstallSectionState extends State<InstallSection> {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       c.linuxHost
           ? _header(Icons.rocket_launch_rounded, "Linux'un yanına kur",
-              'Mevcut sistemin ve dosyaların yerinde kalır. Bir bölüm küçülterek boş yer açılır; $_name ISO dosyasından, bir GRUB girişiyle açılır.')
+              tr('Mevcut sistemin ve dosyaların yerinde kalır. Bir bölüm küçülterek boş yer açılır; {name} ISO dosyasından, bir GRUB girişiyle açılır.', {'name': _name}))
           : _header(Icons.rocket_launch_rounded, "Windows'un yanına kur",
-              "Windows ve dosyaların yerinde kalır. $_name için bilgisayarında yer açılır."),
+              tr('Windows ve dosyaların yerinde kalır. {name} için bilgisayarında yer açılır.', {'name': _name})),
       const SizedBox(height: 22),
       _threeSteps(official, c.linuxHost),
       const SizedBox(height: 22),
@@ -379,8 +404,10 @@ class _InstallSectionState extends State<InstallSection> {
       ] else ...[
         if (official) ...[
           _bigButton('Kurmak için tıklayın', Icons.touch_app_rounded, () => _begin(c)),
-          _small('${iso.sizeBytes != null ? 'İndirilecek ISO dosyası: ${isoSizeText(iso.sizeBytes!)}. ' : ''}'
-              'Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.'),
+          _small([
+            if (iso.sizeBytes != null) tr('İndirilecek ISO dosyası: {size}.', {'size': isoSizeText(iso.sizeBytes!)}),
+            tr('Önce neler yapılacağını sana göstereceğiz. Sen onaylamadan bilgisayarında hiçbir şey değişmez.'),
+          ].join(' ')),
           const SizedBox(height: 14),
           OutlinedButton.icon(
             onPressed: () => _beginOwn(c),
@@ -451,8 +478,8 @@ class _InstallSectionState extends State<InstallSection> {
     final steps = official
         ? [
             ('Tıklarsın', 'Gerisini BesideOS yapar.'),
-            ('Bilgisayar hazırlanır', linux ? '$_name indirilir, disklerinde yer açılır ve GRUB menüsüne bir giriş eklenir.' : '$_name indirilir ve Windows\'un yanında yer açılır.'),
-            ('Yeniden başlar', '$_name kurulum ekranı açılır.'),
+            ('Bilgisayar hazırlanır', linux ? tr('{name} indirilir, disklerinde yer açılır ve GRUB menüsüne bir giriş eklenir.', {'name': _name}) : tr("{name} indirilir ve Windows'un yanında yer açılır.", {'name': _name})),
+            ('Yeniden başlar', tr('{name} kurulum ekranı açılır.', {'name': _name})),
           ]
         : [
             ('ISO dosyanı seçersin', 'Bilgisayarındaki ya da indirdiğin dosyayı gösterirsin.'),
@@ -507,7 +534,7 @@ class _InstallSectionState extends State<InstallSection> {
       _ => own ? 2 : 3,
     };
     final rows = <(String, Widget?)>[
-      if (!own) ('$_name indiriliyor ve kontrol ediliyor', idx == 0 ? _downloadDetail(c.download) : null),
+      if (!own) (tr('{name} indiriliyor ve kontrol ediliyor', {'name': _name}), idx == 0 ? _downloadDetail(c.download) : null),
       (own ? 'Seçtiğin ISO dosyası inceleniyor' : 'İndirilen dosya inceleniyor', null),
       ('Bilgisayarın kontrol ediliyor', idx == (own ? 1 : 2) && !c.linuxHost ? _detail('Windows izin isteyecek: «Evet» de.') : null),
       ('Plan hazırlanıyor', null),
@@ -544,7 +571,7 @@ class _InstallSectionState extends State<InstallSection> {
           const SizedBox(height: 6),
           _detail(known
               ? '%${(dl.received * 100 / t).floor()}'
-              : '${(dl.received / (1024 * 1024)).toStringAsFixed(1)} MB indirildi'),
+              : tr('{mb} MB indirildi', {'mb': (dl.received / (1024 * 1024)).toStringAsFixed(1)})),
         ]);
     }
   }
@@ -581,7 +608,7 @@ class _InstallSectionState extends State<InstallSection> {
   Widget _sizeChips(InstallController c) => Wrap(spacing: 8, runSpacing: 8, children: [
         for (final g in linuxSpaceChoicesGiB)
           ChoiceChip(
-            label: Text(g == c.recommendedGiB ? '$g GB · önerilen' : '$g GB'),
+            label: Text(g == c.recommendedGiB ? tr('{g} GB · önerilen', {'g': g}) : '$g GB'),
             selected: c.linuxGiB == g,
             onSelected: c.busy ? null : (_) => c.replan(g),
           ),
@@ -596,8 +623,9 @@ class _InstallSectionState extends State<InstallSection> {
       Text(c.linuxHost ? 'Yer hangi bölümden açılsın?' : 'Yer hangi sürücüden açılsın?',
           style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
       const SizedBox(height: 4),
-      _detail('Yer, seçtiğin ${c.linuxHost ? 'bölümün' : 'sürücünün'} boş alanından ayrılır. Dosyaların silinmez.'
-          '${c.linuxHost ? ' Listede olmayan bölümler küçültülemeyen bir dosya sistemindedir ya da yeterli boş yeri yoktur.' : ''}'),
+      _detail(c.linuxHost
+          ? tr('Yer, seçtiğin bölümün boş alanından ayrılır. Dosyaların silinmez. Listede olmayan bölümler küçültülemeyen bir dosya sistemindedir ya da yeterli boş yeri yoktur.')
+          : tr('Yer, seçtiğin sürücünün boş alanından ayrılır. Dosyaların silinmez.')),
       const SizedBox(height: 10),
       for (final d in c.drives) _driveTile(c, d),
       const SizedBox(height: 12),
@@ -608,8 +636,10 @@ class _InstallSectionState extends State<InstallSection> {
     final sel = c.target != null && d.same(c.target!);
     final name = d.device != null
         ? (d.label.isEmpty ? d.device! : '${d.device} (${d.label})')
-        : (d.label.isEmpty ? '${d.letter}: sürücüsü' : '${d.letter}: sürücüsü (${d.label})');
-    final disk = d.diskName.isEmpty ? 'Disk ${d.disk}' : d.diskName;
+        : (d.label.isEmpty
+            ? tr('{letter}: sürücüsü', {'letter': d.letter})
+            : tr('{letter}: sürücüsü ({label})', {'letter': d.letter, 'label': d.label}));
+    final disk = d.diskName.isEmpty ? tr('Disk {n}', {'n': d.disk}) : d.diskName;
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
       child: Material(
@@ -629,13 +659,14 @@ class _InstallSectionState extends State<InstallSection> {
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text(d.isWindows ? '$name · Windows burada' : name,
+                  Text(d.isWindows ? tr('{name} · Windows burada', {'name': name}) : name,
                       style: const TextStyle(color: kText, fontWeight: FontWeight.w700, fontSize: 15)),
                   const SizedBox(height: 2),
                   Text(d.device != null
-                      ? '$disk · ${d.fstype} · toplam ${_gb(d.sizeBytes)} · en fazla ${_gb(d.freeBytes)} yer açılabilir'
-                          '${d.mountpoint == '/' || d.mountpoint == '/home' ? ' · şu an çalışan sistemin bölümü' : ''}'
-                      : '$disk · toplam ${_gb(d.sizeBytes)} · ${_gb(d.freeBytes)} boş',
+                      ? tr('{disk} · {fstype} · toplam {total} · en fazla {max} yer açılabilir',
+                              {'disk': disk, 'fstype': d.fstype, 'total': _gb(d.sizeBytes), 'max': _gb(d.freeBytes)}) +
+                          (d.mountpoint == '/' || d.mountpoint == '/home' ? ' · ${tr('şu an çalışan sistemin bölümü')}' : '')
+                      : tr('{disk} · toplam {total} · {free} boş', {'disk': disk, 'total': _gb(d.sizeBytes), 'free': _gb(d.freeBytes)}),
                       style: const TextStyle(color: kMuted, height: 1.4)),
                 ]),
               ),
@@ -666,17 +697,17 @@ class _InstallSectionState extends State<InstallSection> {
       const Text('Neler olacak?', style: TextStyle(color: kText, fontSize: 16, fontWeight: FontWeight.w700)),
       const SizedBox(height: 10),
       if (c.linuxHost) ...[
-        _bullet(Icons.content_cut_rounded, '${c.target!.device} bölümü küçültülür ve yaklaşık $gb GB boş (ayrılmamış) yer açılır.'),
-        _bullet(Icons.playlist_add_rounded, 'GRUB açılış menüsüne "BesideOS" adlı bir giriş eklenir; ${_sys(c)} ISO dosyası olduğu yerde kalır.'),
+        _bullet(Icons.content_cut_rounded, tr('{device} bölümü küçültülür ve yaklaşık {gb} GB boş (ayrılmamış) yer açılır.', {'device': c.target!.device, 'gb': gb})),
+        _bullet(Icons.playlist_add_rounded, tr('GRUB açılış menüsüne "{sys} kurulumu" adlı bir giriş eklenir; ISO dosyası olduğu yerde kalır.', {'sys': _sys(c)})),
       ] else ...[
         _bullet(Icons.content_cut_rounded,
             c.target != null && !c.target!.isWindows && c.drives.length > 1
-                ? '${c.target!.letter}: sürücüsünde yaklaşık $gb GB boş yer açılır.'
-                : "Windows'un yanında yaklaşık $gb GB boş yer açılır."),
-        _bullet(Icons.file_copy_rounded, '${_sys(c)} kurulum dosyaları bu yere kopyalanır.'),
+                ? tr('{letter}: sürücüsünde yaklaşık {gb} GB boş yer açılır.', {'letter': c.target!.letter, 'gb': gb})
+                : tr("Windows'un yanında yaklaşık {gb} GB boş yer açılır.", {'gb': gb})),
+        _bullet(Icons.file_copy_rounded, tr('{sys} kurulum dosyaları bu yere kopyalanır.', {'sys': _sys(c)})),
       ],
       _bullet(Icons.restart_alt_rounded,
-          'Hazır olunca sen yeniden başlatırsın. Açılışta menü 5 saniye görünür, ${_sys(c)} kurulumu seçili gelir; kurulu sistemlerin de aynı listede.'),
+          tr('Hazır olunca sen yeniden başlatırsın. Açılışta menü 5 saniye görünür, {sys} kurulumu seçili gelir; kurulu sistemlerin de aynı listede.', {'sys': _sys(c)})),
       const SizedBox(height: 6),
       _diskAdvice(c),
       if (plan.risks.isNotEmpty)
@@ -716,8 +747,7 @@ class _InstallSectionState extends State<InstallSection> {
       context: context,
       builder: (ctx) => AlertDialog(
         title: const Text('Şimdi yeniden başlatalım mı?'),
-        content: Text('Bilgisayar 15 saniye sonra yeniden başlayacak. Açılışta menü 5 saniye görünür: ${_sys(c)} kurulumu seçili gelir, '
-            'istersen kurulu bir sistemi seçebilirsin. Açık işlerini şimdi kaydet.'),
+        content: Text(tr('Bilgisayar 15 saniye sonra yeniden başlayacak. Açılışta menü 5 saniye görünür: {sys} kurulumu seçili gelir, istersen kurulu bir sistemi seçebilirsin. Açık işlerini şimdi kaydet.', {'sys': _sys(c)})),
         actions: [
           TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Şimdi değil')),
           FilledButton(onPressed: () => Navigator.pop(ctx, true), child: const Text('Evet, yeniden başlat')),

@@ -32,7 +32,7 @@ void main() {
     expect(catalog.byId('windows-11')!.userSuppliedIso, isTrue);
     expect(catalog.byId('ubuntu')!.basedOn, 'Debian');
     expect(catalog.byId('fedora')!.basedOn, isNull);
-    expect(catalog.byId('fedora')!.hosts, contains('mac-m1m2'));
+    expect(catalog.byId('fedora')!.hosts, contains('linux'));
   });
 
   bundledIsoTests();

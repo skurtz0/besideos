@@ -72,7 +72,7 @@ void main() {
     expect(find.byType(TextField), findsNothing);
     expect(find.textContaining('SHA'), findsNothing);
     // a distro that lists no Windows host is still installable from here
-    await t.pumpWidget(section(d: dist(hosts: const ['mac-m1m2'])));
+    await t.pumpWidget(section(d: dist(hosts: const [])));
     expect(find.text('Kurmak için tıklayın'), findsOneWidget);
   });
 
@@ -242,7 +242,7 @@ void main() {
     });
     await t.pump();
     expect(c.phase, InstallPhase.applied);
-    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -OutDir -Menu');
+    expect(runner.calls.last, 'apply-plan.ps1* -PlanFile -Execute -OutDir');
     // the computer is NOT restarted by itself: the person gets a button and a confirmation
     expect(runner.calls.any((x) => x.startsWith('shutdown')), isFalse);
     expect(find.text('Hazır! Şimdi yeniden başlatabilirsin'), findsOneWidget);

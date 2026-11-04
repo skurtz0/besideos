@@ -16,7 +16,7 @@ Map<String, dynamic> d(String id, {Object? family = 'linux', Map<String, dynamic
         {'title': 'Step', 'body': 'Body'}
       ],
       'requirements': ['2 GB RAM'],
-      'hosts': ['windows', 'linux', 'mac-m1m2'],
+      'hosts': ['windows', 'linux'],
       'downloadPage': 'https://example.com',
       'userSuppliedIso': false,
       'license': 'GPL',
@@ -35,7 +35,7 @@ void main() {
     expect(x.desktop, 'GNOME');
     expect(x.accent, 0xFFE95420);
     expect(x.guide.single.title, 'Step');
-    expect(x.hosts, ['windows', 'linux', 'mac-m1m2']);
+    expect(x.hosts, ['windows', 'linux']);
     expect(x.userSuppliedIso, false);
   });
 

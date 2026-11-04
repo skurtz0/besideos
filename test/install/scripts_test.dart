@@ -26,6 +26,31 @@ void main() {
     });
   }
 
+  test('Explorer pop-ups are suppressed while the steps run and the service is always restored', () {
+    final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(text, contains('Stop-Service -Name ShellHWDetection'));
+    expect('Resume-ShellHw'.allMatches(text).length, greaterThanOrEqualTo(3)); // definition + failure exit + normal end
+    expect(text, contains('PowerShell.Exiting'));
+  });
+
+  test('label patching leaves menu titles alone', () {
+    final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(text, contains('menuentry|submenu'));
+    expect(text, contains(r'menu\s+label'));
+  });
+
+  test('the staged installer menu gets a back-to-Windows entry (GRUB leaves to the firmware)', () {
+    final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
+    expect(text, contains('function Add-WindowsEntryToGrub'));
+    expect(text, contains('--id besideos_windows {'));
+    expect(text, contains(r'[string]$BackLabel'));          // the entry's text comes from the app, in the person's language
+    expect(text, contains('Windows (cancel installation)')); // ... with an English default
+    expect(text, contains(r'$desc = $et'));                // -EntryTitle is the whole boot entry name
+    expect(text, contains('exit 0'));
+    // only the staged copy on the new partition is edited, and only for non-Windows media
+    expect(text.indexOf(r'Add-WindowsEntryToGrub $dst'), greaterThan(text.indexOf('Update-BootLabel \$dst')));
+  });
+
   test('the boot menu is set up with a fallback and always put back by undo and by a startup task', () {
     final text = File('probe/windows/apply-plan.ps1').readAsStringSync();
     expect(text, contains('function Enable-BesideMenu'));
@@ -101,14 +126,6 @@ void main() {
     expect(apply, isNot(contains('-Include')));              // ignored together with -LiteralPath
   });
 
-  test('the boot chooser changes nothing without -Execute and only accepts listed entries', () {
-    final boot = File('probe/windows/boot-entries.ps1').readAsStringSync();
-    expect(boot, contains('DRY-RUN'));
-    expect(boot, contains('if (-not \$Execute)'));
-    expect(boot, contains('is not a firmware boot entry of this computer'));
-    // $Id is the parameter; PowerShell variables are case-insensitive, so no loop may reuse $id
-    expect(RegExp(r'^\s*\$id\s*=', multiLine: true, caseSensitive: false).hasMatch(boot), isFalse);
-  });
 
   test('the app never restarts the computer on its own', () {
     final dart = File('lib/install/install_controller.dart').readAsStringSync();

@@ -37,6 +37,8 @@
                      selected, instead of starting it directly. The previous default/timeout/menu setting is restored by a
                      one-time startup task the next time Windows itself starts, and by -Undo. If the menu cannot be set up,
                      the script falls back to the direct one-shot start.
+.PARAMETER EntryTitle Full name of the one-shot boot entry (e.g. "Debian installer"), instead of the plan's default. ASCII only.
+.PARAMETER BackLabel Text of the "back to Windows" entry added to the installer's GRUB menu (any text; default "Windows (cancel installation)").
 .PARAMETER MenuTitle Name of the system shown in the menu ("BesideOS: 5 saniye icinde kurulacak: <name>"). ASCII only.
 
 .NOTES
@@ -52,7 +54,9 @@ param(
     [switch]$Reboot,
     [string]$OutDir,
     [switch]$Menu,
-    [string]$MenuTitle
+    [string]$MenuTitle,
+    [string]$EntryTitle,
+    [string]$BackLabel
 )
 
 $ErrorActionPreference = 'Stop'
@@ -508,6 +512,10 @@ Req ($label -cmatch '^[A-Za-z0-9_]{1,11}$') 'Etiket gecersiz (1-11 harf/rakam).'
 Req ([string]$ex.target_label -ceq $label) 'extract_iso hedef etiketi uyusmuyor.' 'extract_iso target_label differs from created label'
 $desc = [string]$bo.description; $loader = [string]$bo.loader_path
 Req ($desc -match '^[\x20-\x7E]+$' -and $desc -notmatch '["{}]') 'Onyukleme aciklamasi yalniz ASCII, tirnaksiz olmali.' 'Boot entry description must be printable ASCII without quotes/braces'
+if ($EntryTitle) {
+    $et = ((([string]$EntryTitle) -replace '[^ -~]', '') -replace '["{}%&|<>^]', '').Trim()
+    if ($et.Length -gt 0 -and $et.Length -le 60) { $desc = $et }
+}
 $a = $env:PROCESSOR_ARCHITEW6432; if (-not $a) { $a = $env:PROCESSOR_ARCHITECTURE }
 $leaf = Split-Path -Leaf $loader
 $wantLeaf = $null
@@ -638,14 +646,56 @@ function Update-BootLabel([string]$root, [string]$old, [string]$new) {
         if (@('.cfg', '.conf', '.lst', '.menu') -notcontains $f.Extension.ToLowerInvariant()) { continue }
         if ($f.Length -gt 262144) { continue }
         $txt = $latin.GetString([System.IO.File]::ReadAllBytes($f.FullName))
-        $out = $txt
-        if ($old) { $out = $out.Replace($esc, $new).Replace($old, $new) }
-        $out = [regex]::Replace($out, 'archisosearchuuid=\S+', "archisolabel=$new")
+        # Menu titles are text for the person, not boot options: "Start Linux Mint 22.3 ..." must not become "Start BESIDEOS".
+        # Titles (menuentry/submenu "...", syslinux menu label/title/label lines) are kept as they are; the rest is patched.
+        $sb = New-Object System.Text.StringBuilder
+        foreach ($ln in [regex]::Split($txt, '(?<=\n)')) {
+            if ($ln.ToLowerInvariant() -cmatch '^\s*(menu\s+label|menu\s+title|title|label|say)\b') { [void]$sb.Append($ln); continue }
+            $head = ''; $rest = $ln
+            $mm = [regex]::Match($ln, '^\s*(?:menuentry|submenu)\s+(?:''[^'']*''|"[^"]*")')
+            if ($mm.Success) { $head = $mm.Value; $rest = $ln.Substring($head.Length) }
+            if ($old) { $rest = $rest.Replace($esc, $new).Replace($old, $new) }
+            $rest = [regex]::Replace($rest, 'archisosearchuuid=\S+', "archisolabel=$new")
+            [void]$sb.Append($head).Append($rest)
+        }
+        $out = $sb.ToString()
         if ($out -ceq $txt) { continue }
         if ($f.IsReadOnly) { $f.IsReadOnly = $false }   # robocopy keeps the ISO's read-only flag
         [System.IO.File]::WriteAllBytes($f.FullName, $latin.GetBytes($out))
         $n++
         Log ('boot label patched: ' + $f.FullName.Substring($root.Length))
+    }
+    return $n
+}
+# Adds a "back to Windows" entry to the installer's own GRUB menu on the staging partition, so the one-shot start shows a
+# choice (installer / Windows) like the Linux host does. The Windows boot menu cannot start a Linux .efi file (0xc000007b),
+# GRUB can leave to the firmware, which goes on with Windows. Only our copy on the staging partition changes, never the ISO. Returns the number of files changed.
+function Add-WindowsEntryToGrub([string]$root, [string]$entryLabel) {
+    # no control characters and none of the characters GRUB reads inside a quoted title: " $ ` \
+    $entryLabel = ([string]$entryLabel -replace '[\x00-\x1F"$`]', '').Replace([string][char]92, '').Trim()
+    if ($entryLabel.Length -eq 0 -or $entryLabel.Length -gt 80) { $entryLabel = 'Windows (cancel installation)' }
+    $entry = @(
+        '',
+        '# BesideOS: back to Windows',
+        ('menuentry "' + $entryLabel + '" --id besideos_windows {'),
+        '	# Back to the firmware: the one-shot installer entry is used up, so it goes on with the next one (Windows).',
+        '	# (chainloading bootmgfw.efi from here ended in 0xc000000f, BCD missing, on a real Windows 10 machine)',
+        '	exit 0',
+        '}',
+        ''
+    ) -join "`n"
+    $enc = New-Object System.Text.UTF8Encoding($false)
+    $n = 0
+    foreach ($rel in @('boot\grub\grub.cfg', 'EFI\BOOT\grub.cfg')) {
+        $f = Join-Path $root $rel
+        if (-not (Test-Path -LiteralPath $f -PathType Leaf)) { continue }
+        $txt = [System.IO.File]::ReadAllText($f)
+        if ($txt -notmatch 'menuentry' -or $txt.Contains('besideos_windows')) { continue }
+        $fi = Get-Item -LiteralPath $f
+        if ($fi.IsReadOnly) { $fi.IsReadOnly = $false }
+        [System.IO.File]::AppendAllText($f, $entry, $enc)
+        $n++
+        Log "Windows entry added to the installer menu: $rel"
     }
     return $n
 }
@@ -698,6 +748,21 @@ $script:State = [ordered]@{
 }
 $stageLetter = $null
 $n = 0
+# A new volume or a mounted ISO makes Explorer pop up (AutoPlay, "You need to format the disk"). The shell hardware detection
+# service is what does that; it is stopped while the steps run and always started again (also when the script exits early).
+$script:shellHwStopped = $false
+function Resume-ShellHw {
+    if (-not $script:shellHwStopped) { return }
+    try { Start-Service -Name ShellHWDetection -ErrorAction Stop } catch { }
+    $script:shellHwStopped = $false
+}
+if ($Execute) {
+    try {
+        $sv = Get-Service -Name ShellHWDetection -ErrorAction Stop
+        if ($sv.Status -eq 'Running') { Stop-Service -Name ShellHWDetection -Force -ErrorAction Stop; $script:shellHwStopped = $true; Log 'ShellHWDetection stopped while the steps run (no Explorer pop-ups).' }
+    } catch { Log "could not stop ShellHWDetection (Explorer may pop up): $($_.Exception.Message)" 'WARN' }
+    [void](Register-EngineEvent -SourceIdentifier PowerShell.Exiting -Action { try { Start-Service -Name ShellHWDetection -ErrorAction Stop } catch { } })
+}
 foreach ($ps in @($plan.steps)) {
     $n++; $s = $ps.step; $t = [string]$s.type
     Log "STEP $n/$(@($plan.steps).Count) [$t] $($ps.description)"
@@ -798,6 +863,7 @@ foreach ($ps in @($plan.steps)) {
                         if ($srcIsIso -and -not (Test-Path -LiteralPath (Join-Path $dst 'sources\boot.wim'))) {
                             $np = Update-BootLabel $dst $(if ($isoLabel -ine $label) { $isoLabel } else { '' }) $label
                             Log "boot label: ISO label '$isoLabel' -> '$label' in $np boot config file(s)"
+                            try { [void](Add-WindowsEntryToGrub $dst $BackLabel) } catch { Log "could not add the Windows entry to the installer menu: $($_.Exception.Message)" 'WARN' }
                         }
                         if ($splitWim) {
                             # FAT32 holds no file of 4 GiB or more; Windows Setup reads install.swm, install2.swm ... instead of install.wim.
@@ -825,7 +891,7 @@ foreach ($ps in @($plan.steps)) {
                 if ($Menu) {
                     $mt = (([string]$MenuTitle) -replace '[^\x20-\x7E]', '') -replace '["{}%&|<>^]', ''
                     $mt = $mt.Trim()
-                    if ($mt.Length -gt 0 -and $mt.Length -le 40) { $menuDesc = "BesideOS: 5 saniye icinde kurulacak: $mt" }
+                    if ($mt.Length -gt 0 -and $mt.Length -le 40) { $menuDesc = "$mt kurulumu" }
                 }
                 if ($Execute) { $isWinMedia = ((Test-Path -LiteralPath "${stageLetter}:\sources\boot.wim" -PathType Leaf) -and (Test-Path -LiteralPath "${stageLetter}:\boot\boot.sdi" -PathType Leaf)) }
                 if (-not $Execute -and $isWinMedia) {
@@ -925,9 +991,11 @@ foreach ($ps in @($plan.steps)) {
             try { Save-State } catch { Log "state save failed: $($_.Exception.Message)" 'ERROR' }
             Log "DURDURULDU. Geri almak icin -Undo ile tekrar calistirin (UNDO.flag). / STOPPED. Run again with -Undo (and -Execute) to roll back." 'ERROR'
         }
+        Resume-ShellHw
         exit 1
     }
 }
+Resume-ShellHw
 if ($Execute) { Log 'DONE: all steps executed. State in apply-state.json.' }
 else { Log 'DRY-RUN complete: nothing was changed. Add -Execute to apply.' }
 exit 0

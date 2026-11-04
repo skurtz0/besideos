@@ -55,9 +55,9 @@ void main() {
     expect(find.text('Ad win'), findsOneWidget);
     final cards = t.getTopLeft(find.text('Ad win')).dy;
     final status = t.getTopLeft(find.text('Kurmadan önce yedek al')).dy;
-    final safety = t.getTopLeft(find.text('Önce güvenlik')).dy;
+    final how = t.getTopLeft(find.text('Nasıl çalışır?')).dy;
     expect(cards, lessThan(status));
-    expect(cards, greaterThan(safety));
+    expect(cards, greaterThan(how));
     // a card opens its distro page
     await t.tap(find.text('Ad mint'));
     await _settle(t);

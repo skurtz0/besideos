@@ -1,0 +1,151 @@
+Najpopularniejszy Linux dla początkujących.
+Ubuntu to bardzo popularna dystrybucja Linuksa z dużą społecznością użytkowników i obszerną dokumentacją. Domyślnie ma pulpit GNOME.
+Dla osób, które przechodzą na Linuksa po raz pierwszy i chcą znaleźć dużo pomocy, gdy coś pójdzie nie tak.
+Stały pasek aplikacji (dok) po lewej, cienki pasek stanu u góry i prosty pulpit w pomarańczowo-fioletowych barwach.
+Komputer z 64-bitowym procesorem
+Wystarczająco dużo wolnego miejsca na dysku na instalację
+Połączenie z internetem (do pobrania)
+Wolne oprogramowanie (różne otwarte licencje, w tym GPL)
+Pulpit Ubuntu 24.04 LTS
+Lekki i prosty Ubuntu.
+Xubuntu to wydanie Ubuntu z pulpitem Xfce. Pobiera oprogramowanie z repozytorium Ubuntu, ale zużywa mniej zasobów.
+Osoby, które chcą zgodności z Ubuntu, ale lżejszego systemu.
+Cienki panel u góry, rozwijany pasek aplikacji na dole i prosty pulpit w odcieniach niebieskiego.
+Pulpit Xubuntu 24.04 LTS
+Bardzo konfigurowalny KDE Plasma oparty na Ubuntu.
+Kubuntu to wydanie Ubuntu z pulpitem KDE Plasma. Wygląd i zachowanie można zmienić niemal pod każdym względem.
+Osoby, które chcą układu podobnego do Windows i lubią wszystko ustawiać.
+Pasek zadań podobny do Windows na dole, niebieskie barwy i nowoczesne okna z efektami przezroczystości.
+Pulpit Kubuntu 24.04 LTS
+Spokojny pulpit, który wydaje się znajomy osobom przechodzącym z Windows.
+Główne wydanie Linux Mint używa pulpitu Cinnamon. Dolny pasek, menu Start i zasobnik systemowy dają strukturę podobną do układu Windows.
+Osoby przechodzące z Windows, które chcą znajomego, prostego interfejsu.
+Pasek zadań na dole, menu Start po lewej i zasobnik systemowy po prawej; pulpit o klasycznym układzie z zielonymi akcentami.
+Pulpit Linux Mint Cinnamon 22.3
+Cinnamon (zalecany)
+Spokojny i elegancki pulpit, który wydaje się znajomy użytkownikom Windows. Najlepszy wybór dla większości osób.
+Xfce (lekki)
+Lżejszy i szybszy dla starych lub wolnych komputerów.
+Pulpit Linux Mint Xfce (obraz starszej wersji)
+MATE (klasyczny)
+Pulpit w dawnym stylu, prosty i bardzo konfigurowalny.
+Pulpit Linux Mint MATE (obraz z wersji 20)
+Praktyczny system dla programistów i graczy.
+Pop!_OS to system oparty na Ubuntu od firmy System76. Wyróżnia się automatycznym układaniem okien i obsługą kart graficznych do gier.
+Osoby, które piszą oprogramowanie i grają.
+Cienki pasek u góry, prosty pulpit z ciemnym motywem i turkusowymi akcentami.
+Plik ISO systemu (jeśli jest na twoim komputerze, wybierasz go)
+Pulpit Pop!_OS 24.04 LTS
+Ekran instalacji Pop!_OS (obraz z wersji 20.04)
+Znajomy Linux dla osób przechodzących z Windows.
+Zorin OS ułatwia przejście na Linuksa dzięki znajomym układom. Jest oparty na Ubuntu.
+Osoby przechodzące z Windows, które nie chcą czuć się zagubione.
+Pasek zadań i menu Start jak w Windows; elegancki pulpit w odcieniach niebieskiego.
+Pulpit Zorin OS 17.3
+Elegancki i prosty Linux.
+elementary OS znany jest z prostego wyglądu i własnych aplikacji. Jest oparty na Ubuntu i używa pulpitu Pantheon.
+Osoby, które chcą eleganckiego, prostego interfejsu.
+Cienki pasek u góry, wyśrodkowany dok na dole i okna z zaokrąglonymi rogami.
+Pulpit elementary OS 8.0
+Uniwersalny system operacyjny prowadzony przez społeczność, znany ze stabilności.
+Debian to system operacyjny rozwijany przez społeczność wolontariuszy i znany ze stabilności. Stanowi podstawę wielu innych dystrybucji.
+Osoby, które chcą stabilnego, prostego systemu i trochę znają Linuksa.
+Zależy od wybranego środowiska pulpitu; domyślny wygląd jest prosty i niewyszukany.
+Pulpit Debian 13 (Trixie) GNOME
+Live: Xfce (najpierw wypróbuj)
+Możesz wypróbować system przed instalacją. Lekki pulpit Xfce.
+Pulpit Debian 13 Xfce
+Live: KDE Plasma (najpierw wypróbuj)
+Możesz wypróbować system przed instalacją. Bogaty i konfigurowalny pulpit KDE.
+Pulpit Debian 13 KDE Plasma
+Stabilny, lekki i pełen narzędzi.
+MX Linux jest oparty na Debianie i ma własny mały zestaw narzędzi. Działa płynnie na komputerach średnich i starszych.
+Osoby, które chcą lekkiego i stabilnego systemu.
+Panel przy krawędzi, niebiesko-zielona tapeta i pulpit pokazujący informacje, takie jak zegar.
+Domyślny pulpit MX Linux 18.3 (obraz starszej wersji)
+Dystrybucja wspierana przez społeczność z aktualnym oprogramowaniem.
+Fedora Workstation to dystrybucja Linuksa z pulpitem GNOME, rozwijana przez projekt Fedora.
+Osoby, które chcą zobaczyć aktualne oprogramowanie i narzędzia dla programistów.
+Cienki pasek u góry, aplikacje pełnoekranowe z widokiem aktywności i prosty pulpit GNOME w odcieniach niebieskiego.
+Pulpit Fedora 42 Workstation
+Ekran instalacji Fedory (Anaconda, Fedora 42)
+Linux gotowy do gier.
+Bazzite to system oparty na Fedorze, stworzony do grania. Steam i sterowniki kart graficznych są gotowe; ponieważ pliki systemowe są chronione, trudno go zepsuć.
+Osoby, które chcą grać na komputerze i szukają doświadczenia podobnego do Steam Deck.
+Pasek zadań podobny do Windows w KDE; w trybie konsoli interfejs Steam otwiera się na pełnym ekranie.
+Wystarczająco dużo wolnego miejsca na dysku na instalację (ISO ma około 8 GB)
+Pulpit Bazzite 42 KDE
+Pulpit, KDE (karta graficzna AMD / Intel)
+Właściwy wybór dla większości komputerów. Wybierz, jeśli twoja karta graficzna nie jest firmy Nvidia.
+Pulpit, KDE (karta graficzna Nvidia)
+Wybierz, jeśli twoja karta graficzna jest firmy Nvidia; sterowniki są gotowe.
+Pulpit, GNOME (karta graficzna AMD / Intel)
+Dla osób, które wolą prosty pulpit GNOME od KDE.
+Pulpit Bazzite 42 GNOME
+Tryb konsoli w stylu Steam Deck
+Interfejs Steam otwiera się od razu po włączeniu komputera. Dla komputerów podłączonych do telewizora i konsol przenośnych.
+Łatwy do zainstalowania Arch Linux.
+Manjaro to system oparty na Arch Linuksie z aktualnym oprogramowaniem. Łatwo się go instaluje i jest stale aktualizowany.
+Osoby, które chcą najnowszego oprogramowania i mają trochę doświadczenia.
+Zależy od wybranego pulpitu; nowoczesny wygląd z zielonymi akcentami.
+Pulpit Manjaro 24.0 KDE Plasma
+Szybki, dostrojony system oparty na Arch.
+CachyOS to szybki system oparty na Arch Linuksie, z pakietami zoptymalizowanymi pod procesor i dostrojonym jądrem. Pulpit wybierasz sam podczas instalacji.
+Użytkownicy, którzy szukają wydajności i mają trochę doświadczenia.
+Zależy od wybranego pulpitu; domyślnie nowoczesny KDE Plasma z ciemnym motywem.
+Pulpit CachyOS KDE Plasma (2025.08)
+Elegancki, gotowy do pracy pulpit programisty, obsługiwany klawiaturą.
+Omarchy to system zbudowany na Arch Linuksie, z menedżerem okien Hyprland i gotowymi narzędziami programistycznymi. Ma mnóstwo motywów.
+Osoby, które pracują głównie z klawiaturą, piszą oprogramowanie i lubią dłubać w systemie.
+Płaskie okna bez ramek układają się obok siebie; ciemne, eleganckie motywy, cienki pasek u góry.
+Wolne oprogramowanie (MIT)
+Domyślny pulpit Omarchy
+Solidny system z potężnymi narzędziami administracyjnymi.
+openSUSE to dystrybucja z długą tradycją, pochodząca z Niemiec. Zarządzanie systemem jest proste dzięki YaST; wydanie Tumbleweed jest stale aktualizowane.
+Osoby, które chcą solidnych podstaw i potężnych narzędzi administracyjnych.
+Nowoczesny, czysty pulpit z zielonymi akcentami.
+Pulpit openSUSE Tumbleweed, KDE Plasma 6
+Legendarny Windows z zielonym wzgórzem i niebieskim paskiem zadań.
+Windows XP to bardzo stary komercyjny system operacyjny Microsoftu, który od dawna nie dostaje aktualizacji zabezpieczeń. Na nowych komputerach najprawdopodobniej nie zadziała. BesideOS nie rozpowszechnia pliku ISO.
+Osoby, które chcą używać bardzo starych programów i sprzętu albo są po prostu ciekawe. Zalecamy nie łączyć go z internetem.
+Niebieski pasek zadań, zielony przycisk „Start” i słynny obraz pulpitu z zielonym wzgórzem.
+Stary komputer (rozruch BIOS)
+Ważna licencja Windows
+Nie działa na nowych komputerach (UEFI); bezpieczniej wypróbować go na maszynie wirtualnej
+Komercyjny (licencja Microsoft)
+Pulpit Windows XP: menu Start i okno Mój komputer
+Klasyczny Windows z przezroczystymi oknami.
+Windows 7 to komercyjny system operacyjny Microsoftu i nie dostaje już aktualizacji zabezpieczeń. Na nowych komputerach (UEFI) może nie działać. BesideOS nie rozpowszechnia pliku ISO.
+Osoby, które chcą uruchamiać stare programy i stary sprzęt.
+Okna z efektem przezroczystego szkła, duży pasek zadań na dole i klasyczne menu Start.
+32- lub 64-bitowy procesor
+Zalecany jest rozruch w trybie dawnym (BIOS/CSM); może się nie zainstalować na nowych komputerach UEFI
+Pulpit Windows 7 i menu Start
+Stary Windows z ekranem startowym z kafelkami.
+Windows 8.1 to komercyjny system operacyjny Microsoftu i nie dostaje już aktualizacji zabezpieczeń. BesideOS nie rozpowszechnia pliku ISO; przynosisz własne ISO.
+Osoby, które potrzebują Windows 8.1 do starego programu lub sprzętu.
+Ekran startowy z pełnoekranowych kolorowych kafelków i klasyczny pulpit.
+64-bitowy lub 32-bitowy procesor
+Ze względów bezpieczeństwa zalecamy nie łączyć go z internetem
+Ekran startowy Windows 8.1
+Poprzednia, szeroko używana wersja Microsoftu.
+Windows 10 to komercyjny system operacyjny Microsoftu. BesideOS nie rozpowszechnia pliku ISO; wybierasz własne ISO albo pobierasz je ze strony Microsoftu.
+Osoby, które chcą używać Windows na komputerach niespełniających wymagań Windows 11.
+Po lewej menu Start z kafelkami na żywo, na dole pasek zadań.
+64-bitowy procesor
+Pulpit Windows 10: menu Start i panel powiadomień
+Aktualna wersja Windows od Microsoftu.
+Windows 11 to komercyjny system operacyjny Microsoftu. BesideOS nie rozpowszechnia pliku ISO; wybierasz własne ISO albo pobierasz je ze strony Microsoftu.
+Osoby, które chcą uruchamiać aplikacje i gry wymagające Windows.
+Wyśrodkowany pasek zadań i menu Start, okna z zaokrąglonymi rogami.
+Komputer z obsługą UEFI i możliwością Secure Boot
+TPM 2.0 (oficjalne wymaganie)
+Pulpit Windows 11 i menu Start
+Windows do prób serwerowych i laboratoryjnych.
+Windows Server 2025 to serwerowy system operacyjny Microsoftu. Wersję próbną pobiera się ze strony Microsoftu; BesideOS nie rozpowszechnia pliku ISO.
+Osoby, które chcą poznać role serwera i narzędzia administracyjne.
+Pasek zadań i menu Start podobne do Windows 11; zawiera narzędzia do zarządzania serwerem.
+64-bitowy komputer z obsługą UEFI
+Wersja próbna lub ważna licencja serwerowa
+Pulpit Windows Server 2025 (interfejs niemiecki)
+Obraz: {text}

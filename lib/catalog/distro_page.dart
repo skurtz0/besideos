@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import '../l10n/l10n.dart';
+import '../l10n/text.dart';
+import 'package:flutter/material.dart' hide Text;
 
 import '../brand.dart';
 import '../site_mode.dart';
@@ -12,8 +14,6 @@ import 'support_matrix.dart';
 const _hostNames = {
   Host.windows: 'Windows',
   Host.linux: 'Linux',
-  Host.macM1M2: 'Mac M1/M2',
-  Host.macOther: 'Diğer Mac',
 };
 
 class DistroPage extends StatefulWidget {
@@ -123,7 +123,7 @@ class _DistroBody extends StatelessWidget {
             ? const BackButton()
             : IconButton(
                 icon: const Icon(Icons.arrow_back),
-                tooltip: 'Dağıtımlar',
+                tooltip: tr('Dağıtımlar'),
                 onPressed: () => Navigator.pushReplacementNamed(context, '/distros'),
               ),
       ),
@@ -147,7 +147,7 @@ class _DistroBody extends StatelessWidget {
               _card(Icons.lightbulb_outline_rounded, 'Bu sistem nedir?', [
                 Text(d.description, style: const TextStyle(color: kText, height: 1.6)),
                 const SizedBox(height: 10),
-                Text('Kimler için: ${d.bestFor}', style: const TextStyle(color: kMuted, height: 1.5)),
+                Text(tr('Kimler için: {text}', {'text': tr(d.bestFor)}), style: const TextStyle(color: kMuted, height: 1.5)),
               ]),
               const SizedBox(height: 16),
               _card(Icons.palette_outlined, 'Nasıl görünür?', [
@@ -181,7 +181,7 @@ class _DistroBody extends StatelessWidget {
               ),
               if (!web) ...[
                 const SizedBox(height: 20),
-                Text('Lisans: ${d.license}', style: const TextStyle(color: kMuted, fontSize: 13, height: 1.5)),
+                Text(tr('Lisans: {text}', {'text': tr(d.license)}), style: const TextStyle(color: kMuted, fontSize: 13, height: 1.5)),
                 const SizedBox(height: 4),
                 const Text('Resmi sayfa', style: TextStyle(color: kMuted, fontSize: 13)),
                 SelectableText(d.downloadPage, style: const TextStyle(color: kAccent)),
@@ -210,8 +210,8 @@ class _DistroBody extends StatelessWidget {
             Text(d.tagline, style: const TextStyle(color: kText, fontSize: 18, height: 1.4)),
             const SizedBox(height: 12),
             Wrap(spacing: 8, runSpacing: 8, children: [
-              if (d.desktop != null) _pill('Masaüstü: ${d.desktop}'),
-              if (d.basedOn != null) _pill('Temel aldığı sistem: ${d.basedOn}'),
+              if (d.desktop != null) _pill(tr('Masaüstü: {text}', {'text': d.desktop})),
+              if (d.basedOn != null) _pill(tr('Temel aldığı sistem: {text}', {'text': d.basedOn})),
             ]),
           ]),
         ),
@@ -255,7 +255,7 @@ class _DistroBody extends StatelessWidget {
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(width: 24, child: Text(ok ? '✓' : '✗', style: TextStyle(color: ok ? kGreen : kMuted, fontWeight: FontWeight.w700))),
         Expanded(
-          child: Text('${_hostNames[h]}: ${e.reason}', style: const TextStyle(color: kMuted, height: 1.5)),
+          child: Text(tr('{host}: {reason}', {'host': tr(_hostNames[h]!), 'reason': tr(e.reason)}), style: const TextStyle(color: kMuted, height: 1.5)),
         ),
       ]),
     );

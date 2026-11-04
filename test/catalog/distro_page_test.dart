@@ -61,23 +61,22 @@ void main() {
   });
 
   testWidgets('shows supported hosts: check only for hosts in distro.hosts', (t) async {
-    // mint hosts: windows, linux (both supported by the matrix); mac M1/M2 not in hosts.
+    // mint hosts: windows, linux (both supported by the matrix).
     await t.pumpWidget(page(catalog.distros.first));
     expect(find.textContaining(supportFor(Host.windows, DistroFamily.linux).reason), findsOneWidget);
-    expect(find.textContaining(supportFor(Host.macOther, DistroFamily.linux).reason), findsOneWidget);
+    expect(find.textContaining(supportFor(Host.linux, DistroFamily.linux).reason), findsOneWidget);
     expect(find.text('✓'), findsNWidgets(2));
-    expect(find.text('✗'), findsNWidgets(2));
+    expect(find.text('✗'), findsNothing);
   });
 
-  testWidgets('hosts [windows] gives no check for Mac M1/M2', (t) async {
+  testWidgets('hosts [windows] gives no check for Linux', (t) async {
     final x = Distro(
       id: 'u', name: 'U', family: DistroFamily.linux, tagline: 't', description: 'd', bestFor: 'b',
       look: 'l', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['windows'],
       downloadPage: 'x', userSuppliedIso: false, license: 'l');
     await t.pumpWidget(page(x));
     expect(find.text('✓'), findsOneWidget);
-    expect(find.textContaining('Mac M1/M2: Bu dağıtım için bu rehberde yok'), findsOneWidget);
-    expect(find.textContaining('Asahi Linux ile Linux, macOS yanına kurulabilir'), findsNothing);
+    expect(find.textContaining('Linux: Bu dağıtım için bu rehberde yok'), findsOneWidget);
   });
 
   testWidgets('no page has manual steps, unsupported targets or the ISO path/checksum form', (t) async {
@@ -171,7 +170,7 @@ void main() {
   testWidgets('summary excludes hosts the matrix rejects', (t) async {
     final x = Distro(
       id: 'lx', name: 'Ad lx', family: DistroFamily.windows, tagline: '', description: '', bestFor: '',
-      look: '', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const ['mac-m1m2'],
+      look: '', accent: 0xFF336699, guide: const [], requirements: const [], hosts: const [],
       downloadPage: '', userSuppliedIso: false, license: '',
     );
     await t.pumpWidget(page(x));

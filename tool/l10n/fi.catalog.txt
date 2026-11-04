@@ -1,0 +1,151 @@
+Yleisin Linux aloittelijoille.
+Ubuntu on erittäin laajasti käytetty Linux-jakelu, jolla on suuri käyttäjäyhteisö ja runsaasti ohjeita. Oletuksena mukana on GNOME-työpöytä.
+Niille, jotka siirtyvät Linuxiin ensimmäistä kertaa ja haluavat löytää paljon apua, kun jokin menee vikaan.
+Kiinteä sovelluspalkki (telakka) vasemmalla, ohut tilapalkki ylhäällä ja yksinkertainen työpöytä oranssin ja violetin sävyissä.
+Tietokone, jossa on 64-bittinen suoritin
+Riittävästi vapaata levytilaa asennukseen
+Internet-yhteys (latausta varten)
+Vapaa ohjelmisto (useita avoimen lähdekoodin lisenssejä, mukaan lukien GPL)
+Ubuntu 24.04 LTS -työpöytä
+Kevyt ja yksinkertainen Ubuntu.
+Xubuntu on Ubuntun Xfce-työpöytäversio. Se hakee ohjelmat Ubuntun ohjelmavarastosta, mutta käyttää vähemmän resursseja.
+Ne, jotka haluavat Ubuntu-yhteensopivuuden mutta kevyemmän järjestelmän.
+Ohut paneeli ylhäällä, esiin liukuva sovelluspalkki alhaalla ja yksinkertainen työpöytä sinisen sävyissä.
+Xubuntu 24.04 LTS -työpöytä
+Ubuntuun perustuva, erittäin muokattava KDE Plasma.
+Kubuntu on Ubuntun KDE Plasma -työpöytäversio. Sen ulkonäköä ja toimintaa voi muuttaa lähes kaikin tavoin.
+Ne, jotka haluavat Windowsin kaltaisen asettelun ja tykkäävät säätää kaikkea.
+Windowsin kaltainen tehtäväpalkki alhaalla, siniset sävyt ja modernit ikkunat läpinäkyvyystehosteilla.
+Kubuntu 24.04 LTS -työpöytä
+Rauhallinen työpöytä, joka tuntuu tutulta Windowsista tuleville.
+Linux Mintin pääversio käyttää Cinnamon-työpöytää. Alapalkki, Käynnistä-valikko ja ilmaisinalue antavat Windowsin asettelun kaltaisen rakenteen.
+Windowsista siirtyvät, jotka haluavat tutun, yksinkertaisen käyttöliittymän.
+Tehtäväpalkki alhaalla, Käynnistä-valikko vasemmalla ja ilmaisinalue oikealla; perinteisen asettelun työpöytä vihreillä korostuksilla.
+Linux Mint Cinnamon 22.3 -työpöytä
+Cinnamon (suositus)
+Rauhallinen ja tyylikäs työpöytä, joka tuntuu tutulta Windows-käyttäjille. Paras valinta useimmille.
+Xfce (kevyt)
+Kevyempi ja nopeampi vanhoille tai hitaille tietokoneille.
+Linux Mint Xfce -työpöytä (kuva vanhemmasta versiosta)
+MATE (klassinen)
+Vanhan tyylin, yksinkertainen ja erittäin säädettävä työpöytä.
+Linux Mint MATE -työpöytä (kuva versiosta 20)
+Käytännöllinen järjestelmä kehittäjille ja pelaajille.
+Pop!_OS on System76:n Ubuntuun perustuva järjestelmä. Se erottuu ikkunoiden automaattisella järjestelyllä ja pelikäyttöön tarkoitettujen näytönohjainten tuella.
+Ohjelmistoja kehittävät ja pelaavat.
+Ohut palkki ylhäällä, yksinkertainen työpöytä tummalla teemalla ja turkoosilla korostuksella.
+Järjestelmän ISO-tiedosto (jos se on tietokoneellasi, valitset sen)
+Pop!_OS 24.04 LTS -työpöytä
+Pop!_OS:n asennusnäyttö (kuva versiosta 20.04)
+Tuttu Linux Windowsista tuleville.
+Zorin OS helpottaa siirtymistä Linuxiin tutuilla asetteluilla. Se perustuu Ubuntuun.
+Windowsista tulevat, jotka eivät halua tuntea eksyvänsä.
+Tehtäväpalkki ja Käynnistä-valikko kuten Windowsissa; tyylikäs työpöytä sinisen sävyissä.
+Zorin OS 17.3 -työpöytä
+Tyylikäs ja yksinkertainen Linux.
+elementary OS tunnetaan yksinkertaisesta ulkoasustaan ja omista sovelluksistaan. Se perustuu Ubuntuun ja käyttää Pantheon-työpöytää.
+Ne, jotka haluavat tyylikkään, yksinkertaisen käyttöliittymän.
+Ohut palkki ylhäällä, keskitetty telakka alhaalla ja pyöreäkulmaiset ikkunat.
+elementary OS 8.0 -työpöytä
+Yhteisön ylläpitämä yleiskäyttöinen käyttöjärjestelmä, joka tunnetaan vakaudestaan.
+Debian on vapaaehtoisyhteisön kehittämä käyttöjärjestelmä, joka tunnetaan vakaudestaan. Se on monen muun jakelun perusta.
+Ne, jotka haluavat vakaan ja yksinkertaisen järjestelmän ja osaavat hieman Linuxia.
+Vaihtelee valitun työpöytäympäristön mukaan; oletusulkoasu on vaatimaton ja hillitty.
+Debian 13 (Trixie) GNOME -työpöytä
+Live: Xfce (kokeile ensin)
+Voit kokeilla järjestelmää ennen asennusta. Kevyt Xfce-työpöytä.
+Debian 13 Xfce -työpöytä
+Live: KDE Plasma (kokeile ensin)
+Voit kokeilla järjestelmää ennen asennusta. Monipuolinen ja muokattava KDE-työpöytä.
+Debian 13 KDE Plasma -työpöytä
+Vakaa, kevyt ja täynnä työkaluja.
+MX Linux perustuu Debianiin ja sisältää oman pienen työkalukokoelmansa. Se toimii sujuvasti keskitason ja vanhemmilla tietokoneilla.
+Ne, jotka haluavat kevyen ja vakaan järjestelmän.
+Paneeli reunassa, sinivihreä taustakuva ja työpöytä, joka näyttää tietoja, kuten kellon.
+MX Linux 18.3 -oletustyöpöytä (kuva vanhemmasta versiosta)
+Yhteisön tukema jakelu ajantasaisilla ohjelmilla.
+Fedora Workstation on Linux-jakelu, jossa on GNOME-työpöytä ja jota kehittää Fedora-projekti.
+Ne, jotka haluavat nähdä ajantasaisia ohjelmia ja kehittäjätyökaluja.
+Ohut palkki ylhäällä, kokoruudun sovellukset ja toimintanäkymä sekä yksinkertainen GNOME-työpöytä sinisen sävyissä.
+Fedora 42 Workstation -työpöytä
+Fedoran asennusnäyttö (Anaconda, Fedora 42)
+Pelaamiseen valmis Linux.
+Bazzite on Fedoraan perustuva, pelaamiseen tehty järjestelmä. Steam ja näytönohjainten ajurit ovat valmiina; koska järjestelmätiedostot on suojattu, sen on vaikea mennä rikki.
+Ne, jotka haluavat pelata tietokoneella ja etsivät Steam Deckin kaltaista kokemusta.
+Windowsin kaltainen tehtäväpalkki KDE:llä; konsolitilassa Steam-käyttöliittymä avautuu koko ruudulle.
+Riittävästi vapaata levytilaa asennukseen (ISO on noin 8 Gt)
+Bazzite 42 KDE -työpöytä
+Työpöytä, KDE (AMD / Intel -näytönohjain)
+Oikea valinta useimmille tietokoneille. Valitse tämä, jos näytönohjaimesi ei ole Nvidia.
+Työpöytä, KDE (Nvidia-näytönohjain)
+Valitse tämä, jos näytönohjaimesi on Nvidia; ajurit ovat valmiina.
+Työpöytä, GNOME (AMD / Intel -näytönohjain)
+Niille, jotka pitävät yksinkertaisesta GNOME-työpöydästä KDE:tä enemmän.
+Bazzite 42 GNOME -työpöytä
+Steam Deck -tyylinen konsolitila
+Steam-käyttöliittymä avautuu heti, kun käynnistät tietokoneen. Televisioon kytketyille tietokoneille ja kämmenkonsoleille.
+Helposti asennettava Arch Linux.
+Manjaro on Arch Linuxiin perustuva järjestelmä ajantasaisilla ohjelmilla. Se on helppo asentaa ja päivittyy jatkuvasti.
+Ne, jotka haluavat uusimmat ohjelmat ja joilla on hieman kokemusta.
+Vaihtelee valitun työpöydän mukaan; moderni ulkoasu vihreillä korostuksilla.
+Manjaro 24.0 KDE Plasma -työpöytä
+Nopea, viritetty Archiin perustuva järjestelmä.
+CachyOS on nopea Arch Linuxiin perustuva järjestelmä, jossa on suorittimelle optimoituja paketteja ja viritetty ydin. Työpöydän valitset itse asennuksen aikana.
+Käyttäjät, jotka etsivät suorituskykyä ja joilla on hieman kokemusta.
+Vaihtelee valitun työpöydän mukaan; oletuksena moderni KDE Plasma tummalla teemalla.
+CachyOS KDE Plasma -työpöytä (2025.08)
+Tyylikäs, käyttövalmis kehittäjän työpöytä, jota ohjataan näppäimistöllä.
+Omarchy on Arch Linuxin päälle rakennettu järjestelmä, jossa on Hyprland-ikkunanhallinta ja käyttövalmiit kehittäjätyökalut. Mukana on paljon teemoja.
+Ne, jotka työskentelevät pääasiassa näppäimistöllä, kehittävät ohjelmistoja ja tykkäävät näpertää järjestelmänsä kanssa.
+Litteät, kehyksettömät ikkunat asettuvat vierekkäin; tummat ja tyylikkäät teemat, ohut palkki ylhäällä.
+Vapaa ohjelmisto (MIT)
+Omarchyn oletustyöpöytä
+Vankka järjestelmä tehokkailla hallintatyökaluilla.
+openSUSE on pitkän perinteen jakelu, joka on lähtöisin Saksasta. Järjestelmän hallinta on helppoa YaSTilla; Tumbleweed-versio päivittyy jatkuvasti.
+Ne, jotka haluavat vankan perustan ja tehokkaat hallintatyökalut.
+Moderni, siisti työpöytä vihreillä korostuksilla.
+openSUSE Tumbleweed, KDE Plasma 6 -työpöytä
+Legendaarinen Windows vihreällä kukkulalla ja sinisellä tehtäväpalkilla.
+Windows XP on Microsoftin hyvin vanha kaupallinen käyttöjärjestelmä, joka ei ole saanut tietoturvapäivityksiä pitkään aikaan. Uusilla tietokoneilla se ei todennäköisesti toimi. BesideOS ei jaa ISO-tiedostoa.
+Ne, jotka haluavat käyttää hyvin vanhoja ohjelmia ja laitteita tai ovat vain uteliaita. Suosittelemme olemaan liittämättä sitä internetiin.
+Sininen tehtäväpalkki, vihreä ”Start”-painike ja kuuluisa työpöytäkuva vihreällä kukkulalla.
+Vanha tietokone (BIOS-käynnistys)
+Voimassa oleva Windows-lisenssi
+Ei toimi uusilla (UEFI) tietokoneilla; sen kokeileminen virtuaalikoneessa on turvallisempaa
+Kaupallinen (Microsoftin lisenssi)
+Windows XP -työpöytä: Käynnistä-valikko ja Oma tietokone -ikkuna
+Klassinen Windows läpinäkyvillä ikkunoilla.
+Windows 7 on Microsoftin kaupallinen käyttöjärjestelmä, eikä se saa enää tietoturvapäivityksiä. Se ei välttämättä toimi uusilla tietokoneilla (UEFI). BesideOS ei jaa ISO-tiedostoa.
+Ne, jotka haluavat ajaa vanhoja ohjelmia ja vanhoja laitteita.
+Läpinäkyvän lasin tehosteella varustetut ikkunat, suuri tehtäväpalkki alhaalla ja klassinen Käynnistä-valikko.
+32- tai 64-bittinen suoritin
+Suositellaan vanhaa (BIOS/CSM) käynnistystä; se ei välttämättä asennu uusille UEFI-tietokoneille
+Windows 7 -työpöytä ja Käynnistä-valikko
+Vanha Windows ruutujen täyttämällä aloitusnäytöllä.
+Windows 8.1 on Microsoftin kaupallinen käyttöjärjestelmä, eikä se saa enää tietoturvapäivityksiä. BesideOS ei jaa ISO-tiedostoa; tuot oman ISO:si.
+Ne, jotka tarvitsevat Windows 8.1:n vanhaa ohjelmaa tai laitetta varten.
+Koko näytön värillisistä ruuduista koostuva aloitusnäyttö ja klassinen työpöytä.
+64-bittinen tai 32-bittinen suoritin
+Turvallisuuden vuoksi suosittelemme olemaan liittämättä sitä internetiin
+Windows 8.1 -aloitusnäyttö
+Microsoftin laajasti käytetty edellinen versio.
+Windows 10 on Microsoftin kaupallinen käyttöjärjestelmä. BesideOS ei jaa ISO-tiedostoa; valitset oman ISO:si tai lataat sen Microsoftin viralliselta sivulta.
+Ne, jotka haluavat käyttää Windowsia tietokoneilla, jotka eivät täytä Windows 11:n vaatimuksia.
+Vasemmalla Käynnistä-valikko live-ruuduilla, alhaalla tehtäväpalkki.
+64-bittinen suoritin
+Windows 10 -työpöytä: Käynnistä-valikko ja ilmoituspaneeli
+Microsoftin nykyinen Windows-versio.
+Windows 11 on Microsoftin kaupallinen käyttöjärjestelmä. BesideOS ei jaa ISO-tiedostoa; valitset oman ISO:si tai lataat sen Microsoftin viralliselta sivulta.
+Ne, jotka haluavat ajaa sovelluksia ja pelejä, jotka tarvitsevat Windowsin.
+Keskitetty tehtäväpalkki ja Käynnistä-valikko, pyöreäkulmaiset ikkunat.
+Tietokone, jossa on UEFI-tuki ja joka osaa Secure Bootin
+TPM 2.0 (virallinen vaatimus)
+Windows 11 -työpöytä ja Käynnistä-valikko
+Windows palvelin- ja laboratoriokokeiluihin.
+Windows Server 2025 on Microsoftin palvelinkäyttöjärjestelmä. Kokeiluversio ladataan Microsoftin virallisesta sivulta; BesideOS ei jaa ISO-tiedostoa.
+Ne, jotka haluavat oppia palvelinroolit ja hallintatyökalut.
+Windows 11:n kaltainen tehtäväpalkki ja Käynnistä-valikko; mukana palvelimen hallintatyökalut.
+64-bittinen tietokone, jossa on UEFI-tuki
+Kokeiluversio tai voimassa oleva palvelinlisenssi
+Windows Server 2025 -työpöytä (saksankielinen käyttöliittymä)
+Kuva: {text}

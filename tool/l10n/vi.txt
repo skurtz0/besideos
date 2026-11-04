@@ -1,0 +1,260 @@
+Từng bước một
+Trang chủ
+Nếu bạn có công việc chưa lưu, hãy lưu lại. Nếu đổi ý, hãy bấm nút bên dưới.
+Mã nguồn mở, MIT
+Hãy tìm phím mở menu khởi động (thường là F12, F10, F9 hoặc Esc). Nếu trình cài đặt không tự hiện ra, hãy chọn mục "Cài đặt <tên hệ điều hành>" trong menu đó (ví dụ "Cài đặt Debian").
+Lỗi mạng
+Không thành công.
+Kiểm tra máy tính của bạn trước khi bắt đầu
+Bấm để bắt đầu
+Đánh dấu vào ô phía trên để bắt đầu.
+Bắt đầu nhé?
+Lỗi không mong muốn.
+Lỗi không mong muốn: {e}
+BesideOS là phần mềm mã nguồn mở theo giấy phép MIT. Nó dựa trên dự án hop của Arjun Ingole (cũng là MIT). Tên các hệ điều hành khác thuộc về chủ sở hữu của chúng và chỉ được dùng để nói BesideOS có thể cài những gì.
+BesideOS tạo chỗ trống trên ổ đĩa của bạn và chuẩn bị việc cài đặt; khi sẵn sàng, bạn tự khởi động lại. Windows vẫn giữ nguyên.
+BesideOS tạo chỗ trống trên ổ đĩa cho hệ điều hành mới. Tệp của bạn không bị xóa, nhưng thao tác trên đĩa hiếm khi có thể gặp sự cố, nên chúng tôi khuyên bạn sao lưu các tệp quan trọng. Nếu đổi ý, "Hoàn tác thay đổi" sẽ đưa mọi thứ về như cũ.
+Máy tính sẽ khởi động lại sau 15 giây
+Máy tính sẽ khởi động lại sau 15 giây. Khi khởi động, menu hiện trong 5 giây với mục cài đặt {sys} được chọn sẵn; bạn có thể chọn một hệ điều hành đã cài. Hãy lưu công việc đang mở ngay bây giờ.
+Có vẻ máy tính đã khởi động ở chế độ BIOS (cũ); nên dùng UEFI.
+Máy tính đang được chuẩn bị
+Máy tính của bạn phải khởi động ở chế độ UEFI (tắt "Legacy/CSM" trong cài đặt BIOS).
+Máy tính của bạn phải khởi động ở chế độ UEFI (tắt "Legacy/CSM" trong cài đặt BIOS). Ở chế độ BIOS cũ, cách này không hoạt động.
+Đang kiểm tra máy tính của bạn
+Cài hệ điều hành thứ hai trên máy tính mà không cần USB.
+Các tệp ISO trên máy tính của bạn
+Máy tính của bạn chưa thay đổi gì. Hãy xem điều gì sẽ xảy ra rồi hãy bắt đầu.
+Máy tính của bạn chưa thay đổi gì.
+Máy tính của bạn cần có gì?
+Bạn chỉ ra tệp có sẵn trên máy tính hoặc tệp bạn đã tải về.
+Cần biết
+Một phân vùng sẽ được thu nhỏ và một mục sẽ được thêm vào menu GRUB. Máy tính KHÔNG tự khởi động lại; bạn sẽ quyết định việc đó sau.
+Khởi động lại một lần
+Sau một lần khởi động lại, hệ điều hành mới được cài bên cạnh hệ điều hành cũ.
+Cho lần khởi động tiếp theo, mục này được chọn một lần duy nhất.
+Ở lần khởi động tiếp theo, trình cài đặt sẽ hiện ra. Sau đó máy tính khởi động như bình thường.
+Đã xảy ra sự cố
+Bạn bấm vào một mục và bắt đầu cài đặt.
+Hãy chọn một mục. Nếu không chắc, bạn có thể chọn mục đầu tiên.
+Hãy chọn một mục. Chúng tôi sẽ cho bạn thấy từng bước cách cài đặt.
+Hãy chọn một mục; xem nó trông thế nào và cần những gì.
+Chỉ định dạng (format) vùng trống mới tạo. Đừng động vào các phân vùng Windows và phân vùng BESIDEOS.
+Chỗ trống đã được tạo trên ổ đĩa chứa ổ {letter}:; hãy chọn ổ đĩa đó trong trình cài đặt.
+Không thể khởi động tệp ISO này trên máy tính này.
+Tệp ISO này không thể khởi động trực tiếp bằng GRUB (thiếu thông tin để khởi động từ ISO). Có lẽ đây là tệp cài đặt nhỏ như "netinst"; hãy thử bản "Live" của cùng hệ điều hành.
+Cách khởi động loại ISO này chưa được thử nghiệm.
+Hiện chưa thể cài đặt lên máy tính này
+Không tìm thấy GRUB trên máy tính này (có thể có trình quản lý khởi động khác như systemd-boot).
+Menu GRUB của máy tính này không đọc các mục tùy chỉnh; BesideOS không thể hoạt động ở đây.
+Bản phân phối này không có trong hướng dẫn này.
+Tệp này không phải là ảnh ISO đọc được.
+Phiên bản Windows cũ này có thể không khởi động được trên máy tính mới (UEFI). Nếu không khởi động được, "Hoàn tác thay đổi" sẽ đưa mọi thứ về như cũ.
+Hệ điều hành này là gì?
+Bạn tự mang tệp ISO của hệ điều hành này đến; không cần gõ đường dẫn hay mã kiểm tra, chỉ cần chọn tệp. Trước tiên chúng tôi sẽ cho bạn thấy sẽ làm gì. Máy tính của bạn không thay đổi gì cho đến khi bạn chấp thuận.
+Trình cài đặt của hệ điều hành này có thể không khởi động được trên một số máy tính. Nếu không khởi động được, "Hoàn tác thay đổi" sẽ đưa mọi thứ về như cũ.
+Tính năng này hoạt động trong ứng dụng máy tính BesideOS, trên máy tính chạy Windows. Ở đây bạn có thể tìm hiểu hệ điều hành và tải tệp ISO.
+Không tìm thấy
+Thu nhỏ phân vùng được coi là thao tác không thể hoàn tác: "Hoàn tác" cố gắng phóng to phân vùng về kích thước cũ, nhưng không làm được nếu hệ điều hành mới đã được cài vào vùng đó.
+Thu nhỏ phân vùng hiếm khi có thể gây sự cố.
+Không có trang như vậy.
+Bạn có thể thử chọn dung lượng nhỏ hơn:
+Nếu muốn bắt đầu sau, hãy tự khởi động lại máy tính; trình cài đặt sẽ hiện ra ở lần khởi động đầu tiên. Nếu không hiện, hãy chọn mục "Cài đặt {sys}" trong menu GRUB (Shift hoặc Esc). Khi cài xong, bạn có thể gỡ mục đó bằng "hoàn tác".
+Nếu muốn bắt đầu sau, hãy tự khởi động lại máy tính; trình cài đặt sẽ hiện ra ở lần khởi động đầu tiên. Nếu không hiện, hãy chọn "Cài đặt {sys}" trong menu khởi động. Khi cài xong, bạn có thể xóa phân vùng tạm có tên BESIDEOS.
+Có một lần cài đặt trước đó chưa hoàn tất
+Các bản phân phối
+Quay lại các bản phân phối
+Các thay đổi đã được hoàn tác
+Đang hoàn tác các thay đổi…
+Hoàn tác thay đổi
+Không thể thu thập thông tin ổ đĩa.
+Ở màn hình ổ đĩa, hãy chọn "Không gian chưa phân bổ" và bấm "Tiếp theo". Windows sẽ tạo các phân vùng riêng của nó ở đó.
+Lỗi ổ đĩa
+Lỗi ổ đĩa: không thể ghi tệp.
+Khi trình cài đặt hỏi về ổ đĩa, ĐỪNG chọn "Xóa toàn bộ ổ đĩa". Hãy chọn "Cài đặt bên cạnh" hoặc "Tùy chọn khác" (phân vùng thủ công) và chỉ dùng "chỗ trống".
+Ổ đĩa {n}
+Ổ đĩa bây giờ trông như thế này.
+Không thể đọc các ổ đĩa. {reason}
+Chỗ trống được tạo trên các ổ đĩa của bạn và một mục khởi động tệp ISO của bạn được thêm vào menu GRUB.
+Không thể đọc tệp hoặc mã kiểm tra không hợp lệ.
+Tệp quá lớn
+Nếu bạn chưa có tệp, bạn có thể tải từ trang chính thức:
+Đang kiểm tra tệp có bị hỏng không…
+Xác minh thất bại (lỗi ổ đĩa).
+Đang lấy thông tin xác minh…
+Nếu không chắc, hãy để việc cài đặt ở màn hình đó, khởi động lại máy tính và chọn "hoàn tác" trong BesideOS.
+Nếu không chắc, hãy để việc cài đặt ở màn hình đó; bạn có thể tắt máy tính và quay lại Windows, rồi chỉ cần chọn "hoàn tác" trong BesideOS.
+Có, bắt đầu
+Có, khởi động lại
+Không có bản phân phối phù hợp
+Một mục "Cài đặt {sys}" được thêm vào menu khởi động GRUB; tệp ISO vẫn ở nguyên chỗ cũ.
+Một mục "Cài đặt {sys}" được thêm vào menu khởi động GRUB.
+Nếu menu GRUB không tự hiện, hãy giữ Shift hoặc nhấn Esc khi khởi động và chọn mục "BesideOS".
+Hoàn tác thất bại.
+Chúng tôi khuyên bạn hoàn tác.
+Phần còn lại do BesideOS lo.
+Địa chỉ không hợp lệ.
+Tên tệp không hợp lệ.
+Đã từ chối địa chỉ không an toàn
+Bạn đang dùng máy tính nào?
+Có thể cài lên những máy tính nào?
+Bạn muốn cài hệ điều hành nào?
+Bạn có thể cài những hệ điều hành nào?
+Bạn muốn cái nào?
+Khi sẵn sàng, bạn tự khởi động lại. Khi khởi động, menu hiện trong 5 giây với mục cài đặt {sys} được chọn sẵn; các hệ điều hành đã cài của bạn nằm trong cùng danh sách.
+Xong rồi! Bây giờ bạn có thể khởi động lại
+Đang chuẩn bị, vui lòng chờ…
+Tất cả
+Mọi thứ đã sẵn sàng!
+Không có gì thay đổi.
+Tệp ISO (*.iso)
+Bấm để chọn tệp ISO của riêng tôi và cài đặt
+Bạn chọn tệp ISO của mình
+Tệp ISO
+Tệp ISO nằm trên hệ thống tệp mà GRUB không đọc được. Hãy sao chép tệp sang ổ đĩa ext4, btrfs, xfs hoặc FAT32.
+Không tìm thấy tệp ISO.
+Tệp ISO vẫn ở nguyên chỗ cũ: {path}
+Tệp ISO nằm trên ổ đĩa được mã hóa; GRUB không đọc được. Hãy sao chép sang ổ đĩa không mã hóa.
+Tệp ISO phải nằm ngoài phân vùng bạn sẽ cài đặt (ví dụ trên một ổ đĩa riêng). Trình cài đặt không thể xóa phân vùng chứa chính tệp ISO của nó.
+Tệp ISO nằm trên ổ đĩa mà bạn có thể cài đặt lên. Trình cài đặt không thể xóa phân vùng chứa chính tệp ISO của nó; hãy cài hệ điều hành mới vào chỗ trống mà BesideOS đã tạo.
+Đừng động vào phân vùng chứa tệp ISO và hệ điều hành hiện tại; chỉ định dạng vùng mới tạo.
+Không thể tải hoặc xác minh tệp ISO.
+Không thể kiểm tra nội dung của tệp ISO. {detail}
+Không thể kiểm tra tệp ISO. {detail}
+Để xem bên trong ISO cần có chương trình "xorriso". Hãy cài đặt và thử lại.
+Đóng
+Danh mục
+Danh mục trống
+Không thể tải danh mục: {msg}
+Tôi muốn chọn tệp ISO của riêng mình và cài đặt
+Dành cho ai: {text}
+Sao lưu trước khi cài đặt
+Chọn tệp ISO bạn muốn cài đặt
+Tải ứng dụng BesideOS để cài đặt
+Bấm để cài đặt
+Các hệ điều hành có thể cài bên cạnh
+Cài đặt
+Thiếu thành phần cài đặt
+Các tệp cài đặt được đặt trên cùng ổ đĩa.
+Các tệp cài đặt được đặt trong một phân vùng nhỏ trên cùng ổ đĩa. Không cần USB.
+Khi trình cài đặt mở ra, ở câu hỏi về ổ đĩa ĐỪNG chọn "Xóa toàn bộ ổ đĩa". Hãy chọn "Tùy chọn khác" (phân vùng thủ công) và chỉ dùng chỗ trống (chưa phân bổ) mà BesideOS đã tạo.
+Trình cài đặt hiện ra.
+Việc cài đặt sẽ được chuẩn bị: chỗ trống sẽ được tạo và các tệp sẽ được sao chép. Máy tính KHÔNG tự khởi động lại; bạn sẽ quyết định việc đó sau.
+Việc cài đặt đã được chuẩn bị
+Đang chuẩn bị cài đặt…
+Chuẩn bị cài đặt thất bại.
+Không thể cài đặt.
+Bắt đầu cài đặt
+Xem việc cài đặt
+Linux
+Trên máy tính Linux, có thể cài Windows vào một phân vùng riêng dưới dạng khởi động kép.
+Trên máy tính Linux, có thể khởi động một bản Linux khác từ tệp ISO bằng một mục GRUB và cài vào chỗ trống (không thu nhỏ phân vùng nào).
+Các hệ điều hành Linux
+Cài bên cạnh Linux
+Giấy phép: {text}
+Màn hình nền: {text}
+Hệ điều hành hiện tại và tệp của bạn vẫn giữ nguyên. Một phân vùng được thu nhỏ để tạo chỗ trống; {name} khởi động từ tệp ISO của nó bằng một mục GRUB.
+Trông như thế nào
+Cách hoạt động
+Loại nào?
+Sẽ xảy ra điều gì?
+Một cửa sổ hỏi mật khẩu của bạn sẽ mở ra.
+Một cửa sổ hỏi mật khẩu của bạn sẽ mở ra. Đừng đóng cửa sổ này. Máy tính không tự khởi động lại.
+Đang chuẩn bị kế hoạch
+Không thể tạo kế hoạch (mã {code}). {detail}
+Sau khi bạn xem kế hoạch và xác nhận đã sao lưu tệp, chỗ trống sẽ được tạo trên ổ đĩa.
+Trang chính thức
+Tên tệp này không có trong tệp mã kiểm tra; không thể xác minh. Danh mục có thể đã cũ; hãy tải từ trang chính thức.
+Mã kiểm tra không khớp. Tệp chưa bị xóa; hãy kiểm tra giá trị SHA-256.
+Mã kiểm tra không khớp; tệp đã bị xóa.
+Secure Boot đang bật. Các ISO có nhân chưa ký có thể không khởi động được; nếu menu cài đặt không hiện, hãy tắt Secure Boot trong BIOS.
+Khi bật Secure Boot, một số ISO có thể không khởi động được. Nếu trình cài đặt không hiện, hãy tắt Secure Boot trong cài đặt BIOS.
+Khi bật Secure Boot, một số hệ điều hành có thể không khởi động được. Nếu trình cài đặt không hiện, hãy tắt Secure Boot trong cài đặt BIOS; sau khi cài xong bạn có thể bật lại.
+Không tìm thấy tệp đã chọn hoặc nó không phải là tệp ISO.
+Tệp ISO bạn đã chọn đang được kiểm tra
+Mã lỗi máy chủ: {code}
+Máy chủ không phản hồi
+Phản hồi của máy chủ không hợp lệ
+Mở ứng dụng để cài đặt bằng một cú bấm
+Chi tiết kỹ thuật
+Thử lại
+Dựa trên: {text}
+Bạn bấm
+Ứng dụng chạy trên máy tính Windows. Bạn chọn hệ điều hành muốn cài trong ứng dụng và bắt đầu cài đặt chỉ bằng một cú bấm.
+Có vẻ thiếu các tệp của ứng dụng. Hãy tải lại BesideOS và mở.
+Hủy
+Hủy, hoàn tác các thay đổi
+Windows
+Trình cài đặt Windows khởi động theo cách này, từ đĩa RAM. Việc thấy lỗi hoặc cảnh báo trong lúc cài đặt là bình thường; thường bạn có thể bỏ qua và tiếp tục. Nếu việc cài đặt không tiến triển chút nào, "Hoàn tác thay đổi" sẽ đưa mọi thứ về như cũ.
+Trên máy tính Windows, có thể cài Linux bên cạnh Windows dưới dạng khởi động kép.
+Trên máy tính Windows, có thể cài Windows thứ hai vào một phân vùng riêng dưới dạng khởi động kép.
+Windows sẽ xin quyền: hãy chọn "Có".
+Windows sẽ xin quyền: hãy chọn "Có". Đừng đóng cửa sổ này. Máy tính không tự khởi động lại.
+Windows cần ít nhất 64 GB; 80 GB là thoải mái. Hãy chọn nhiều hơn nếu bạn sẽ cài nhiều chương trình.
+Nếu bạn thấy lỗi khi cài Windows
+Các hệ điều hành Windows
+Windows và tệp của bạn vẫn giữ nguyên. Chỗ trống được tạo trên máy tính cho {name}.
+Trong Windows, Khởi động nhanh (Fast Startup) và BitLocker phải được tắt. Nếu BitLocker đang bật, BesideOS từ chối cài đặt.
+Cài bên cạnh Windows
+Khoảng {gb} GB chỗ trống được tạo bên cạnh Windows.
+Chỗ trống được tạo bên cạnh Windows và các tệp được đặt ở đó.
+Chỉ hỗ trợ ổ đĩa phân vùng GPT.
+Có thể có những thay đổi chưa hoàn tất
+Hệ điều hành mới
+Chúng ta dành bao nhiêu chỗ cho hệ điều hành mới?
+Không tìm thấy phân vùng nào có thể tạo chỗ trống cho hệ điều hành mới. Cần một phân vùng có thể thu nhỏ (ext4, btrfs hoặc NTFS) và còn trống ít nhất {gb} GB.
+Khởi động lại
+Hủy việc khởi động lại
+Không thể khởi động lại máy tính. Hãy tự khởi động lại.
+Sau khi khởi động lại, menu hiện trong 5 giây với mục "Cài đặt {sys}" được chọn sẵn. Nếu muốn, bạn có thể chọn một hệ điều hành đã cài trong danh sách. Hãy khởi động lại sau khi lưu công việc đang mở.
+Trước khi bắt đầu lần mới, bạn phải hoàn tác các thay đổi trước đó.
+Phân vùng để tạo chỗ trống phải là ext4, btrfs hoặc NTFS và còn đủ chỗ trống. Ổ đĩa phải là GPT.
+Chỗ trống được tạo
+Chỗ trống được tạo: một phân vùng thu nhỏ lại.
+Tạo chỗ trống từ phân vùng nào?
+Tạo chỗ trống từ ổ nào?
+Chỗ trống được lấy từ vùng trống của phân vùng bạn chọn. Tệp của bạn không bị xóa. Các phân vùng không có trong danh sách dùng hệ thống tệp không thu nhỏ được hoặc không đủ chỗ trống.
+Chỗ trống được lấy từ vùng trống của ổ bạn chọn. Tệp của bạn không bị xóa.
+Không có
+Quyền quản trị chưa được cấp; không thể đọc thông tin ổ đĩa. Không có gì bị thay đổi.
+Quyền quản trị chưa được cấp; không thể đọc các ổ đĩa. Không có gì bị thay đổi.
+Quyền quản trị chưa được cấp; không có gì được hoàn tác.
+Quyền quản trị chưa được cấp; không có gì bị thay đổi.
+Không có địa chỉ chuyển hướng
+{credit}  ·  Bấm vào ảnh để phóng to
+Phân vùng {device} được thu nhỏ và khoảng {gb} GB chỗ trống (chưa phân bổ) được tạo.
+Phân vùng {device} được thu nhỏ {gb} GB; chỗ được giải phóng vẫn để trống (chưa phân bổ).
+{device} chỉ có thể giải phóng tối đa {gb} GB. Hãy chọn dung lượng nhỏ hơn hoặc dùng phân vùng khác.
+{disk} · tổng {total} · trống {free}
+{disk} · {fstype} · tổng {total} · có thể giải phóng tối đa {max}
+{g} GB · khuyên dùng
+{host}: {reason}
+Ổ {letter}:
+Ổ {letter}: ({label})
+Khoảng {gb} GB chỗ trống được tạo trên ổ {letter}:.
+Đã tải {mb} MB
+{name} được tải về và chỗ trống được tạo bên cạnh Windows.
+{name} được tải về, chỗ trống được tạo trên các ổ đĩa của bạn và một mục được thêm vào menu GRUB.
+Đang tải và kiểm tra {name}
+Trình cài đặt {name} hiện ra.
+{name} · Windows ở đây
+Các tệp cài đặt {sys} được sao chép vào đây.
+Hãy chọn ổ đĩa cẩn thận khi cài {sys}
+Hình minh họa. Kế hoạch thật sẽ được cho bạn xem đầy đủ trước khi có gì thay đổi.
+Quá nhiều lần chuyển hướng
+Với hầu hết mọi người, 30 GB là đủ. Hãy chọn nhiều hơn nếu bạn sẽ cài nhiều chương trình.
+Tôi đã sao lưu các tệp quan trọng
+Hãy sao lưu các tệp quan trọng: thu nhỏ phân vùng hiếm khi có thể gây sự cố.
+Ba bước. Máy tính của bạn không thay đổi gì cho đến khi bạn chấp thuận.
+Hai hệ điều hành, một ổ đĩa. Không cần USB.
+Tải về
+Tệp đã tải về đang được kiểm tra
+Tải về thất bại: {message}
+Bấm để tải về
+Để sau
+Khởi động lại ngay
+Khởi động lại ngay bây giờ nhé?
+Hệ điều hành hiện tại
+phân vùng của hệ điều hành đang chạy
+Cài đặt {name}
+Windows (hủy cài đặt)
+BesideOS: cài hệ điều hành khác bên cạnh hệ điều hành này

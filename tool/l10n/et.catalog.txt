@@ -1,0 +1,151 @@
+Kõige levinum Linux algajatele.
+Ubuntu on väga laialt kasutatav Linuxi distributsioon, millel on suur kasutajaskond ja rohkelt dokumentatsiooni. Vaikimisi on kaasas GNOME töölaud.
+Neile, kes lähevad esimest korda Linuxile üle ja tahavad probleemide korral leida palju abi.
+Vasakul fikseeritud rakendusteriba (dokk), üleval õhuke olekuriba ja lihtne töölaud oranžikas-lilladel toonidel.
+Arvuti 64-bitise protsessoriga
+Paigalduseks piisavalt vaba kettaruumi
+Internetiühendus (allalaadimiseks)
+Vaba tarkvara (mitmesugused avatud lähtekoodiga litsentsid, sh GPL)
+Ubuntu 24.04 LTS töölaud
+Kerge ja lihtne Ubuntu.
+Xubuntu on Ubuntu Xfce töölauaga väljaanne. See võtab tarkvara Ubuntu hoidlast, kuid kasutab vähem ressursse.
+Neile, kes tahavad Ubuntu ühilduvust, aga kergemat süsteemi.
+Üleval õhuke paneel, all esiletulev rakendusteriba ja lihtne töölaud siniste toonidega.
+Xubuntu 24.04 LTS töölaud
+Ubuntul põhinev, väga kohandatav KDE Plasma.
+Kubuntu on Ubuntu KDE Plasma töölauaga väljaanne. Selle välimust ja käitumist saab muuta peaaegu igas suhtes.
+Neile, kes tahavad Windowsi-sarnast paigutust ja armastavad kõike seadistada.
+All Windowsi-sarnane tegumiriba, sinised toonid ja kaasaegsed aknad läbipaistvusefektidega.
+Kubuntu 24.04 LTS töölaud
+Rahulik töölaud, mis tundub tuttav Windowsist tulijatele.
+Linux Minti põhiväljaanne kasutab Cinnamoni töölauda. Alumise riba, Start-menüü ja süsteemisalvega pakub see Windowsi paigutusega sarnast ülesehitust.
+Windowsist üleminejad, kes tahavad tuttavat ja lihtsat kasutajaliidest.
+All tegumiriba, vasakul Start-menüü ja paremal süsteemisalv; klassikalise paigutusega töölaud roheliste rõhutustega.
+Linux Mint Cinnamon 22.3 töölaud
+Cinnamon (soovitatav)
+Rahulik ja elegantne töölaud, mis tundub tuttav Windowsi kasutajatele. Enamiku jaoks parim valik.
+Xfce (kerge)
+Kergem ja kiirem vanadele või aeglastele arvutitele.
+Linux Mint Xfce töölaud (pilt vanemast versioonist)
+MATE (klassikaline)
+Vanaaegne, lihtne ja väga reguleeritav töölaud.
+Linux Mint MATE töölaud (pilt versioonist 20)
+Praktiline süsteem arendajatele ja mängijatele.
+Pop!_OS on System76 Ubuntul põhinev süsteem. See paistab silma akende automaatse paigutamise ja mängude jaoks mõeldud graafikakaartide toega.
+Need, kes kirjutavad tarkvara ja mängivad.
+Üleval õhuke riba, lihtne töölaud tumeda teema ja türkiissiniste rõhutustega.
+Süsteemi ISO-fail (kui see on sinu arvutis, valid selle ise)
+Pop!_OS 24.04 LTS töölaud
+Pop!_OS-i paigaldusekraan (pilt versioonist 20.04)
+Tuttav Linux Windowsist tulijatele.
+Zorin OS teeb Linuxile üleminemise lihtsamaks tuttavate paigutustega. See põhineb Ubuntul.
+Windowsist tulijad, kes ei taha end võõrana tunda.
+Tegumiriba ja Start-menüü nagu Windowsis; elegantne töölaud siniste toonidega.
+Zorin OS 17.3 töölaud
+Elegantne ja lihtne Linux.
+elementary OS on tuntud oma lihtsa kujunduse ja oma rakenduste poolest. See põhineb Ubuntul ja kasutab Pantheoni töölauda.
+Need, kes tahavad elegantset ja lihtsat kasutajaliidest.
+Üleval õhuke riba, all keskele joondatud dokk ja ümarate nurkadega aknad.
+elementary OS 8.0 töölaud
+Kogukonna hallatav universaalne operatsioonisüsteem, mis on tuntud oma stabiilsuse poolest.
+Debian on vabatahtlike kogukonna arendatud operatsioonisüsteem, mis on tuntud oma stabiilsuse poolest. See on paljude teiste distributsioonide alus.
+Need, kes tahavad stabiilset ja lihtsat süsteemi ning teavad Linuxist veidi.
+Sõltub valitud töölauakeskkonnast; vaikimisi välimus on tagasihoidlik ja lihtne.
+Debian 13 (Trixie) GNOME töölaud
+Live: Xfce (proovi esmalt)
+Saad süsteemi enne paigaldamist proovida. Kerge Xfce töölaud.
+Debian 13 Xfce töölaud
+Live: KDE Plasma (proovi esmalt)
+Saad süsteemi enne paigaldamist proovida. Rikkalik ja kohandatav KDE töölaud.
+Debian 13 KDE Plasma töölaud
+Stabiilne, kerge ja täis tööriistu.
+MX Linux põhineb Debianil ja kaasas on tema enda väike tööriistakogu. See töötab sujuvalt keskmistel ja vanematel arvutitel.
+Need, kes tahavad kerget ja stabiilset süsteemi.
+Paneel serval, sinakasroheline taustapilt ja töölaud, mis näitab infot, näiteks kella.
+MX Linux 18.3 vaiketöölaud (pilt vanemast versioonist)
+Kogukonna toetatud distributsioon ajakohase tarkvaraga.
+Fedora Workstation on GNOME töölauaga Linuxi distributsioon, mida arendab Fedora projekt.
+Need, kes tahavad näha ajakohast tarkvara ja arendaja tööriistu.
+Üleval õhuke riba, täisekraanil rakendused koos tegevuste vaatega ja lihtne GNOME töölaud siniste toonidega.
+Fedora 42 Workstation töölaud
+Fedora paigaldusekraan (Anaconda, Fedora 42)
+Mängimiseks valmis Linux.
+Bazzite on Fedoral põhinev süsteem, mis on tehtud mängimiseks. Steam ja graafikakaardi draiverid on valmis; kuna süsteemifailid on kaitstud, on seda raske rikkuda.
+Need, kes tahavad arvutis mängida ja otsivad Steam Decki-sarnast kogemust.
+Windowsi-sarnane tegumiriba KDE-ga; konsoolirežiimis avaneb Steami liides täisekraanil.
+Paigalduseks piisavalt vaba kettaruumi (ISO on umbes 8 GB)
+Bazzite 42 KDE töölaud
+Töölaud, KDE (AMD / Inteli graafikakaart)
+Õige valik enamikule arvutitele. Vali see, kui sinu graafikakaart ei ole Nvidia.
+Töölaud, KDE (Nvidia graafikakaart)
+Vali see, kui sinu graafikakaart on Nvidia; draiverid on valmis.
+Töölaud, GNOME (AMD / Inteli graafikakaart)
+Neile, kes eelistavad KDE asemel lihtsat GNOME töölauda.
+Bazzite 42 GNOME töölaud
+Steam Decki stiilis konsoolirežiim
+Steami liides avaneb kohe, kui arvuti käivitad. Teleriga ühendatud arvutitele ja pihuseadmetele.
+Hõlpsasti paigaldatav Arch Linux.
+Manjaro on Arch Linuxil põhinev süsteem ajakohase tarkvaraga. Seda on lihtne paigaldada ja see uueneb pidevalt.
+Need, kes tahavad uusimat tarkvara ja kellel on veidi kogemust.
+Sõltub valitud töölauast; kaasaegne välimus roheliste rõhutustega.
+Manjaro 24.0 KDE Plasma töölaud
+Kiire, häälestatud Archil põhinev süsteem.
+CachyOS on kiire Arch Linuxil põhinev süsteem, kaasas protsessorile optimeeritud paketid ja häälestatud tuum. Töölaua valid paigalduse ajal ise.
+Kasutajad, kes otsivad jõudlust ja kellel on veidi kogemust.
+Sõltub valitud töölauast; vaikimisi kaasaegne KDE Plasma tumeda teemaga.
+CachyOS KDE Plasma töölaud (2025.08)
+Elegantne, kasutusvalmis arendaja töölaud, mida juhitakse klaviatuuriga.
+Omarchy on Arch Linuxi peale ehitatud süsteem, kaasas Hyprlandi aknahaldur ja kasutusvalmis arendustööriistad. Kaasas on palju teemasid.
+Need, kes töötavad peamiselt klaviatuuriga, arendavad tarkvara ja armastavad oma süsteemiga nokitseda.
+Lamedad, ääristeta aknad paigutuvad kõrvuti; tumedad ja elegantsed teemad, üleval õhuke riba.
+Vaba tarkvara (MIT)
+Omarchy vaiketöölaud
+Kindel süsteem võimsate haldustööriistadega.
+openSUSE on pika traditsiooniga distributsioon Saksamaalt. Süsteemi haldamine on YaST-iga lihtne; Tumbleweedi väljaanne uueneb pidevalt.
+Need, kes tahavad kindlat alust ja võimsaid haldustööriistu.
+Kaasaegne, puhas töölaud roheliste rõhutustega.
+openSUSE Tumbleweed, KDE Plasma 6 töölaud
+Legendaarne Windows rohelise mäe ja sinise tegumiribaga.
+Windows XP on Microsofti väga vana kommertsoperatsioonisüsteem ja see ei ole pikka aega turvauuendusi saanud. Uutes arvutites ei tööta see tõenäoliselt. BesideOS ei levita ISO-faili.
+Need, kes tahavad kasutada väga vanu programme ja riistvara või on lihtsalt uudishimulikud. Soovitame seda mitte internetti ühendada.
+Sinine tegumiriba, roheline „Start”-nupp ja kuulus töölauapilt rohelise mäega.
+Vana arvuti (BIOS-i käivitus)
+Kehtiv Windowsi litsents
+Ei tööta uutes (UEFI) arvutites; selle proovimine virtuaalmasinas on turvalisem
+Kommertslik (Microsofti litsents)
+Windows XP töölaud: Start-menüü ja Minu arvuti aken
+Klassikaline Windows läbipaistvate akendega.
+Windows 7 on Microsofti kommertsoperatsioonisüsteem ja see ei saa enam turvauuendusi. Uutes arvutites (UEFI) ei pruugi see töötada. BesideOS ei levita ISO-faili.
+Need, kes tahavad käitada vanu programme ja vana riistvara.
+Läbipaistva klaasi efektiga aknad, all suur tegumiriba ja klassikaline Start-menüü.
+32- või 64-bitine protsessor
+Soovitatav on vana (BIOS/CSM) käivitus; uutesse UEFI arvutitesse ei pruugi see paigalduda
+Windows 7 töölaud ja Start-menüü
+Vana Windows plaatidega Start-ekraaniga.
+Windows 8.1 on Microsofti kommertsoperatsioonisüsteem ja see ei saa enam turvauuendusi. BesideOS ei levita ISO-faili; tood oma ISO ise.
+Need, kes vajavad Windows 8.1 vana programmi või riistvara jaoks.
+Täisekraanil värvilistest plaatidest koosnev Start-ekraan ja klassikaline töölaud.
+64-bitine või 32-bitine protsessor
+Turvalisuse huvides soovitame seda mitte internetti ühendada
+Windows 8.1 Start-ekraan
+Microsofti laialt kasutatud eelmine versioon.
+Windows 10 on Microsofti kommertsoperatsioonisüsteem. BesideOS ei levita ISO-faili; valid oma ISO või laed selle alla Microsofti ametlikult lehelt.
+Need, kes tahavad kasutada Windowsi arvutitel, mis ei vasta Windows 11 nõuetele.
+Vasakul Start-menüü elavate plaatidega, all tegumiriba.
+64-bitine protsessor
+Windows 10 töölaud: Start-menüü ja teavituspaneel
+Microsofti praegune Windowsi versioon.
+Windows 11 on Microsofti kommertsoperatsioonisüsteem. BesideOS ei levita ISO-faili; valid oma ISO või laed selle alla Microsofti ametlikult lehelt.
+Need, kes tahavad käitada rakendusi ja mänge, mis vajavad Windowsi.
+Keskele joondatud tegumiriba ja Start-menüü, ümarate nurkadega aknad.
+Arvuti UEFI toe ja Secure Booti võimekusega
+TPM 2.0 (ametlik nõue)
+Windows 11 töölaud ja Start-menüü
+Windows serveri- ja laborikatseteks.
+Windows Server 2025 on Microsofti serverioperatsioonisüsteem. Prooviversioon laaditakse alla Microsofti ametlikult lehelt; BesideOS ei levita ISO-faili.
+Need, kes tahavad õppida serverirolle ja haldustööriistu.
+Windows 11-ga sarnane tegumiriba ja Start-menüü; kaasas serveri haldustööriistad.
+64-bitine arvuti UEFI toega
+Prooviversioon või kehtiv serverilitsents
+Windows Server 2025 töölaud (saksakeelne liides)
+Pilt: {text}

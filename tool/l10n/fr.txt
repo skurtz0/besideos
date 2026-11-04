@@ -1,0 +1,260 @@
+Pas à pas
+Accueil
+Si vous avez du travail non enregistré, enregistrez-le. Si vous changez d'avis, appuyez sur le bouton ci-dessous.
+Open source, MIT
+Repérez la touche du menu de démarrage (souvent F12, F10, F9 ou Échap). Si l'installateur n'apparaît pas tout seul, choisissez dans ce menu l'entrée « Installation de <nom du système> » (par ex. « Installation de Debian »).
+Erreur réseau
+Échec.
+Vérifiez votre ordinateur avant de commencer
+Cliquez pour commencer
+Cochez la case ci-dessus pour commencer.
+On commence ?
+Erreur inattendue.
+Erreur inattendue : {e}
+BesideOS est open source sous licence MIT. Il s'appuie sur le projet hop d'Arjun Ingole (également MIT). Les noms des autres systèmes d'exploitation appartiennent à leurs propriétaires et ne servent qu'à indiquer ce que BesideOS peut installer.
+BesideOS libère de la place sur votre disque et prépare l'installation ; quand tout est prêt, vous redémarrez. Windows reste tel quel.
+BesideOS libère de la place sur votre disque pour le nouveau système. Vos fichiers ne sont pas supprimés, mais les opérations sur disque peuvent rarement mal tourner ; nous vous conseillons de sauvegarder vos fichiers importants. Si vous changez d'avis, « Annuler les modifications » remet tout en l'état.
+L'ordinateur redémarre dans 15 secondes
+L'ordinateur redémarrera dans 15 secondes. Au démarrage, le menu s'affiche pendant 5 secondes avec l'installation de {sys} sélectionnée ; vous pouvez choisir un système déjà installé. Enregistrez dès maintenant votre travail en cours.
+L'ordinateur semble avoir démarré en mode BIOS (hérité) ; UEFI est recommandé.
+L'ordinateur est préparé
+Votre ordinateur doit démarrer en mode UEFI (désactivez « Legacy/CSM » dans les réglages du BIOS).
+Votre ordinateur doit démarrer en mode UEFI (désactivez « Legacy/CSM » dans les réglages du BIOS). Cette méthode ne fonctionne pas en mode BIOS hérité.
+Vérification de votre ordinateur
+Installez un second système sur votre ordinateur sans clé USB.
+Fichiers ISO présents sur votre ordinateur
+Rien n'a encore changé sur votre ordinateur. Regardez ce qui va se passer, puis commencez.
+Rien ne change encore sur votre ordinateur.
+De quoi votre ordinateur a-t-il besoin ?
+Vous indiquez le fichier présent sur votre ordinateur ou que vous avez téléchargé.
+À savoir
+Une partition sera réduite et une entrée sera ajoutée au menu GRUB. L'ordinateur ne redémarre PAS tout seul ; vous le déciderez plus tard.
+Un seul redémarrage
+Après un redémarrage, le nouveau système s'installe à côté de l'ancien.
+Pour le prochain démarrage, cette entrée est choisie une seule fois.
+Au prochain démarrage, l'installateur apparaît. Ensuite, l'ordinateur démarre comme d'habitude.
+Un problème est survenu
+Vous en choisissez un et vous lancez l'installation.
+Choisissez-en un. Si vous hésitez, prenez le premier.
+Choisissez-en un. Nous vous montrerons pas à pas comment l'installer.
+Choisissez-en un ; voyez son aspect et ce qu'il demande.
+Ne formatez que l'espace libre nouvellement créé. Ne touchez ni aux partitions Windows ni à la partition BESIDEOS.
+De l'espace libre a été créé sur le disque du lecteur {letter}: ; choisissez ce disque dans l'installateur.
+Cet ISO ne peut pas démarrer sur cet ordinateur.
+Ce fichier ISO ne peut pas être démarré directement avec GRUB (il manque les informations pour démarrer depuis un ISO). C'est probablement un petit installateur du type « netinst » ; essayez la version « Live » du même système.
+La méthode de démarrage de ce type d'ISO n'a pas encore été testée.
+Installation impossible sur cet ordinateur pour le moment
+GRUB est introuvable sur cet ordinateur (il y a peut-être un autre gestionnaire de démarrage, comme systemd-boot).
+Le menu GRUB de cet ordinateur ne lit pas les entrées personnalisées ; BesideOS ne peut pas fonctionner ici.
+Cette distribution ne figure pas dans ce guide.
+Ce fichier n'est pas une image ISO lisible.
+Cette ancienne version de Windows peut ne pas démarrer sur les ordinateurs récents (UEFI). Si c'est le cas, « Annuler les modifications » remet tout en l'état.
+Qu'est-ce que ce système ?
+Vous apportez vous-même le fichier ISO de ce système ; inutile de saisir un chemin ou une somme de contrôle, il suffit de choisir le fichier. Nous vous montrerons d'abord ce qui sera fait. Rien ne change sur votre ordinateur sans votre accord.
+L'installateur de ce système peut ne pas démarrer sur certains ordinateurs. Si c'est le cas, « Annuler les modifications » remet tout en l'état.
+Cette fonction marche dans l'application de bureau BesideOS, sur un ordinateur Windows. Ici, vous pouvez découvrir le système et télécharger le fichier ISO.
+Introuvable
+La réduction d'une partition est considérée comme irréversible : « Annuler » essaie de la ré-agrandir à sa taille d'origine, mais n'y parvient pas si le nouveau système a été installé dans cet espace.
+La réduction d'une partition peut rarement poser problème.
+Cette page n'existe pas.
+Vous pouvez essayer de choisir un espace plus petit :
+Si vous voulez démarrer plus tard, redémarrez l'ordinateur vous-même ; l'installateur apparaît au premier démarrage. Sinon, choisissez l'entrée « Installation de {sys} » dans le menu GRUB (Maj ou Échap). Une fois l'installation terminée, vous pouvez retirer l'entrée avec « annuler ».
+Si vous voulez démarrer plus tard, redémarrez l'ordinateur vous-même ; l'installateur apparaît au premier démarrage. Sinon, choisissez « Installation de {sys} » dans le menu de démarrage. Une fois l'installation terminée, vous pouvez supprimer la partition temporaire nommée BESIDEOS.
+Une installation précédente est restée inachevée
+Distributions
+Retour aux distributions
+Les modifications ont été annulées
+Annulation des modifications…
+Annuler les modifications
+Les informations sur le disque n'ont pas pu être recueillies.
+Sur l'écran des disques, choisissez « Espace non alloué » et cliquez sur « Suivant ». Windows y crée ses propres partitions.
+Erreur de disque
+Erreur de disque : le fichier n'a pas pu être écrit.
+À la question sur le disque, ne choisissez PAS « Effacer le disque entier ». Choisissez « Installer à côté » ou « Autre chose » (partitionnement manuel) et n'utilisez que l'« espace libre ».
+Disque {n}
+Voici l'état actuel du disque.
+Les disques n'ont pas pu être lus. {reason}
+De la place est libérée sur vos disques et une entrée qui lance votre ISO est ajoutée au menu GRUB.
+Le fichier n'a pas pu être lu ou sa somme de contrôle est invalide.
+Fichier trop volumineux
+Si vous n'avez pas le fichier, vous pouvez le télécharger depuis la page officielle :
+Vérification de l'intégrité du fichier…
+La vérification a échoué (erreur de disque).
+Récupération des informations de vérification…
+Si vous hésitez, laissez l'installation sur cet écran, redémarrez l'ordinateur et choisissez « annuler » dans BesideOS.
+Si vous hésitez, laissez l'installation sur cet écran ; vous pouvez éteindre l'ordinateur et revenir à Windows, puis choisir simplement « annuler » dans BesideOS.
+Oui, commencer
+Oui, redémarrer
+Aucune distribution correspondante
+Une entrée « Installation de {sys} » est ajoutée au menu de démarrage GRUB ; le fichier ISO reste où il est.
+Une entrée « Installation de {sys} » est ajoutée au menu de démarrage GRUB.
+Si le menu GRUB n'apparaît pas tout seul, maintenez Maj ou appuyez sur Échap au démarrage et choisissez l'entrée « BesideOS ».
+L'annulation a échoué.
+Nous vous conseillons d'annuler.
+BesideOS s'occupe du reste.
+Adresse invalide.
+Nom de fichier invalide.
+Adresse non sécurisée rejetée
+Sur quel ordinateur êtes-vous ?
+Sur quels ordinateurs peut-on l'installer ?
+Quel système voulez-vous installer ?
+Quels systèmes pouvez-vous installer ?
+Lequel voulez-vous ?
+Quand tout est prêt, vous redémarrez. Au démarrage, le menu s'affiche 5 secondes avec l'installation de {sys} sélectionnée ; vos systèmes installés figurent dans la même liste.
+Prêt ! Vous pouvez redémarrer maintenant
+Préparation, veuillez patienter…
+Tous
+Tout est prêt !
+Rien n'a changé.
+Fichiers ISO (*.iso)
+Cliquez pour choisir mon propre fichier ISO et installer
+Vous choisissez votre fichier ISO
+Fichier ISO
+Le fichier ISO se trouve sur un système de fichiers que GRUB ne sait pas lire. Copiez le fichier sur un disque en ext4, btrfs, xfs ou FAT32.
+Le fichier ISO est introuvable.
+Le fichier ISO reste où il est : {path}
+Le fichier ISO se trouve sur un disque chiffré ; GRUB ne peut pas le lire. Copiez-le sur un disque non chiffré.
+Le fichier ISO doit se trouver en dehors de la partition sur laquelle vous installez (par ex. sur un autre disque). L'installateur ne peut pas supprimer la partition qui contient son propre ISO.
+Le fichier ISO se trouve sur un disque où vous pourriez installer. L'installateur ne peut pas supprimer la partition qui contient son propre ISO ; installez le nouveau système dans l'espace libre créé par BesideOS.
+Ne touchez ni à la partition qui contient le fichier ISO ni à votre système actuel ; ne formatez que l'espace nouvellement créé.
+L'ISO n'a pas pu être téléchargé ou vérifié.
+Le contenu de l'ISO n'a pas pu être examiné. {detail}
+L'ISO n'a pas pu être vérifié. {detail}
+Le programme « xorriso » est nécessaire pour regarder dans l'ISO. Installez-le et réessayez.
+Fermer
+Catalogue
+Le catalogue est vide
+Le catalogue n'a pas pu être chargé : {msg}
+Je veux choisir mon propre fichier ISO et installer
+Pour qui : {text}
+Sauvegardez avant d'installer
+Choisissez le fichier ISO que vous voulez installer
+Téléchargez l'application BesideOS pour installer
+Cliquez pour installer
+Systèmes à côté desquels on peut installer
+Installation
+Le composant d'installation est manquant
+Les fichiers d'installation sont placés sur le même disque.
+Les fichiers d'installation sont placés dans une petite partition du même disque. Aucune clé USB n'est nécessaire.
+Quand l'installateur s'ouvre, à la question sur le disque, ne choisissez PAS « Effacer le disque entier ». Choisissez « Autre chose » (partitionnement manuel) et n'utilisez que l'espace libre (non alloué) créé par BesideOS.
+L'installateur apparaît.
+L'installation va être préparée : de l'espace libre sera créé et des fichiers seront copiés. L'ordinateur ne redémarre PAS tout seul ; vous le déciderez plus tard.
+L'installation est préparée
+Préparation de l'installation…
+La préparation de l'installation a échoué.
+L'installation est impossible.
+Lancer l'installation
+Voir l'installation
+Linux
+Sur un ordinateur Linux, Windows peut être installé dans une partition séparée en double démarrage.
+Sur un ordinateur Linux, un autre Linux peut être lancé depuis son fichier ISO grâce à une entrée GRUB et installé dans l'espace libre (aucune partition n'est réduite).
+Systèmes Linux
+Installer à côté de Linux
+Licence : {text}
+Bureau : {text}
+Votre système actuel et vos fichiers restent en place. Une partition est réduite pour libérer de la place ; {name} démarre depuis son fichier ISO grâce à une entrée GRUB.
+Son aspect
+Comment ça marche
+Quel type ?
+Que va-t-il se passer ?
+Une fenêtre va s'ouvrir pour demander votre mot de passe.
+Une fenêtre va s'ouvrir pour demander votre mot de passe. Ne fermez pas cette fenêtre. L'ordinateur ne redémarre pas tout seul.
+Préparation du plan
+Le plan n'a pas pu être établi (code {code}). {detail}
+Une fois que vous avez vu le plan et confirmé avoir sauvegardé vos fichiers, de l'espace libre est créé sur le disque.
+Page officielle
+Ce nom de fichier ne figure pas dans le fichier de sommes de contrôle ; il n'a pas pu être vérifié. Le catalogue est peut-être obsolète ; téléchargez depuis la page officielle.
+La somme de contrôle ne correspond pas. Le fichier n'a pas été supprimé ; vérifiez la valeur SHA-256.
+La somme de contrôle ne correspond pas ; le fichier a été supprimé.
+Le démarrage sécurisé (Secure Boot) est activé. Les ISO à noyau non signé peuvent ne pas démarrer ; si le menu d'installation n'apparaît pas, désactivez Secure Boot dans le BIOS.
+Avec Secure Boot activé, certains ISO peuvent ne pas démarrer. Si l'installateur n'apparaît pas, désactivez Secure Boot dans les réglages du BIOS.
+Avec Secure Boot activé, certains systèmes peuvent ne pas démarrer. Si l'installateur n'apparaît pas, désactivez Secure Boot dans les réglages du BIOS ; vous pourrez le réactiver après l'installation.
+Le fichier choisi est introuvable ou n'est pas un fichier ISO.
+Le fichier ISO que vous avez choisi est en cours d'examen
+Code d'erreur du serveur : {code}
+Le serveur ne répond pas
+La réponse du serveur est invalide
+Ouvrez l'application pour installer en un clic
+Détails techniques
+Réessayer
+Basé sur : {text}
+Vous cliquez
+L'application fonctionne sur un ordinateur Windows. Vous choisissez dans l'application le système voulu et lancez l'installation en un clic.
+Les fichiers de l'application semblent manquer. Téléchargez BesideOS de nouveau et ouvrez-le.
+Annuler
+Annuler, défaire les modifications
+Windows
+L'installation de Windows démarre ainsi, depuis un disque RAM. Il est normal de voir des erreurs ou des avertissements pendant l'installation ; la plupart du temps, vous pouvez les ignorer et continuer. Si l'installation n'avance pas du tout, « Annuler les modifications » remet tout en l'état.
+Sur un ordinateur Windows, Linux peut être installé à côté de Windows en double démarrage.
+Sur un ordinateur Windows, un second Windows peut être installé dans une partition séparée en double démarrage.
+Windows va demander l'autorisation : répondez « Oui ».
+Windows va demander l'autorisation : répondez « Oui ». Ne fermez pas cette fenêtre. L'ordinateur ne redémarre pas tout seul.
+Windows demande au moins 64 Go ; 80 Go sont confortables. Choisissez plus si vous installez beaucoup de programmes.
+Si vous voyez une erreur pendant l'installation de Windows
+Systèmes Windows
+Windows et vos fichiers restent en place. De l'espace est créé sur votre ordinateur pour {name}.
+Dans Windows, le démarrage rapide (Fast Startup) et BitLocker doivent être désactivés. Si BitLocker est activé, BesideOS refuse d'installer.
+Installer à côté de Windows
+Environ {gb} Go d'espace libre sont créés à côté de Windows.
+De l'espace est créé à côté de Windows et les fichiers y sont placés.
+Seuls les disques partitionnés en GPT sont pris en charge.
+Il peut rester des modifications inachevées
+Nouveau système
+Combien d'espace réserver au nouveau système ?
+Aucune partition permettant de libérer de la place pour un nouveau système n'a été trouvée. Il faut une partition réductible (ext4, btrfs ou NTFS) avec au moins {gb} Go libres.
+Redémarre
+Annuler le redémarrage
+L'ordinateur n'a pas pu être redémarré. Redémarrez-le vous-même.
+Après le redémarrage, le menu s'affiche 5 secondes avec l'entrée « Installation de {sys} » sélectionnée. Vous pouvez choisir un système déjà installé dans la liste si vous le souhaitez. Redémarrez une fois votre travail en cours enregistré.
+Avant d'en commencer une nouvelle, vous devez annuler les modifications précédentes.
+La partition dont on libère de la place doit être en ext4, btrfs ou NTFS et avoir assez d'espace libre. Le disque doit être en GPT.
+De l'espace est créé
+De l'espace est créé : une partition rétrécit.
+De quelle partition faut-il libérer de la place ?
+De quel lecteur faut-il libérer de la place ?
+L'espace est pris sur la zone libre de la partition choisie. Vos fichiers ne sont pas supprimés. Les partitions absentes de la liste ont un système de fichiers non réductible ou manquent d'espace libre.
+L'espace est pris sur la zone libre du lecteur choisi. Vos fichiers ne sont pas supprimés.
+Aucun
+L'autorisation d'administrateur n'a pas été accordée ; les informations sur le disque n'ont pas pu être lues. Rien n'a été modifié.
+L'autorisation d'administrateur n'a pas été accordée ; les disques n'ont pas pu être lus. Rien n'a été modifié.
+L'autorisation d'administrateur n'a pas été accordée ; rien n'a été annulé.
+L'autorisation d'administrateur n'a pas été accordée ; rien n'a été modifié.
+Aucune adresse de redirection
+{credit}  ·  Cliquez sur l'image pour l'agrandir
+La partition {device} est réduite et environ {gb} Go d'espace libre (non alloué) sont créés.
+La partition {device} est réduite de {gb} Go ; l'espace libéré reste vide (non alloué).
+{device} peut libérer au maximum {gb} Go. Choisissez un espace plus petit ou une autre partition.
+{disk} · total {total} · {free} libres
+{disk} · {fstype} · total {total} · au maximum {max} libérables
+{g} Go · recommandé
+{host} : {reason}
+Lecteur {letter}:
+Lecteur {letter}: ({label})
+Environ {gb} Go d'espace libre sont créés sur le lecteur {letter}:.
+{mb} Mo téléchargés
+{name} est téléchargé et de l'espace est créé à côté de Windows.
+{name} est téléchargé, de l'espace est créé sur vos disques et une entrée est ajoutée au menu GRUB.
+Téléchargement et vérification de {name}
+L'installateur de {name} apparaît.
+{name} · Windows est ici
+Les fichiers d'installation de {sys} sont copiés ici.
+Choisissez bien le disque lors de l'installation de {sys}
+Illustration. Le vrai plan vous est montré en détail avant tout changement.
+Trop de redirections
+30 Go suffisent à la plupart des gens. Choisissez plus si vous installez beaucoup de programmes.
+J'ai sauvegardé mes fichiers importants
+Sauvegardez vos fichiers importants : la réduction d'une partition peut rarement poser problème.
+Trois étapes. Rien ne change sur votre ordinateur sans votre accord.
+Deux systèmes, un seul disque. Pas de clé USB.
+Télécharger
+Le fichier téléchargé est en cours d'examen
+Échec du téléchargement : {message}
+Cliquez pour télécharger
+Pas maintenant
+Redémarrer maintenant
+On redémarre maintenant ?
+Système actuel
+la partition du système en cours d'exécution
+Installation de {name}
+Windows (annuler l'installation)
+BesideOS : installez un autre système d'exploitation à côté de celui-ci

@@ -116,7 +116,6 @@ install(FILES
   "${ENGINE_SCRIPT_DIR}/collect-host-facts.ps1"
   "${ENGINE_SCRIPT_DIR}/apply-plan.ps1"
   "${ENGINE_SCRIPT_DIR}/inspect-iso.ps1"
-  "${ENGINE_SCRIPT_DIR}/boot-entries.ps1"
   DESTINATION "${CMAKE_INSTALL_PREFIX}/engine" COMPONENT Runtime)
 if(EXISTS "${ENGINE_PLAN_EXE}")
   install(FILES "${ENGINE_PLAN_EXE}" DESTINATION "${CMAKE_INSTALL_PREFIX}/engine" COMPONENT Runtime)

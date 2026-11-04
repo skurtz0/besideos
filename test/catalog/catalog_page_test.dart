@@ -22,7 +22,7 @@ Distro d(String id, DistroFamily f, List<String> hosts) => Distro(
     );
 
 final catalog = Catalog([
-  d('mint', DistroFamily.linux, ['windows', 'linux', 'mac-m1m2']),
+  d('mint', DistroFamily.linux, ['windows', 'linux']),
   d('win', DistroFamily.windows, ['windows', 'linux']),
 ]);
 
@@ -46,21 +46,7 @@ void main() {
     expect(find.text('Ad win'), findsOneWidget);
   });
 
-  testWidgets('host filter "Mac M1/M2" hides windows distros', (t) async {
-    await pump(t, catalog);
-    await t.tap(find.text('Mac M1/M2'));
-    await t.pump();
-    expect(find.text('Ad mint'), findsOneWidget);
-    expect(find.text('Ad win'), findsNothing);
-  });
 
-  testWidgets('other Mac matches nothing and explains', (t) async {
-    await pump(t, catalog);
-    await t.tap(find.text('Diğer Mac'));
-    await t.pump();
-    expect(find.text('Ad mint'), findsNothing);
-    expect(find.textContaining('Asahi'), findsOneWidget);
-  });
 
   testWidgets('empty catalog shows "Katalog boş"', (t) async {
     await pump(t, const Catalog([]));
@@ -103,10 +89,4 @@ void main() {
     expect(opened?.id, 'win');
   });
 
-  testWidgets('host filter hides distro whose host the matrix rejects', (t) async {
-    await pump(t, Catalog([d('lx', DistroFamily.windows, ['mac-m1m2'])]));
-    await t.tap(find.text('Mac M1/M2').last);
-    await t.pump();
-    expect(find.text('Ad lx'), findsNothing);
-  });
 }

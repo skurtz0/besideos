@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+import '../l10n/text.dart';
+import 'package:flutter/material.dart' hide Text;
 
-import '../boot/boot_page.dart';
 import '../brand.dart';
-import '../site_mode.dart';
 import '../theme.dart';
 import 'catalog_page.dart';
 import 'distro.dart';
@@ -19,9 +18,6 @@ Route<dynamic> catalogRoute(RouteSettings s, Catalog catalog) {
         body: CatalogPage(catalog: catalog, onOpen: (d) => Navigator.pushNamed(context, '/distros/${d.id}')),
       ),
     );
-  } else if (seg.length == 1 && seg[0] == 'boot') {
-    // Only the desktop app can change the boot order; the website has no such page.
-    body = Builder(builder: (context) => SiteMode.isWeb(context) ? const _NotFound() : const BootPage());
   } else {
     final d = seg.length == 2 && seg[0] == 'distros' ? catalog.byId(seg[1]) : null;
     body = d != null ? DistroPage(distro: d) : const _NotFound();

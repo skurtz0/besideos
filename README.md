@@ -2,7 +2,7 @@
 
 The besideos.com website, built with Flutter web. A landing page plus a distro catalog and install guides at `/#/distros` and `/#/distros/<id>` (hash-based URLs) (data: `assets/catalog/catalog.json`).
 
-Built with Flutter 3.47.7; `flutter analyze` and `flutter test` pass. Web and macOS release builds are verified; Windows and Linux builds are not. No installer exists yet. First time on a machine with Flutter:
+Built with Flutter 3.47.7; `flutter analyze` and `flutter test` pass. The web release build is verified; the Windows build runs (debug and release); the Linux build is not verified. No installer exists yet. First time on a machine with Flutter:
 
 ```
 flutter create . --platforms web --project-name besideos_site
@@ -19,10 +19,9 @@ Icons are a placeholder: `python3 tool/make_icons.py`.
 Flutter web draws to a canvas, so search engines see little beyond the `<noscript>` text in `web/index.html`. Fine for a landing page; reconsider before adding a blog or docs.
 
 
-Desktop platforms (`windows/`, `macos/`, `linux/`) were added with `flutter create . --platforms windows,macos,linux --project-name besideos_site`:
+Desktop platforms (`windows/`, `linux/`) were added with `flutter create . --platforms windows,linux --project-name besideos_site`:
 
 ```
-flutter build macos --release     # verified on macOS
 flutter build windows --release   # not verified (needs a Windows machine)
 flutter build linux --release     # not verified (needs a Linux machine)
 ```
@@ -36,7 +35,7 @@ Rehber sayfasındaki **İndir** düğmesi (yalnız masaüstü uygulamada) ISO do
 
 Windows için BesideOS ISO sağlamaz: kendi ISO dosyanın yolunu ve Microsoft sayfasındaki SHA-256 değerini girip "Doğrula"ya basarsın.
 
-Web sürümünde indirme kapalıdır. macOS sandbox'ı için `macos/Runner/*.entitlements` dosyalarına `com.apple.security.network.client` ve `com.apple.security.files.downloads.read-write` eklendi. Windows ve Linux derlemeleri doğrulanmadı.
+Web sürümünde indirme kapalıdır. Windows ve Linux derlemeleri doğrulanmadı.
 
 ISO girdileri `assets/catalog/catalog.json` içinde (`isos`); Debian `current/` ve Fedora sürüm adresleri yeni sürümde değişir, katalog elle güncellenmelidir.
 

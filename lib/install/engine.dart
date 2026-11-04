@@ -2,11 +2,11 @@ import 'dart:io';
 
 /// The scripts and the planner binary the installer drives.
 class Engine {
-  const Engine({required this.probe, required this.apply, required this.inspect, required this.plan, this.boot, this.grub});
+  const Engine({required this.probe, required this.apply, required this.inspect, required this.plan, this.grub});
 
   /// Linux host: the single GRUB loopback script does inspecting, preparing and undoing (probe/linux/besideos-grub.sh).
   /// The four Windows slots then all point at it so the rest of the code needs no special case.
-  Engine.linux(File script, {this.boot})
+  Engine.linux(File script)
       : probe = script,
         apply = script,
         inspect = script,
@@ -19,9 +19,6 @@ class Engine {
   final File apply;
   final File inspect;
   final File plan;
-
-  /// Lists the installed systems and chooses which one starts next. Optional: older bundles lack it.
-  final File? boot;
 
   bool get complete => probe.existsSync() && apply.existsSync() && inspect.existsSync() && plan.existsSync();
 }
@@ -40,7 +37,7 @@ Engine? locateEngine({String? exePath}) {
     for (var i = 0; i < 8; i++) {
       for (final rel in const ['engine/besideos-grub.sh', 'probe/linux/besideos-grub.sh']) {
         final f = File('${dir.path}/$rel');
-        if (f.existsSync()) return Engine.linux(f, boot: File('${f.parent.path}/boot-entries.sh'));
+        if (f.existsSync()) return Engine.linux(f);
       }
       final up = dir.parent;
       if (up.path == dir.path) break;
@@ -55,7 +52,6 @@ Engine? locateEngine({String? exePath}) {
     apply: File('${bundled.path}${sep}apply-plan.ps1'),
     inspect: File('${bundled.path}${sep}inspect-iso.ps1'),
     plan: File('${bundled.path}$sep$_planExe'),
-    boot: File('${bundled.path}${sep}boot-entries.ps1'),
   );
   if (e.complete) return e;
 
@@ -69,7 +65,6 @@ Engine? locateEngine({String? exePath}) {
           apply: File('$scripts${sep}apply-plan.ps1'),
           inspect: File('$scripts${sep}inspect-iso.ps1'),
           plan: File('${dir.path}${sep}core${sep}target$sep$profile$sep$_planExe'),
-          boot: File('$scripts${sep}boot-entries.ps1'),
         );
         if (dev.complete) return dev;
       }

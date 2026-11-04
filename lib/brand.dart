@@ -1,4 +1,7 @@
-import 'package:flutter/material.dart';
+import 'l10n/l10n.dart';
+import 'l10n/text.dart';
+import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 
 import 'site_mode.dart';
 import 'theme.dart';
@@ -156,7 +159,7 @@ class SiteBar extends StatelessWidget implements PreferredSizeWidget {
                   compact
                       ? IconButton(
                           onPressed: () => Navigator.pushNamed(context, '/distros'),
-                          tooltip: 'Dağıtımlar',
+                          tooltip: tr('Dağıtımlar'),
                           icon: const Icon(Icons.apps_rounded),
                         )
                       : TextButton.icon(
@@ -164,25 +167,13 @@ class SiteBar extends StatelessWidget implements PreferredSizeWidget {
                           icon: const Icon(Icons.apps_rounded, size: 20),
                           label: const Text('Dağıtımlar'),
                         ),
-                // The desktop app (not the website) can choose which installed system starts.
-                if (showCatalog && !web)
-                  compact
-                      ? IconButton(
-                          onPressed: () => Navigator.pushNamed(context, '/boot'),
-                          tooltip: 'Açılış sistemi',
-                          icon: const Icon(Icons.power_settings_new_rounded),
-                        )
-                      : TextButton.icon(
-                          onPressed: () => Navigator.pushNamed(context, '/boot'),
-                          icon: const Icon(Icons.power_settings_new_rounded, size: 20),
-                          label: const Text('Açılış sistemi'),
-                        ),
+                const _LanguageMenu(),
                 if (web) ...[
                   const SizedBox(width: 6),
                   if (compact)
                     IconButton.filled(
                       onPressed: () => SiteMode.download(context),
-                      tooltip: 'İndir',
+                      tooltip: tr('İndir'),
                       icon: const Icon(Icons.download_rounded),
                     )
                   else
@@ -252,6 +243,34 @@ class _PageScrollState extends State<PageScroll> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Lets people change the language by hand; the site and the app otherwise follow the system or browser language.
+class _LanguageMenu extends StatelessWidget {
+  const _LanguageMenu();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: L10n.instance,
+      builder: (context, _) => PopupMenuButton<AppLang>(
+        tooltip: L10n.instance.lang.name,
+        icon: const Icon(Icons.language_rounded),
+        onSelected: L10n.instance.select,
+        itemBuilder: (_) => [
+          for (final l in kLangs)
+            CheckedPopupMenuItem<AppLang>(
+              value: l,
+              checked: l.code == L10n.instance.lang.code,
+              child: Directionality(
+                textDirection: l.rtl ? TextDirection.rtl : TextDirection.ltr,
+                child: m.Text(l.name),
+              ),
+            ),
+        ],
       ),
     );
   }

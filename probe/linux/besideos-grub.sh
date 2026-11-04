@@ -7,7 +7,8 @@
 #   besideos-grub.sh undo    [--name ID | --all] [--execute]
 #   besideos-grub.sh status
 #   besideos-grub.sh disks [--out FILE]            partitions that can give up room, as JSON (root)
-#   prepare ... --title "Ubuntu"                       name shown in the GRUB menu: "BesideOS: 5 saniye içinde kurulacak: Ubuntu"
+#   prepare ... --title "Ubuntu"                       name shown in the GRUB menu: "Ubuntu kurulumu"
+#   prepare ... --label "Installation de Ubuntu"       the whole menu title, instead of "<title> kurulumu"
 #   prepare ... --shrink-dev /dev/sdXN --shrink-gb N   also shrinks that partition by N GiB (leaves it unallocated)
 #
 # Several systems can be prepared at once: each --name ID (default "default") gets its own menu entry
@@ -31,13 +32,14 @@ refuse() { say "REFUSED: $*"; exit 2; }
 fail()   { say "ERROR: $*" >&2; exit 1; }
 
 cmd=${1:-}; [ $# -gt 0 ] && shift
-ISO=; EXECUTE=0; EXPERIMENTAL=0; NAME=default; ALL=0; SHRINK_DEV=; SHRINK_GB=0; OUT=; TITLE=
+ISO=; EXECUTE=0; EXPERIMENTAL=0; NAME=default; ALL=0; SHRINK_DEV=; SHRINK_GB=0; OUT=; TITLE=; LABEL=
 while [ $# -gt 0 ]; do
   case $1 in
     --iso) ISO=${2:-}; shift 2 ;;
     --name) NAME=${2:-}; shift 2 ;;
     --all) ALL=1; shift ;;
     --title) TITLE=${2:-}; shift 2 ;;
+    --label) LABEL=${2:-}; shift 2 ;;
     --shrink-dev) SHRINK_DEV=${2:-}; shift 2 ;;
     --shrink-gb) SHRINK_GB=${2:-0}; shift 2 ;;
     --out) OUT=${2:-}; shift 2 ;;
@@ -159,7 +161,9 @@ locate_iso() {
 menu_entry() {
   local name=${TITLE:-$(basename "$ISO" .iso)}
   name=${name//[\"\$\`\\]/}
-  local title="BesideOS: 5 saniye içinde kurulacak: $name"
+  local title="$name kurulumu"
+  # --label is the whole title, already in the person's language (the app passes it); without it the Turkish default stays
+  if [ -n "$LABEL" ]; then title=${LABEL//[\"\$\`\]/}; fi
   # The next start shows the whole GRUB menu for 5 seconds with this entry selected; every system that is already
   # installed stays in the list below it. GRUB itself forgets the one-shot choice (besideos_next) by saving it empty.
   cat <<ENTRY

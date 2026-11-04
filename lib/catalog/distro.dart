@@ -58,7 +58,7 @@ class IsoAsset {
   });
 }
 
-const _validHosts = {'windows', 'linux', 'mac-m1m2'};
+const _validHosts = {'windows', 'linux'};
 
 class Distro {
   final String id;

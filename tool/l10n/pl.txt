@@ -1,0 +1,260 @@
+Krok po kroku
+Strona główna
+Jeśli masz niezapisaną pracę, zapisz ją. Jeśli zmienisz zdanie, naciśnij przycisk poniżej.
+Otwarte oprogramowanie, MIT
+Sprawdź klawisz menu rozruchu (zwykle F12, F10, F9 lub Esc). Jeśli instalator nie pojawi się sam, wybierz w tym menu pozycję „Instalacja <nazwa systemu>” (np. „Instalacja Debiana”).
+Błąd sieci
+Nie udało się.
+Sprawdź komputer, zanim zaczniesz
+Kliknij, aby zacząć
+Zaznacz pole powyżej, aby zacząć.
+Zaczynamy?
+Nieoczekiwany błąd.
+Nieoczekiwany błąd: {e}
+BesideOS jest oprogramowaniem otwartym na licencji MIT. Opiera się na projekcie hop Arjuna Ingole (również MIT). Nazwy innych systemów operacyjnych należą do ich właścicieli i służą wyłącznie do powiedzenia, co BesideOS potrafi zainstalować.
+BesideOS zwalnia miejsce na dysku i przygotowuje instalację; gdy będzie gotowa, sam uruchamiasz ponownie komputer. Windows zostaje taki, jaki jest.
+BesideOS zwalnia miejsce na dysku dla nowego systemu. Twoje pliki nie są usuwane, ale operacje na dysku rzadko mogą się nie udać, dlatego zalecamy kopię zapasową ważnych plików. Jeśli zmienisz zdanie, „Cofnij zmiany” przywraca wszystko.
+Komputer uruchomi się ponownie za 15 sekund
+Komputer uruchomi się ponownie za 15 sekund. Przy starcie menu pojawi się na 5 sekund z zaznaczoną instalacją {sys}; możesz wybrać zamiast niej zainstalowany system. Zapisz teraz otwartą pracę.
+Wygląda na to, że komputer uruchomił się w trybie BIOS (starszym); zalecany jest UEFI.
+Komputer jest przygotowywany
+Twój komputer musi startować w trybie UEFI (wyłącz „Legacy/CSM” w ustawieniach BIOS).
+Twój komputer musi startować w trybie UEFI (wyłącz „Legacy/CSM” w ustawieniach BIOS). W starszym trybie BIOS ta metoda nie działa.
+Sprawdzanie komputera
+Zainstaluj drugi system na komputerze bez pendrive'a.
+Pliki ISO na twoim komputerze
+Na twoim komputerze nic się jeszcze nie zmieniło. Zobacz, co się wydarzy, a potem zacznij.
+Na twoim komputerze nic się jeszcze nie zmienia.
+Co powinien mieć twój komputer?
+Wskazujesz plik, który jest na komputerze albo który pobrałeś.
+Warto wiedzieć
+Jedna partycja zostanie zmniejszona, a do menu GRUB zostanie dodana jedna pozycja. Komputer NIE uruchomi się sam ponownie; zdecydujesz o tym później.
+Jedno ponowne uruchomienie
+Po jednym restarcie nowy system instaluje się obok starego.
+Przy następnym starcie ta pozycja zostanie wybrana jednorazowo.
+Przy następnym starcie pojawi się instalator. Potem komputer startuje jak zwykle.
+Wystąpił problem
+Naciskasz jeden z nich i zaczynasz instalację.
+Wybierz jeden. Jeśli nie jesteś pewien, możesz wybrać pierwszy.
+Wybierz jeden. Pokażemy krok po kroku, jak się go instaluje.
+Wybierz jeden; zobacz, jak wygląda i czego potrzebuje.
+Formatuj tylko nowo utworzone wolne miejsce. Nie ruszaj partycji Windows ani partycji BESIDEOS.
+Wolne miejsce powstało na dysku, na którym jest dysk {letter}:; wybierz ten dysk w instalatorze.
+Tego ISO nie można uruchomić na tym komputerze.
+Tego pliku ISO nie można uruchomić bezpośrednio przez GRUB (brakuje informacji potrzebnych do rozruchu z ISO). Prawdopodobnie to mały instalator typu „netinst”; spróbuj wersji „Live” tego samego systemu.
+Sposób uruchamiania tego rodzaju ISO nie był jeszcze testowany.
+Na tym komputerze nie można teraz zainstalować
+Na tym komputerze nie znaleziono GRUB-a (może być inny menedżer rozruchu, np. systemd-boot).
+Menu GRUB tego komputera nie czyta własnych pozycji; BesideOS nie może tu działać.
+Tej dystrybucji nie ma w tym przewodniku.
+Ten plik nie jest czytelnym obrazem ISO.
+Ta stara wersja Windows może nie uruchomić się na nowych komputerach (UEFI). Jeśli się nie uruchomi, „Cofnij zmiany” przywraca wszystko.
+Co to za system?
+Plik ISO tego systemu przynosisz sam; nie musisz wpisywać ścieżki ani sumy kontrolnej, wystarczy wybrać plik. Najpierw pokażemy, co zostanie zrobione. Dopóki nie zatwierdzisz, na komputerze nic się nie zmieni.
+Instalator tego systemu może nie uruchomić się na niektórych komputerach. Jeśli się nie uruchomi, „Cofnij zmiany” przywraca wszystko.
+Ta funkcja działa w aplikacji komputerowej BesideOS na komputerze z Windows. Tutaj możesz poznać system i pobrać plik ISO.
+Nie znaleziono
+Zmniejszenie partycji uchodzi za operację nieodwracalną: „Cofnij” próbuje przywrócić jej dawny rozmiar, ale nie zdoła, jeśli nowy system został zainstalowany w tym miejscu.
+Zmniejszenie partycji rzadko może spowodować problemy.
+Nie ma takiej strony.
+Możesz spróbować wybrać mniejszą ilość miejsca:
+Jeśli chcesz zacząć później, uruchom komputer ponownie samodzielnie; instalator pojawi się przy pierwszym starcie. Jeśli się nie pojawi, wybierz pozycję „Instalacja {sys}” w menu GRUB (Shift lub Esc). Po zakończeniu instalacji możesz usunąć pozycję przez „cofnij”.
+Jeśli chcesz zacząć później, uruchom komputer ponownie samodzielnie; instalator pojawi się przy pierwszym starcie. Jeśli się nie pojawi, wybierz „Instalacja {sys}” w menu rozruchu. Po zakończeniu instalacji możesz usunąć tymczasową partycję o nazwie BESIDEOS.
+Poprzednia instalacja pozostała niedokończona
+Dystrybucje
+Wróć do dystrybucji
+Zmiany zostały cofnięte
+Cofanie zmian…
+Cofnij zmiany
+Nie udało się zebrać informacji o dysku.
+Na ekranie dysków wybierz „Nieprzydzielone miejsce” i kliknij „Dalej”. Windows utworzy tam własne partycje.
+Błąd dysku
+Błąd dysku: nie udało się zapisać pliku.
+Gdy instalator zapyta o dysk, NIE wybieraj „Wymaż cały dysk”. Wybierz „Zainstaluj obok” albo „Coś innego” (ręczne partycjonowanie) i używaj tylko „wolnego miejsca”.
+Dysk {n}
+Tak wygląda teraz dysk.
+Nie udało się odczytać dysków. {reason}
+Na twoich dyskach zwalnia się miejsce, a do menu GRUB dodawana jest pozycja uruchamiająca twoje ISO.
+Nie udało się odczytać pliku albo suma kontrolna jest nieprawidłowa.
+Plik jest za duży
+Jeśli nie masz pliku, możesz pobrać go ze strony oficjalnej:
+Sprawdzanie, czy plik nie jest uszkodzony…
+Weryfikacja nie powiodła się (błąd dysku).
+Pobieranie informacji weryfikacyjnych…
+Jeśli nie jesteś pewien, zostaw instalację na tym ekranie, uruchom komputer ponownie i wybierz w BesideOS „cofnij”.
+Jeśli nie jesteś pewien, zostaw instalację na tym ekranie; możesz wyłączyć komputer i wrócić do Windows, a potem po prostu wybrać w BesideOS „cofnij”.
+Tak, zacznij
+Tak, uruchom ponownie
+Brak pasującej dystrybucji
+Do menu rozruchu GRUB dodawana jest pozycja „Instalacja {sys}”; plik ISO zostaje tam, gdzie jest.
+Do menu rozruchu GRUB dodawana jest pozycja „Instalacja {sys}”.
+Jeśli menu GRUB nie pojawi się samo, przy starcie przytrzymaj Shift lub naciśnij Esc i wybierz pozycję „BesideOS”.
+Cofnięcie nie powiodło się.
+Zalecamy cofnięcie.
+Resztę robi BesideOS.
+Nieprawidłowy adres.
+Nieprawidłowa nazwa pliku.
+Odrzucono niebezpieczny adres
+Na jakim komputerze jesteś?
+Na jakich komputerach można zainstalować?
+Który system chcesz zainstalować?
+Jakie systemy możesz zainstalować?
+Który chcesz?
+Gdy wszystko jest gotowe, uruchamiasz ponownie komputer. Przy starcie menu pojawia się na 5 sekund z zaznaczoną instalacją {sys}; twoje zainstalowane systemy są na tej samej liście.
+Gotowe! Możesz teraz uruchomić ponownie
+Przygotowywanie, proszę czekać…
+Wszystkie
+Wszystko gotowe!
+Nic się nie zmieniło.
+Pliki ISO (*.iso)
+Kliknij, aby wybrać własny plik ISO i zainstalować
+Wybierasz własny plik ISO
+Plik ISO
+Plik ISO jest w systemie plików, którego GRUB nie potrafi odczytać. Skopiuj plik na dysk z ext4, btrfs, xfs lub FAT32.
+Nie znaleziono pliku ISO.
+Plik ISO zostaje tam, gdzie jest: {path}
+Plik ISO jest na zaszyfrowanym dysku; GRUB nie może go odczytać. Skopiuj go na niezaszyfrowany dysk.
+Plik ISO musi leżeć poza partycją, na którą instalujesz (np. na osobnym dysku). Instalator nie może usunąć partycji, na której leży jego własne ISO.
+Plik ISO leży na dysku, na który można instalować. Instalator nie może usunąć partycji, na której leży jego własne ISO; zainstaluj nowy system w wolnym miejscu, które utworzył BesideOS.
+Nie ruszaj partycji z plikiem ISO ani obecnego systemu; formatuj tylko nowo utworzone miejsce.
+Nie udało się pobrać ani zweryfikować ISO.
+Nie udało się zbadać zawartości ISO. {detail}
+Nie udało się sprawdzić ISO. {detail}
+Aby zajrzeć do ISO, potrzebny jest program „xorriso”. Zainstaluj go i spróbuj ponownie.
+Zamknij
+Katalog
+Katalog jest pusty
+Nie udało się wczytać katalogu: {msg}
+Chcę wybrać własny plik ISO i zainstalować
+Dla kogo: {text}
+Zrób kopię zapasową przed instalacją
+Wybierz plik ISO, który chcesz zainstalować
+Pobierz aplikację BesideOS, aby zainstalować
+Kliknij, aby zainstalować
+Systemy, obok których można zainstalować
+Instalacja
+Brakuje składnika instalacji
+Pliki instalacyjne trafiają na ten sam dysk.
+Pliki instalacyjne trafiają do małej partycji na tym samym dysku. Pendrive nie jest potrzebny.
+Gdy otworzy się instalator, przy pytaniu o dysk NIE wybieraj „Wymaż cały dysk”. Wybierz „Coś innego” (ręczne partycjonowanie) i używaj tylko wolnego (nieprzydzielonego) miejsca, które utworzył BesideOS.
+Pojawia się instalator.
+Instalacja zostanie przygotowana: powstanie wolne miejsce i zostaną skopiowane pliki. Komputer NIE uruchomi się sam ponownie; zdecydujesz o tym później.
+Instalacja jest przygotowana
+Przygotowywanie instalacji…
+Przygotowanie instalacji nie powiodło się.
+Instalacja nie jest możliwa.
+Rozpocznij instalację
+Zobacz instalację
+Linux
+Na komputerze z Linuksem Windows można zainstalować na osobnej partycji jako podwójny rozruch.
+Na komputerze z Linuksem inny Linux można uruchomić z pliku ISO przez pozycję GRUB i zainstalować w wolnym miejscu (żadna partycja nie jest zmniejszana).
+Systemy Linux
+Zainstaluj obok Linuksa
+Licencja: {text}
+Pulpit: {text}
+Twój obecny system i pliki zostają bez zmian. Jedna partycja jest zmniejszana, aby zwolnić miejsce; {name} uruchamia się z pliku ISO przez pozycję GRUB.
+Jak wygląda
+Jak to działa
+Jakiego rodzaju?
+Co się wydarzy?
+Otworzy się okno z prośbą o hasło.
+Otworzy się okno z prośbą o hasło. Nie zamykaj tego okna. Komputer nie uruchomi się sam ponownie.
+Przygotowywanie planu
+Nie udało się utworzyć planu (kod {code}). {detail}
+Gdy zobaczysz plan i potwierdzisz, że zrobiłeś kopię zapasową plików, na dysku powstanie wolne miejsce.
+Strona oficjalna
+Tej nazwy pliku nie ma w pliku sum kontrolnych; nie udało się zweryfikować. Katalog mógł się zestarzeć; pobierz ze strony oficjalnej.
+Suma kontrolna się nie zgadza. Plik nie został usunięty; sprawdź wartość SHA-256.
+Suma kontrolna się nie zgadza; plik został usunięty.
+Secure Boot jest włączony. ISO z niepodpisanymi jądrami mogą się nie uruchomić; jeśli menu instalacji się nie pojawi, wyłącz Secure Boot w BIOS.
+Przy włączonym Secure Boot niektóre ISO mogą się nie uruchomić. Jeśli instalator się nie pojawi, wyłącz Secure Boot w ustawieniach BIOS.
+Przy włączonym Secure Boot niektóre systemy mogą się nie uruchomić. Jeśli instalator się nie pojawi, wyłącz Secure Boot w ustawieniach BIOS; po instalacji możesz go włączyć z powrotem.
+Nie znaleziono wybranego pliku albo nie jest to plik ISO.
+Wybrany plik ISO jest badany
+Kod błędu serwera: {code}
+Serwer nie odpowiada
+Odpowiedź serwera jest nieprawidłowa
+Otwórz aplikację, aby zainstalować jednym kliknięciem
+Szczegóły techniczne
+Spróbuj ponownie
+Oparty na: {text}
+Klikasz
+Aplikacja działa na komputerze z Windows. W aplikacji wybierasz system, który chcesz, i uruchamiasz instalację jednym kliknięciem.
+Wygląda na to, że brakuje plików aplikacji. Pobierz BesideOS ponownie i otwórz.
+Anuluj
+Anuluj, cofnij zmiany
+Windows
+Instalator Windows uruchamia się tą metodą z dysku RAM. Błędy lub ostrzeżenia podczas instalacji są normalne; najczęściej można je zignorować i kontynuować. Jeśli instalacja w ogóle nie postępuje, „Cofnij zmiany” przywraca wszystko.
+Na komputerze z Windows Linuksa można zainstalować obok Windows jako podwójny rozruch.
+Na komputerze z Windows drugi system Windows można zainstalować na osobnej partycji jako podwójny rozruch.
+Windows poprosi o zgodę: odpowiedz „Tak”.
+Windows poprosi o zgodę: odpowiedz „Tak”. Nie zamykaj tego okna. Komputer nie uruchomi się sam ponownie.
+Windows potrzebuje co najmniej 64 GB; 80 GB to wygodnie. Wybierz więcej, jeśli zainstalujesz dużo programów.
+Jeśli zobaczysz błąd podczas instalacji Windows
+Systemy Windows
+Windows i twoje pliki zostają bez zmian. Na komputerze powstaje miejsce dla {name}.
+W Windows muszą być wyłączone Szybki start (Fast Startup) i BitLocker. Jeśli BitLocker jest włączony, BesideOS odmawia instalacji.
+Zainstaluj obok Windows
+Obok Windows powstaje około {gb} GB wolnego miejsca.
+Obok Windows powstaje miejsce i trafiają tam pliki.
+Obsługiwane są tylko dyski z partycjami GPT.
+Mogą być niedokończone zmiany
+Nowy system
+Ile miejsca zarezerwować dla nowego systemu?
+Nie znaleziono partycji, z której można zwolnić miejsce dla nowego systemu. Potrzebna jest partycja, którą można zmniejszyć (ext4, btrfs lub NTFS), z co najmniej {gb} GB wolnego miejsca.
+Uruchamia się ponownie
+Anuluj ponowne uruchomienie
+Nie udało się uruchomić komputera ponownie. Uruchom go samodzielnie.
+Po restarcie menu pojawi się na 5 sekund z zaznaczoną pozycją „Instalacja {sys}”. Jeśli chcesz, możesz wybrać z listy jeden z zainstalowanych systemów. Uruchom ponownie po zapisaniu otwartej pracy.
+Zanim zaczniesz nową, musisz cofnąć wcześniejsze zmiany.
+Partycja, z której zwalnia się miejsce, musi mieć ext4, btrfs lub NTFS i dość wolnego miejsca. Dysk musi być GPT.
+Powstaje miejsce
+Powstaje miejsce: jedna partycja się zmniejsza.
+Z której partycji zwolnić miejsce?
+Z którego dysku zwolnić miejsce?
+Miejsce jest odejmowane od wolnej części wybranej partycji. Twoje pliki nie są usuwane. Partycje, których nie ma na liście, mają system plików, którego nie można zmniejszyć, albo za mało wolnego miejsca.
+Miejsce jest odejmowane od wolnej części wybranego dysku. Twoje pliki nie są usuwane.
+Brak
+Nie przyznano uprawnień administratora; nie udało się odczytać informacji o dysku. Nic nie zmieniono.
+Nie przyznano uprawnień administratora; nie udało się odczytać dysków. Nic nie zmieniono.
+Nie przyznano uprawnień administratora; nic nie cofnięto.
+Nie przyznano uprawnień administratora; nic nie zmieniono.
+Brak adresu przekierowania
+{credit}  ·  Kliknij obraz, aby powiększyć
+Partycja {device} jest zmniejszana i powstaje około {gb} GB wolnego (nieprzydzielonego) miejsca.
+Partycja {device} jest zmniejszana o {gb} GB; zwolnione miejsce pozostaje puste (nieprzydzielone).
+Z {device} można zwolnić najwyżej {gb} GB. Wybierz mniej miejsca albo użyj innej partycji.
+{disk} · razem {total} · wolne {free}
+{disk} · {fstype} · razem {total} · można zwolnić najwyżej {max}
+{g} GB · zalecane
+{host}: {reason}
+Dysk {letter}:
+Dysk {letter}: ({label})
+Na dysku {letter}: powstaje około {gb} GB wolnego miejsca.
+Pobrano {mb} MB
+{name} jest pobierany, a obok Windows powstaje miejsce.
+{name} jest pobierany, na dyskach powstaje miejsce, a do menu GRUB dodawana jest pozycja.
+Pobieranie i sprawdzanie {name}
+Pojawia się instalator {name}.
+{name} · Windows jest tutaj
+Pliki instalacyjne {sys} są tu kopiowane.
+Ostrożnie wybierz dysk podczas instalacji {sys}
+Rysunek. Prawdziwy plan zobaczysz w całości, zanim cokolwiek się zmieni.
+Za dużo przekierowań
+Większości osób wystarczy 30 GB. Wybierz więcej, jeśli zainstalujesz dużo programów.
+Zrobiłem kopię zapasową ważnych plików
+Zrób kopię zapasową ważnych plików: zmniejszenie partycji rzadko może spowodować problemy.
+Trzy kroki. Dopóki nie zatwierdzisz, na komputerze nic się nie zmieni.
+Dwa systemy, jeden dysk. Bez pendrive'a.
+Pobierz
+Pobrany plik jest badany
+Pobieranie nie powiodło się: {message}
+Kliknij, aby pobrać
+Nie teraz
+Uruchom ponownie teraz
+Uruchomić ponownie teraz?
+Obecny system
+partycja aktualnie działającego systemu
+Instalacja {name}
+Windows (anuluj instalację)
+BesideOS: zainstaluj drugi system operacyjny obok tego

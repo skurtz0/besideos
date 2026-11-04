@@ -344,7 +344,7 @@
       "name": "Zorin OS",
       "family": "linux",
       "tagline": "Windows'tan geçenler için tanıdık Linux.",
-      "description": "Zorin OS, Windows ya da macOS'a benzeyen düzenleriyle Linux'a geçişi kolaylaştırır. Ubuntu tabanlıdır.",
+      "description": "Zorin OS, tanıdık düzenleriyle Linux'a geçişi kolaylaştırır. Ubuntu tabanlıdır.",
       "bestFor": "Windows'tan geçip yadırgamak istemeyenler.",
       "desktop": "GNOME (özelleştirilmiş)",
       "basedOn": "Ubuntu",
@@ -389,12 +389,12 @@
       "id": "elementary-os",
       "name": "elementary OS",
       "family": "linux",
-      "tagline": "macOS'a benzeyen şık ve sade Linux.",
+      "tagline": "Şık ve sade Linux.",
       "description": "elementary OS, sade tasarımı ve kendi uygulamalarıyla bilinir. Ubuntu tabanlıdır ve Pantheon masaüstünü kullanır.",
       "bestFor": "Şık ve sade bir arayüz isteyenler.",
       "desktop": "Pantheon",
       "basedOn": "Ubuntu",
-      "look": "Üstte ince bir çubuk, altta ortalanmış bir dock ve macOS'u andıran yuvarlak köşeli pencereler.",
+      "look": "Üstte ince bir çubuk, altta ortalanmış bir dock ve yuvarlak köşeli pencereler.",
       "accent": 4284791551,
       "guide": [
         {
@@ -582,7 +582,7 @@
       "name": "Fedora",
       "family": "linux",
       "tagline": "Güncel yazılımlar sunan, topluluk destekli bir dağıtım.",
-      "description": "Fedora Workstation, GNOME masaüstüyle gelen ve Fedora Projesi tarafından geliştirilen bir Linux dağıtımıdır. Apple Silicon (M1/M2) Mac'lerde Asahi Linux projesinin Fedora Asahi Remix'i kullanılır.",
+      "description": "Fedora Workstation, GNOME masaüstüyle gelen ve Fedora Projesi tarafından geliştirilen bir Linux dağıtımıdır.",
       "bestFor": "Güncel yazılımları ve geliştirici araçlarını görmek isteyenler.",
       "desktop": "GNOME",
       "look": "Üstte ince bir çubuk, tam ekran uygulama ve etkinlik görünümü olan, mavi tonlu sade bir GNOME masaüstü.",
@@ -602,14 +602,13 @@
         }
       ],
       "requirements": [
-        "64 bit işlemcili bir bilgisayar veya Apple Silicon (M1/M2) Mac",
+        "64 bit işlemcili bir bilgisayar",
         "Kurulum için yeterli boş disk alanı",
         "İnternet bağlantısı (indirme için)"
       ],
       "hosts": [
         "windows",
-        "linux",
-        "mac-m1m2"
+        "linux"
       ],
       "downloadPage": "https://fedoraproject.org/workstation/download",
       "userSuppliedIso": false,

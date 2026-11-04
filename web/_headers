@@ -1,0 +1,10 @@
+# Cloudflare Pages: these files keep the same name from one release to the next, so browsers must check for a new
+# version every time instead of showing a cached copy for hours (a stale main.dart.js would mix with newer assets).
+/main.dart.js
+  Cache-Control: no-cache
+/flutter_bootstrap.js
+  Cache-Control: no-cache
+/flutter.js
+  Cache-Control: no-cache
+/assets/*
+  Cache-Control: no-cache

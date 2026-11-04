@@ -6,7 +6,7 @@ Bu dosya, projeye başka bir bilgisayarda (ör. Linux'ta Claude ile) devam etmek
 
 - **Site + Windows uygulaması:** Flutter (`lib/`), tek kod tabanı. Site: https://besideos.pages.dev (Cloudflare Pages, Direct Upload). Uygulama: `BesideOS.exe` (Windows, tam ekran açılır).
 - **Planlayıcı:** Rust, `core/besideos_core` (`besideos-plan`). Çıkış kodları: 0 plan, 2 ret, 1 hata.
-- **Motor:** `probe/windows/*.ps1` (Windows PowerShell 5.1, yalnızca ASCII): `collect-host-facts`, `inspect-iso`, `apply-plan`, `boot-entries`.
+- **Motor:** `probe/windows/*.ps1` (Windows PowerShell 5.1, yalnızca ASCII): `collect-host-facts`, `inspect-iso`, `apply-plan`.
 - **Katalog:** `assets/catalog/catalog.json` (21 sistem), ekran görüntüleri `assets/screens/`.
 - Derleme (Windows): `tool\build_windows.ps1` (Rust planlayıcı + Flutter + `engine/` klasörü). Testler: `flutter test` (208), `cargo test` (core).
 

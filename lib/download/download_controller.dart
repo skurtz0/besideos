@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import '../catalog/distro.dart';
+import '../l10n/l10n.dart';
 import 'checksum.dart';
 import 'downloader.dart';
 import 'iso_verifier.dart';
@@ -135,7 +136,7 @@ class DownloadController extends ChangeNotifier {
     } on DownloadCancelled {
       _set(DownloadPhase.cancelled);
     } on DownloadException catch (e) {
-      _set(DownloadPhase.failed, error: 'İndirme başarısız: ${e.message}');
+      _set(DownloadPhase.failed, error: tr('İndirme başarısız: {message}', {'message': e.message}));
     } on FormatException {
       _set(DownloadPhase.failed, error: 'Geçersiz adres.');
     } on FileSystemException {
