@@ -3,8 +3,17 @@ import 'package:flutter/widgets.dart';
 
 import 'download_stub.dart' if (dart.library.js_interop) 'download_web.dart' as impl;
 
-/// The Windows app package, served from the site root.
-const kAppDownloadPath = 'BesideOS-windows.zip';
+/// The app packages, served from the site root.
+const kWindowsDownloadPath = 'BesideOS-windows.zip';
+const kLinuxDownloadPath = 'BesideOS-linux.tar.gz';
+
+/// Which package fits the visitor's system: Linux desktops get the Linux build, everything else the Windows one
+/// (Android and ChromeOS report "Linux" too, but cannot run either; they stay on the default).
+String appDownloadFor(String userAgent) {
+  final ua = userAgent.toLowerCase();
+  final linuxDesktop = ua.contains('linux') && !ua.contains('android') && !ua.contains('cros');
+  return linuxDesktop ? kLinuxDownloadPath : kWindowsDownloadPath;
+}
 
 /// Whether this is the public website (shows "download the app") or the desktop app itself.
 /// Defaults to [kIsWeb]; tests and previews can force either.
@@ -24,7 +33,8 @@ class SiteMode extends InheritedWidget {
     if (cb != null) {
       cb();
     } else {
-      impl.startDownload(kAppDownloadPath, kAppDownloadPath);
+      final file = appDownloadFor(impl.browserUserAgent());
+      impl.startDownload(file, file);
     }
   }
 

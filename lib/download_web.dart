@@ -9,3 +9,6 @@ void startDownload(String path, String fileName) {
   a.click();
   a.remove();
 }
+
+/// The visitor's browser user agent, used to pick the matching app package.
+String browserUserAgent() => web.window.navigator.userAgent;
