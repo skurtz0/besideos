@@ -58,3 +58,21 @@ Türkçe yerel ayar (tr-TR) notu: PowerShell'de büyük/küçük harf duyarsız 
 Kaynak kod [MIT lisansı](LICENSE) ile yayımlanır. Katalogdaki dağıtım adları, logoları ve ekran görüntüleri ilgili projelerin mülkiyetindedir ve kendi lisanslarına tabidir; MIT lisansı yalnızca BesideOS'un kendi kodunu kapsar.
 
 Windows paketleri ücretsiz kod imzalama için [SignPath Foundation](https://signpath.org) ile imzalanacaktır; imza politikası bu bölüme eklenecektir.
+
+## Code signing policy
+
+Free code signing for the Windows binaries is provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
+
+- Only binaries built from this repository by the public GitHub Actions workflow (`.github/workflows/deploy-web.yml`) are submitted for signing. Nothing is built or signed locally.
+- Signed files: `BesideOS.exe` and `engine/besideos-plan.exe` in `BesideOS-windows.zip`.
+- Every release is reviewed and approved by the maintainer before signing. Roles: author, reviewer and approver is the project owner, [skurtz0](https://github.com/skurtz0).
+- BesideOS does not include third-party binaries that are signed under this certificate.
+
+## Privacy policy
+
+BesideOS does not collect, store or transmit personal data and contains no telemetry or analytics.
+
+- The desktop app works offline except for downloading the operating system image (ISO) and its checksum file you choose, directly from that distribution's official download servers.
+- Everything it reads about your computer (disks, partitions, boot entries) stays on your computer, in `%LOCALAPPDATA%\BesideOS\work` on Windows, and is never uploaded.
+- The app only changes the disk after you review the plan and confirm; "Undo" restores the previous state.
+- The website [besideos.com](https://besideos.com) is a static site hosted on Cloudflare Pages; Cloudflare may keep standard server logs (such as IP address) as described in [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/). The site sets no tracking cookies.
