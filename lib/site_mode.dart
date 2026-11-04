@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'download_stub.dart' if (dart.library.js_interop) 'download_web.dart' as impl;
 
 /// The app packages, served from the site root.
-const kWindowsDownloadPath = 'BesideOS-windows.zip';
-const kLinuxDownloadPath = 'BesideOS-linux.tar.gz';
+const kWindowsDownloadPath = 'BesideOS-Setup.exe';
+const kLinuxDownloadPath = 'besideos-linux-amd64.deb';
 
 /// Which package fits the visitor's system: Linux desktops get the Linux build, everything else the Windows one
 /// (Android and ChromeOS report "Linux" too, but cannot run either; they stay on the default).

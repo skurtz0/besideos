@@ -1,6 +1,6 @@
 name: Deploy site to Cloudflare Pages
 
-# Builds the web site and the Windows and Linux app packages, then publishes both to Cloudflare Pages.
+# Builds the web site and the Windows installer and the Linux package, then publishes both to Cloudflare Pages.
 # Needs two repository secrets (Settings > Secrets and variables > Actions):
 #   CLOUDFLARE_API_TOKEN   token with "Cloudflare Pages: Edit"
 #   CLOUDFLARE_ACCOUNT_ID  your Cloudflare account id
@@ -29,16 +29,19 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: powershell -NoProfile -File tool/build_windows.ps1
-      - name: Zip the app (BesideOS/ prefix, forward-slash entries)
+      - name: Build the installer (Inno Setup)
         shell: pwsh
         run: |
-          New-Item -ItemType Directory -Path stage/BesideOS | Out-Null
-          Copy-Item -Recurse -Force build/windows/x64/runner/Release/* stage/BesideOS/
-          Compress-Archive -Path stage/BesideOS -DestinationPath BesideOS-windows.zip
+          $iscc = Join-Path ${env:ProgramFiles(x86)} 'Inno Setup 6\ISCC.exe'
+          if (-not (Test-Path $iscc)) { choco install innosetup -y --no-progress }
+          $ver = (Select-String -Path pubspec.yaml -Pattern '^version:\s*([0-9.]+)').Matches[0].Groups[1].Value
+          $src = (Resolve-Path build/windows/x64/runner/Release).Path
+          & $iscc "/DAppVersion=$ver" "/DSourceDir=$src" tool/installer/besideos.iss
+          if ($LASTEXITCODE -ne 0) { throw 'ISCC failed' }
       - uses: actions/upload-artifact@v4
         with:
           name: windows-app
-          path: BesideOS-windows.zip
+          path: build/installer/BesideOS-Setup.exe
           if-no-files-found: error
 
   linux-app:
@@ -56,10 +59,11 @@ jobs:
           cache: true
       - run: flutter pub get
       - run: bash tool/build_linux.sh
+      - run: bash tool/package_deb.sh
       - uses: actions/upload-artifact@v4
         with:
           name: linux-app
-          path: build/BesideOS-linux.tar.gz
+          path: build/besideos-linux-amd64.deb
           if-no-files-found: error
 
   deploy:
@@ -96,10 +100,9 @@ jobs:
       - name: Trim files the site does not use (Pages allows 25 MiB per file)
         run: |
           rm -f build/web/canvaskit/skwasm* build/web/canvaskit/wimp* build/web/*.symbols
-          ls -la build/web/BesideOS-windows.zip
-          unzip -tq build/web/BesideOS-windows.zip
-          ls -la build/web/BesideOS-linux.tar.gz
-          tar -tzf build/web/BesideOS-linux.tar.gz > /dev/null
+          ls -la build/web/BesideOS-Setup.exe build/web/besideos-linux-amd64.deb
+          [ "$(head -c2 build/web/BesideOS-Setup.exe)" = "MZ" ]
+          dpkg-deb --info build/web/besideos-linux-amd64.deb > /dev/null
 
       - name: Publish
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
