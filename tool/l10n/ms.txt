@@ -258,3 +258,4 @@ partition sistem yang sedang berjalan sekarang
 Pemasangan {name}
 Windows (batalkan pemasangan)
 BesideOS: pasang sistem pengendalian lain di sebelah yang ini
+Jika Chrome menyekat muat turun: dalam gelembung muat turun pilih ⋮ → Simpan. Fail ini baharu, jadi Chrome belum mengenalinya.

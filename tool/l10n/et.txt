@@ -258,3 +258,4 @@ praegu töötava süsteemi partitsioon
 {name} paigaldus
 Windows (tühista paigaldus)
 BesideOS: paigalda teine operatsioonisüsteem selle kõrvale
+Kui Chrome allalaadimise blokeerib: vali allalaadimise mullis ⋮ → Säilita. Fail on uus, seega Chrome ei tunne seda veel.

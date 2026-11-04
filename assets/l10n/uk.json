@@ -259,6 +259,7 @@
  "{name} kurulumu": "Встановлення {name}",
  "Windows (kurulumdan vazgeç)": "Windows (скасувати встановлення)",
  "BesideOS: başka bir işletim sistemini bunun yanına kur": "BesideOS: встановіть другу операційну систему поруч із цією",
+ "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "Якщо Chrome блокує завантаження: у вікні завантажень виберіть ⋮ → Зберегти. Файл новий, тому Chrome його ще не знає.",
  "Yeni başlayanlar için en yaygın Linux.": "Найпоширеніший Linux для початківців.",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "Ubuntu — дуже поширений дистрибутив Linux з великою спільнотою користувачів і багатою документацією. За замовчуванням постачається зі стільницею GNOME.",
  "Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.": "Для тих, хто вперше переходить на Linux і хоче знаходити багато допомоги, якщо щось піде не так.",

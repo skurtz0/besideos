@@ -258,3 +258,4 @@ die Partition des gerade laufenden Systems
 {name} Installation
 Windows (Installation abbrechen)
 BesideOS: ein zweites Betriebssystem neben diesem installieren
+Wenn Chrome den Download blockiert: In der Download-Blase ⋮ → Behalten wählen. Die Datei ist neu, deshalb kennt Chrome sie noch nicht.

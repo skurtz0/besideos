@@ -380,6 +380,14 @@ class _Hero extends StatelessWidget {
               ),
             ),
           ),
+          if (web) ...[
+            const SizedBox(height: 14),
+            Text(
+              "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.",
+              style: TextStyle(
+                  color: kMuted, fontSize: narrow ? 13 : 14, height: 1.5),
+            ),
+          ],
           const SizedBox(height: 26),
           const Wrap(
             spacing: 10,

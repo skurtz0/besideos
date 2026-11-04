@@ -259,6 +259,7 @@
  "{name} kurulumu": "Cài đặt {name}",
  "Windows (kurulumdan vazgeç)": "Windows (hủy cài đặt)",
  "BesideOS: başka bir işletim sistemini bunun yanına kur": "BesideOS: cài hệ điều hành khác bên cạnh hệ điều hành này",
+ "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "Nếu Chrome chặn tải xuống: trong khung tải xuống, chọn ⋮ → Giữ lại. Tệp còn mới nên Chrome chưa nhận ra.",
  "Yeni başlayanlar için en yaygın Linux.": "Linux phổ biến nhất cho người mới bắt đầu.",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "Ubuntu là bản phân phối Linux rất phổ biến, có cộng đồng người dùng lớn và nhiều tài liệu. Mặc định đi kèm màn hình nền GNOME.",
  "Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.": "Dành cho người lần đầu chuyển sang Linux và muốn có nhiều nguồn trợ giúp khi gặp sự cố.",
