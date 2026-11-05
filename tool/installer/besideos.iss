@@ -29,8 +29,27 @@ ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
 
 [Languages]
+; The same 20 languages as the site and the app. Turkish and English ship with Inno Setup; the rest live in tool/installer/languages.
 Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
+Name: "turkish"; MessagesFile: "compiler:LanguagesTurkish.isl"
+Name: "german"; MessagesFile: "languages\1erman.isl"
+Name: "french"; MessagesFile: "languages\1rench.isl"
+Name: "spanish"; MessagesFile: "languages\1panish.isl"
+Name: "italian"; MessagesFile: "languages\1talian.isl"
+Name: "brazilianportuguese"; MessagesFile: "languages\1razilianPortuguese.isl"
+Name: "russian"; MessagesFile: "languages\1ussian.isl"
+Name: "chinesesimplified"; MessagesFile: "languages\1hineseSimplified.isl"
+Name: "chinesetraditional"; MessagesFile: "languages\1hineseTraditional.isl"
+Name: "japanese"; MessagesFile: "languages\1apanese.isl"
+Name: "korean"; MessagesFile: "languages\1orean.isl"
+Name: "arabic"; MessagesFile: "languages\1rabic.isl"
+Name: "polish"; MessagesFile: "languages\1olish.isl"
+Name: "vietnamese"; MessagesFile: "languages\1ietnamese.isl"
+Name: "malaysian"; MessagesFile: "languages\1alaysian.isl"
+Name: "finnish"; MessagesFile: "languages\1innish.isl"
+Name: "estonian"; MessagesFile: "languages\1stonian.isl"
+Name: "ukrainian"; MessagesFile: "languages\1krainian.isl"
+Name: "hindi"; MessagesFile: "languages\1indi.isl"
 
 [Files]
 Source: "{#SourceDir}\*"; DestDir: "{app}"; Flags: recursesubdirs createallsubdirs ignoreversion
