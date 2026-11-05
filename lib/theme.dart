@@ -1,4 +1,5 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'l10n/l10n.dart';
 
 const kBg = Color(0xFF181C26);
 const kPanel = Color(0xFF212736);
@@ -75,7 +76,7 @@ class SectionTitle extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(children: [
         if (icon != null) ...[Icon(icon, color: kAccent, size: 22), const SizedBox(width: 8)],
-        Expanded(child: Text(text, style: const TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700))),
+        Expanded(child: Text(tr(text), style: const TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700))),
       ]),
     );
   }
