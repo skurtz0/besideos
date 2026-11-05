@@ -147,14 +147,18 @@ class SiteBar extends StatelessWidget implements PreferredSizeWidget {
                   const SizedBox(width: 6),
                   const Icon(Icons.chevron_right_rounded, color: kMuted),
                   const SizedBox(width: 2),
-                  Flexible(
-                    child: Text(page!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700)),
+                  // Expanded (not Flexible + Spacer, which would split the free width in half and stop the buttons mid-bar).
+                  Expanded(
+                    child: Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(page!,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(color: kText, fontSize: 18, fontWeight: FontWeight.w700)),
+                    ),
                   ),
-                ],
-                const Spacer(),
+                ] else
+                  const Spacer(),
                 if (showCatalog)
                   compact
                       ? IconButton(
