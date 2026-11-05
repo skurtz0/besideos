@@ -257,5 +257,5 @@ Sistema attuale
 la partizione del sistema attualmente in esecuzione
 Installazione di {name}
 Windows (annulla l'installazione)
-BesideOS: installa un altro sistema operativo accanto a questo
+BesideOS | Installa un altro sistema operativo accanto a questo
 Se Chrome blocca il download: nel riquadro dei download scegli ⋮ → Mantieni. Il file è nuovo e Chrome non lo conosce ancora.

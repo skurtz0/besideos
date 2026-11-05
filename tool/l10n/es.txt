@@ -257,5 +257,5 @@ Sistema actual
 la partición del sistema que se está ejecutando ahora
 Instalación de {name}
 Windows (cancelar la instalación)
-BesideOS: instala otro sistema operativo junto a este
+BesideOS | Instala otro sistema operativo junto a este
 Si Chrome bloquea la descarga: en la burbuja de descarga elige ⋮ → Conservar. El archivo es nuevo y Chrome aún no lo conoce.

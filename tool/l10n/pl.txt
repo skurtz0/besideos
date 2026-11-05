@@ -257,5 +257,5 @@ Obecny system
 partycja aktualnie działającego systemu
 Instalacja {name}
 Windows (anuluj instalację)
-BesideOS: zainstaluj drugi system operacyjny obok tego
+BesideOS | Zainstaluj drugi system operacyjny obok tego
 Jeśli Chrome zablokuje pobieranie: w okienku pobierania wybierz ⋮ → Zachowaj. Plik jest nowy, więc Chrome jeszcze go nie zna.

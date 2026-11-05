@@ -257,5 +257,5 @@ Nykyinen järjestelmä
 parhaillaan käynnissä olevan järjestelmän osio
 {name}-asennus
 Windows (peruuta asennus)
-BesideOS: asenna toinen käyttöjärjestelmä tämän rinnalle
+BesideOS | Asenna toinen käyttöjärjestelmä tämän rinnalle
 Jos Chrome estää latauksen: valitse latauskuplassa ⋮ → Säilytä. Tiedosto on uusi, joten Chrome ei vielä tunne sitä.

@@ -112,7 +112,7 @@ class _BesideSiteState extends State<BesideSite> {
                   child: child!),
               title: 'BesideOS',
               onGenerateTitle: (_) =>
-                  tr('BesideOS: başka bir işletim sistemini bunun yanına kur'),
+                  tr('BesideOS | Başka bir işletim sistemini bunun yanına kur'),
               debugShowCheckedModeBanner: false,
               theme: base.copyWith(
                 textTheme: tt.copyWith(

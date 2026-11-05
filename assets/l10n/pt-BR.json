@@ -258,7 +258,7 @@
  "şu an çalışan sistemin bölümü": "a partição do sistema que está em execução agora",
  "{name} kurulumu": "Instalação do {name}",
  "Windows (kurulumdan vazgeç)": "Windows (cancelar a instalação)",
- "BesideOS: başka bir işletim sistemini bunun yanına kur": "BesideOS: instale outro sistema operacional ao lado deste",
+ "BesideOS | Başka bir işletim sistemini bunun yanına kur": "BesideOS | Instale outro sistema operacional ao lado deste",
  "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "Se o Chrome bloquear o download: na janelinha de downloads escolha ⋮ → Manter. O arquivo é novo e o Chrome ainda não o conhece.",
  "Yeni başlayanlar için en yaygın Linux.": "O Linux mais comum para quem está começando.",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "O Ubuntu é uma distribuição Linux muito difundida, com uma grande comunidade de usuários e muita documentação. Por padrão vem com a área de trabalho GNOME.",

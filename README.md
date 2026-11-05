@@ -1,5 +1,7 @@
 <p align="center"><img src="web/icons/Icon-192.png" width="96" alt="BesideOS logo"></p>
 
+[English](README.md) · [Türkçe](readme/README.tr.md) · [Deutsch](readme/README.de.md) · [Español](readme/README.es.md) · [Français](readme/README.fr.md) · [Italiano](readme/README.it.md) · [Português (Brasil)](readme/README.pt-BR.md) · [Polski](readme/README.pl.md) · [Русский](readme/README.ru.md) · [Українська](readme/README.uk.md) · [Eesti](readme/README.et.md) · [Suomi](readme/README.fi.md) · [Bahasa Melayu](readme/README.ms.md) · [Tiếng Việt](readme/README.vi.md) · [العربية](readme/README.ar.md) · [हिन्दी](readme/README.hi.md) · [日本語](readme/README.ja.md) · [한국어](readme/README.ko.md) · [简体中文](readme/README.zh-CN.md) · [繁體中文](readme/README.zh-TW.md)
+
 # BesideOS
 
 **Install another operating system beside the one you are running. No USB stick.**

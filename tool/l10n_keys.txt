@@ -257,5 +257,5 @@ Yönlendirme adresi yok
 şu an çalışan sistemin bölümü
 {name} kurulumu
 Windows (kurulumdan vazgeç)
-BesideOS: başka bir işletim sistemini bunun yanına kur
+BesideOS | Başka bir işletim sistemini bunun yanına kur
 Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.

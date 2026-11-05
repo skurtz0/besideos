@@ -258,7 +258,7 @@
  "şu an çalışan sistemin bölümü": "지금 실행 중인 시스템의 파티션",
  "{name} kurulumu": "{name} 설치",
  "Windows (kurulumdan vazgeç)": "Windows(설치 취소)",
- "BesideOS: başka bir işletim sistemini bunun yanına kur": "BesideOS: 이 운영 체제 옆에 다른 운영 체제 설치",
+ "BesideOS | Başka bir işletim sistemini bunun yanına kur": "BesideOS | 이 운영 체제 옆에 다른 운영 체제 설치",
  "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "Chrome에서 다운로드를 차단하면: 다운로드 창에서 ⋮ → 유지를 선택하세요. 새 파일이라 Chrome이 아직 인식하지 못합니다.",
  "Yeni başlayanlar için en yaygın Linux.": "입문자에게 가장 흔한 Linux.",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "Ubuntu는 사용자 커뮤니티와 문서가 풍부한, 매우 널리 쓰이는 Linux 배포판입니다. 기본으로 GNOME 데스크톱이 함께 제공됩니다.",

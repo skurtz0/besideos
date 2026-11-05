@@ -258,7 +258,7 @@
  "şu an çalışan sistemin bölümü": "当前正在运行的系统所在的分区",
  "{name} kurulumu": "安装 {name}",
  "Windows (kurulumdan vazgeç)": "Windows（取消安装）",
- "BesideOS: başka bir işletim sistemini bunun yanına kur": "BesideOS：在当前系统旁边安装另一个操作系统",
+ "BesideOS | Başka bir işletim sistemini bunun yanına kur": "BesideOS | 在当前系统旁边安装另一个操作系统",
  "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "如果 Chrome 拦截了下载：在下载气泡中选择 ⋮ → 保留。该文件较新，Chrome 暂时还不认识它。",
  "Yeni başlayanlar için en yaygın Linux.": "适合新手的最常见的 Linux。",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "Ubuntu 是使用非常广泛的 Linux 发行版，拥有庞大的用户社区和丰富的文档。默认搭载 GNOME 桌面。",
