@@ -10,6 +10,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  actions: write
 
 jobs:
   update:
@@ -30,6 +31,7 @@ jobs:
       - run: flutter analyze
       - run: flutter test
       - uses: peter-evans/create-pull-request@v7
+        id: cpr
         with:
           branch: bot/update-iso-catalog
           commit-message: 'Catalog: update ISO links to the newest official releases'
@@ -40,3 +42,12 @@ jobs:
             web/llms-full.txt
             web/distros
             web/sitemap.xml
+      # analyze and test above already passed, so merge at once. A push made with the default token does not start
+      # other workflows, so start the site deploy by hand (otherwise installed apps never see the new catalog).
+      - name: Merge and deploy
+        if: steps.cpr.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr merge "${{ steps.cpr.outputs.pull-request-number }}" --squash --delete-branch --repo "$GITHUB_REPOSITORY"
+          gh workflow run deploy-web.yml --ref main --repo "$GITHUB_REPOSITORY"
