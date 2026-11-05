@@ -28,6 +28,11 @@ jobs:
         run: git diff --exit-code -- assets/l10n
       - run: flutter analyze
       - run: flutter test
+      - name: Catalog ISO links are alive
+        run: python3 tool/update_catalog.py --check
+        continue-on-error: true
+      - name: Generated llms-full.txt and SEO pages are up to date
+        run: python3 tool/build_llms_full.py && python3 tool/build_seo_pages.py && git diff --exit-code -- web/llms-full.txt web/distros web/sitemap.xml
 
   windows-build:
     runs-on: windows-latest

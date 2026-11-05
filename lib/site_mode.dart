@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 
 import 'download_stub.dart' if (dart.library.js_interop) 'download_web.dart' as impl;
 
+/// Opens a web address in the browser (a new tab on the site, the default browser in the app).
+void openExternal(String url) => impl.openExternal(url);
+
 /// The app packages, served from the site root.
 const kWindowsDownloadPath = 'BesideOS-Setup.exe';
 const kLinuxDownloadPath = 'besideos-linux-amd64.deb';

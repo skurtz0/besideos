@@ -1,0 +1,215 @@
+# BesideOS: full catalog
+
+> Operating systems BesideOS can install beside the current one, without a USB stick. https://besideos.com/
+
+## Ubuntu
+- id: ubuntu
+- family: linux
+- tagline: Yeni başlayanlar için en yaygın Linux.
+- best for: Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.
+- desktop: GNOME
+- official download page: https://ubuntu.com/download/desktop
+- page: https://besideos.com/#/distros/ubuntu
+- ISO (x86_64): https://releases.ubuntu.com/26.04.1/ubuntu-26.04.1-desktop-amd64.iso (checksums: https://releases.ubuntu.com/26.04.1/SHA256SUMS)
+- ISO (arm64): https://cdimage.ubuntu.com/ubuntu/releases/26.04.1/release/ubuntu-26.04.1-desktop-arm64.iso (checksums: https://cdimage.ubuntu.com/ubuntu/releases/26.04.1/release/SHA256SUMS)
+
+## Xubuntu
+- id: xubuntu
+- family: linux
+- tagline: Ubuntu'nun hafif ve sade hâli.
+- best for: Ubuntu uyumluluğunu isteyip daha hafif bir sistem arayanlar.
+- desktop: Xfce
+- official download page: https://xubuntu.org/download/
+- page: https://besideos.com/#/distros/xubuntu
+- ISO (x86_64): https://cdimage.ubuntu.com/xubuntu/releases/26.04.1/release/xubuntu-26.04.1-desktop-amd64.iso (checksums: https://cdimage.ubuntu.com/xubuntu/releases/26.04.1/release/SHA256SUMS)
+
+## Kubuntu
+- id: kubuntu
+- family: linux
+- tagline: Ubuntu tabanlı, çok özelleştirilebilir KDE Plasma.
+- best for: Windows'a benzer bir düzen isteyip her şeyi ayarlamayı sevenler.
+- desktop: KDE Plasma
+- official download page: https://kubuntu.org/getkubuntu/
+- page: https://besideos.com/#/distros/kubuntu
+- ISO (x86_64): https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/kubuntu-26.04.1-desktop-amd64.iso (checksums: https://cdimage.ubuntu.com/kubuntu/releases/26.04.1/release/SHA256SUMS)
+
+## Linux Mint
+- id: linux-mint
+- family: linux
+- tagline: Windows'tan gelenlere tanıdık gelen, sakin bir masaüstü.
+- best for: Windows'tan geçenler ve tanıdık, sade bir arayüz isteyenler.
+- desktop: Cinnamon
+- official download page: https://linuxmint.com/download.php
+- page: https://besideos.com/#/distros/linux-mint
+- ISO (x86_64): https://mirrors.edge.kernel.org/linuxmint/stable/22.3/linuxmint-22.3-cinnamon-64bit.iso (checksums: https://mirrors.edge.kernel.org/linuxmint/stable/22.3/sha256sum.txt)
+
+## Pop!_OS
+- id: pop-os
+- family: linux
+- tagline: Geliştiriciler ve oyuncular için pratik sistem.
+- best for: Yazılım geliştirenler ve oyun oynayanlar.
+- desktop: COSMIC
+- official download page: https://system76.com/pop/download/
+- page: https://besideos.com/#/distros/pop-os
+- ISO: the user picks their own ISO file
+
+## Zorin OS
+- id: zorin-os
+- family: linux
+- tagline: Windows'tan geçenler için tanıdık Linux.
+- best for: Windows'tan geçip yadırgamak istemeyenler.
+- desktop: GNOME (özelleştirilmiş)
+- official download page: https://zorin.com/os/download/
+- page: https://besideos.com/#/distros/zorin-os
+- ISO: the user picks their own ISO file
+
+## elementary OS
+- id: elementary-os
+- family: linux
+- tagline: Şık ve sade Linux.
+- best for: Şık ve sade bir arayüz isteyenler.
+- desktop: Pantheon
+- official download page: https://elementary.io/
+- page: https://besideos.com/#/distros/elementary-os
+- ISO: the user picks their own ISO file
+
+## Debian
+- id: debian
+- family: linux
+- tagline: Kararlılığıyla bilinen, topluluk işletmeli evrensel işletim sistemi.
+- best for: Kararlı ve sade bir sistem isteyen, biraz Linux bilgisi olanlar.
+- desktop: None
+- official download page: https://www.debian.org/distrib/
+- page: https://besideos.com/#/distros/debian
+- ISO (x86_64): https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/debian-live-13.7.0-amd64-xfce.iso (checksums: https://cdimage.debian.org/debian-cd/current-live/amd64/iso-hybrid/SHA256SUMS)
+
+## MX Linux
+- id: mx-linux
+- family: linux
+- tagline: Kararlı, hafif ve araç dolu.
+- best for: Hafif ve kararlı bir sistem isteyenler.
+- desktop: Xfce
+- official download page: https://mxlinux.org/download-links/
+- page: https://besideos.com/#/distros/mx-linux
+- ISO: the user picks their own ISO file
+
+## Fedora
+- id: fedora
+- family: linux
+- tagline: Güncel yazılımlar sunan, topluluk destekli bir dağıtım.
+- best for: Güncel yazılımları ve geliştirici araçlarını görmek isteyenler.
+- desktop: GNOME
+- official download page: https://fedoraproject.org/workstation/download
+- page: https://besideos.com/#/distros/fedora
+- ISO (x86_64): https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Workstation/x86_64/iso/Fedora-Workstation-Live-45-1.4.x86_64.iso (checksums: https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Workstation/x86_64/iso/Fedora-Workstation-45-1.4-x86_64-CHECKSUM)
+- ISO (arm64): https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Workstation/aarch64/iso/Fedora-Workstation-Live-45-1.4.aarch64.iso (checksums: https://dl.fedoraproject.org/pub/fedora/linux/releases/45/Workstation/aarch64/iso/Fedora-Workstation-45-1.4-aarch64-CHECKSUM)
+
+## Bazzite
+- id: bazzite
+- family: linux
+- tagline: Oyun için hazır Linux.
+- best for: Bilgisayarda oyun oynamak isteyenler ve Steam Deck benzeri bir deneyim arayanlar.
+- desktop: KDE Plasma / GNOME
+- official download page: https://bazzite.gg/
+- page: https://besideos.com/#/distros/bazzite
+- ISO (x86_64): https://download.bazzite.gg/bazzite-stable-amd64.iso (checksums: https://download.bazzite.gg/bazzite-stable-amd64.iso-CHECKSUM)
+
+## Manjaro
+- id: manjaro
+- family: linux
+- tagline: Arch Linux'un kolay kurulan hâli.
+- best for: En yeni yazılımları isteyen ve biraz deneyimi olanlar.
+- desktop: KDE Plasma / GNOME / Xfce
+- official download page: https://manjaro.org/products/download/x86
+- page: https://besideos.com/#/distros/manjaro
+- ISO: the user picks their own ISO file
+
+## CachyOS
+- id: cachyos
+- family: linux
+- tagline: Hızlı ve ayarlı Arch tabanlı sistem.
+- best for: Performans arayan ve biraz deneyimi olan kullanıcılar.
+- desktop: KDE Plasma / GNOME / Hyprland ve daha fazlası
+- official download page: https://cachyos.org/download/
+- page: https://besideos.com/#/distros/cachyos
+- ISO: the user picks their own ISO file
+
+## Omarchy
+- id: omarchy
+- family: linux
+- tagline: Klavyeyle kullanılan, hazır kurulu şık bir geliştirici masaüstü.
+- best for: Klavye ağırlıklı çalışan, yazılım geliştiren ve sistemini kurcalamayı sevenler.
+- desktop: Hyprland
+- official download page: https://omarchy.org/
+- page: https://besideos.com/#/distros/omarchy
+- ISO (x86_64): https://iso.omarchy.org/omarchy-4.0.6.iso (checksums: https://iso.omarchy.org/omarchy-4.0.6.iso.sha256)
+
+## openSUSE
+- id: opensuse
+- family: linux
+- tagline: Güçlü yönetim araçlarıyla sağlam bir sistem.
+- best for: Sağlam altyapı ve güçlü yönetim araçları isteyenler.
+- desktop: KDE Plasma / GNOME
+- official download page: https://get.opensuse.org/
+- page: https://besideos.com/#/distros/opensuse
+- ISO: the user picks their own ISO file
+
+## Windows XP
+- id: windows-xp
+- family: windows
+- tagline: Yeşil tepeli, mavi görev çubuklu efsane Windows.
+- best for: Çok eski programları ve donanımı kullanmak ya da merak edenler. İnternete bağlamamanı öneririz.
+- desktop: None
+- official download page: https://learn.microsoft.com/lifecycle/products/windows-xp
+- page: https://besideos.com/#/distros/windows-xp
+- ISO: the user picks their own ISO file
+
+## Windows 7
+- id: windows-7
+- family: windows
+- tagline: Şeffaf pencereli klasik Windows.
+- best for: Eski programları ve eski donanımı çalıştırmak isteyenler.
+- desktop: None
+- official download page: https://learn.microsoft.com/lifecycle/products/windows-7
+- page: https://besideos.com/#/distros/windows-7
+- ISO: the user picks their own ISO file
+
+## Windows 8.1
+- id: windows-8-1
+- family: windows
+- tagline: Başlat ekranı kutucuklu eski Windows.
+- best for: Eski bir program ya da donanım için Windows 8.1 gerekenler.
+- desktop: None
+- official download page: https://learn.microsoft.com/lifecycle/products/windows-81
+- page: https://besideos.com/#/distros/windows-8-1
+- ISO: the user picks their own ISO file
+
+## Windows 10
+- id: windows-10
+- family: windows
+- tagline: Microsoft'un yaygın kullanılan önceki sürümü.
+- best for: Windows 11 gereksinimlerini karşılamayan bilgisayarlarda Windows kullanmak isteyenler.
+- desktop: None
+- official download page: https://www.microsoft.com/software-download/windows10ISO
+- page: https://besideos.com/#/distros/windows-10
+- ISO: the user picks their own ISO file
+
+## Windows 11
+- id: windows-11
+- family: windows
+- tagline: Microsoft'un güncel Windows sürümü.
+- best for: Windows'a ihtiyaç duyan uygulama ve oyunları çalıştırmak isteyenler.
+- desktop: None
+- official download page: https://www.microsoft.com/software-download/windows11
+- page: https://besideos.com/#/distros/windows-11
+- ISO: the user picks their own ISO file
+
+## Windows Server 2025
+- id: windows-server-2025
+- family: windows
+- tagline: Sunucu ve laboratuvar denemeleri için Windows.
+- best for: Sunucu rollerini ve yönetim araçlarını öğrenmek isteyenler.
+- desktop: None
+- official download page: https://www.microsoft.com/evalcenter/evaluate-windows-server-2025
+- page: https://besideos.com/#/distros/windows-server-2025
+- ISO: the user picks their own ISO file

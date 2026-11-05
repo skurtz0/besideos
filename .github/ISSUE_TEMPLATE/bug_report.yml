@@ -1,0 +1,14 @@
+name: Bug report
+description: Something did not work
+body:
+  - type: input
+    id: os
+    attributes: {label: Your operating system and BesideOS version}
+    validations: {required: true}
+  - type: input
+    id: distro
+    attributes: {label: Which operating system were you installing?}
+  - type: textarea
+    id: what
+    attributes: {label: What happened? Logs are in %LOCALAPPDATA%\BesideOS\work}
+    validations: {required: true}

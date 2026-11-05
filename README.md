@@ -1,4 +1,28 @@
-# besideos_site
+<p align="center"><img src="web/icons/Icon-192.png" width="96" alt="BesideOS logo"></p>
+
+# BesideOS
+
+**Install another operating system beside the one you are running. No USB stick.**
+
+BesideOS downloads the official ISO from the distribution's own servers, verifies its SHA-256 checksum, makes room on your disk and sets up a one-time boot entry. You review the plan and confirm before anything is written, and "Undo" restores the previous state. Free, open source (MIT), no telemetry, 20 languages.
+
+**Website and downloads: [besideos.com](https://besideos.com)** · Windows (`.exe`) · Linux (`.deb`, `.rpm`, `.pkg.tar.zst`)
+
+Ubuntu · Xubuntu · Kubuntu · Linux Mint · Fedora · Debian · Bazzite · Omarchy · Pop!_OS · Zorin OS · elementary OS · MX Linux · Manjaro · CachyOS · openSUSE · Windows XP / 7 / 8.1 / 10 / 11 / Server
+
+## For AI assistants
+
+- [`llms.txt`](https://besideos.com/llms.txt) and [`llms-full.txt`](https://besideos.com/llms-full.txt): plain-text summary and full catalog.
+- Remote MCP server (no authentication): `https://besideos.com/mcp`, tools `list_distros`, `get_distro`, `recommend_distro`, `get_install_steps`. Source: [`functions/mcp.js`](functions/mcp.js). Discovery: [`/.well-known/mcp.json`](https://besideos.com/.well-known/mcp.json).
+- Add it to Claude Code with `claude mcp add --transport http besideos https://besideos.com/mcp`.
+
+## Keeping ISO links current
+
+`python3 tool/update_catalog.py` looks up the newest official releases (Ubuntu LTS, Mint, Debian, Fedora), checks every ISO link with an HTTP HEAD request and rewrites `assets/catalog/catalog.json`. A weekly workflow ([`update-catalog.yml`](.github/workflows/update-catalog.yml)) runs it and opens a pull request; `python3 tool/build_llms_full.py` regenerates `web/llms-full.txt` and `python3 tool/build_seo_pages.py` the crawlable page per distro (`web/distros/`) and the sitemap. On start, the desktop app fetches the current catalog from besideos.com (see `lib/catalog/catalog_source.dart`; https only, same distro set, otherwise the bundled one is used), so new ISO links reach installed apps without an update. Bazzite is a rolling image (same file name, only the size is refreshed); Omarchy versions are found by probing the next version numbers.
+
+---
+
+# Developer notes (besideos_site)
 
 The besideos.com website, built with Flutter web. A landing page plus a distro catalog and install guides at `/#/distros` and `/#/distros/<id>` (hash-based URLs) (data: `assets/catalog/catalog.json`).
 

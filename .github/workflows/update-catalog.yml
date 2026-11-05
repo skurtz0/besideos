@@ -1,0 +1,42 @@
+name: Update ISO catalog
+
+# Every Monday (and by hand): look up the newest official ISOs, verify the links and open a pull request.
+# A dead link that cannot be refreshed fails this run, so it shows up as a red check instead of a broken download.
+on:
+  schedule:
+    - cron: '17 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Look up new releases and verify every ISO link
+        run: python3 tool/update_catalog.py
+      - run: python3 tool/build_llms_full.py
+      - run: python3 tool/build_seo_pages.py
+      # Pull requests opened with the default token do not start CI, so the checks run here instead.
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: bot/update-iso-catalog
+          commit-message: 'Catalog: update ISO links to the newest official releases'
+          title: 'Catalog: update ISO links'
+          body: 'Automatic weekly update by `tool/update_catalog.py`. Every link was checked with an HTTP HEAD request.'
+          add-paths: |
+            assets/catalog/catalog.json
+            web/llms-full.txt
+            web/distros
+            web/sitemap.xml

@@ -1,0 +1,8 @@
+{
+  "name": "besideos",
+  "title": "BesideOS",
+  "description": "Find a Linux or Windows distribution, its official ISO and install guide. BesideOS installs another operating system beside the current one without a USB stick.",
+  "endpoint": "https://besideos.com/mcp",
+  "transport": "streamable-http",
+  "authentication": "none"
+}

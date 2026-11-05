@@ -12,3 +12,6 @@ void startDownload(String path, String fileName) {
 
 /// The visitor's browser user agent, used to pick the matching app package.
 String browserUserAgent() => web.window.navigator.userAgent;
+
+/// Opens [url] in a new browser tab.
+void openExternal(String url) => web.window.open(url, '_blank', 'noopener');

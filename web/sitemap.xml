@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://besideos.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://besideos.com/distros/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://besideos.com/distros/ubuntu/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/xubuntu/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/kubuntu/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/linux-mint/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/pop-os/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/zorin-os/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/elementary-os/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/debian/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/mx-linux/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/fedora/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/bazzite/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/manjaro/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/cachyos/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/omarchy/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/opensuse/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/windows-xp/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/windows-7/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/windows-8-1/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/windows-10/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/windows-11/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://besideos.com/distros/windows-server-2025/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+</urlset>

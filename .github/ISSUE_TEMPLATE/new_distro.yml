@@ -1,0 +1,10 @@
+name: Request an operating system
+description: Ask for a distribution to be added to the catalog
+body:
+  - type: input
+    id: name
+    attributes: {label: Name and official download page}
+    validations: {required: true}
+  - type: textarea
+    id: why
+    attributes: {label: Why should it be added?}

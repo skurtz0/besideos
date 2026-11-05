@@ -8,3 +8,15 @@
   Cache-Control: no-cache
 /assets/*
   Cache-Control: no-cache
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+/llms-full.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+/.well-known/mcp.json
+  Content-Type: application/json
+  Access-Control-Allow-Origin: *
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

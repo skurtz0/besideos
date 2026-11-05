@@ -3,11 +3,13 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart' hide Text;
+import 'package:flutter/material.dart' as m show Text;
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'brand.dart';
 import 'catalog/catalog_page.dart' show DistroSections;
+import 'catalog/catalog_source.dart';
 import 'catalog/distro.dart';
 import 'catalog/routes.dart';
 import 'home_sections.dart';
@@ -22,7 +24,7 @@ Future<void> main() async {
 }
 
 Future<String> _loadCatalogAsset() =>
-    rootBundle.loadString('assets/catalog/catalog.json');
+    loadCatalogJson(() => rootBundle.loadString('assets/catalog/catalog.json'));
 
 class BesideSite extends StatefulWidget {
   /// [catalog] is injected by tests; otherwise it is loaded (lazily, only for /distros) via [catalogLoader].
@@ -684,7 +686,45 @@ class _Footer extends StatelessWidget {
             'Privacy policy: github.com/skurtz0/besideos#privacy-policy',
             style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
           ),
+          SizedBox(height: 28),
+          Center(child: _SkurtinatiSignature()),
+          SizedBox(height: 12),
         ],
+      ),
+    );
+  }
+}
+
+/// "SKURTINATI" centred under the footer, in the M23_HYDRANT SPECIAL font, linking to skurtinati.com.
+class _SkurtinatiSignature extends StatelessWidget {
+  const _SkurtinatiSignature();
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      link: true,
+      label: 'SKURTINATI, skurtinati.com',
+      excludeSemantics: true,
+      child: Tooltip(
+        message: 'skurtinati.com',
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          mouseCursor: SystemMouseCursors.click,
+          onTap: () => openExternal('https://www.skurtinati.com/'),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: m.Text(
+              'SKURTINATI',
+              style: TextStyle(
+                fontFamily: 'M23HydrantSpecial',
+                color: kText,
+                fontSize: 28,
+                letterSpacing: 4,
+                height: 1,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

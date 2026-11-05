@@ -26,3 +26,7 @@ flutter:
     - assets/catalog/
     - assets/screens/
     - assets/l10n/
+  fonts:
+    - family: M23HydrantSpecial
+      fonts:
+        - asset: assets/fonts/M23_HYDRANT_SPECIAL.ttf
