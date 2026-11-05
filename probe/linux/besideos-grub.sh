@@ -165,7 +165,7 @@ menu_entry() {
   name=${name//[\"\$\`\\]/}
   local title="$name kurulumu"
   # --label is the whole title, already in the person's language (the app passes it); without it the Turkish default stays
-  if [ -n "$LABEL" ]; then title=${LABEL//[\"\$\`\]/}; fi
+  if [ -n "$LABEL" ]; then title=${LABEL//[\"\$\`\\]/}; fi
   # The next start shows the whole GRUB menu for 5 seconds with this entry selected; every system that is already
   # installed stays in the list below it. GRUB itself forgets the one-shot choice (besideos_next) by saving it empty.
   cat <<ENTRY
