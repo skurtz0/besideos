@@ -16,4 +16,9 @@ void main() {
     expect(appDownloadFor('Mozilla/5.0 (Linux; Android 14; Pixel 8) Chrome/126 Mobile Safari/537.36'), kWindowsDownloadPath);
     expect(appDownloadFor('Mozilla/5.0 (X11; CrOS x86_64 14541.0.0) Chrome/126 Safari/537.36'), kWindowsDownloadPath);
   });
+
+  test('Linux package follows the distro the browser names', () {
+    expect(recommendedLinuxPackage('Mozilla/5.0 (X11; Fedora; Linux x86_64; rv:128.0) Firefox/128.0'), kLinuxRpmPath);
+    expect(recommendedLinuxPackage('Mozilla/5.0 (X11; Linux x86_64) Chrome/126 Safari/537.36'), kLinuxDownloadPath);
+  });
 }

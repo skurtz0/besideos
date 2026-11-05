@@ -1,11 +1,28 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 import 'download_stub.dart' if (dart.library.js_interop) 'download_web.dart' as impl;
 
 /// The app packages, served from the site root.
 const kWindowsDownloadPath = 'BesideOS-Setup.exe';
 const kLinuxDownloadPath = 'besideos-linux-amd64.deb';
+const kLinuxRpmPath = 'besideos-linux-x86_64.rpm';
+const kLinuxArchPath = 'besideos-linux-x86_64.pkg.tar.zst';
+
+/// Linux package formats offered to Linux visitors: label, file under the site root.
+const kLinuxPackages = <(String, String, String)>[
+  ('.deb', 'Debian, Ubuntu, Linux Mint, Pop!_OS', kLinuxDownloadPath),
+  ('.rpm', 'Fedora, openSUSE, RHEL', kLinuxRpmPath),
+  ('.pkg.tar.zst', 'Arch, Manjaro, CachyOS, EndeavourOS', kLinuxArchPath),
+];
+
+/// The package the visitor's browser hints at (Firefox names Fedora/Ubuntu/...); the `.deb` when it says nothing.
+String recommendedLinuxPackage(String userAgent) {
+  final ua = userAgent.toLowerCase();
+  if (RegExp(r'fedora|red hat|centos|suse').hasMatch(ua)) return kLinuxRpmPath;
+  if (RegExp(r'arch|manjaro').hasMatch(ua)) return kLinuxArchPath;
+  return kLinuxDownloadPath;
+}
 
 /// Which package fits the visitor's system: Linux desktops get the Linux build, everything else the Windows one
 /// (Android and ChromeOS report "Linux" too, but cannot run either; they stay on the default).
@@ -33,9 +50,35 @@ class SiteMode extends InheritedWidget {
     if (cb != null) {
       cb();
     } else {
-      final file = appDownloadFor(impl.browserUserAgent());
-      impl.startDownload(file, file);
+      final ua = impl.browserUserAgent();
+      final file = appDownloadFor(ua);
+      if (file == kLinuxDownloadPath) {
+        _pickLinuxPackage(context, recommendedLinuxPackage(ua));
+      } else {
+        impl.startDownload(file, file);
+      }
     }
+  }
+
+  static Future<void> _pickLinuxPackage(BuildContext context, String recommended) async {
+    final file = await showDialog<String>(
+      context: context,
+      builder: (context) => SimpleDialog(
+        title: const Text('Linux'),
+        children: [
+          for (final (ext, distros, path) in kLinuxPackages)
+            SimpleDialogOption(
+              onPressed: () => Navigator.pop(context, path),
+              child: ListTile(
+                leading: Icon(path == recommended ? Icons.download_for_offline : Icons.download),
+                title: Text(ext),
+                subtitle: Text(distros),
+              ),
+            ),
+        ],
+      ),
+    );
+    if (file != null) impl.startDownload(file, file);
   }
 
   @override

@@ -60,10 +60,18 @@ jobs:
       - run: flutter pub get
       - run: bash tool/build_linux.sh
       - run: bash tool/package_deb.sh
+      - name: Package .rpm and Arch .pkg.tar.zst
+        run: |
+          sudo apt-get install -y ruby rpm zstd
+          sudo gem install fpm --no-document
+          bash tool/package_rpm_arch.sh
       - uses: actions/upload-artifact@v4
         with:
           name: linux-app
-          path: build/besideos-linux-amd64.deb
+          path: |
+            build/besideos-linux-amd64.deb
+            build/besideos-linux-x86_64.rpm
+            build/besideos-linux-x86_64.pkg.tar.zst
           if-no-files-found: error
 
   deploy:
@@ -103,6 +111,7 @@ jobs:
           ls -la build/web/BesideOS-Setup.exe build/web/besideos-linux-amd64.deb
           [ "$(head -c2 build/web/BesideOS-Setup.exe)" = "MZ" ]
           dpkg-deb --info build/web/besideos-linux-amd64.deb > /dev/null
+          ls -la build/web/besideos-linux-x86_64.rpm build/web/besideos-linux-x86_64.pkg.tar.zst
 
       - name: Publish
         if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
