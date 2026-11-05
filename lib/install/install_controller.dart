@@ -364,6 +364,10 @@ class InstallController extends ChangeNotifier {
         _fail('Yönetici izni verilmedi; disk bilgisi okunamadı. Hiçbir şey değiştirilmedi.');
         return;
       }
+      if (r.exitCode == kElevationFailed) {
+        _fail(tr('Beklenmeyen hata: {e}', {'e': r.stderr.trim()}));
+        return;
+      }
       if (r.exitCode != 0 || !_f('facts.json').existsSync()) {
         _fail('${tr('Disk bilgisi toplanamadı.')}${_logTail('probe.log')}');
         return;
@@ -609,6 +613,8 @@ class InstallController extends ChangeNotifier {
       );
       if (r.exitCode == kElevationDeclined) {
         _fail('Yönetici izni verilmedi; hiçbir şey değiştirilmedi.');
+      } else if (r.exitCode == kElevationFailed) {
+        _fail(tr('Beklenmeyen hata: {e}', {'e': r.stderr.trim()}));
       } else if (r.exitCode != 0) {
         _fail('${tr('Kurulum hazırlığı başarısız oldu.')}${linuxHost ? _scriptReason(r) : _logTail('apply.log')}');
       } else {
@@ -631,6 +637,8 @@ class InstallController extends ChangeNotifier {
       );
       if (r.exitCode == kElevationDeclined) {
         _fail('Yönetici izni verilmedi; geri alınmadı.');
+      } else if (r.exitCode == kElevationFailed) {
+        _fail(tr('Beklenmeyen hata: {e}', {'e': r.stderr.trim()}));
       } else if (r.exitCode != 0) {
         _fail('${tr('Geri alma başarısız oldu.')}${linuxHost ? _scriptReason(r) : _logTail('apply.log')}');
       } else {

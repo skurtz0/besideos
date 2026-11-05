@@ -319,6 +319,7 @@ void main() {
       expect(s, contains("'\"C:\\a b\\work\"'"));
       expect(s, contains('-Verb RunAs -Wait -PassThru'));
       expect(s, contains('exit $kElevationDeclined'));
+      expect(s, contains('exit $kElevationFailed'));
     });
 
     test('rejects arguments with double quotes', () {

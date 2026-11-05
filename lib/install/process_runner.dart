@@ -11,6 +11,9 @@ class RunResult {
 /// Exit code of an elevated run when the user dismisses the UAC prompt (ERROR_CANCELLED).
 const kElevationDeclined = 1223;
 
+/// Exit code when the elevated PowerShell could not be started for any other reason; stderr holds the cause.
+const kElevationFailed = 1224;
+
 abstract class ProcessRunner {
   Future<RunResult> exec(String exe, List<String> args);
 
@@ -54,7 +57,10 @@ String _psArg(String a) {
 String elevatedCommand(String script, List<String> args) {
   final list = ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', script, ...args].map(_psArg).join(',');
   return 'try { \$p = Start-Process -FilePath powershell.exe -Verb RunAs -Wait -PassThru '
-      '-WindowStyle Hidden -ArgumentList @($list); exit \$p.ExitCode } catch { exit $kElevationDeclined }';
+      '-WindowStyle Hidden -ArgumentList @($list); exit \$p.ExitCode } catch { '
+      // 1223 = the person dismissed the UAC prompt. Anything else is a real launch failure: say why instead of hiding it.
+      'if (\$_.Exception.NativeErrorCode -eq $kElevationDeclined) { exit $kElevationDeclined }; '
+      '[Console]::Error.WriteLine(\$_.Exception.Message); exit $kElevationFailed }';
 }
 
 String encodePowerShell(String s) {
