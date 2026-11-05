@@ -19,7 +19,7 @@
 # /var/lib/besideos, and the GRUB one-time "next boot" entry. The ISO file itself is never touched.
 # Exit codes: 0 done, 1 error, 2 refused (nothing changed).
 
-set -euo pipefail
+set -Eeuo pipefail
 
 STATE_DIR=${BESIDEOS_STATE_DIR:-/var/lib/besideos}
 CFG_MARK=$STATE_DIR/cfg_existed   # whether custom.cfg existed before BesideOS first wrote to it
@@ -30,6 +30,8 @@ ok()     { say "OK: $*"; }
 warn()   { say "WARN: $*"; }
 refuse() { say "REFUSED: $*"; exit 2; }
 fail()   { say "ERROR: $*" >&2; exit 1; }
+# set -e would otherwise end the script silently and the app could only say "failed" without a reason.
+trap 'rc=$?; say "ERROR: step failed (exit $rc) at line $LINENO: $BASH_COMMAND" >&2' ERR
 
 cmd=${1:-}; [ $# -gt 0 ] && shift
 ISO=; EXECUTE=0; EXPERIMENTAL=0; NAME=default; ALL=0; SHRINK_DEV=; SHRINK_GB=0; OUT=; TITLE=; LABEL=
@@ -337,11 +339,19 @@ shrink_undo() { # uses SHRINK_* from the state file
   echo Yes | parted ---pretend-input-tty "$disk" resizepart "$partn" "${SHRINK_ORIG_END}B" >/dev/null 2>&1 || fail "could not grow $SHRINK_DEV back"
   partprobe "$disk" >/dev/null 2>&1 || true
   case $SHRINK_FS in
-    ext4) e2fsck -f -y "$SHRINK_DEV" >/dev/null || [ $? -le 1 ]; resize2fs "$SHRINK_DEV" >/dev/null || fail "resize2fs could not grow $SHRINK_DEV" ;;
+    ext4)
+      local rc=0; e2fsck -f -y "$SHRINK_DEV" >/dev/null || rc=$?
+      [ "$rc" -le 1 ] || fail "e2fsck found problems on $SHRINK_DEV (exit $rc); the partition was grown but its file system was not"
+      resize2fs "$SHRINK_DEV" >/dev/null || fail "resize2fs could not grow $SHRINK_DEV" ;;
     btrfs)
-      local mnt; mnt=$(findmnt -n -o TARGET "$SHRINK_DEV" | head -n1)
+      local mnt; mnt=$(findmnt -n -o TARGET "$SHRINK_DEV" | head -n1 || true)
       if [ -n "$mnt" ]; then btrfs filesystem resize 1:max "$mnt" >/dev/null || fail "btrfs could not grow back"
-      else local t; t=$(mktemp -d /run/besideos-mnt.XXXXXX); mount "$SHRINK_DEV" "$t" && btrfs filesystem resize 1:max "$t" >/dev/null; umount "$t"; rmdir "$t"; fi ;;
+      else
+        local t; t=$(mktemp -d /run/besideos-mnt.XXXXXX)
+        mount "$SHRINK_DEV" "$t" || { rmdir "$t"; fail "cannot mount $SHRINK_DEV to grow it back"; }
+        btrfs filesystem resize 1:max "$t" >/dev/null || { umount "$t"; rmdir "$t"; fail "btrfs could not grow back"; }
+        umount "$t"; rmdir "$t"
+      fi ;;
     ntfs) ntfsresize -f "$SHRINK_DEV" >/dev/null <<<y || fail "ntfsresize could not grow back" ;;
   esac
   ok "$SHRINK_DEV grown back to its original size"
