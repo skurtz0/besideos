@@ -260,6 +260,7 @@
  "Windows (kurulumdan vazgeç)": "Windows (Installation abbrechen)",
  "BesideOS | Başka bir işletim sistemini bunun yanına kur": "BesideOS | Ein zweites Betriebssystem neben diesem installieren",
  "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "Wenn Chrome den Download blockiert: In der Download-Blase ⋮ → Behalten wählen. Die Datei ist neu, deshalb kennt Chrome sie noch nicht.",
+ "Yeni sürüm var: {v}": "Neue Version verfügbar: {v}",
  "Yeni başlayanlar için en yaygın Linux.": "Das verbreitetste Linux für Einsteiger.",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "Ubuntu ist eine sehr weit verbreitete Linux-Distribution mit einer großen Nutzer- und Dokumentationsgemeinschaft. Standardmäßig kommt sie mit dem GNOME-Desktop.",
  "Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.": "Für alle, die zum ersten Mal auf Linux umsteigen und bei Problemen viele Hilfsquellen finden möchten.",

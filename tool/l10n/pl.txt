@@ -259,3 +259,4 @@ Instalacja {name}
 Windows (anuluj instalację)
 BesideOS | Zainstaluj drugi system operacyjny obok tego
 Jeśli Chrome zablokuje pobieranie: w okienku pobierania wybierz ⋮ → Zachowaj. Plik jest nowy, więc Chrome jeszcze go nie zna.
+Dostępna nowa wersja: {v}

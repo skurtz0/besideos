@@ -259,3 +259,4 @@ Instalação do {name}
 Windows (cancelar a instalação)
 BesideOS | Instale outro sistema operacional ao lado deste
 Se o Chrome bloquear o download: na janelinha de downloads escolha ⋮ → Manter. O arquivo é novo e o Chrome ainda não o conhece.
+Nova versão disponível: {v}

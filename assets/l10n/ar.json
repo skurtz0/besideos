@@ -260,6 +260,7 @@
  "Windows (kurulumdan vazgeç)": "Windows (إلغاء التثبيت)",
  "BesideOS | Başka bir işletim sistemini bunun yanına kur": "BesideOS | ثبّت نظام تشغيل آخر بجانب هذا النظام",
  "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "إذا حظر Chrome التنزيل: من نافذة التنزيل اختر ⋮ ← الاحتفاظ. الملف جديد ولذلك لا يعرفه Chrome بعد.",
+ "Yeni sürüm var: {v}": "يتوفر إصدار جديد: {v}",
  "Yeni başlayanlar için en yaygın Linux.": "أشهر نسخ Linux للمبتدئين.",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "Ubuntu توزيعة Linux واسعة الانتشار جدًا ولها مجتمع كبير من المستخدمين ووثائق وفيرة. يأتي افتراضيًا بسطح مكتب GNOME.",
  "Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.": "لمن ينتقلون إلى Linux لأول مرة ويريدون إيجاد الكثير من المساعدة عند حدوث مشكلة.",

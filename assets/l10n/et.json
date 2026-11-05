@@ -260,6 +260,7 @@
  "Windows (kurulumdan vazgeç)": "Windows (tühista paigaldus)",
  "BesideOS | Başka bir işletim sistemini bunun yanına kur": "BesideOS | Paigalda teine operatsioonisüsteem selle kõrvale",
  "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "Kui Chrome allalaadimise blokeerib: vali allalaadimise mullis ⋮ → Säilita. Fail on uus, seega Chrome ei tunne seda veel.",
+ "Yeni sürüm var: {v}": "Saadaval on uus versioon: {v}",
  "Yeni başlayanlar için en yaygın Linux.": "Kõige levinum Linux algajatele.",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "Ubuntu on väga laialt kasutatav Linuxi distributsioon, millel on suur kasutajaskond ja rohkelt dokumentatsiooni. Vaikimisi on kaasas GNOME töölaud.",
  "Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.": "Neile, kes lähevad esimest korda Linuxile üle ja tahavad probleemide korral leida palju abi.",

@@ -259,3 +259,4 @@ Yönlendirme adresi yok
 Windows (kurulumdan vazgeç)
 BesideOS | Başka bir işletim sistemini bunun yanına kur
 Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.
+Yeni sürüm var: {v}

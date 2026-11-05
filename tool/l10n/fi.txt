@@ -259,3 +259,4 @@ parhaillaan käynnissä olevan järjestelmän osio
 Windows (peruuta asennus)
 BesideOS | Asenna toinen käyttöjärjestelmä tämän rinnalle
 Jos Chrome estää latauksen: valitse latauskuplassa ⋮ → Säilytä. Tiedosto on uusi, joten Chrome ei vielä tunne sitä.
+Uusi versio saatavilla: {v}

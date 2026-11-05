@@ -259,3 +259,4 @@ Cài đặt {name}
 Windows (hủy cài đặt)
 BesideOS | Cài hệ điều hành khác bên cạnh hệ điều hành này
 Nếu Chrome chặn tải xuống: trong khung tải xuống, chọn ⋮ → Giữ lại. Tệp còn mới nên Chrome chưa nhận ra.
+Đã có phiên bản mới: {v}

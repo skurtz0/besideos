@@ -260,6 +260,7 @@
  "Windows (kurulumdan vazgeç)": "Windows（インストールをやめる）",
  "BesideOS | Başka bir işletim sistemini bunun yanına kur": "BesideOS | このOSの隣に別のOSをインストール",
  "Chrome indirmeyi engellerse: indirme balonunda ⋮ → Sakla'yı seç. Dosya yeni olduğu için henüz tanınmıyor.": "Chrome がダウンロードをブロックした場合：ダウンロードの吹き出しで ⋮ → 保存 を選んでください。ファイルが新しいため、Chrome はまだ認識していません。",
+ "Yeni sürüm var: {v}": "新しいバージョンがあります：{v}",
  "Yeni başlayanlar için en yaygın Linux.": "初心者にいちばん定番の Linux。",
  "Ubuntu, geniş bir kullanıcı ve belge topluluğuna sahip, çok yaygın kullanılan bir Linux dağıtımıdır. Varsayılan olarak GNOME masaüstüyle gelir.": "Ubuntu は、大きなユーザーコミュニティと豊富なドキュメントを持つ、とても広く使われている Linux ディストリビューションです。標準で GNOME デスクトップが付いてきます。",
  "Linux'a ilk kez geçenler ve sorun olduğunda bol kaynak bulmak isteyenler.": "初めて Linux に乗り換える人や、困ったときに情報がたくさん欲しい人。",

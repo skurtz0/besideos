@@ -16,11 +16,13 @@ import 'home_sections.dart';
 import 'l10n/l10n.dart';
 import 'site_mode.dart';
 import 'theme.dart';
+import 'update_check.dart';
+import 'update_fetch_stub.dart' if (dart.library.io) 'update_fetch_io.dart' as upd;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await L10n.instance.init();
-  runApp(const BesideSite());
+  runApp(BesideSite(checkUpdate: upd.newerRelease));
 }
 
 Future<String> _loadCatalogAsset() =>
@@ -34,6 +36,7 @@ class BesideSite extends StatefulWidget {
       this.initialRoute = '/',
       this.web,
       this.onDownload,
+      this.checkUpdate,
       super.key});
   final String initialRoute;
 
@@ -44,6 +47,9 @@ class BesideSite extends StatefulWidget {
   final VoidCallback? onDownload;
   final Catalog? catalog;
   final Future<String> Function()? catalogLoader;
+
+  /// Desktop app only: resolves to the newer version's number, or null. Tests leave it out.
+  final Future<String?> Function()? checkUpdate;
 
   @override
   State<BesideSite> createState() => _BesideSiteState();
@@ -59,7 +65,7 @@ class _BesideSiteState extends State<BesideSite> {
         .where((e) => e.isNotEmpty);
     if (seg.isEmpty || (seg.first != 'distros' && seg.first != 'boot')) {
       return MaterialPageRoute(
-          settings: s, builder: (_) => HomePage(catalog: _catalog));
+          settings: s, builder: (_) => HomePage(catalog: _catalog, checkUpdate: widget.checkUpdate));
     }
     return MaterialPageRoute(
       settings: s,
@@ -161,7 +167,9 @@ class _CatalogError extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key, this.catalog});
+  const HomePage({super.key, this.catalog, this.checkUpdate});
+
+  final Future<String?> Function()? checkUpdate;
 
   /// Shown as the list of systems above the status note; null hides that section.
   final Future<Catalog>? catalog;
@@ -173,6 +181,7 @@ class HomePage extends StatelessWidget {
       body: PageScroll(
         child: Column(
           children: [
+            if (checkUpdate != null && !SiteMode.isWeb(context)) _UpdateBanner(check: checkUpdate!),
             const _GlowBackground(child: _Section(child: _Hero())),
             const _Section(child: HowItWorks()),
             if (catalog != null) _Section(child: _Showcase(catalog: catalog!)),
@@ -728,4 +737,37 @@ class _SkurtinatiSignature extends StatelessWidget {
       ),
     );
   }
+}
+
+/// A thin bar above the page when a newer release exists; opens the release page in the browser.
+class _UpdateBanner extends StatefulWidget {
+  const _UpdateBanner({required this.check});
+  final Future<String?> Function() check;
+
+  @override
+  State<_UpdateBanner> createState() => _UpdateBannerState();
+}
+
+class _UpdateBannerState extends State<_UpdateBanner> {
+  late final Future<String?> _v = widget.check();
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<String?>(
+        future: _v,
+        builder: (context, snap) {
+          final v = snap.data;
+          if (v == null) return const SizedBox.shrink();
+          return Material(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Flexible(child: m.Text(tr('Yeni sürüm var: {v}', {'v': v}))),
+                const SizedBox(width: 12),
+                TextButton(onPressed: () => openExternal(kReleasesPage), child: const Text('İndir')),
+              ]),
+            ),
+          );
+        },
+      );
 }

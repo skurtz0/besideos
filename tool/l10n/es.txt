@@ -259,3 +259,4 @@ Instalación de {name}
 Windows (cancelar la instalación)
 BesideOS | Instala otro sistema operativo junto a este
 Si Chrome bloquea la descarga: en la burbuja de descarga elige ⋮ → Conservar. El archivo es nuevo y Chrome aún no lo conoce.
+Nueva versión disponible: {v}

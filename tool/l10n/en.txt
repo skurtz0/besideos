@@ -259,3 +259,4 @@ the partition of the system that is running now
 Windows (cancel installation)
 BesideOS | Install another operating system beside this one
 If Chrome blocks the download: in the download bubble choose ⋮ → Keep. The file is new, so Chrome does not know it yet.
+New version available: {v}
