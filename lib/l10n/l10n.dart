@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter/widgets.dart';
 
+import 'install_lang_stub.dart' if (dart.library.io) 'install_lang_io.dart';
+
 /// One language the site and the app are shown in.
 class AppLang {
   const AppLang(this.code, this.name, this.locale);
@@ -86,9 +88,15 @@ class L10n extends ChangeNotifier {
   AppLang get lang => _lang;
   Locale get locale => _lang.locale;
 
-  /// Picks the language from the system (or browser) preferences. Tests skip this and stay in Turkish.
-  Future<void> init({Iterable<Locale>? preferred}) =>
-      select(detectLang(preferred ?? PlatformDispatcher.instance.locales));
+  /// Picks the language: the one chosen in the installer when there is one, otherwise the system (or browser)
+  /// preferences. Tests skip this and stay in Turkish.
+  Future<void> init({Iterable<Locale>? preferred, String? installed}) {
+    final fromInstaller = installed ?? installedLangCode();
+    if (fromInstaller != null && kLangs.any((l) => l.code == fromInstaller)) {
+      return select(langByCode(fromInstaller));
+    }
+    return select(detectLang(preferred ?? PlatformDispatcher.instance.locales));
+  }
 
   Future<void> select(AppLang lang) async {
     _texts = lang.code == 'tr' ? const {} : await _load(lang.code);
