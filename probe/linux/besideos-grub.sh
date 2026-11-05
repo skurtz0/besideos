@@ -340,8 +340,12 @@ shrink_undo() { # uses SHRINK_* from the state file
   partprobe "$disk" >/dev/null 2>&1 || true
   case $SHRINK_FS in
     ext4)
-      local rc=0; e2fsck -f -y "$SHRINK_DEV" >/dev/null || rc=$?
-      [ "$rc" -le 1 ] || fail "e2fsck found problems on $SHRINK_DEV (exit $rc); the partition was grown but its file system was not"
+      # The desktop may have mounted the partition again after it grew; e2fsck refuses (exit 8) on a mounted file system,
+      # and ext4 can be grown while mounted, so check only when it is not mounted.
+      if ! findmnt -n "$SHRINK_DEV" >/dev/null 2>&1; then
+        local rc=0; e2fsck -f -y "$SHRINK_DEV" >/dev/null || rc=$?
+        [ "$rc" -le 1 ] || fail "e2fsck found problems on $SHRINK_DEV (exit $rc); the partition was grown but its file system was not"
+      fi
       resize2fs "$SHRINK_DEV" >/dev/null || fail "resize2fs could not grow $SHRINK_DEV" ;;
     btrfs)
       local mnt; mnt=$(findmnt -n -o TARGET "$SHRINK_DEV" | head -n1 || true)
