@@ -11,7 +11,7 @@
 AppId={{6B1B1A2E-5E0F-4F0B-9C58-3A1F7E5D2B44}
 AppName=BesideOS
 AppVersion={#AppVersion}
-AppPublisher=skurtz0
+AppPublisher=SKURTINATI
 AppPublisherURL=https://besideos.com
 AppSupportURL=https://github.com/skurtz0/besideos
 DefaultDirName={localappdata}\Programs\BesideOS

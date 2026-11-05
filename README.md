@@ -57,17 +57,6 @@ Türkçe yerel ayar (tr-TR) notu: PowerShell'de büyük/küçük harf duyarsız 
 
 Kaynak kod [MIT lisansı](LICENSE) ile yayımlanır. Katalogdaki dağıtım adları, logoları ve ekran görüntüleri ilgili projelerin mülkiyetindedir ve kendi lisanslarına tabidir; MIT lisansı yalnızca BesideOS'un kendi kodunu kapsar.
 
-Windows paketleri ücretsiz kod imzalama için [SignPath Foundation](https://signpath.org) ile imzalanacaktır; imza politikası bu bölüme eklenecektir.
-
-## Code signing policy
-
-Free code signing for the Windows binaries is provided by [SignPath.io](https://signpath.io), certificate by [SignPath Foundation](https://signpath.org).
-
-- Only binaries built from this repository by the public GitHub Actions workflow (`.github/workflows/deploy-web.yml`) are submitted for signing. Nothing is built or signed locally.
-- Signed files: the installer `BesideOS-Setup.exe` and the `BesideOS.exe` and `engine/besideos-plan.exe` programs inside it.
-- Every release is reviewed and approved by the maintainer before signing. Roles: author, reviewer and approver is the project owner, [skurtz0](https://github.com/skurtz0).
-- BesideOS does not include third-party binaries that are signed under this certificate.
-
 ## Privacy policy
 
 BesideOS does not collect, store or transmit personal data and contains no telemetry or analytics.

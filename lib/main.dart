@@ -680,10 +680,8 @@ class _Footer extends StatelessWidget {
             style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
           ),
           SizedBox(height: 10),
-          // Kept in English on purpose: it is the wording the SignPath Foundation asks for.
           Text(
-            'Free code signing provided by SignPath.io, certificate by SignPath Foundation. '
-            'Code signing policy and privacy policy: github.com/skurtz0/besideos#code-signing-policy',
+            'Privacy policy: github.com/skurtz0/besideos#privacy-policy',
             style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
           ),
         ],
