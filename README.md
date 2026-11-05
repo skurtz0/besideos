@@ -28,7 +28,7 @@ Ubuntu · Xubuntu · Kubuntu · Linux Mint · Fedora · Debian · Bazzite · Oma
 
 The besideos.com website, built with Flutter web. A landing page plus a distro catalog and install guides at `/#/distros` and `/#/distros/<id>` (hash-based URLs) (data: `assets/catalog/catalog.json`).
 
-Built with Flutter 3.47.7; `flutter analyze` and `flutter test` pass. The web release build is verified; the Windows build runs (debug and release); the Linux build is not verified. No installer exists yet. First time on a machine with Flutter:
+Built with Flutter 3.47.7; `flutter analyze` and `flutter test` pass. The web release build is verified; the Windows build runs (debug and release); the Linux build is not verified. Release installers are built by CI (`.github/workflows/release.yml`). First time on a machine with Flutter:
 
 ```
 flutter create . --platforms web --project-name besideos_site
@@ -52,36 +52,40 @@ flutter build windows --release   # not verified (needs a Windows machine)
 flutter build linux --release     # not verified (needs a Linux machine)
 ```
 
-Web release build (`flutter build web --release --no-web-resources-cdn`) verified. Windows and Linux: doğrulanmadı.
+The web release build (`flutter build web --release --no-web-resources-cdn`) is verified. The Windows and Linux builds are produced by CI on every release; they have not been checked on real hardware.
 
 
-## İndirme ve doğrulama
+## Download and verification
 
-Rehber sayfasındaki **İndir** düğmesi (yalnız masaüstü uygulamada) ISO dosyasını resmi dağıtım sunucusundan `~/Downloads/BesideOS` klasörüne indirir. Önce resmi sağlama dosyası (SHA256SUMS / CHECKSUM) alınır, indirme bitince dosyanın SHA-256 değeri karşılaştırılır; eşleşmezse dosya silinir. Katalog sağlama değeri taşımaz, sağlama dosyası her seferinde çalışma anında alınır. Arayüz yalnız "İndirildi ve doğrulandı" der; **kurulum motoru yok**, hiçbir şey kurulmaz. Sağlama değeri indirme kaynağıyla aynı siteden alındığı için bozulmayı yakalar, ele geçirilmiş bir kaynağa karşı koruma sağlamaz. Fedora CHECKSUM dosyasının PGP imzası uygulamada doğrulanmaz.
+The **Download** button on a guide page (desktop app only) downloads the ISO from the distribution's official server into `~/Downloads/BesideOS`. The official checksum file (SHA256SUMS / CHECKSUM) is fetched first; when the download finishes, the file's SHA-256 is compared and the file is deleted if it does not match. The catalog carries no checksums: the checksum file is fetched at run time, every time. The checksum comes from the same site as the download, so it catches corruption but does not protect against a compromised mirror. The PGP signature of Fedora's CHECKSUM file is not verified in the app.
 
-Windows için BesideOS ISO sağlamaz: kendi ISO dosyanın yolunu ve Microsoft sayfasındaki SHA-256 değerini girip "Doğrula"ya basarsın.
+For Windows, BesideOS does not provide an ISO: you enter the path of your own ISO and the SHA-256 shown on Microsoft's page, then press "Verify".
 
-Web sürümünde indirme kapalıdır. Windows ve Linux derlemeleri doğrulanmadı.
+Downloading is disabled in the web version. ISO entries are in `assets/catalog/catalog.json` (`isos`); the weekly catalog workflow keeps them current (see above).
 
-ISO girdileri `assets/catalog/catalog.json` içinde (`isos`); Debian `current/` ve Fedora sürüm adresleri yeni sürümde değişir, katalog elle güncellenmelidir.
+## One-click install (Windows desktop app only)
 
-## Tek tıkla kurulum (yalnız Windows masaüstü uygulaması)
+The "Click to install" button on a distribution page runs, in order: download and verify the ISO → mount it and measure its contents (`probe/windows/inspect-iso.ps1`) → collect disk information (`collect-host-facts.ps1`, asks for UAC) → build the plan with `besideos-plan`. Nothing is written to the disk up to this point. The plan, its risks and the space to be set aside for Linux (20–120 GiB) are shown. If there are several suitable NTFS drives (for example a second disk), you also choose which drive the space is taken from (`drives.json`; the chosen drive is passed to the planner, and `apply-plan.ps1` refuses system, boot and hidden partitions). Nothing starts until the backup box is ticked and the final confirmation dialog is accepted. For distributions with several editions (Mint desktops, Debian installer/live, Bazzite) the choice is made on the distribution page. Every distribution has one-click install: where an official ISO address exists, the ISO is downloaded and verified; where it does not (and for anyone who picks "I want to choose my own ISO"), the user picks an ISO file from a file dialog or from the ISO files found on the computer (Downloads, Desktop, Documents); no path or checksum has to be typed. The website only offers the app download.
 
-Dağıtım sayfasındaki **"Kurmak için tıklayın"** düğmesi sırayla: ISO'yu indirip doğrular → ISO'yu bağlayıp içeriğini ölçer (`probe/windows/inspect-iso.ps1`) → disk bilgisini toplar (`collect-host-facts.ps1`, UAC ister) → `besideos-plan` ile planı üretir. **Bu noktaya kadar diske hiçbir şey yazılmaz.** Plan, riskler ve Linux için ayrılacak alan (20–120 GiB) gösterilir. Birden fazla uygun NTFS sürücü varsa (ör. ikinci disk) yerin hangi sürücüden açılacağı da seçilir (`drives.json`; planlayıcıya seçilen sürücü verilir, `apply-plan.ps1` sistem/önyükleme/gizli bölümleri reddeder). Yedek kutusu işaretlenip son onay penceresi onaylanmadan uygulama başlamaz. Birden çok sürümü olan dağıtımlarda (Mint masaüstleri, Debian kurulum/canlı, Bazzite) seçim dağıtım sayfasındadır. Her dağıtımda tek tıkla kurulum vardır: resmi ISO adresi olanlar indirilip doğrulanır; olmayanlarda (ve isteyen herkes için "Kendi ISO dosyamı seçip kurmak istiyorum" ile) kullanıcı ISO dosyasını bir dosya penceresinden seçer ya da bilgisayarında bulunan ISO'ları (İndirilenler, Masaüstü, Belgeler) listeden seçer; yol ya da sağlama kodu girilmez. Web sitesi yalnızca uygulamayı indirtir. Onaydan sonra `apply-plan.ps1 -Execute -Reboot` (UAC ister): Windows bölümünü küçültür, FAT32 `BESIDEOS` bölümü açar, ISO içeriğini kopyalar, tek seferlik UEFI önyükleme girdisi ekler ve yeniden başlatır. Açılışta dağıtımın kendi kurulum ekranı gelir; kurulumun kendisi o ekranda yapılır. Hata olursa ya da vazgeçilirse **"Değişiklikleri geri al"** (`-Undo -Execute`) uygulanan adımları tersine çevirir. Çalışma dosyaları ve günlükler `%LOCALAPPDATA%\BesideOS\work` altındadır.
+After confirmation, `apply-plan.ps1 -Execute -Reboot` (asks for UAC) shrinks the Windows partition, creates a FAT32 `BESIDEOS` partition, copies the ISO contents, adds a one-time UEFI boot entry and restarts. On boot, the distribution's own installer appears; the installation itself is done on that screen. If something fails or the user backs out, "Undo changes" (`-Undo -Execute`) reverses the applied steps. Working files and logs are under `%LOCALAPPDATA%\BesideOS\work`.
 
-Derleme (Rust planlayıcıyı da pakete koyar): `powershell -File tool\build_windows.ps1`. Gerekenler: Flutter, Rust (cargo), Visual Studio "Desktop development with C++". Motor `build\windows\x64\runner\Release\engine\` altına kopyalanır; geliştirirken `flutter run -d windows` depo içindeki betikleri ve `core\target\release\besideos-plan.exe` dosyasını kullanır.
+Build (also packages the Rust planner): `powershell -File tool\build_windows.ps1`. Requirements: Flutter, Rust (cargo), Visual Studio "Desktop development with C++". The engine is copied to `build\windows\x64\runner\Release\engine\`; during development `flutter run -d windows` uses the scripts in the repository and `core\target\release\besideos-plan.exe`.
 
-Sınırlar: ISO içeriğini FAT32 bölüme açıp UEFI ile açma yöntemi yalnız Ubuntu arm64 ile sanal makinede denendi. Fedora Live ISO etiketiyle kurulum ortamını aradığı için açılmayabilir (arayüz uyarır). FAT32 4 GiB'dan büyük dosya tutamaz: 4 GiB'dan büyük dosya içeren ISO'lar planlayıcı tarafından reddedilir, tek istisna Windows ISO'larındaki `sources\install.wim`: o dosya DISM ile `install.swm` parçalarına bölünerek yazılır (Windows Kur parçaları okur; bölme küçük gerçek bir WIM ile denendi, gerçek bir Windows ISO ile uçtan uca denenmedi). UEFI açılış dosyası (`\EFI\BOOT\BOOTX64.EFI`) olmayan ISO'lar (Windows XP/7 gibi BIOS-only ortamlar) diske dokunmadan reddedilir. `-Execute` gerçek bir Windows 10 diskinde Linux Mint ile çalıştırıldı (bölüm küçültme, `BESIDEOS` bölümü, ISO kopyası, önyükleme girdisi, yeniden başlatma); kurulumun sonuna kadar gidilmesi ve `-Undo -Execute` bu depoda doğrulanmadı (`-Undo` yalnız kuru çalıştırmayla, gerçek durum dosyasıyla denendi). Windows PowerShell 5.1 notu: `[CmdletBinding()]` varken `param()` varsayılanlarında `$PSScriptRoot` boştur; varsayılanları param bloğunun dışında ata (`test/install/scripts_test.dart` bunu denetler).
+Limits:
+- Extracting the ISO contents to a FAT32 partition and booting it with UEFI was tried only with Ubuntu arm64 in a virtual machine. Fedora Live looks for its installer environment by ISO label, so it may not boot (the UI warns).
+- FAT32 cannot hold files over 4 GiB: the planner rejects ISOs that contain one. The only exception is `sources\install.wim` in Windows ISOs, which is split into `install.swm` parts with DISM (Windows Setup reads the parts; the split was tried with a small real WIM, not end to end with a real Windows ISO).
+- ISOs without a UEFI boot file (`\EFI\BOOT\BOOTX64.EFI`), such as BIOS-only Windows XP/7, are rejected without touching the disk.
+- `-Execute` was run on a real Windows 10 disk with Linux Mint (partition shrink, `BESIDEOS` partition, ISO copy, boot entry, reboot). Going through to the end of the installation, and `-Undo -Execute`, were not verified in this repository (`-Undo` was tried only as a dry run with a real state file).
+- Windows PowerShell 5.1: with `[CmdletBinding()]`, `$PSScriptRoot` is empty in `param()` defaults; assign the defaults outside the param block (`test/install/scripts_test.dart` checks this).
+- Turkish locale (tr-TR): in PowerShell, a case-insensitive `[A-Za-z]` match misses capital `I`, and `ToLower()` turns `I` into `ı`. The scripts use `-cmatch` and `ToLowerInvariant()`; keep this in mind when adding regexes.
 
-Türkçe yerel ayar (tr-TR) notu: PowerShell'de büyük/küçük harf duyarsız `[A-Za-z]` eşleşmesi büyük `I`'yı kaçırır ve `ToLower()` `I`'yı `ı` yapar. Betiklerde `-cmatch` ve `ToLowerInvariant()` kullanılır; yeni regex eklerken buna dikkat et.
+## Core (Rust)
 
-## Çekirdek (Rust)
+`core/` holds a pure Rust library and the `besideos-plan` tool that produce the plan for installing Linux beside Windows. It does not touch the disk: it only outputs a plan (JSON) or a reasoned refusal. Details: `core/README.md`.
 
-`core/` altında, Windows yanına Linux kurulumunun planını üreten saf bir Rust kütüphanesi ve `besideos-plan` aracı bulunur. Diske dokunmaz, yalnız plan (JSON) ya da gerekçeli ret üretir; gerçek host bilgisi toplama (3b) ve planı uygulama (3c) sonraki aşamalardır. Ayrıntı: `core/README.md`.
+## License
 
-## Lisans
-
-Kaynak kod [MIT lisansı](LICENSE) ile yayımlanır. Katalogdaki dağıtım adları, logoları ve ekran görüntüleri ilgili projelerin mülkiyetindedir ve kendi lisanslarına tabidir; MIT lisansı yalnızca BesideOS'un kendi kodunu kapsar.
+The source code is released under the [MIT license](LICENSE). Distribution names, logos and screenshots in the catalog belong to the respective projects and are subject to their own licenses; the MIT license covers only BesideOS's own code.
 
 ## Privacy policy
 
