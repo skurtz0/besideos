@@ -695,6 +695,8 @@ class _Footer extends StatelessWidget {
             'Privacy policy: github.com/skurtz0/besideos#privacy-policy',
             style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
           ),
+          SizedBox(height: 10),
+          _MailLink(),
           SizedBox(height: 28),
           Center(child: _SkurtinatiSignature()),
           SizedBox(height: 12),
@@ -702,6 +704,20 @@ class _Footer extends StatelessWidget {
       ),
     );
   }
+}
+
+class _MailLink extends StatelessWidget {
+  const _MailLink();
+
+  @override
+  Widget build(BuildContext context) => InkWell(
+        mouseCursor: SystemMouseCursors.click,
+        onTap: () => openExternal('mailto:info@skurtinati.com'),
+        child: const Text(
+          'Contact: info@skurtinati.com',
+          style: TextStyle(color: kMuted, fontSize: 13, height: 1.5),
+        ),
+      );
 }
 
 /// "SKURTINATI" centred under the footer, in the M23_HYDRANT SPECIAL font, linking to skurtinati.com.
